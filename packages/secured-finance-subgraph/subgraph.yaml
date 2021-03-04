@@ -1,27 +1,91 @@
 specVersion: 0.0.2
-description: Gravatar for Ethereum
-repository: https://github.com/graphprotocol/example-subgraph
+description: Secured Finance is decentralized P2P banking business for digital assets 
+repository: https://github.com/secured-finance/secured-finance-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Gravity
+    name: Loan
     network: mainnet
     source:
-      address: '0x2E645469f354BB4F5c8a05B3b30A929361cf77eC'
-      abi: Gravity
+      address: '0x389d4D8d1f3BEbc9429A94a669b5AE7C7e4aC3d1'
+      abi: Loan
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - Gravatar
+        - Loan
+        - LoanSchedule
+        - SchedulePayment
       abis:
-        - name: Gravity
-          file: ./abis/Gravity.json
+        - name: Loan
+          file: ./abis/Loan.json
       eventHandlers:
-        - event: NewGravatar(uint256,address,string,string)
-          handler: handleNewGravatar
-        - event: UpdatedGravatar(uint256,address,string,string)
-          handler: handleUpdatedGravatar
-      file: ./src/mapping.ts
+        - event: MakeLoanDeal(indexed address,indexed uint8,uint8,uint8,uint256,uint256,indexed uint256)
+          handler: handleMakeLoanDeal
+        - event: NotifyPayment(indexed address,indexed address,uint8,uint8,uint256,uint256,uint256,indexed bytes32)
+          handler: handleNotifyLoanPayment
+        - event: ConfirmPayment(indexed address,indexed address,uint8,uint8,uint256,uint256,uint256,indexed bytes32)
+          handler: handleConfirmLoanPayment
+        - event: UpdateState(indexed address,indexed address,indexed uint256,uint8,uint8)
+          handler: handleUpdateLoanState
+      file: ./src/loan.ts
+  - kind: ethereum/contract
+    name: Collateral
+    network: mainnet
+    source:
+      address: '0x1d3A83EFD4D549073e3c4C9DD3D026b793aA34e2'
+      abi: Collateral
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Collateral
+      abis:
+        - name: Collateral
+          file: ./abis/Collateral.json
+        - name: FxMarket
+          file: ./abis/FxMarket.json
+      eventHandlers:
+        - event: SetColBook(indexed address,indexed string,bytes32,address)
+          handler: handleSetCollateralBook
+        - event: UpSizeETH(indexed address)
+          handler: handleUpSizeETH
+        - event: UpSizeFIL(indexed address,uint256,bytes32)
+          handler: handleUpSizeFIL
+        - event: ConfirmUpSizeFIL(indexed address,indexed bytes32,uint256,indexed bytes32)
+          handler: handleConfirmUpSizeFIL
+        - event: DelColBook(indexed address)
+          handler: handleDeleteCollateralBook
+        - event: PartialLiquidation(indexed address,indexed address,indexed uint256,uint8)
+          handler: handlePartialLiquidation
+      file: ./src/collateral.ts
+  # - kind: ethereum/contract
+  #   name: MoneyMarket
+  #   network: mainnet
+  #   source:
+  #     address: '0x3DF72a5de19AFe47EAb3bd29cA6e1322F6ee3583'
+  #     abi: MoneyMarket
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - MoneyMarket
+  #     abis:
+  #       - name: MoneyMarket
+  #         file: ./abis/MoneyMarket.json
+  #     eventHandlers:
+  #       - event: SetMoneyMarketBook(indexed address)
+  #         handler: handleSetMonetMarketBook
+  #       - event: DelMoneyMarketBook(indexed address)
+  #         handler: handleDeleteMoneyMarketBook
+  #       - event: SetOneItem(indexed address,uint8,uint8,uint8,uint256,uint256,uint256)
+  #         handler: handleSetOneItemMoneyMarket
+  #       - event: DelOneItem(indexed address,uint8,uint8,uint8)
+  #         handler: handleDeleteOneItemMoneyMarket
+  #       - event: TakeOneItem(indexed address,uint8,uint8,uint8,uint256)
+  #         handler: handleTakeOneItemMoneyMarket
+  #     file: ./src/moneyMarket.ts

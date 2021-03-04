@@ -1,6 +1,120 @@
-type Gravatar @entity {
+type Loan @entity {
+  id: ID!
+  lender: Bytes!
+  lenderUser: User!
+  borrower: Bytes!
+  borrowUser: User!
+  side: Int!
+  currency: Int!
+  term: Int
+  amount: BigInt! # maybe BigInt!
+  couponPayment: BigInt!
+  rate: BigInt!
+  startTimestamp: BigInt!
+  endTimestamp: BigInt!
+  presentValue: BigInt!
+  currentTimestamp: BigInt!
+  isAvailable: Boolean!
+  startTxHash: Bytes!
+  state: Int!
+
+  schedule: LoanSchedule! @derivedFrom(field: "loan")
+}
+
+type LoanSchedule @entity {
+  id: ID!
+  
+  payments: [SchedulePayment!] @derivedFrom(field: "schedule")
+  loan: Loan!
+}
+
+type SchedulePayment @entity {
+  id: ID!
+  notice: BigInt!
+  payment: BigInt!
+  amount: BigInt!
+  isDone: Boolean!
+  txHash: Bytes!
+
+  schedule: LoanSchedule!
+}
+
+enum LoanState {
+  REGISTERED
+  WORKING
+  DUE
+  PAST_DUE
+  CLOSED
+  TERMINATED
+}
+
+type Collateral @entity {
+  id: ID!
+  collateralID: String!
+  user: User!
+  userAddressETH: Bytes!
+  userAddressFIL: Bytes!
+  userAddressUSDC: Bytes!
+  collateralAddressFIL: Bytes!
+  collateralAddressUSDC: Bytes!
+  collateralAmountETH: BigInt!
+  collateralAmountFIL: BigInt!
+  collateralAmountUSDC: BigInt!
+  collateralAmountFILinETH: BigInt!
+  collateralAmountUSDCinETH: BigInt!
+  inuseETH: BigInt!
+  inuseFIL: BigInt!
+  inuseUSDC: BigInt!
+  inuseFILinETH: BigInt!
+  inuseUSDCinETH: BigInt!
+  coverage: BigInt!
+  isAvailable: Boolean!
+  state: Int!
+  filDepositTxHash: Bytes!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
+
+enum CollateralState {
+  EMPTY
+  AVAILABLE
+  IN_USE
+  MARGIN_CALL
+  LIQUIDATION_IN_PROGRESS
+  LIQUIDATION
+}
+
+enum MoneyMarketCcy {
+  ETH 
+  FIL 
+  USDC
+}
+
+enum MoneyMarketSide {
+  LEND
+  BORROW
+}
+
+enum MoneyMarketTerm {
+  _3m
+  _6m
+  _1y
+  _2y
+  _3y
+  _5y
+}
+
+type User @entity {
   id: ID!
   owner: Bytes!
-  displayName: String!
-  imageUrl: String!
+  totalLendInETH: BigInt!
+  totalBorrowInETH: BigInt!
+  totalCollateralInETH: BigInt!
+
+  updatedAt: BigInt!
+
+  collateral: Collateral! @derivedFrom(field: "user")
+  loans: [Loan!] @derivedFrom(field: "lenderUser")
+  borrows: [Loan!] @derivedFrom(field: "borrowUser")
+
 }
