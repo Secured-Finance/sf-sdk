@@ -13,4 +13,4 @@ This subgraph tracks of the current state of Secured Finance Protocol smart cont
 
 ## License
 
-This project is licensed under the MIT license, Copyright (c) 2021 Secured Finance. For more information see LICENSE.md.
+This project is licensed under the MIT license, Copyright (c) 2021 Secured Finance. For more information see LICENSE.

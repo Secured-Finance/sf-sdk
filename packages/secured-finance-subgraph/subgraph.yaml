@@ -73,7 +73,9 @@ dataSources:
   #     apiVersion: 0.0.4
   #     language: wasm/assemblyscript
   #     entities:
-  #       - MoneyMarket
+  #       - LendingMarket
+  #       - MoneyMarketOrderBook
+  #       - MoneyMarketOrder
   #     abis:
   #       - name: MoneyMarket
   #         file: ./abis/MoneyMarket.json
