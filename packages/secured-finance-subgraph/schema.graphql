@@ -118,3 +118,38 @@ type User @entity {
   borrows: [Loan!] @derivedFrom(field: "borrowUser")
 
 }
+
+type LendingMarket @entity {
+  id: ID!
+
+  totalAvailableLiquidityInETH: BigInt!
+  totalLiquidityInETH: BigInt!
+
+  markets: [MoneyMarketOrderBook]!
+}
+
+type MoneyMarketOrderBook @entity {
+  id: ID!
+  totalAvailableLiquidityInETH: BigInt!
+  totalLiquidityInETH: BigInt!
+  currency: Int!
+  term: Int!
+  spread: BigInt!
+  marketRate: BigInt!
+
+  lendOrders: [MoneyMarketOrder]!
+  borrowOrders: [MoneyMarketOrder]!
+
+  tradeHistory: [MoneyMarketOrder]!
+  # marketMakers: [User]! @derivedFrom(field: "owner")
+}
+
+type MoneyMarketOrder @entity {
+  id: ID!
+  term: Int!
+  amount: BigInt!
+  rate: Int!
+  goodtil: BigInt!
+  isAvailable: Boolean!
+  address: Bytes!
+}
