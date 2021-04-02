@@ -45,50 +45,47 @@ function constructSchedule(id: string, term: i32, rate: BigInt, amount: BigInt, 
 }
 
 export function handleMakeLoanDeal(event: MakeLoanDeal): void {
-    let loan = new Loan(event.params.loanId.toHex())
+    let loan = new Loan(event.params.loanId.toString())
     loan.side = event.params.side
     loan.currency = event.params.ccy
 
     loan.term = event.params.term
     loan.amount = event.params.amt
 
-    // identify who is lender and borrower
-    if (loan.side == 0) {
-        const lender = getUser(event.params.makerAddr, event.block.timestamp)
-        const borrower = getUser(event.transaction.from, event.block.timestamp)
+    const lender = getUser(event.params.lender, event.block.timestamp)
+    const borrower = getUser(event.params.borrower, event.block.timestamp)
 
-        loan.lender = event.params.makerAddr
-        let updatedLendInETH = lender.totalLendInETH.plus(loan.amount)
-        lender.totalLendInETH = updatedLendInETH
-        loan.lenderUser = event.params.makerAddr.toHex()
+    loan.lender = event.params.lender
+    let updatedLendInETH = lender.totalLendInETH.plus(loan.amount)
+    lender.totalLendInETH = updatedLendInETH
+    loan.lenderUser = event.params.lender.toHex()
 
-        loan.borrower = event.transaction.from
-        let updatedBorrowInETH = borrower.totalBorrowInETH.plus(loan.amount)
-        borrower.totalBorrowInETH = updatedBorrowInETH
-        loan.borrowUser = event.transaction.from.toHex()
+    loan.borrower = event.params.borrower
+    let updatedBorrowInETH = borrower.totalBorrowInETH.plus(loan.amount)
+    borrower.totalBorrowInETH = updatedBorrowInETH
+    loan.borrowUser = event.params.borrower.toHex()
 
-        lender.save()
-        borrower.save()
-    }
-    if (loan.side == 1) {
-        const lender = getUser(event.transaction.from, event.block.timestamp)
-        const borrower = getUser(event.params.makerAddr, event.block.timestamp)
+    lender.save()
+    borrower.save()
+    // if (loan.side == 1) {
+    //     const lender = getUser(event.transaction.from, event.block.timestamp)
+    //     const borrower = getUser(event.params.makerAddr, event.block.timestamp)
 
-        let updatedLendInETH = lender.totalLendInETH.plus(loan.amount)
-        lender.totalLendInETH = updatedLendInETH
+    //     let updatedLendInETH = lender.totalLendInETH.plus(loan.amount)
+    //     lender.totalLendInETH = updatedLendInETH
 
-        loan.lender = event.transaction.from
-        loan.lenderUser = event.transaction.from.toHex()
+    //     loan.lender = event.transaction.from
+    //     loan.lenderUser = event.transaction.from.toHex()
 
-        let updatedBorrowInETH = borrower.totalBorrowInETH.plus(loan.amount)
-        borrower.totalBorrowInETH = updatedBorrowInETH
+    //     let updatedBorrowInETH = borrower.totalBorrowInETH.plus(loan.amount)
+    //     borrower.totalBorrowInETH = updatedBorrowInETH
 
-        loan.borrower = event.params.makerAddr
-        loan.borrowUser = event.params.makerAddr.toHex()
+    //     loan.borrower = event.params.makerAddr
+    //     loan.borrowUser = event.params.makerAddr.toHex()
 
-        lender.save()
-        borrower.save()
-    }
+    //     lender.save()
+    //     borrower.save()
+    // }
 
     // calculate coupon payment:
     const couponFractions = getCouponFractionsFromTerm(loan.term)
@@ -102,7 +99,7 @@ export function handleMakeLoanDeal(event: MakeLoanDeal): void {
     loan.endTimestamp = event.block.timestamp.plus(loanTime)
 
     //construct loan schedule
-    const schedule = getLoanSchedule(event.params.loanId.toHex(), loan.term, loan.rate, loan.amount, loan.startTimestamp)
+    const schedule = getLoanSchedule(event.params.loanId.toString(), loan.term, loan.rate, loan.amount, loan.startTimestamp)
     schedule.save()
 
     loan.presentValue = event.params.amt
@@ -114,9 +111,9 @@ export function handleMakeLoanDeal(event: MakeLoanDeal): void {
 }
 
 export function handleUpdateLoanState(event: UpdateState): void {
-    let loan = Loan.load(event.params.loanId.toHex())
+    let loan = Loan.load(event.params.loanId.toString())
     if (loan == null) {
-      loan = new Loan(event.params.loanId.toHex())
+      loan = new Loan(event.params.loanId.toString())
     }
 
     if (loan.state == event.params.prevState) {
@@ -128,9 +125,9 @@ export function handleUpdateLoanState(event: UpdateState): void {
 }
 
 export function handleNotifyLoanPayment(event: NotifyPayment): void {
-    let loan = Loan.load(event.params.loanId.toHex())
+    let loan = Loan.load(event.params.loanId.toString())
     if (loan == null) {
-      loan = new Loan(event.params.loanId.toHex())
+      loan = new Loan(event.params.loanId.toString())
     }
 
     loan.currentTimestamp = event.block.timestamp
@@ -138,14 +135,14 @@ export function handleNotifyLoanPayment(event: NotifyPayment): void {
     if (loan.state == 0) {
         loan.startTxHash = event.params.txHash
     } else if (loan.state == 2) {
-        const schedule = getLoanSchedule(event.params.loanId.toHex(), loan.term, loan.rate, loan.amount, loan.startTimestamp)
+        const schedule = getLoanSchedule(event.params.loanId.toString(), loan.term, loan.rate, loan.amount, loan.startTimestamp)
         const frequency = getLoanPaymentFrequencyFromTerm(loan.term)
 
         let i :BigInt = BIG_INT_ZERO
-        let schedulePayment = SchedulePayment.load(event.params.loanId.toHex() + "-" + i.toString())
+        let schedulePayment = SchedulePayment.load(event.params.loanId.toString() + "-" + i.toString())
 
         for (i; i.lt(frequency); i = i.plus(BIG_INT_ONE)) {
-            schedulePayment = SchedulePayment.load(event.params.loanId.toHex() + "-" + i.toString())
+            schedulePayment = SchedulePayment.load(event.params.loanId.toString() + "-" + i.toString())
             if (schedulePayment.isDone == false) break;
         }
         schedulePayment.txHash = event.params.txHash
@@ -158,22 +155,22 @@ export function handleNotifyLoanPayment(event: NotifyPayment): void {
 }
 
 export function handleConfirmLoanPayment(event: ConfirmPayment): void {
-    let loan = Loan.load(event.params.loanId.toHex())
+    let loan = Loan.load(event.params.loanId.toString())
     if (loan == null) {
-      loan = new Loan(event.params.loanId.toHex())
+      loan = new Loan(event.params.loanId.toString())
     }
 
     if (loan.state == 0 && loan.startTxHash == event.params.txHash && loan.amount == event.params.amt) {
         loan.state = 1
     } else if (loan.state == 2) {
-        const schedule = getLoanSchedule(event.params.loanId.toHex(), loan.term, loan.rate, loan.amount, loan.startTimestamp)
+        const schedule = getLoanSchedule(event.params.loanId.toString(), loan.term, loan.rate, loan.amount, loan.startTimestamp)
         const frequency = getLoanPaymentFrequencyFromTerm(loan.term)
 
         let i :BigInt = BIG_INT_ZERO
-        let schedulePayment = SchedulePayment.load(event.params.loanId.toHex() + "-" + i.toString())
+        let schedulePayment = SchedulePayment.load(event.params.loanId.toString() + "-" + i.toString())
 
         for (i; i.lt(frequency); i = i.plus(BIG_INT_ONE)) {
-            schedulePayment = SchedulePayment.load(event.params.loanId.toHex() + "-" + i.toString())
+            schedulePayment = SchedulePayment.load(event.params.loanId.toString() + "-" + i.toString())
             if (schedulePayment.isDone == false) {
                 if (schedulePayment.txHash == event.params.txHash) {
                     schedulePayment.isDone = true
