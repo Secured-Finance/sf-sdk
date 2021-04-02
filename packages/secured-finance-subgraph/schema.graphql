@@ -24,7 +24,7 @@ type Loan @entity {
 type LoanSchedule @entity {
   id: ID!
   
-  payments: [SchedulePayment!] @derivedFrom(field: "schedule")
+  payments: [SchedulePayment!]! @derivedFrom(field: "schedule")
   loan: Loan!
 }
 
@@ -46,6 +46,20 @@ enum LoanState {
   PAST_DUE
   CLOSED
   TERMINATED
+}
+
+enum CcyPair {
+  FILETH 
+  FILUSDC 
+  ETHUSDC
+  BTCUSDC
+  BTCETH
+  BTCFIL
+}
+
+enum FXSide {
+  BID 
+  OFFER
 }
 
 type Collateral @entity {
@@ -84,18 +98,19 @@ enum CollateralState {
   LIQUIDATION
 }
 
-enum MoneyMarketCcy {
+enum Ccy {
   ETH 
   FIL 
   USDC
+  BTC
 }
 
-enum MoneyMarketSide {
+enum Side {
   LEND
   BORROW
 }
 
-enum MoneyMarketTerm {
+enum Term {
   _3m
   _6m
   _1y
@@ -114,42 +129,128 @@ type User @entity {
   updatedAt: BigInt!
 
   collateral: Collateral! @derivedFrom(field: "user")
-  loans: [Loan!] @derivedFrom(field: "lenderUser")
+  loans: [Loan!]! @derivedFrom(field: "lenderUser")
   borrows: [Loan!] @derivedFrom(field: "borrowUser")
 
+  openOrders: [LendingMarketOrder!] @derivedFrom(field: "makerUser")
+
+  madeOrders: [FilledLendingMarketOrder!] @derivedFrom(field: "makerUser")
+  takenOrders: [FilledLendingMarketOrder!] @derivedFrom(field: "takerUser")
+  # canceledOrders: [LendingMarketOrder!] @derivedFrom(field: "makerUser")
+}
+
+type LendingMarketController @entity {
+  id: ID!
+
+  # liquidity
+  totalAvailableLiquidityETH: BigInt!
+  totalLiquidityETH: BigInt!
+  
+  totalAvailableLiquidityFIL: BigInt!
+  totalLiquidityFIL: BigInt!
+
+  totalAvailableLiquidityBTC: BigInt!
+  totalLiquidityBTC: BigInt!
+
+  totalAvailableLiquidityUSDC: BigInt!
+  totalLiquidityUSDC: BigInt!
+
+  # liquidity in USD
+  totalAvailableLiquidityInUSD: BigInt!
+  totalLiquidityInUSD: BigInt!
+
+  markets: [LendingMarket!] @derivedFrom(field: "controller")
+  marketCount: Int!
 }
 
 type LendingMarket @entity {
   id: ID!
-
-  totalAvailableLiquidityInETH: BigInt!
-  totalLiquidityInETH: BigInt!
-
-  markets: [MoneyMarketOrderBook]!
-}
-
-type MoneyMarketOrderBook @entity {
-  id: ID!
-  totalAvailableLiquidityInETH: BigInt!
-  totalLiquidityInETH: BigInt!
+  controller: LendingMarketController!
   currency: Int!
   term: Int!
   spread: BigInt!
   marketRate: BigInt!
+  orderCount: Int!
 
-  lendOrders: [MoneyMarketOrder]!
-  borrowOrders: [MoneyMarketOrder]!
+  # liquidity
+  totalAvailableLiquidity: BigInt!
+  totalLiquidity: BigInt!
 
-  tradeHistory: [MoneyMarketOrder]!
-  # marketMakers: [User]! @derivedFrom(field: "owner")
+  # liquidity in USD
+  totalAvailableLiquidityInUSD: BigInt!
+  totalLiquidityInUSD: BigInt!
+
+  # creation timestamps
+  createdAtTimestamp: BigInt!
+  createdAtBlockNumber: BigInt!
+
+  # two-sided orderbook
+  lendOrderbook: [LendingMarketOrderRow!] @derivedFrom(field: "lendMarket")
+  borrowOrderbook: [LendingMarketOrderRow!] @derivedFrom(field: "borrowMarket")
+
+  lendOrders: [LendingMarketOrder]! @derivedFrom(field: "lendingMarket")
+  borrowOrders: [LendingMarketOrder]! @derivedFrom(field: "borrowingMarket")
+  canceledOrders: [LendingMarketOrder]! @derivedFrom(field: "cancelMarket")
+
+  tradeHistory: [FilledLendingMarketOrder!] @derivedFrom(field: "market")
 }
 
-type MoneyMarketOrder @entity {
+type LendingMarketOrderRow @entity {
   id: ID!
+  currency: Int!
+  side: Int!
+  lendMarket: LendingMarket!
+  borrowMarket: LendingMarket!
   term: Int!
+  rate: BigInt!
+  orders: [LendingMarketOrder]! @derivedFrom(field: "row")
+  totalAmount: BigInt!
+  # totalUSDAmount: BigInt!
+
+  # creation timestamps
+  createdAtTimestamp: BigInt!
+  createdAtBlockNumber: BigInt!
+}
+
+type LendingMarketOrder @entity {
+  id: ID!
+  currency: Int!
+  side: Int!
+  row: LendingMarketOrderRow
+  lendingMarket: LendingMarket
+  borrowingMarket: LendingMarket
+  cancelMarket: LendingMarket
+  term: Int!
+  rate: BigInt!
   amount: BigInt!
-  rate: Int!
-  goodtil: BigInt!
-  isAvailable: Boolean!
-  address: Bytes!
+  deadline: BigInt!
+  maker: Bytes!
+  makerUser: User!
+
+  # creation timestamps
+  createdAtTimestamp: BigInt!
+  createdAtBlockNumber: BigInt!
+
+  # # updated timestamps
+  updatedAtTimestamp: BigInt!
+  updatedAtBlockNumber: BigInt!
+}
+
+type FilledLendingMarketOrder @entity {
+  id: ID!
+  orderId: BigInt!
+  currency: Int!
+  side: Int!
+  market: LendingMarket!
+  term: Int!
+  rate: BigInt!
+  amount: BigInt!
+  maker: Bytes!
+  makerUser: User!
+  taker: Bytes!
+  takerUser: User!
+
+  # creation timestamps
+  createdAtTimestamp: BigInt!
+  createdAtBlockNumber: BigInt!
 }
