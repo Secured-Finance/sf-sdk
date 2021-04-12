@@ -6,10 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Loan
-    network: mainnet
+    network: ropsten
     source:
-      address: '0x7D25E74029976f675A23Ac444d57fD59ca999727'
+      address: '0x51C947C8dFc96E591DE1Cb4007150fAd46907b05'
       abi: Loan
+      startBlock: 10026125
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -33,10 +34,11 @@ dataSources:
       file: ./src/loan.ts
   - kind: ethereum/contract
     name: Collateral
-    network: mainnet
+    network: ropsten
     source:
-      address: '0xce6027F8cBab5a96FF345E481daB069030E81cb7'
+      address: '0x86D971F85Be1f6e3C1b1E41d74104560e9e2040d'
       abi: Collateral
+      startBlock: 10026125
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -62,10 +64,11 @@ dataSources:
       file: ./src/collateral.ts
   - kind: ethereum/contract
     name: LendingMarketController
-    network: mainnet
+    network: ropsten
     source:
-      address: '0x950C34a09Ce94ad6e89d5e31eDa0719737ffE144'
+      address: '0x0d1a99841ae744556D6397826F2d158993287947'
       abi: LendingMarketController
+      startBlock: 10026125
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -82,7 +85,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: LendingMarket
-    network: mainnet
+    network: ropsten
     source:
       abi: LendingMarket
     mapping:

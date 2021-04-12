@@ -83,6 +83,7 @@ export function handleNewLendingMarket(event: LendingMarketCreated): void {
     lendingController.save()
 
     let market = new LendingMarket(event.params.marketAddr.toHexString()) as LendingMarket
+    market.marketAddr = event.params.marketAddr
     market.currency = event.params.ccy
     market.term = event.params.term
     market.controller = LENDING_MARKET_CONTROLLER_ADDR.toHexString()

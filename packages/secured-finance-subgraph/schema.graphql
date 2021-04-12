@@ -165,6 +165,7 @@ type LendingMarketController @entity {
 
 type LendingMarket @entity {
   id: ID!
+  marketAddr: Bytes!
   controller: LendingMarketController!
   currency: Int!
   term: Int!
@@ -199,6 +200,7 @@ type LendingMarketOrderRow @entity {
   id: ID!
   currency: Int!
   side: Int!
+  marketAddr: Bytes!
   lendMarket: LendingMarket!
   borrowMarket: LendingMarket!
   term: Int!
@@ -214,9 +216,11 @@ type LendingMarketOrderRow @entity {
 
 type LendingMarketOrder @entity {
   id: ID!
+  orderId: BigInt!
   currency: Int!
   side: Int!
   row: LendingMarketOrderRow
+  marketAddr: Bytes!
   lendingMarket: LendingMarket
   borrowingMarket: LendingMarket
   cancelMarket: LendingMarket
@@ -242,6 +246,7 @@ type FilledLendingMarketOrder @entity {
   currency: Int!
   side: Int!
   market: LendingMarket!
+  marketAddr: Bytes!
   term: Int!
   rate: BigInt!
   amount: BigInt!
