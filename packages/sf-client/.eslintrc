@@ -1,0 +1,15 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "extends": [
+      "prettier"
+    ],
+    "rules": {
+      "no-return-await": "warn",
+      "eqeqeq": "warn",
+      "no-eq-null": "warn",
+      "unicorn/filename-case": "off",
+      "max-statements-per-line": "warn"
+    }
+}
