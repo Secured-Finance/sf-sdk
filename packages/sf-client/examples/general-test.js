@@ -1,7 +1,5 @@
-const { SecuredFinanceClient } = require('../dist/index.js');
-const { ethTransaction, signTranaction } = require("../dist/utils/eth-tx.js");
-
-const { getDefaultProvider, Wallet, BigNumber, utils } = require('ethers');
+const { SecuredFinanceClient } = require('../dist/index');
+const { getDefaultProvider, Wallet } = require('ethers');
 require("dotenv/config");
 
 (async function() {
@@ -15,5 +13,5 @@ require("dotenv/config");
     );
     await sfClient.init();
 
-    console.log(sfClient);
+    console.log(sfClient.contracts.lendingMarkets);
 })();

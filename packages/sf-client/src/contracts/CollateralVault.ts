@@ -22,11 +22,11 @@ export class CollateralVault {
     }
 
     deposit = async (amount: number | BigNumber, txParams?: TxBase) => {
-        return await this.contract.deposit(amount, txParams);
+        return await this.contract.functions['deposit(uint256)'](amount);
     }
 
     depositIntoPosition = async (counterparty: string, amount: number | BigNumber, txParams?: TxBase) => {
-        return await this.contract.deposit(counterparty, amount, txParams);
+        return await this.contract.functions['deposit(address,uint256)'](counterparty, amount);
     }
 
     withdraw = async (amount: number | BigNumber, txParams?: TxBase) => {

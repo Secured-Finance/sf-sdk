@@ -1,16 +1,9 @@
-import { BigNumber, Contract, Signer} from 'ethers';
+import { Contract, Signer} from 'ethers';
 import { BaseProvider } from '@ethersproject/providers';
 import LendingMarketControllerAbi from "../lib/abis/LendingMarketController";
 import { TxBase } from '../utils/eth-tx';
 import { addresses } from '../lib/addresses';
-
-export interface MarketOrder {
-    ccy: string;
-    term: string;
-    side: number;
-    amount: number | BigNumber;
-    rate: number | BigNumber;
-}
+import { MarketOrder } from '../utils/types';
 
 export class LendingMarketController {
     contract: Contract;
@@ -60,3 +53,5 @@ export class LendingMarketController {
     }
 
 }
+
+export default LendingMarketController;

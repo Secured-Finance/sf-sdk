@@ -77,11 +77,11 @@ export class CollateralAggregator {
     }
 
     getUsedVaultsInPosition = async (party0: string, party1: string) => {
-        return await this.contract.getUsedVaults(party0, party1);
+        return await this.contract.functions['getUsedVaults(address, address)'](party0, party1);
     }
 
     getUsedVaults = async (user: string) => {
-        return await this.contract.getUsedVaults(user);
+        return await this.contract.functions['getUsedVaults(address)'](user);
     }
 
 }
