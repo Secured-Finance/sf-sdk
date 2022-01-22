@@ -3,21 +3,25 @@ import { DEFAULT_ADDRESS } from "../utils/constants";
 export interface ContractAddresses {
     collateralAggregator: string,
     loan: string,
+    lendingMarketController: string,
 }
 
 const MAINNET_ADDRESSES: ContractAddresses = {
     collateralAggregator: DEFAULT_ADDRESS,
     loan: DEFAULT_ADDRESS,
+    lendingMarketController: DEFAULT_ADDRESS,
 };
 
 const ROPSTEN_ADDRESSES: ContractAddresses = {
     collateralAggregator: DEFAULT_ADDRESS,
     loan: DEFAULT_ADDRESS,
+    lendingMarketController: DEFAULT_ADDRESS,
 };
 
 const LOCALHOST_ADDRESSES: ContractAddresses = {
     collateralAggregator: DEFAULT_ADDRESS,
     loan: DEFAULT_ADDRESS,
+    lendingMarketController: DEFAULT_ADDRESS,
 };
 
 export const addresses:{[key: number]: ContractAddresses}  = {

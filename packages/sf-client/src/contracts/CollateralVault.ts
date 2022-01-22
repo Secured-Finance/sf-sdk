@@ -1,4 +1,4 @@
-import { BigNumber, BytesLike, Contract, Signer} from 'ethers';
+import { BigNumber, Contract, Signer} from 'ethers';
 import { BaseProvider } from '@ethersproject/providers';
 import CollateralVaultAbi from "../lib/abis/CollateralVault";
 import { TxBase } from '../utils/eth-tx';

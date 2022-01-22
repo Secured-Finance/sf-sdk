@@ -1,8 +1,7 @@
-import { BigNumber, BytesLike, Contract, Signer} from 'ethers';
+import { BigNumber, Contract, Signer} from 'ethers';
 import { BaseProvider } from '@ethersproject/providers';
 import LendingMarketAbi from "../lib/abis/LendingMarket";
 import { TxBase } from '../utils/eth-tx';
-import { addresses } from '../lib/addresses';
 import { getLendingMarketByCcyAndTerm } from '../utils/addresses';
 
 export class LendingMarket {
@@ -15,7 +14,6 @@ export class LendingMarket {
         network: number
     ) {
         let marketAddress = getLendingMarketByCcyAndTerm(ccy, term, network);
-        console.log(marketAddress);
 
         this.contract = new Contract(
             marketAddress.address,
@@ -60,24 +58,39 @@ export class LendingMarket {
         return await this.contract.getMidRate();
     }
 
-    cancelOrder = async (orderID: number | BigNumber) => {
+    cancelOrder = async (orderID: number | BigNumber, txParams?: TxBase) => {
         return await this.contract.cancelOrder(orderID);
     }
 
-    makeOrder = async (side: number, amount: number | BigNumber, rate: number | BigNumber) => {
-        return await this.contract.makeOrder(side, amount, rate);
+    makeOrder = async (
+        side: number, 
+        amount: number | BigNumber, 
+        rate: number | BigNumber, 
+        txParams?: TxBase
+    ) => {
+        return await this.contract.makeOrder(side, amount, rate, txParams);
     }
 
-    takeOrder = async (side: number, orderID: number | BigNumber, amount: number | BigNumber) => {
-        return await this.contract.takeOrder(side, orderID, amount);
+    takeOrder = async (
+        side: number, 
+        orderID: number | BigNumber, 
+        amount: number | BigNumber, 
+        txParams?: TxBase
+    ) => {
+        return await this.contract.takeOrder(side, orderID, amount, txParams);
     }
 
     matchOrders = async (side: number, amount: number | BigNumber, rate: number | BigNumber) => {
         return await this.contract.matchOrders(side, amount, rate);
     }
 
-    order = async (side: number, amount: number | BigNumber, rate: number | BigNumber) => {
-        return await this.contract.order(side, amount, rate);
+    order = async (
+        side: number, 
+        amount: number | BigNumber, 
+        rate: number | BigNumber, 
+        txParams?: TxBase
+    ) => {
+        return await this.contract.order(side, amount, rate, txParams);
     }
 
 }
