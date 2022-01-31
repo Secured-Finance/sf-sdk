@@ -8,7 +8,7 @@ export function createUser(address: Address, time: BigInt): User {
     user.owner = address
     user.updatedAt = time
     user.totalBorrowInETH = BIG_INT_ZERO
-    user.totalCollateralInETH = BIG_INT_ZERO
+    // user.totalCollateralInETH = BIG_INT_ZERO
     user.totalLendInETH = BIG_INT_ZERO
   
     return user as User

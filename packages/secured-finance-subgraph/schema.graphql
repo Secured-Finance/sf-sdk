@@ -4,10 +4,9 @@ type Loan @entity {
   lenderUser: User!
   borrower: Bytes!
   borrowUser: User!
-  side: Int!
-  currency: Int!
-  term: Int
-  amount: BigInt! # maybe BigInt!
+  currency: Bytes!
+  term: BigInt!
+  notional: BigInt!
   couponPayment: BigInt!
   rate: BigInt!
   startTimestamp: BigInt!
@@ -19,12 +18,31 @@ type Loan @entity {
   state: Int!
 
   schedule: LoanSchedule! @derivedFrom(field: "loan")
+  termination: LoanTermination @derivedFrom(field: "loan")
+  novationHistory: [LoanNovation!] @derivedFrom(field: "loan")
 }
 
 type LoanSchedule @entity {
   id: ID!
   
   payments: [SchedulePayment!]! @derivedFrom(field: "schedule")
+  loan: Loan!
+}
+
+type LoanTermination @entity {
+  id: ID!
+  terminationAsker: Bytes!
+  terminationSubmitter: Bytes!
+  terminationDate: BigInt!
+  repayment: BigInt!
+  loan: Loan!
+}
+
+type LoanNovation @entity {
+  id: ID!
+  previousLender: Bytes!
+  newLender: Bytes!
+  novationDate: BigInt!
   loan: Loan!
 }
 
@@ -48,46 +66,32 @@ enum LoanState {
   TERMINATED
 }
 
-enum CcyPair {
-  FILETH 
-  FILUSDC 
-  ETHUSDC
-  BTCUSDC
-  BTCETH
-  BTCFIL
-}
-
-enum FXSide {
-  BID 
-  OFFER
-}
-
-type Collateral @entity {
-  id: ID!
-  collateralID: String!
-  user: User!
-  userAddressETH: Bytes!
-  userAddressFIL: Bytes!
-  userAddressUSDC: Bytes!
-  collateralAddressFIL: Bytes!
-  collateralAddressUSDC: Bytes!
-  collateralAmountETH: BigInt!
-  collateralAmountFIL: BigInt!
-  collateralAmountUSDC: BigInt!
-  collateralAmountFILinETH: BigInt!
-  collateralAmountUSDCinETH: BigInt!
-  inuseETH: BigInt!
-  inuseFIL: BigInt!
-  inuseUSDC: BigInt!
-  inuseFILinETH: BigInt!
-  inuseUSDCinETH: BigInt!
-  coverage: BigInt!
-  isAvailable: Boolean!
-  state: Int!
-  filDepositTxHash: Bytes!
-  createdAt: BigInt!
-  updatedAt: BigInt!
-}
+# type Collateral @entity {
+#   id: ID!
+#   collateralID: String!
+#   user: User!
+#   userAddressETH: Bytes!
+#   userAddressFIL: Bytes!
+#   userAddressUSDC: Bytes!
+#   collateralAddressFIL: Bytes!
+#   collateralAddressUSDC: Bytes!
+#   collateralAmountETH: BigInt!
+#   collateralAmountFIL: BigInt!
+#   collateralAmountUSDC: BigInt!
+#   collateralAmountFILinETH: BigInt!
+#   collateralAmountUSDCinETH: BigInt!
+#   inuseETH: BigInt!
+#   inuseFIL: BigInt!
+#   inuseUSDC: BigInt!
+#   inuseFILinETH: BigInt!
+#   inuseUSDCinETH: BigInt!
+#   coverage: BigInt!
+#   isAvailable: Boolean!
+#   state: Int!
+#   filDepositTxHash: Bytes!
+#   createdAt: BigInt!
+#   updatedAt: BigInt!
+# }
 
 enum CollateralState {
   EMPTY
@@ -98,39 +102,27 @@ enum CollateralState {
   LIQUIDATION
 }
 
-enum Ccy {
-  ETH 
-  FIL 
-  USDC
-  BTC
-}
-
 enum Side {
   LEND
   BORROW
 }
 
-enum Term {
-  _3m
-  _6m
-  _1y
-  _2y
-  _3y
-  _5y
-}
 
 type User @entity {
   id: ID!
   owner: Bytes!
   totalLendInETH: BigInt!
   totalBorrowInETH: BigInt!
-  totalCollateralInETH: BigInt!
+  # totalCollateralInETH: BigInt!
 
   updatedAt: BigInt!
 
-  collateral: Collateral! @derivedFrom(field: "user")
+  # collateral: Collateral! @derivedFrom(field: "user")
   loans: [Loan!]! @derivedFrom(field: "lenderUser")
   borrows: [Loan!] @derivedFrom(field: "borrowUser")
+
+  closedLoans: [Loan!]! @derivedFrom(field: "lenderUser")
+  closedBorrows: [Loan!] @derivedFrom(field: "borrowUser")
 
   openOrders: [LendingMarketOrder!] @derivedFrom(field: "makerUser")
 
@@ -167,8 +159,8 @@ type LendingMarket @entity {
   id: ID!
   marketAddr: Bytes!
   controller: LendingMarketController!
-  currency: Int!
-  term: Int!
+  currency: Bytes!
+  term: BigInt!
   spread: BigInt!
   marketRate: BigInt!
   orderCount: Int!
@@ -189,23 +181,23 @@ type LendingMarket @entity {
   lendOrderbook: [LendingMarketOrderRow!] @derivedFrom(field: "lendMarket")
   borrowOrderbook: [LendingMarketOrderRow!] @derivedFrom(field: "borrowMarket")
 
-  lendOrders: [LendingMarketOrder]! @derivedFrom(field: "lendingMarket")
-  borrowOrders: [LendingMarketOrder]! @derivedFrom(field: "borrowingMarket")
-  canceledOrders: [LendingMarketOrder]! @derivedFrom(field: "cancelMarket")
+  lendOrders: [LendingMarketOrder!] @derivedFrom(field: "lendingMarket")
+  borrowOrders: [LendingMarketOrder!] @derivedFrom(field: "borrowingMarket")
+  canceledOrders: [LendingMarketOrder!] @derivedFrom(field: "cancelMarket")
 
   tradeHistory: [FilledLendingMarketOrder!] @derivedFrom(field: "market")
 }
 
 type LendingMarketOrderRow @entity {
   id: ID!
-  currency: Int!
+  currency: Bytes!
   side: Int!
   marketAddr: Bytes!
   lendMarket: LendingMarket!
   borrowMarket: LendingMarket!
-  term: Int!
+  term: BigInt!
   rate: BigInt!
-  orders: [LendingMarketOrder]! @derivedFrom(field: "row")
+  orders: [LendingMarketOrder!] @derivedFrom(field: "row")
   totalAmount: BigInt!
   # totalUSDAmount: BigInt!
 
@@ -217,14 +209,14 @@ type LendingMarketOrderRow @entity {
 type LendingMarketOrder @entity {
   id: ID!
   orderId: BigInt!
-  currency: Int!
+  currency: Bytes!
   side: Int!
   row: LendingMarketOrderRow
   marketAddr: Bytes!
   lendingMarket: LendingMarket
   borrowingMarket: LendingMarket
   cancelMarket: LendingMarket
-  term: Int!
+  term: BigInt!
   rate: BigInt!
   amount: BigInt!
   deadline: BigInt!
@@ -243,11 +235,11 @@ type LendingMarketOrder @entity {
 type FilledLendingMarketOrder @entity {
   id: ID!
   orderId: BigInt!
-  currency: Int!
+  currency: Bytes!
   side: Int!
   market: LendingMarket!
   marketAddr: Bytes!
-  term: Int!
+  term: BigInt!
   rate: BigInt!
   amount: BigInt!
   maker: Bytes!
@@ -258,4 +250,55 @@ type FilledLendingMarketOrder @entity {
   # creation timestamps
   createdAtTimestamp: BigInt!
   createdAtBlockNumber: BigInt!
+}
+
+type Term @entity {
+  id: ID!
+  daysNum: BigInt!
+  dfFrac: BigInt!
+  paymentNum: BigInt!
+
+  products: [Product!]! @derivedFrom(field: "terms")
+  currencies: [Currency!]! @derivedFrom(field: "terms")
+}
+
+type Product @entity {
+  id: ID!
+  prefix: Bytes!
+  productImplementation: Bytes!
+  productController: Bytes!
+  terms: [Term!]!
+}
+
+type Currency @entity {
+  id: ID!
+  identifier: Bytes!
+  name: String!
+  chainID: Int!
+  ltv: BigInt!
+  minMargin: BigInt!
+  isSupported: Boolean!
+  isCollateral: Boolean!
+  terms: [Term!]!
+
+  priceFeed: PriceFeed! @derivedFrom(field: "currency")
+}
+
+type PriceFeed @entity {
+  id: ID!
+  contract: Bytes!
+  currency: Currency!
+  pair: String!
+}
+
+type CloseOutNetting @entity {
+  id: ID!
+  address0: Bytes!
+  address1: Bytes!
+  packedAddresses: Bytes!
+  aggregatedPayment0: BigInt!
+  aggregatedPayment1: BigInt!
+  netPayment: BigInt!
+  currency: Currency!
+  flipped: Boolean!
 }
