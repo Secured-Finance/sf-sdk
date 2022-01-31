@@ -1,10 +1,10 @@
-import { Address, BigInt, log } from "@graphprotocol/graph-ts"
+import { Address, BigInt, Bytes, log } from "@graphprotocol/graph-ts"
 import { LendingMarketCreated } from "../generated/LendingMarketController/LendingMarketController"
 import { LendingMarket, LendingMarketController } from "../generated/schema"
 import { LendingMarket as LendingMarketTemplate } from '../generated/templates'
 import { BIG_INT_ZERO, LENDING_MARKET_CONTROLLER_ADDR } from "./constants"
 
-export function createLendingMarket(address: Address): LendingMarketController {
+export function createLendingController(address: Address): LendingMarketController {
     const lendingController = new LendingMarketController(address.toHex())
 
     lendingController.totalAvailableLiquidityETH = BIG_INT_ZERO
@@ -31,50 +31,50 @@ export function getLendingMarketController(address: Address): LendingMarketContr
     let lendingController = LendingMarketController.load(address.toHex())
 
     if (lendingController === null) {
-        lendingController = createLendingMarket(address)
+        lendingController = createLendingController(address)
     }
 
     return lendingController as LendingMarketController
 }
 
-export function increaseLendingControllerLiquidity(ccy: i32, amount: BigInt): void {
+export function increaseLendingControllerLiquidity(ccy: Bytes, amount: BigInt): void {
     let lendingController = getLendingMarketController(LENDING_MARKET_CONTROLLER_ADDR);
 
-    switch (ccy) {
-        case 0:
-            lendingController.totalAvailableLiquidityETH = lendingController.totalAvailableLiquidityETH.plus(amount)
-            lendingController.totalLiquidityETH = lendingController.totalLiquidityETH.plus(amount)    
-        case 1:
-            lendingController.totalAvailableLiquidityFIL = lendingController.totalAvailableLiquidityFIL.plus(amount)
-            lendingController.totalLiquidityFIL = lendingController.totalLiquidityFIL.plus(amount)    
-        case 2:
-            lendingController.totalAvailableLiquidityUSDC = lendingController.totalAvailableLiquidityUSDC.plus(amount)
-            lendingController.totalLiquidityUSDC = lendingController.totalLiquidityUSDC.plus(amount)    
-        case 3:
-            lendingController.totalAvailableLiquidityBTC = lendingController.totalAvailableLiquidityBTC.plus(amount)
-            lendingController.totalLiquidityBTC = lendingController.totalLiquidityBTC.plus(amount)    
-        default:
+    // switch (ccy) {
+    //     case 0:
+    //         lendingController.totalAvailableLiquidityETH = lendingController.totalAvailableLiquidityETH.plus(amount)
+    //         lendingController.totalLiquidityETH = lendingController.totalLiquidityETH.plus(amount)    
+    //     case 1:
+    //         lendingController.totalAvailableLiquidityFIL = lendingController.totalAvailableLiquidityFIL.plus(amount)
+    //         lendingController.totalLiquidityFIL = lendingController.totalLiquidityFIL.plus(amount)    
+    //     case 2:
+    //         lendingController.totalAvailableLiquidityUSDC = lendingController.totalAvailableLiquidityUSDC.plus(amount)
+    //         lendingController.totalLiquidityUSDC = lendingController.totalLiquidityUSDC.plus(amount)    
+    //     case 3:
+    //         lendingController.totalAvailableLiquidityBTC = lendingController.totalAvailableLiquidityBTC.plus(amount)
+    //         lendingController.totalLiquidityBTC = lendingController.totalLiquidityBTC.plus(amount)    
+    //     default:
             
-        lendingController.save()
-    }
+    //     lendingController.save()
+    // }
 }
 
-export function reduceAvailableLiquidity(ccy: i32, amount: BigInt): void {
+export function reduceAvailableLiquidity(ccy: Bytes, amount: BigInt): void {
     let lendingController = getLendingMarketController(LENDING_MARKET_CONTROLLER_ADDR);
 
-    switch (ccy) {
-        case 0:
-            lendingController.totalAvailableLiquidityETH = lendingController.totalAvailableLiquidityETH.minus(amount)
-        case 1:
-            lendingController.totalAvailableLiquidityFIL = lendingController.totalAvailableLiquidityFIL.minus(amount)
-        case 2:
-            lendingController.totalAvailableLiquidityUSDC = lendingController.totalAvailableLiquidityUSDC.minus(amount) 
-        case 3:
-            lendingController.totalAvailableLiquidityBTC = lendingController.totalAvailableLiquidityBTC.minus(amount)
-        default:
+    // switch (ccy) {
+    //     case 0:
+    //         lendingController.totalAvailableLiquidityETH = lendingController.totalAvailableLiquidityETH.minus(amount)
+    //     case 1:
+    //         lendingController.totalAvailableLiquidityFIL = lendingController.totalAvailableLiquidityFIL.minus(amount)
+    //     case 2:
+    //         lendingController.totalAvailableLiquidityUSDC = lendingController.totalAvailableLiquidityUSDC.minus(amount) 
+    //     case 3:
+    //         lendingController.totalAvailableLiquidityBTC = lendingController.totalAvailableLiquidityBTC.minus(amount)
+    //     default:
             
-        lendingController.save()
-    }
+    //     lendingController.save()
+    // }
 }
 
 export function handleNewLendingMarket(event: LendingMarketCreated): void {

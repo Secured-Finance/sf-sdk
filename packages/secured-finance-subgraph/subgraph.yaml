@@ -5,73 +5,170 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Loan
-    network: ropsten
+    name: LoanV2
+    network: mainnet
     source:
-      address: '0x51C947C8dFc96E591DE1Cb4007150fAd46907b05'
-      abi: Loan
-      startBlock: 10026125
+      address: '0x8D6b80b1d3a70ac961246682B7e1790Bab02C704'
+      abi: LoanV2
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Loan
         - LoanSchedule
         - SchedulePayment
       abis:
-        - name: Loan
-          file: ./abis/Loan.json
+        - name: LoanV2
+          file: ./abis/LoanV2.json
       eventHandlers:
-        - event: MakeLoanDeal(indexed address,indexed address,uint8,uint8,uint8,uint256,uint256,indexed uint256)
-          handler: handleMakeLoanDeal
-        - event: NotifyPayment(indexed address,indexed address,uint8,uint8,uint256,uint256,uint256,indexed bytes32)
-          handler: handleNotifyLoanPayment
-        - event: ConfirmPayment(indexed address,indexed address,uint8,uint8,uint256,uint256,uint256,indexed bytes32)
-          handler: handleConfirmLoanPayment
-        - event: UpdateState(indexed address,indexed address,indexed uint256,uint8,uint8)
-          handler: handleUpdateLoanState
+        - event: Register(indexed address,indexed address,bytes32,uint256,uint256,uint256,indexed bytes32)
+          handler: handleLoanRegister
+        - event: RequestTermination(bytes32,indexed address)
+          handler: handleLoanTerminationRequest
+        - event: RejectTermination(bytes32,indexed address)
+          handler: handleLoanTerminationRejection
+        - event: EarlyTermination(bytes32,indexed address,uint256)
+          handler: handleLoanEarlyTermination
+        - event: MarkToMarket(bytes32,uint256,uint256)
+          handler: handleLoanMarkToMarket
+        - event: Novation(indexed bytes32,address)
+          handler: handleLoanNovation
+        - event: Liquidate(bytes32)
+          handler: handleLoanLiquidation
       file: ./src/loan.ts
   - kind: ethereum/contract
-    name: Collateral
-    network: ropsten
+    name: TermStructure
+    network: mainnet
     source:
-      address: '0x86D971F85Be1f6e3C1b1E41d74104560e9e2040d'
-      abi: Collateral
-      startBlock: 10026125
+      address: '0x35327F4Ab83B9754835a8c2B4963cFE842758dc5'
+      abi: TermStructure
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - Collateral
+        - Term
       abis:
-        - name: Collateral
-          file: ./abis/Collateral.json
+        - name: TermStructure
+          file: ./abis/TermStructure.json
       eventHandlers:
-        - event: SetColBook(indexed address,indexed string,bytes32,address)
-          handler: handleSetCollateralBook
-        - event: UpSizeETH(indexed address)
-          handler: handleUpSizeETH
-        - event: UpSizeFIL(indexed address,uint256,bytes32)
-          handler: handleUpSizeFIL
-        - event: ConfirmUpSizeFIL(indexed address,indexed bytes32,uint256,indexed bytes32)
-          handler: handleConfirmUpSizeFIL
-        - event: DelColBook(indexed address)
-          handler: handleDeleteCollateralBook
-        - event: PartialLiquidation(indexed address,indexed address,indexed uint256,uint8)
-          handler: handlePartialLiquidation
-      file: ./src/collateral.ts
+        - event: TermAdded(uint256,uint256,uint256)
+          handler: handleNewTerm
+        - event: ProductTermSupportUpdated(uint256,bytes4,bytes32,bool)
+          handler: handleTermProductSupport
+      file: ./src/terms.ts
+  - kind: ethereum/contract
+    name: ProductAddressResolver
+    network: mainnet
+    source:
+      address: '0xa9e01C3ACFB67C2057532FddFafffb1e18B26c39'
+      abi: ProductAddressResolver
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Product
+      abis:
+        - name: ProductAddressResolver
+          file: ./abis/ProductAddressResolver.json
+      eventHandlers:
+        - event: RegisterProduct(bytes4,indexed address,indexed address)
+          handler: handleNewProduct
+      file: ./src/product-resolver.ts
+  - kind: ethereum/contract
+    name: CurrencyController
+    network: mainnet
+    source:
+      address: '0x798c05D73824DC43D38119bd2f1EF914457816A3'
+      abi: CurrencyController
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Term
+      abis:
+        - name: CurrencyController
+          file: ./abis/CurrencyController.json
+      eventHandlers:
+        - event: CcyAdded(indexed bytes32,string,uint16,uint256)
+          handler: handleNewCurrency
+        - event: LTVUpdated(indexed bytes32,uint256)
+          handler: handleCurrencyLTVUpdate
+        - event: MinMarginUpdated(indexed bytes32,uint256)
+          handler: handleCurrencyMinMarginUpdate
+        - event: CcySupportUpdate(indexed bytes32,bool)
+          handler: handleCurrencySupportUpdate
+        - event: CcyCollateralUpdate(indexed bytes32,bool)
+          handler: handleCurrencyCollateralSupportUpdate
+        - event: PriceFeedAdded(bytes32,string,indexed address)
+          handler: handleCurrencyPriceFeed
+        - event: PriceFeedRemoved(bytes32,string,indexed address)
+          handler: handleCurrencyPriceFeedRemove
+      file: ./src/currency-controller.ts
+  - kind: ethereum/contract
+    name: CloseOutNetting
+    network: mainnet
+    source:
+      address: '0x3F207D4A7d904d6Be9aD1bB19C6d6055043eBd30'
+      abi: CloseOutNetting
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CloseOutNetting
+      abis:
+        - name: CloseOutNetting
+          file: ./abis/CloseOutNetting.json
+      eventHandlers:
+        - event: AddCloseOutPayments(indexed address,indexed address,bytes32,uint256,uint256)
+          handler: handleCloseOutPaymentIncrease
+        - event: RemoveCloseOutPayments(indexed address,indexed address,bytes32,uint256,uint256)
+          handler: handleCloseOutPaymentDecrease
+      file: ./src/close-out-netting.ts
+  # - kind: ethereum/contract
+  #   name: Collateral
+  #   network: mainnet
+  #   source:
+  #     address: '0x86D971F85Be1f6e3C1b1E41d74104560e9e2040d'
+  #     abi: Collateral
+  #     startBlock: 10026125
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.6
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - Collateral
+  #     abis:
+  #       - name: Collateral
+  #         file: ./abis/Collateral.json
+  #     eventHandlers:
+  #       - event: SetColBook(indexed address,indexed string,bytes32,address)
+  #         handler: handleSetCollateralBook
+  #       - event: UpSizeETH(indexed address)
+  #         handler: handleUpSizeETH
+  #       - event: UpSizeFIL(indexed address,uint256,bytes32)
+  #         handler: handleUpSizeFIL
+  #       - event: ConfirmUpSizeFIL(indexed address,indexed bytes32,uint256,indexed bytes32)
+  #         handler: handleConfirmUpSizeFIL
+  #       - event: DelColBook(indexed address)
+  #         handler: handleDeleteCollateralBook
+  #       - event: PartialLiquidation(indexed address,indexed address,indexed uint256,uint8)
+  #         handler: handlePartialLiquidation
+  #     file: ./src/collateral.ts
   - kind: ethereum/contract
     name: LendingMarketController
-    network: ropsten
+    network: mainnet
     source:
       address: '0x0d1a99841ae744556D6397826F2d158993287947'
       abi: LendingMarketController
-      startBlock: 10026125
+      # startBlock: 10026125
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - LendingMarketController
@@ -79,18 +176,18 @@ dataSources:
         - name: LendingMarketController
           file: ./abis/LendingMarketController.json
       eventHandlers:
-        - event: LendingMarketCreated(uint8,uint8,indexed address)
+        - event: LendingMarketCreated(bytes32,uint256,indexed address)
           handler: handleNewLendingMarket
       file: ./src/lendingController.ts
 templates:
   - kind: ethereum/contract
     name: LendingMarket
-    network: ropsten
+    network: mainnet
     source:
       abi: LendingMarket
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - LendingMarket
@@ -101,7 +198,7 @@ templates:
         - name: LendingMarket
           file: ./abis/LendingMarket.json
       eventHandlers:
-        - event: MakeOrder(uint256,indexed address,uint8,uint8,uint8,uint256,uint256,uint256)
+        - event: MakeOrder(uint256,indexed address,uint8,bytes32,uint256,uint256,uint256)
           handler: handleMakeLendingOrder
         - event: TakeOrder(uint256,indexed address,uint8,uint256,uint256)
           handler: handleTakeLendingOrder
