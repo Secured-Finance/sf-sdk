@@ -8,7 +8,7 @@ dataSources:
     name: LoanV2
     network: mainnet
     source:
-      address: '0x8D6b80b1d3a70ac961246682B7e1790Bab02C704'
+      address: '0x05b22c7FD08CC68Fd0866b2b1004F3295e69Aa42'
       abi: LoanV2
     mapping:
       kind: ethereum/events
@@ -41,7 +41,7 @@ dataSources:
     name: TermStructure
     network: mainnet
     source:
-      address: '0x35327F4Ab83B9754835a8c2B4963cFE842758dc5'
+      address: '0x4c44f15fd2e79C9819024FEf9452042d2df2de26'
       abi: TermStructure
     mapping:
       kind: ethereum/events
@@ -62,7 +62,7 @@ dataSources:
     name: ProductAddressResolver
     network: mainnet
     source:
-      address: '0xa9e01C3ACFB67C2057532FddFafffb1e18B26c39'
+      address: '0x444f310468a3735F3453e982c62E1e99C95f3ff3'
       abi: ProductAddressResolver
     mapping:
       kind: ethereum/events
@@ -81,7 +81,7 @@ dataSources:
     name: CurrencyController
     network: mainnet
     source:
-      address: '0x798c05D73824DC43D38119bd2f1EF914457816A3'
+      address: '0x70b4bff41C2Eb94F44333A1f118937c9064D2Ca6'
       abi: CurrencyController
     mapping:
       kind: ethereum/events
@@ -112,7 +112,7 @@ dataSources:
     name: CloseOutNetting
     network: mainnet
     source:
-      address: '0x3F207D4A7d904d6Be9aD1bB19C6d6055043eBd30'
+      address: '0xAb45660e1902202DFA375f44E82279EFE9f7854E'
       abi: CloseOutNetting
     mapping:
       kind: ethereum/events
@@ -129,6 +129,31 @@ dataSources:
         - event: RemoveCloseOutPayments(indexed address,indexed address,bytes32,uint256,uint256)
           handler: handleCloseOutPaymentDecrease
       file: ./src/close-out-netting.ts
+  - kind: ethereum/contract
+    name: PaymentAggregator
+    network: mainnet
+    source:
+      address: '0x0c824b1a58618951De386DE6B2D3c575f8cd3822'
+      abi: PaymentAggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - TimeSlot
+      abis:
+        - name: PaymentAggregator
+          file: ./abis/PaymentAggregator.json
+      eventHandlers:
+        - event: RegisterPayment(indexed address,indexed address,bytes32,bytes32,uint256,uint256,uint256,uint256,uint256)
+          handler: handleTimeSlotPaymentIncrease
+        - event: RemovePayment(indexed address,indexed address,bytes32,bytes32,uint256,uint256,uint256,uint256,uint256)
+          handler: handleTimeSlotPaymentDecrease
+        - event: VerifyPayment(indexed address,indexed address,bytes32,bytes32,uint256,uint256,uint256,uint256,bytes32)
+          handler: handleTimeSlotPaymentVerification
+        - event: SettlePayment(indexed address,indexed address,bytes32,bytes32,uint256,uint256,uint256,bytes32)
+          handler: handleTimeSlotPaymentSettlement
+      file: ./src/payment-aggregator.ts
   # - kind: ethereum/contract
   #   name: Collateral
   #   network: mainnet

@@ -89,7 +89,7 @@ export function getCouponFractionsFromTerm(term: BigInt): BigInt {
     }
 }
 
-export function packAddresses(party0: Address, party1: Address): ByteArray {
+export function packAddresses(party0: Address, party1: Address): Bytes {
     let _party0: Address, _party1: Address
 
     if (party0.toHexString() < party1.toHexString()) {
@@ -100,32 +100,17 @@ export function packAddresses(party0: Address, party1: Address): ByteArray {
         _party1 = party0
     }
 
-    log.info('PACK-ADDRESSES {} {} ', [
-        _party0.toHexString(),
-        _party1.toHexString(),
-    ]);
+    const encodedParams = new Bytes(64)
+    encodedParams.set(_party0, 12)
+    encodedParams.set(_party1, 44)
 
-    let params: Array<Address> = [
-        _party0,
-        _party1,
-    ];
-
-    let encoded = ethereum.encode(ethereum.Value.fromAddressArray(params))!
-
-    log.info('PACK-ADDRESSES-1 {} ', [
-        encoded.toHexString(),
-    ]);
-
-    let packedHash = crypto.keccak256(encoded)
-
-    log.info('PACK-ADDRESSES-2 {} ', [
-        packedHash.toHexString(),
-    ]);
+    let hash = crypto.keccak256(encodedParams)
+    let packedHash = Bytes.fromByteArray(hash)
 
     return packedHash
 }
 
 export function isFlippedAddresses(party0: Bytes, party1: Bytes): boolean {
-    let flipped = party0.toHexString() < party1.toHexString() ? false : true 
+    let flipped = party0.toHexString() < party1.toHexString() ? false : true
     return flipped
 }
