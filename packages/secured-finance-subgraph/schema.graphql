@@ -302,3 +302,27 @@ type CloseOutNetting @entity {
   currency: Currency!
   flipped: Boolean!
 }
+
+type TimeSlot @entity {
+  id: ID!
+  address0: Bytes!
+  address1: Bytes!
+  totalPayment0: BigInt!
+  totalPayment1: BigInt!
+  netPayment: BigInt!
+
+  year: BigInt!
+  month: BigInt!
+  day: BigInt!
+  position: Bytes!
+  flipped: Boolean!
+  paymentProof: Bytes!
+  verificationParty: Bytes!
+  verificationTimestamp: BigInt!
+
+  settlementParty: Bytes!
+  settlementTimestamp: BigInt!
+
+  isSettled: Boolean!
+  currency: Currency!
+}
