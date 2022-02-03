@@ -274,6 +274,7 @@ type Currency @entity {
   id: ID!
   identifier: Bytes!
   name: String!
+  shortName: String!
   chainID: Int!
   ltv: BigInt!
   minMargin: BigInt!
@@ -325,4 +326,105 @@ type TimeSlot @entity {
 
   isSettled: Boolean!
   currency: Currency!
+}
+
+type CollateralAggregator @entity {
+  id: ID!
+  address: Bytes!
+  liquidationPrice: BigInt!
+  marginCall: BigInt!
+  autoLiquidation: BigInt!
+  minCollateralRequirements: BigInt!
+  collateralPositions: [CollateralPosition!] @derivedFrom(field: "aggregator")
+  # bilateralPositions: [BilateralPosition!] derivedFrom(field: "aggregator")
+  collateralVaults: [CollateralVault!] @derivedFrom(field: "aggregator")
+  collateralUserContracts: [CollateralUserContract!] @derivedFrom(field: "aggregator")
+}
+
+type CollateralPosition @entity {
+  id: ID!
+  address: Bytes!
+  isRegistered: Boolean!
+  user: User!
+  aggregator: CollateralAggregator!
+  collateralPositions: [CollateralPositionCurrencyState!] @derivedFrom(field: "position")
+}
+
+type CollateralPositionCurrencyState @entity {
+  id: ID!
+  address: Bytes!
+  unsettledPV: BigInt!
+  currencyIdentifier: Bytes!
+  currency: Currency!
+  user: User!
+  aggregator: CollateralAggregator!
+  position: CollateralPosition!
+}
+
+type BilateralPosition @entity {
+  id: ID!
+  address0: Bytes!
+  address1: Bytes!
+  packedAddresses: Bytes!
+  collateralNettings: [CollateralNetting!] @derivedFrom(field: "bilateralPosition")
+  aggregator: CollateralAggregator!
+}
+
+type CollateralNetting @entity {
+  id: ID!
+  address0: Bytes!
+  address1: Bytes!
+  currencyIdentifier: Bytes!
+  currency: Currency!
+  packedAddresses: Bytes!
+  unsettled0PV: BigInt!
+  unsettled1PV: BigInt!
+  party0PV: BigInt!
+  party1PV: BigInt!
+  netPV: BigInt!
+  aggregator: CollateralAggregator!
+  bilateralPosition: BilateralPosition!
+}
+
+type CollateralVault @entity {
+  id: ID!
+  address: Bytes!
+  currency: Currency!
+  currencyIdentifier: Bytes!
+  tokenAddress: Bytes!
+  collateralBooks: [CollateralBook!] @derivedFrom(field: "vault")
+  collateralPositions: [CollateralVaultPosition!] @derivedFrom(field: "vault")
+  aggregator: CollateralAggregator!
+  isSupported: Boolean! 
+}
+
+type CollateralUserContract @entity {
+  id: ID!
+  address: Bytes!
+  aggregator: CollateralAggregator!
+  isSupported: Boolean!
+}
+
+type CollateralBook @entity {
+  id: ID!
+  address: Bytes!
+  user: User!
+  currency: Currency!
+  currencyIdentifier: Bytes!
+  independentCollateral: BigInt!
+  lockedCollateral: BigInt!
+  vault: CollateralVault!
+  isDefaulted: Boolean!
+}
+
+type CollateralVaultPosition @entity {
+  id: ID!
+  address0: Bytes!
+  address1: Bytes!
+  packedAddresses: Bytes!
+  currency: Currency!
+  currencyIdentifier: Bytes!
+  vault: CollateralVault!
+  lockedCollateral0: BigInt!
+  lockedCollateral1: BigInt!
 }

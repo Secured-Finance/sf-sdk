@@ -1,4 +1,4 @@
-import { BigInt, ByteArray, Bytes, log } from "@graphprotocol/graph-ts"
+import { BigInt, Bytes } from "@graphprotocol/graph-ts"
 import { TimeSlot } from "../generated/schema"
 import { RegisterPayment, RemovePayment, VerifyPayment, SettlePayment } from '../generated/PaymentAggregator/PaymentAggregator'
 import { isFlippedAddresses, packAddresses } from "./helpers"
