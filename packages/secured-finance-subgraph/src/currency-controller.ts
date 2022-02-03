@@ -38,8 +38,10 @@ export function getCurrency(identifier: Bytes): Currency {
 
 export function handleNewCurrency(event: CcyAdded): void {
     const currency = getCurrency(event.params.ccy)
+    let ccyShortName = getCurrencyName(event.params.ccy.toHexString());
 
     currency.name = event.params.name
+    currency.shortName = ccyShortName
     currency.chainID = event.params.chainId
     currency.ltv = event.params.ltv
     currency.isSupported = true
