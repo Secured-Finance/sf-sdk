@@ -1,11 +1,11 @@
-# Secured Finance - JavaScript(TypeScript) SDK
+# Secured Finance - JavaScript SDK
 
 ## Packages
 
 | Package                                                               | Status                                                                                                                                               | Description                          |
 | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
 | [`@secured-finance/sf-client`](/packages/sf-client)   || Client library for the Secured Finance protocol        |
-| [`@secured-finance/sf-graph-client`](/packages/sf-client)   || GraphQL library for querying data from SF subgraph        |
+| [`@secured-finance/sf-graph-client`](/packages/sf-graph-client)   || GraphQL library for querying data from SF subgraph        |
 
 ## Using packages
 
