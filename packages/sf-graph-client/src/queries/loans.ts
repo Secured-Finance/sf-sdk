@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const LOAN_DEALS = gql`
-    query LoanDeals($account: Bytes!) {
-        loans (where: {lender: $account}) {
+    query LoanDeals($account: Bytes!, $skip: Int!) {
+        loans (where: {lender: $account}, skip: $skip) {
             id
             lender
             borrower
@@ -20,8 +20,8 @@ export const LOAN_DEALS = gql`
 `
 
 export const BORROW_DEALS = gql`
-    query BorrowDeals($account: Bytes!) {
-        loans (where: {borrower: $account}) {
+    query BorrowDeals($account: Bytes!, $skip: Int!) {
+        loans (where: {borrower: $account}, skip: $skip) {
             id
             lender
             borrower
@@ -82,9 +82,9 @@ export const LOAN_TERMINATION = gql`
 `
 
 export const LOAN_NOVATION_HISTORY = gql`
-    query LoanNovationHistory($id: String!) {
+    query LoanNovationHistory($id: String!, $skip: Int!) {
         loan (id: $id) {
-            novationHistory {
+            novationHistory (skip: $skip) {
                 id
                 previousLender
                 newLender

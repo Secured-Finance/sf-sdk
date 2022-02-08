@@ -9,6 +9,7 @@ export const COLLATERAL_AGGREGATOR = gql`
             marginCall
             autoLiquidation
             minCollateralRequirements
+        }
     }
 `
 
