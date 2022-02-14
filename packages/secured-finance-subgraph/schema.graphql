@@ -66,48 +66,6 @@ enum LoanState {
   TERMINATED
 }
 
-# type Collateral @entity {
-#   id: ID!
-#   collateralID: String!
-#   user: User!
-#   userAddressETH: Bytes!
-#   userAddressFIL: Bytes!
-#   userAddressUSDC: Bytes!
-#   collateralAddressFIL: Bytes!
-#   collateralAddressUSDC: Bytes!
-#   collateralAmountETH: BigInt!
-#   collateralAmountFIL: BigInt!
-#   collateralAmountUSDC: BigInt!
-#   collateralAmountFILinETH: BigInt!
-#   collateralAmountUSDCinETH: BigInt!
-#   inuseETH: BigInt!
-#   inuseFIL: BigInt!
-#   inuseUSDC: BigInt!
-#   inuseFILinETH: BigInt!
-#   inuseUSDCinETH: BigInt!
-#   coverage: BigInt!
-#   isAvailable: Boolean!
-#   state: Int!
-#   filDepositTxHash: Bytes!
-#   createdAt: BigInt!
-#   updatedAt: BigInt!
-# }
-
-enum CollateralState {
-  EMPTY
-  AVAILABLE
-  IN_USE
-  MARGIN_CALL
-  LIQUIDATION_IN_PROGRESS
-  LIQUIDATION
-}
-
-enum Side {
-  LEND
-  BORROW
-}
-
-
 type User @entity {
   id: ID!
   owner: Bytes!
@@ -336,7 +294,7 @@ type CollateralAggregator @entity {
   autoLiquidation: BigInt!
   minCollateralRequirements: BigInt!
   collateralPositions: [CollateralPosition!] @derivedFrom(field: "aggregator")
-  # bilateralPositions: [BilateralPosition!] derivedFrom(field: "aggregator")
+  bilateralPositions: [BilateralPosition!] @derivedFrom(field: "aggregator")
   collateralVaults: [CollateralVault!] @derivedFrom(field: "aggregator")
   collateralUserContracts: [CollateralUserContract!] @derivedFrom(field: "aggregator")
 }
