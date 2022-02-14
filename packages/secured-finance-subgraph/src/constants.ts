@@ -2,7 +2,7 @@ import { Address, BigDecimal, BigInt, ByteArray, Bytes } from '@graphprotocol/gr
 
 export const ADDRESS_ZERO = Address.fromString('0x0000000000000000000000000000000000000000')
 export const LENDING_MARKET_CONTROLLER_ADDR = Address.fromString('0x950C34a09Ce94ad6e89d5e31eDa0719737ffE144')
-export const COLLATERAL_AGGREGATOR_ADDR = Address.fromString('0x950C34a09Ce94ad6e89d5e31eDa0719737ffE144')
+export const COLLATERAL_AGGREGATOR_ADDR = Address.fromString('0x6DB01958669DfcD90c504ae9c5A2795C28B25fDc')
 export const RATES_AGGREGATOR_ADDR = Address.fromString('0x0000000000000000000000000000000000000000')
 
 export const FIL_ETH_PRICE_FEED_ADDR = Address.fromString('0x0000000000000000000000000000000000000000')
