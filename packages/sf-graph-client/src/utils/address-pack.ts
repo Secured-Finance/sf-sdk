@@ -8,7 +8,7 @@ export const packAddresses = (address0: string, address1: string) => {
     let _address0 = addresses[0];
     let _address1 = addresses[1];
 
-    if (_address0 != address0) {
+    if (_address0 !== address0) {
         encodedAddrs = utils.defaultAbiCoder.encode([ "address", "address" ], [ _address0, _address1 ]);
         packed = utils.keccak256(encodedAddrs);
         return [packed, true];

@@ -14,7 +14,7 @@ export const COLLATERAL_AGGREGATOR = gql`
 `
 
 export const BILATERAL_POSITIONS_FROM_COLLATERAL_AGGREGATOR = gql`
-    query BilateralPositionsFromAggregator($id: Bytes!) {
+    query BilateralPositionsFromAggregator($id: Bytes!, $address: Bytes!) {
         collateralAggregator (id: $id) {
             bilateralPositions (filters: { address0: $address, or: { address1: $address }}) {
                 id
@@ -32,6 +32,7 @@ export const BILATERAL_POSITIONS_FROM_COLLATERAL_AGGREGATOR = gql`
                     }
                 }
             }
+        }
     }
 `
 
@@ -47,5 +48,6 @@ export const UNSETTLED_POSITIONS_FROM_COLLATERAL_AGGREGATOR = gql`
                     name
                 }
             }
+        }
     }
 `

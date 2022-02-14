@@ -35,5 +35,6 @@ export const SUPPORTED_PRODUCTS_BY_TERM = gql`
                 productImplementation
                 productController
             }
+        }
     }
 `

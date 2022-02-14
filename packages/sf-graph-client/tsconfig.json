@@ -9,7 +9,7 @@
       "outDir": "dist",
       "rootDir": "src",
       "strict": true,
-      "target": "es2017",
+      "target": "esnext",
       "skipLibCheck": true,
       "strictNullChecks": false,
       "allowJs": true,
