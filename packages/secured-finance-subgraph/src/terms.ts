@@ -32,8 +32,7 @@ export function handleNewTerm(event: TermAdded): void {
     const term = getTerm(event.params.numDays)
 
     if (term) {
-        term.dfFrac = event.params.dfFrac
-        term.paymentNum = event.params.numPayments
+        // TODO: add payment schedules per frequency, number of payments per frequency
 
         term.save()
     }
