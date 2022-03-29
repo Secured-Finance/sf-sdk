@@ -4,18 +4,19 @@ on:
     types: [opened, reopened, synchronize]
 
 jobs:
-  checks:
+  checks-pr:
+    name: Validate Pull Request
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - name: install dependencies
+      - name: Install Dependencies
         run: npm install
-      - name: bootstrap
+      - name: Bootstrap Repo
         run: npm run bootstrap
-      - name: lint
+      - name: Lint Code
         run: npm run lint
-      - name: format
+      - name: Format Code
         run: npm run format
-      - name: test
+      - name: Execute Test
         run: npm run test-all
