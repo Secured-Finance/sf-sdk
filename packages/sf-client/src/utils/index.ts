@@ -1,5 +1,3 @@
-import { packAddresses } from "./addresses";
+import { packAddresses } from './addresses';
 
-export {
-    packAddresses,
-}
+export { packAddresses };

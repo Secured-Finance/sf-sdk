@@ -1,0 +1,17 @@
+{
+  "tabWidth": 4,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "arrowParens": "avoid",
+  "parser": "typescript",
+  "overrides": [
+    {
+      "files": ["*.json"],
+      "options": {
+        "parser": "json",
+        "singleQuote": false,
+        "tabWidth": 2
+      }
+    }
+  ]
+}

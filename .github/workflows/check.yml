@@ -1,0 +1,22 @@
+name: Validate Pull Request
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  checks-pr:
+    name: Validate Pull Request
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: npm install
+      - name: Bootstrap Repo
+        run: npm run bootstrap
+      - name: Lint Code
+        run: npm run lint
+      - name: Format Code
+        run: npm run format
+      - name: Execute Test
+        run: npm run test-all

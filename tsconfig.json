@@ -13,14 +13,10 @@
     "skipLibCheck": true,
     "strictNullChecks": false,
     "allowJs": true,
-    "checkJs": true,
+    "checkJs": true
   },
-  "include": [
-    "packages/sf-client/src/**/*"
-  ],
-  "exclude": [
-    "node_modules/**/*"
-  ],
+  "include": ["packages/sf-client/src/**/*"],
+  "exclude": ["node_modules/**/*"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"

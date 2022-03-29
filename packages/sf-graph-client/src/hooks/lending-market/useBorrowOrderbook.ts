@@ -1,10 +1,16 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { LENDING_BORROW_ORDERBOOK } from "../../queries"
-import { OrderbookRow, toBN } from "../../utils"
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { LENDING_BORROW_ORDERBOOK } from '../../queries';
+import { OrderbookRow, toBN } from '../../utils';
 
-export const useBorrowOrderbook = (lendingMarket: string, assetUsdPrice: number, skip: number = 0) => {
-    const [borrowOrderbook, setBorrowOrderbook] = useState<Array<OrderbookRow>>([])
+export const useBorrowOrderbook = (
+    lendingMarket: string,
+    assetUsdPrice: number,
+    skip: number = 0
+) => {
+    const [borrowOrderbook, setBorrowOrderbook] = useState<Array<OrderbookRow>>(
+        []
+    );
 
     const fetchBorrowOrderbook = useCallback(async () => {
         try {
@@ -15,36 +21,40 @@ export const useBorrowOrderbook = (lendingMarket: string, assetUsdPrice: number,
                     skip: skip,
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.lendingMarket.borrowOrderbook) {
-                let parsedOrderbook: Array<OrderbookRow> = []
-                res.data.lendingMarket.borrowOrderbook.map((item: any, index: number) => {
-                    const usdAmountBN = toBN(res.data.lendingMarket.borrowOrderbook[index].totalAmount).mul(toBN(assetUsdPrice));
-                    const usdAmount = usdAmountBN.toNumber();
-                    const orderbookItem = Object.assign(
-                        {}, 
-                        res.data.lendingMarket.borrowOrderbook[index],
-                        { "usdAmount": usdAmount }
-                    );
-                    parsedOrderbook.push(orderbookItem)
-                })
-                setBorrowOrderbook(parsedOrderbook)
+                let parsedOrderbook: Array<OrderbookRow> = [];
+                res.data.lendingMarket.borrowOrderbook.map(
+                    (item: any, index: number) => {
+                        const usdAmountBN = toBN(
+                            res.data.lendingMarket.borrowOrderbook[index]
+                                .totalAmount
+                        ).mul(toBN(assetUsdPrice));
+                        const usdAmount = usdAmountBN.toNumber();
+                        const orderbookItem = Object.assign(
+                            {},
+                            res.data.lendingMarket.borrowOrderbook[index],
+                            { usdAmount: usdAmount }
+                        );
+                        parsedOrderbook.push(orderbookItem);
+                    }
+                );
+                setBorrowOrderbook(parsedOrderbook);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [lendingMarket, skip, assetUsdPrice])
-    
-	useEffect(() => {
+    }, [lendingMarket, skip, assetUsdPrice]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchBorrowOrderbook();
+        if (client) {
+            fetchBorrowOrderbook();
         }
-        return () => { 
+        return () => {
             isMounted = false;
         };
-	}, [client, lendingMarket, skip, assetUsdPrice])
+    }, [client, lendingMarket, skip, assetUsdPrice]);
 
-    return borrowOrderbook
-}
+    return borrowOrderbook;
+};

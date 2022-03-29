@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { BORROW_DEALS } from "../../queries"
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { BORROW_DEALS } from '../../queries';
 
 export const useBorrowingDeals = (account: string, skip: number = 0) => {
-    const [borrowingDeals, setBorrowingDeals] = useState()
+    const [borrowingDeals, setBorrowingDeals] = useState();
 
     const fetchBorrowingDeals = useCallback(async () => {
         try {
@@ -14,25 +14,24 @@ export const useBorrowingDeals = (account: string, skip: number = 0) => {
                     skip: skip,
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.loans) {
                 setBorrowingDeals(res?.data.loans);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [account, skip])
-    
-	useEffect(() => {
+    }, [account, skip]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchBorrowingDeals();
+        if (client) {
+            fetchBorrowingDeals();
         }
         return () => {
-            isMounted = false
+            isMounted = false;
         };
-	}, [account, client])
+    }, [account, client]);
 
-    return borrowingDeals
-}
+    return borrowingDeals;
+};

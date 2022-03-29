@@ -7,12 +7,10 @@
     },
     "bootstrap": {
       "ignore": "component-*",
-      "npmClientArgs": ["--no-package-lock"]
+      "npmClientArgs": ["--no-package-lock", "--legacy-peer-deps"]
     }
   },
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
   "version": "0.1.0",
   "npmClient": "npm"
 }

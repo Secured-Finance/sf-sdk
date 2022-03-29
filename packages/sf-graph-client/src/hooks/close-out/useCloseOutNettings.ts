@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { CLOSE_OUT_NETTINGS } from "../../queries"
-import { sortAddresses } from "../../utils"
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { CLOSE_OUT_NETTINGS } from '../../queries';
+import { sortAddresses } from '../../utils';
 
 export const useCloseOutNettings = (
     user: string,
     counterparty: string,
     skip: number = 0
 ) => {
-    const [closeOutNettings, setCloseOutNettings] = useState()
+    const [closeOutNettings, setCloseOutNettings] = useState();
     const sortedAddresses = sortAddresses(user, counterparty);
 
     const fetchCloseOutNettings = useCallback(async () => {
@@ -21,25 +21,24 @@ export const useCloseOutNettings = (
                     skip: skip,
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.closeOutNettings) {
                 setCloseOutNettings(res?.data.closeOutNettings);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [user, counterparty, skip])
-    
-	useEffect(() => {
+    }, [user, counterparty, skip]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchCloseOutNettings();
+        if (client) {
+            fetchCloseOutNettings();
         }
         return () => {
-            isMounted = false
+            isMounted = false;
         };
-	}, [client, user, counterparty, skip])
+    }, [client, user, counterparty, skip]);
 
-    return closeOutNettings
-}
+    return closeOutNettings;
+};

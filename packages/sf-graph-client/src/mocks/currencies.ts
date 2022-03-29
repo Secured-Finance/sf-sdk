@@ -1,11 +1,11 @@
-import { CURRENCY } from "../queries";
+import { CURRENCY } from '../queries';
 
 export const currencyQueriesMock = [
     {
         request: {
             query: CURRENCY,
             variables: {
-                currency: '0xETH'
+                currency: '0xETH',
             },
         },
         result: {
@@ -24,20 +24,20 @@ export const currencyQueriesMock = [
                         {
                             daysNum: 90,
                             dfFrac: 2500,
-                            paymentNum: 1
-                        }
-                    ]
+                            paymentNum: 1,
+                        },
+                    ],
                 },
             },
         },
     },
     {
         request: {
-          query: CURRENCY,
-          variables: {
-            currency: '0xWETH'
-          },
+            query: CURRENCY,
+            variables: {
+                currency: '0xWETH',
+            },
         },
         error: new Error('Network error'),
-    },  
+    },
 ];

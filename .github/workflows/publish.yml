@@ -1,0 +1,19 @@
+name: Publish to NPM
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: install dependencies
+        run: npm install
+      - name: bootstrap
+        run: npm run bootstrap
+      - name: publish
+        run: npm run publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

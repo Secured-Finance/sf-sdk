@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { LOAN_NOVATION_HISTORY } from "../../queries"
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { LOAN_NOVATION_HISTORY } from '../../queries';
 
 export const useLoanNovationHistory = (id: string, skip: number) => {
-    const [novationHistory, setNovationHistory] = useState()
+    const [novationHistory, setNovationHistory] = useState();
 
     const fetchLoanNovationHistory = useCallback(async () => {
         try {
@@ -14,25 +14,24 @@ export const useLoanNovationHistory = (id: string, skip: number) => {
                     skip: skip,
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.loan.novationHistory) {
                 setNovationHistory(res?.data.loan.novationHistory);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [id, skip])
-    
-	useEffect(() => {
+    }, [id, skip]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchLoanNovationHistory();
+        if (client) {
+            fetchLoanNovationHistory();
         }
         return () => {
-            isMounted = false
+            isMounted = false;
         };
-	}, [client, id, skip])
+    }, [client, id, skip]);
 
-    return novationHistory
-}
+    return novationHistory;
+};

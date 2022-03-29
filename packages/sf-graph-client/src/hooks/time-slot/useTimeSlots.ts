@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { TIME_SLOTS } from "../../queries"
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { TIME_SLOTS } from '../../queries';
 
 export const useTimeSlots = (user: string, skip: number = 0) => {
-    const [timeSlots, setTimeSlots] = useState()
+    const [timeSlots, setTimeSlots] = useState();
 
     const fetchTimeSlots = useCallback(async () => {
         try {
@@ -14,25 +14,24 @@ export const useTimeSlots = (user: string, skip: number = 0) => {
                     skip: skip,
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.timeSlots) {
                 setTimeSlots(res?.data.timeSlots);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [user, skip])
-    
-	useEffect(() => {
+    }, [user, skip]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchTimeSlots();
+        if (client) {
+            fetchTimeSlots();
         }
         return () => {
-            isMounted = false
+            isMounted = false;
         };
-	}, [client, user, skip])
+    }, [client, user, skip]);
 
-    return timeSlots
-}
+    return timeSlots;
+};

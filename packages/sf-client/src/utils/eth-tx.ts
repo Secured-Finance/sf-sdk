@@ -1,26 +1,41 @@
-import { TransactionReceipt, TransactionResponse } from "@ethersproject/abstract-provider";
-import { parse, Transaction } from "@ethersproject/transactions"
-import { BigNumber, BigNumberish, Bytes, BytesLike, Contract, PopulatedTransaction } from "ethers/lib/ethers";
-import { estimateGasPrice, GasPriceKey } from "./gas";
+import {
+    TransactionReceipt,
+    TransactionResponse,
+} from '@ethersproject/abstract-provider';
+import { parse, Transaction } from '@ethersproject/transactions';
+import {
+    BigNumber,
+    BigNumberish,
+    Bytes,
+    BytesLike,
+    Contract,
+    PopulatedTransaction,
+} from 'ethers/lib/ethers';
+import { estimateGasPrice, GasPriceKey } from './gas';
 
 export declare type TxBase = {
-    to?: string,
-    from?: string,
-    nonce?: BigNumberish,
+    to?: string;
+    from?: string;
+    nonce?: BigNumberish;
 
-    gasLimit?: BigNumberish,
-    gasPrice?: number | bigint | BigNumber | Bytes | GasPriceKey,
+    gasLimit?: BigNumberish;
+    gasPrice?: number | bigint | BigNumber | Bytes | GasPriceKey;
 
-    data?: BytesLike,
-    value?: BigNumberish,
-    chainId?: number
-}
+    data?: BytesLike;
+    value?: BigNumberish;
+    chainId?: number;
+};
 
 export interface TxOptions extends TxBase {
-    confirmations?: number
+    confirmations?: number;
 }
 
-export const populateTx = async (contract: Contract, method: string, args: any[], options?: TxOptions): Promise<PopulatedTransaction> => {
+export const populateTx = async (
+    contract: Contract,
+    method: string,
+    args: any[],
+    options?: TxOptions
+): Promise<PopulatedTransaction> => {
     const overrides = {
         gasPrice: options?.gasPrice,
         value: options?.value,
@@ -29,7 +44,7 @@ export const populateTx = async (contract: Contract, method: string, args: any[]
 
     if (options?.gasPrice === undefined) {
         overrides.gasPrice = await estimateGasPrice();
-    } else if (typeof(options?.gasPrice) === "string") {
+    } else if (typeof options?.gasPrice === 'string') {
         overrides.gasPrice = await estimateGasPrice(options?.gasPrice);
     }
 
@@ -38,29 +53,54 @@ export const populateTx = async (contract: Contract, method: string, args: any[]
     }
 
     args.push(overrides);
-    const txRequest: PopulatedTransaction = await contract.populateTransaction[method](...args);
+    const txRequest: PopulatedTransaction = await contract.populateTransaction[
+        method
+    ](...args);
 
     return txRequest;
-}
+};
 
-export const ethTransaction = async (contract: Contract, method: string, args: any[], options?: TxOptions):Promise<string> => {
-    const txRequest : PopulatedTransaction = await populateTx(contract, method, args, options);
+export const ethTransaction = async (
+    contract: Contract,
+    method: string,
+    args: any[],
+    options?: TxOptions
+): Promise<string> => {
+    const txRequest: PopulatedTransaction = await populateTx(
+        contract,
+        method,
+        args,
+        options
+    );
 
     if (options?.confirmations !== undefined && options?.confirmations > 0) {
-        const tx: TransactionReceipt = await (await contract.signer.sendTransaction(txRequest)).wait(options?.confirmations);
+        const tx: TransactionReceipt = await (
+            await contract.signer.sendTransaction(txRequest)
+        ).wait(options?.confirmations);
 
         return tx.transactionHash;
-    } 
-        const tx: TransactionResponse = await contract.signer.sendTransaction(txRequest);
-        
-        return tx.hash;
-    
-}
+    }
+    const tx: TransactionResponse = await contract.signer.sendTransaction(
+        txRequest
+    );
 
-export const signTranaction = async (contract: Contract, method: string, args: any[], options?: TxOptions):Promise<Transaction> => {
-    const txRequest: PopulatedTransaction = await populateTx(contract, method, args, options);
+    return tx.hash;
+};
+
+export const signTranaction = async (
+    contract: Contract,
+    method: string,
+    args: any[],
+    options?: TxOptions
+): Promise<Transaction> => {
+    const txRequest: PopulatedTransaction = await populateTx(
+        contract,
+        method,
+        args,
+        options
+    );
 
     const tx = await contract.signer.signTransaction(txRequest);
 
     return parse(tx);
-}
+};

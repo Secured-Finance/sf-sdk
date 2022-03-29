@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const CURRENCIES = gql`
     query Currencies($skip: Int!) {
-        currencies (skip: $skip) {
+        currencies(skip: $skip) {
             id
             identifier
             name
@@ -14,11 +14,11 @@ export const CURRENCIES = gql`
             isCollateral
         }
     }
-`
+`;
 
 export const CURRENCY = gql`
     query Currency($currency: Bytes!) {
-        currency (id: $currency) {
+        currency(id: $currency) {
             id
             identifier
             name
@@ -35,11 +35,11 @@ export const CURRENCY = gql`
             }
         }
     }
-`
+`;
 
 export const SUPPORTED_CURRENCIES_BY_TERM = gql`
     query SupportedCurrencies($term: Bytes!) {
-        terms (where: {id: $term}) {
+        terms(where: { id: $term }) {
             currencies {
                 identifier
                 name
@@ -52,4 +52,4 @@ export const SUPPORTED_CURRENCIES_BY_TERM = gql`
             }
         }
     }
-`
+`;

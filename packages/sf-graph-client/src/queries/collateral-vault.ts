@@ -1,15 +1,15 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const COLLATERAL_VAULTS = gql`
     query CollateralVaults($skip: Int!) {
-        collateralVaults (skip: $skip) {
+        collateralVaults(skip: $skip) {
             id
             address
             tokenAddress
             currency {
                 shortName
                 name
-            }      
+            }
             collateralBooks {
                 id
                 address
@@ -25,18 +25,18 @@ export const COLLATERAL_VAULTS = gql`
             }
         }
     }
-`
+`;
 
 export const COLLATERAL_VAULT = gql`
     query CollateralVault($vaultId: Bytes!) {
-        collateralVault (id: $id) {
+        collateralVault(id: $id) {
             id
             address
             tokenAddress
             currency {
                 shortName
                 name
-            }      
+            }
             collateralBooks {
                 id
                 address
@@ -52,19 +52,21 @@ export const COLLATERAL_VAULT = gql`
             }
         }
     }
-`
+`;
 
 export const COLLATERAL_BOOK_FROM_VAULT = gql`
     query CollateralVault($vaultId: Bytes!, $address: Bytes!) {
-        collateralVault (id: $vaultId) {
+        collateralVault(id: $vaultId) {
             id
             address
             tokenAddress
             currency {
                 shortName
                 name
-            }      
-            collateralBooks (filters: { address0: $address, or: { address1: $address }}) {
+            }
+            collateralBooks(
+                filters: { address0: $address, or: { address1: $address } }
+            ) {
                 id
                 address
                 independentCollateral
@@ -72,19 +74,21 @@ export const COLLATERAL_BOOK_FROM_VAULT = gql`
             }
         }
     }
-`
+`;
 
 export const BILATERAL_POSITIONS_FROM_VAULT = gql`
     query CollateralVault($vaultId: Bytes!, $address: Bytes!) {
-        collateralVault (id: $vaultId) {
+        collateralVault(id: $vaultId) {
             id
             address
             tokenAddress
             currency {
                 shortName
                 name
-            }      
-            collateralPositions (filters: { address0: $address, or: { address1: $address }}) {
+            }
+            collateralPositions(
+                filters: { address0: $address, or: { address1: $address } }
+            ) {
                 id
                 address0
                 address1
@@ -94,19 +98,19 @@ export const BILATERAL_POSITIONS_FROM_VAULT = gql`
             }
         }
     }
-`
+`;
 
 export const BILATERAL_POSITION_FROM_VAULT = gql`
     query CollateralVault($vaultId: Bytes!, $positionId: Bytes!) {
-        collateralVault (id: $vaultId) {
+        collateralVault(id: $vaultId) {
             id
             address
             tokenAddress
             currency {
                 shortName
                 name
-            }      
-            collateralPosition (id: $positionId) {
+            }
+            collateralPosition(id: $positionId) {
                 id
                 address0
                 address1
@@ -116,4 +120,4 @@ export const BILATERAL_POSITION_FROM_VAULT = gql`
             }
         }
     }
-`
+`;

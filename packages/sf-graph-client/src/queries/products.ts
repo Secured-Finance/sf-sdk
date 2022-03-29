@@ -2,18 +2,18 @@ import { gql } from '@apollo/client';
 
 export const PRODUCTS = gql`
     query Products($skip: Int!) {
-        products (skip: $skip) {
+        products(skip: $skip) {
             id
             prefix
             productImplementation
             productController
         }
     }
-`
+`;
 
 export const PRODUCT = gql`
     query Product($product: Bytes!) {
-        product (id: $product) {
+        product(id: $product) {
             id
             prefix
             productImplementation
@@ -25,11 +25,11 @@ export const PRODUCT = gql`
             }
         }
     }
-`
+`;
 
 export const SUPPORTED_PRODUCTS_BY_TERM = gql`
     query SupportedProducts($term: Bytes!) {
-        terms (where: {id: $term}) {
+        terms(where: { id: $term }) {
             products {
                 prefix
                 productImplementation
@@ -37,4 +37,4 @@ export const SUPPORTED_PRODUCTS_BY_TERM = gql`
             }
         }
     }
-`
+`;

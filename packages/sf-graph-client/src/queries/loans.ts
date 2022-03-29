@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const LOAN_DEALS = gql`
     query LoanDeals($account: Bytes!, $skip: Int!) {
-        loans (where: {lender: $account}, skip: $skip) {
+        loans(where: { lender: $account }, skip: $skip) {
             id
             lender
             borrower
@@ -17,11 +17,11 @@ export const LOAN_DEALS = gql`
             state
         }
     }
-`
+`;
 
 export const BORROW_DEALS = gql`
     query BorrowDeals($account: Bytes!, $skip: Int!) {
-        loans (where: {borrower: $account}, skip: $skip) {
+        loans(where: { borrower: $account }, skip: $skip) {
             id
             lender
             borrower
@@ -36,11 +36,11 @@ export const BORROW_DEALS = gql`
             state
         }
     }
-`
+`;
 
 export const LOAN_INFO = gql`
     query Loan($id: String!) {
-        loan (id: $id) {
+        loan(id: $id) {
             id
             lender
             borrower
@@ -65,11 +65,11 @@ export const LOAN_INFO = gql`
             }
         }
     }
-`
+`;
 
 export const LOAN_TERMINATION = gql`
     query LoanTermination($id: String!) {
-        loan (id: $id) {
+        loan(id: $id) {
             termination {
                 id
                 terminationAsker
@@ -79,12 +79,12 @@ export const LOAN_TERMINATION = gql`
             }
         }
     }
-`
+`;
 
 export const LOAN_NOVATION_HISTORY = gql`
     query LoanNovationHistory($id: String!, $skip: Int!) {
-        loan (id: $id) {
-            novationHistory (skip: $skip) {
+        loan(id: $id) {
+            novationHistory(skip: $skip) {
                 id
                 previousLender
                 newLender
@@ -92,4 +92,4 @@ export const LOAN_NOVATION_HISTORY = gql`
             }
         }
     }
-`
+`;

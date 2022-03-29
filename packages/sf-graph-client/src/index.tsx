@@ -1,9 +1,9 @@
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider } from '@apollo/client';
 import * as React from 'react';
-import { client } from "./client";
-import  * as utils  from './utils';
+import { client } from './client';
+import * as utils from './utils';
 
-export { 
+export {
     useBorrowOrderbook,
     useBorrowingDeals,
     useCloseOutNetting,
@@ -22,22 +22,17 @@ export {
     useTermInfo,
     useTerms,
     useTimeSlotInfo,
-    useTimeSlots
+    useTimeSlots,
 } from './hooks';
 
-export {
-    utils,
-    client 
-}
+export { utils, client };
 
-interface GraphClientProviderProps{
+interface GraphClientProviderProps {
     children: React.ReactNode | React.ReactNode[] | null;
 }
 
-export const GraphClientProvider: React.FC<GraphClientProviderProps> = ({children}) => {
-    return (
-        <ApolloProvider client={client}>
-            {children}
-        </ApolloProvider>
-    );
-}
+export const GraphClientProvider: React.FC<GraphClientProviderProps> = ({
+    children,
+}) => {
+    return <ApolloProvider client={client}>{children}</ApolloProvider>;
+};

@@ -2,18 +2,18 @@ import { gql } from '@apollo/client';
 
 export const TERMS = gql`
     query Terms($skip: Int!) {
-        terms (skip: $skip) {
+        terms(skip: $skip) {
             id
             daysNum
             dfFrac
             paymentNum
         }
     }
-`
+`;
 
 export const TERM = gql`
     query Term($id: Bytes!) {
-        term (id: $id) {
+        term(id: $id) {
             id
             daysNum
             dfFrac
@@ -35,4 +35,4 @@ export const TERM = gql`
             }
         }
     }
-`
+`;
