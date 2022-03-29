@@ -1,8 +1,8 @@
-import { BigNumber, Contract } from "ethers";
+import { BigNumber, Contract } from 'ethers';
 
 export interface SFContract {
-    contract: Contract
-};
+    contract: Contract;
+}
 
 export interface MarketOrder {
     ccy: string;

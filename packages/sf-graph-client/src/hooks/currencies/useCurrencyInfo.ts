@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { CURRENCY } from "../../queries"
-import { generateCurrencyId } from "../../utils";
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { CURRENCY } from '../../queries';
+import { generateCurrencyId } from '../../utils';
 
 export const useCurrencyInfo = (ccyShortName: string) => {
     const [currency, setCurrency] = useState();
@@ -15,25 +15,24 @@ export const useCurrencyInfo = (ccyShortName: string) => {
                     currency: currencyId,
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.currency) {
                 setCurrency(res?.data.currency);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [ccyShortName])
-    
-	useEffect(() => {
+    }, [ccyShortName]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchCurrencyInfo();
+        if (client) {
+            fetchCurrencyInfo();
         }
         return () => {
-            isMounted = false
+            isMounted = false;
         };
-	}, [client, ccyShortName])
+    }, [client, ccyShortName]);
 
-    return currency
-}
+    return currency;
+};

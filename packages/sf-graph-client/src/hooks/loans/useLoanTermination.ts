@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { LOAN_TERMINATION } from "../../queries"
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { LOAN_TERMINATION } from '../../queries';
 
 export const useLoanTermination = (id: string) => {
-    const [loanTermination, setLoanTermination] = useState()
+    const [loanTermination, setLoanTermination] = useState();
 
     const fetchLoanTermination = useCallback(async () => {
         try {
@@ -13,25 +13,24 @@ export const useLoanTermination = (id: string) => {
                     id: id,
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.loan.termination) {
                 setLoanTermination(res?.data.loan.termination);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [id])
-    
-	useEffect(() => {
+    }, [id]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchLoanTermination();
+        if (client) {
+            fetchLoanTermination();
         }
         return () => {
-            isMounted = false
+            isMounted = false;
         };
-	}, [client, id])
+    }, [client, id]);
 
-    return loanTermination
-}
+    return loanTermination;
+};

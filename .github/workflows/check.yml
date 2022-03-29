@@ -13,5 +13,9 @@ jobs:
         run: npm install
       - name: bootstrap
         run: npm run bootstrap
+      - name: lint
+        run: npm run lint
+      - name: format
+        run: npm run format
       - name: test
         run: npm run test-all

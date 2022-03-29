@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { TERMS } from "../../queries"
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { TERMS } from '../../queries';
 
 export const useTerms = (skip: number = 0) => {
-    const [terms, setTerms] = useState()
+    const [terms, setTerms] = useState();
 
     const fetchTerms = useCallback(async () => {
         try {
@@ -13,25 +13,24 @@ export const useTerms = (skip: number = 0) => {
                     skip: skip,
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.terms) {
                 setTerms(res?.data.terms);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [skip])
-    
-	useEffect(() => {
+    }, [skip]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchTerms();
+        if (client) {
+            fetchTerms();
         }
         return () => {
-            isMounted = false
+            isMounted = false;
         };
-	}, [client, skip])
+    }, [client, skip]);
 
-    return terms
-}
+    return terms;
+};

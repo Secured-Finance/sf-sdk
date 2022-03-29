@@ -6,22 +6,22 @@ import { mnemonicSigner } from './signer';
 import { TxBase } from './eth-tx';
 
 export declare type GasPrices = {
-    instant: number,
-    fast: number,
-    standard: number,
-    low: number,
-}
+    instant: number;
+    fast: number;
+    standard: number;
+    low: number;
+};
 
 export declare type GasPriceOracleOptions = {
-    chainId: number,
-    defaultRpc: string,
-    timeout: number,
-    defaultFallbackGasPrices: GasPrices,
-}
+    chainId: number;
+    defaultRpc: string;
+    timeout: number;
+    defaultFallbackGasPrices: GasPrices;
+};
 
 export declare type GasPriceKey = 'instant' | 'fast' | 'standard' | 'low';
 
-export const DEFAULT_GAS_PRICES: {[key: number]: GasPrices} = {
+export const DEFAULT_GAS_PRICES: { [key: number]: GasPrices } = {
     1: {
         instant: 23,
         fast: 17,
@@ -39,7 +39,7 @@ export const DEFAULT_GAS_PRICES: {[key: number]: GasPrices} = {
         fast: 1,
         standard: 1,
         low: 1,
-    }
+    },
 };
 
 const options: GasPriceOracleOptions = {
@@ -53,12 +53,15 @@ export const SUBTRACT_GAS_LIMIT = 100000;
 
 export const getDefaultOracle = (chainId = 1): GasPriceOracle => {
     options.defaultFallbackGasPrices = DEFAULT_GAS_PRICES[chainId];
-    options.chainId = chainId
+    options.chainId = chainId;
 
     return new GasPriceOracle(options);
-}
+};
 
-export const currentGasPrices = async (oracle?: GasPriceOracle, fallbackGasPrices?: GasPrices): Promise<GasPrices> => {
+export const currentGasPrices = async (
+    oracle?: GasPriceOracle,
+    fallbackGasPrices?: GasPrices
+): Promise<GasPrices> => {
     if (oracle == null) {
         oracle = new GasPriceOracle(options);
     }
@@ -67,12 +70,18 @@ export const currentGasPrices = async (oracle?: GasPriceOracle, fallbackGasPrice
         return fallbackGasPrices;
     }
 
-    return await oracle.gasPrices(fallbackGasPrices).then((gasPrices: GasPrices): GasPrices => {
-        return gasPrices;
-    });
-}
+    return await oracle
+        .gasPrices(fallbackGasPrices)
+        .then((gasPrices: GasPrices): GasPrices => {
+            return gasPrices;
+        });
+};
 
-export const estimateGasPrice = async (priceKey: GasPriceKey = "fast", oracle?: GasPriceOracle, fallbackGasPrices?: GasPrices): Promise<number | BigNumber> => {
+export const estimateGasPrice = async (
+    priceKey: GasPriceKey = 'fast',
+    oracle?: GasPriceOracle,
+    fallbackGasPrices?: GasPrices
+): Promise<number | BigNumber> => {
     const prices = await currentGasPrices(oracle, fallbackGasPrices);
 
     if (prices == null) {
@@ -82,9 +91,14 @@ export const estimateGasPrice = async (priceKey: GasPriceKey = "fast", oracle?: 
     const weiPrice = utils.parseUnits(gweiPrice, 'gwei');
 
     return weiPrice;
-}
+};
 
-export const estimateGasLimit = async (toAddress: string, value? :number, data? :any, signer?: Wallet): Promise<number | BigNumber> => {
+export const estimateGasLimit = async (
+    toAddress: string,
+    value?: number,
+    data?: any,
+    signer?: Wallet
+): Promise<number | BigNumber> => {
     if (!signer) {
         signer = mnemonicSigner();
         const provider = getProvider();
@@ -92,12 +106,12 @@ export const estimateGasLimit = async (toAddress: string, value? :number, data? 
         signer = signer.connect(provider);
     }
 
-    const tx: TxBase = { 
+    const tx: TxBase = {
         to: toAddress,
-        value: value ? value: 0,
-        data: data ? data: null,
+        value: value ? value : 0,
+        data: data ? data : null,
     };
 
     const gasLimit = await signer.estimateGas(tx);
     return gasLimit;
-}
+};

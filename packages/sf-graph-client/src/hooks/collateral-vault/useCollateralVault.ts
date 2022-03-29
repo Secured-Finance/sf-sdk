@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { COLLATERAL_VAULT } from "../../queries"
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { COLLATERAL_VAULT } from '../../queries';
 
 export const useCollateralVault = (vault: string) => {
-    const [collateralVault, setCollateralVault] = useState()
+    const [collateralVault, setCollateralVault] = useState();
 
     const fetchCollateralVault = useCallback(async () => {
         try {
@@ -13,25 +13,24 @@ export const useCollateralVault = (vault: string) => {
                     vaultId: vault.toLowerCase(),
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.collateralVault) {
                 setCollateralVault(res?.data.collateralVault);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [vault])
-    
-	useEffect(() => {
+    }, [vault]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchCollateralVault();
+        if (client) {
+            fetchCollateralVault();
         }
         return () => {
-            isMounted = false
+            isMounted = false;
         };
-	}, [client, vault])
+    }, [client, vault]);
 
-    return collateralVault
-}
+    return collateralVault;
+};

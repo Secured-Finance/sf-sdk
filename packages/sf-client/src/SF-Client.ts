@@ -15,16 +15,20 @@ export class SFClient {
     wallet: Wallet;
     contracts: ContractsInstance;
 
-    constructor(provider: BaseProvider, wallet?: Wallet, options?: { defaultGas?: number; defaultGasPrice?: any; }) {
+    constructor(
+        provider: BaseProvider,
+        wallet?: Wallet,
+        options?: { defaultGas?: number; defaultGasPrice?: any }
+    ) {
         this.defaultGas = options?.defaultGas || 6000000;
         this.defaultGasPrice = options?.defaultGasPrice || 1000000000000;
-    
+
         this.wallet = wallet;
-    
+
         this.provider = provider || getDefaultProvider();
     }
-    
-    async init():Promise<void> {
+
+    async init(): Promise<void> {
         const network = await this.provider.getNetwork();
 
         this.networkId = network.chainId;
@@ -33,5 +37,5 @@ export class SFClient {
         const contractsInstance = new ContractsInstance();
         await contractsInstance.init(this.provider, this.networkId);
         this.contracts = contractsInstance;
-    };
+    }
 }

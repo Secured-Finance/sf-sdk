@@ -1,15 +1,15 @@
-import { DEFAULT_ADDRESS } from "../utils/constants";
+import { DEFAULT_ADDRESS } from '../utils/constants';
 
 export interface ContractAddresses {
-    collateralAggregator: string,
-    loan: string,
-    lendingMarketController: string,
-    currencyController: string,
-    closeOutNetting: string,
-    paymentAggregator: string,
-    productAddressResolver: string,
-    markToMarket: string,
-    termStructure: string,
+    collateralAggregator: string;
+    loan: string;
+    lendingMarketController: string;
+    currencyController: string;
+    closeOutNetting: string;
+    paymentAggregator: string;
+    productAddressResolver: string;
+    markToMarket: string;
+    termStructure: string;
 }
 
 const MAINNET_ADDRESSES: ContractAddresses = {
@@ -48,7 +48,7 @@ const LOCALHOST_ADDRESSES: ContractAddresses = {
     termStructure: DEFAULT_ADDRESS,
 };
 
-export const addresses:{[key: number]: ContractAddresses}  = {
+export const addresses: { [key: number]: ContractAddresses } = {
     1: MAINNET_ADDRESSES,
     3: ROPSTEN_ADDRESSES,
     1337: LOCALHOST_ADDRESSES,

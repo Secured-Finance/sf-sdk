@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { PRODUCT } from "../../queries"
-import { generateProductId } from "../../utils"
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { PRODUCT } from '../../queries';
+import { generateProductId } from '../../utils';
 
 export const useProductInfo = (prefix: string) => {
-    const [product, setProduct] = useState()
-    const productId = generateProductId(prefix)
+    const [product, setProduct] = useState();
+    const productId = generateProductId(prefix);
 
     const fetchProductInfo = useCallback(async () => {
         try {
@@ -15,25 +15,24 @@ export const useProductInfo = (prefix: string) => {
                     product: productId,
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.product) {
                 setProduct(res?.data.product);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [productId])
-    
-	useEffect(() => {
+    }, [productId]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchProductInfo();
+        if (client) {
+            fetchProductInfo();
         }
         return () => {
-            isMounted = false
+            isMounted = false;
         };
-	}, [client, productId])
+    }, [client, productId]);
 
-    return product
-}
+    return product;
+};

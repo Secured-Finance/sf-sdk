@@ -1,37 +1,36 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { LENDING_MARKET_INFO } from "../../queries"
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { LENDING_MARKET_INFO } from '../../queries';
 
 export const useLendingMarketInfo = (lendingMarket: string) => {
-    const [lendingMarketInfo, setLendingMarketInfo] = useState()
+    const [lendingMarketInfo, setLendingMarketInfo] = useState();
 
     const fetchLendingMarketInfo = useCallback(async () => {
         try {
             let res = await client.query({
                 query: LENDING_MARKET_INFO,
                 variables: {
-                    market: lendingMarket.toLowerCase()
+                    market: lendingMarket.toLowerCase(),
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.lendingMarket) {
                 setLendingMarketInfo(res?.data.lendingMarket);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [lendingMarket])
-    
-	useEffect(() => {
+    }, [lendingMarket]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchLendingMarketInfo();
+        if (client) {
+            fetchLendingMarketInfo();
         }
         return () => {
-            isMounted = false
+            isMounted = false;
         };
-	}, [lendingMarket, client])
+    }, [lendingMarket, client]);
 
-    return lendingMarketInfo
-}
+    return lendingMarketInfo;
+};

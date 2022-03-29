@@ -1,11 +1,11 @@
-import { useQuery } from "@apollo/client"
-import { BILATERAL_POSITION_FROM_VAULT } from "../../queries"
-import { generateCurrencyId, packAddresses } from "../../utils";
+import { useQuery } from '@apollo/client';
+import { BILATERAL_POSITION_FROM_VAULT } from '../../queries';
+import { generateCurrencyId, packAddresses } from '../../utils';
 
 export const useBilateralPositionFromVault = (
-    vault: string, 
-    user: string, 
-    counterparty: string, 
+    vault: string,
+    user: string,
+    counterparty: string,
     ccyShortName: string
 ) => {
     const packedAddresses = packAddresses(user, counterparty);
@@ -17,7 +17,9 @@ export const useBilateralPositionFromVault = (
         positionId: positionId,
     };
 
-    const { loading, error, data } = useQuery(BILATERAL_POSITION_FROM_VAULT, { variables: variables });
+    const { loading, error, data } = useQuery(BILATERAL_POSITION_FROM_VAULT, {
+        variables: variables,
+    });
 
     if (error) {
         console.log(error);
@@ -26,4 +28,4 @@ export const useBilateralPositionFromVault = (
     if (data?.collateralVault) {
         return data.collateralVault;
     }
-}
+};

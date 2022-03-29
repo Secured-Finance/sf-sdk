@@ -1,5 +1,5 @@
-import { useQuery } from "@apollo/client"
-import { BILATERAL_POSITIONS_FROM_VAULT } from "../../queries"
+import { useQuery } from '@apollo/client';
+import { BILATERAL_POSITIONS_FROM_VAULT } from '../../queries';
 
 export const useBilateralPositionsFromVault = (vault: string, user: string) => {
     const variables = {
@@ -7,7 +7,9 @@ export const useBilateralPositionsFromVault = (vault: string, user: string) => {
         address: user.toLowerCase(),
     };
 
-    const { loading, error, data } = useQuery(BILATERAL_POSITIONS_FROM_VAULT, { variables: variables });
+    const { loading, error, data } = useQuery(BILATERAL_POSITIONS_FROM_VAULT, {
+        variables: variables,
+    });
 
     if (error) {
         console.log(error);
@@ -16,4 +18,4 @@ export const useBilateralPositionsFromVault = (vault: string, user: string) => {
     if (data?.collateralVault) {
         return data.collateralVault;
     }
-}
+};

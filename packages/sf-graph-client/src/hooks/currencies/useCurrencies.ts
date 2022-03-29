@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { CURRENCIES } from "../../queries"
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { CURRENCIES } from '../../queries';
 
 export const useCurrencies = (skip: number = 0) => {
-    const [currencies, setCurrencies] = useState()
+    const [currencies, setCurrencies] = useState();
 
     const fetchCurrencies = useCallback(async () => {
         try {
@@ -13,25 +13,24 @@ export const useCurrencies = (skip: number = 0) => {
                     skip: skip,
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.currencies) {
                 setCurrencies(res?.data.currencies);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [skip])
-    
-	useEffect(() => {
+    }, [skip]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchCurrencies();
+        if (client) {
+            fetchCurrencies();
         }
         return () => {
-            isMounted = false
+            isMounted = false;
         };
-	}, [client, skip])
+    }, [client, skip]);
 
-    return currencies
-}
+    return currencies;
+};

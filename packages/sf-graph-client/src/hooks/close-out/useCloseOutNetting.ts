@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { CLOSE_OUT_NETTING } from "../../queries"
-import { generateCurrencyId, packAddresses } from "../../utils"
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { CLOSE_OUT_NETTING } from '../../queries';
+import { generateCurrencyId, packAddresses } from '../../utils';
 
 export const useCloseOutNetting = (
     user: string,
     counterparty: string,
-    ccyShortName: string,
+    ccyShortName: string
 ) => {
-    const [closeOutNetting, setCloseOutNetting] = useState()
+    const [closeOutNetting, setCloseOutNetting] = useState();
     const packedAddresses = packAddresses(user, counterparty);
     const currencyId = generateCurrencyId(ccyShortName);
     const closeOutNettingId = packedAddresses + '-' + currencyId;
@@ -21,25 +21,24 @@ export const useCloseOutNetting = (
                     id: closeOutNettingId,
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.closeOutNetting) {
                 setCloseOutNetting(res?.data.closeOutNetting);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [user, counterparty, ccyShortName])
-    
-	useEffect(() => {
+    }, [user, counterparty, ccyShortName]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchCloseOutNetting();
+        if (client) {
+            fetchCloseOutNetting();
         }
         return () => {
-            isMounted = false
+            isMounted = false;
         };
-	}, [client, user, counterparty, ccyShortName])
+    }, [client, user, counterparty, ccyShortName]);
 
-    return closeOutNetting
-}
+    return closeOutNetting;
+};

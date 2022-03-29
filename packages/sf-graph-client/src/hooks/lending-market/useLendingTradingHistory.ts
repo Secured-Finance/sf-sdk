@@ -1,9 +1,12 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { LENDING_TRADING_HISTORY } from "../../queries"
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { LENDING_TRADING_HISTORY } from '../../queries';
 
-export const useLendingTradingHistory = (lendingMarket: string, skip: number = 0) => {
-    const [tradingHistory, setTradingHistory] = useState()
+export const useLendingTradingHistory = (
+    lendingMarket: string,
+    skip: number = 0
+) => {
+    const [tradingHistory, setTradingHistory] = useState();
 
     const fetchLendingTradingHistory = useCallback(async () => {
         try {
@@ -14,25 +17,24 @@ export const useLendingTradingHistory = (lendingMarket: string, skip: number = 0
                     skip: skip,
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.lendingMarket.tradeHistory) {
                 setTradingHistory(res?.data.lendingMarket.tradeHistory);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [lendingMarket, skip])
-    
-	useEffect(() => {
+    }, [lendingMarket, skip]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchLendingTradingHistory();
+        if (client) {
+            fetchLendingTradingHistory();
         }
         return () => {
-            isMounted = false
+            isMounted = false;
         };
-	}, [lendingMarket, client])
+    }, [lendingMarket, client]);
 
-    return tradingHistory
-}
+    return tradingHistory;
+};

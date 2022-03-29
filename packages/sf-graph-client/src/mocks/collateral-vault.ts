@@ -1,4 +1,7 @@
-import { COLLATERAL_BOOK_FROM_VAULT, BILATERAL_POSITIONS_FROM_VAULT } from "../queries";
+import {
+    COLLATERAL_BOOK_FROM_VAULT,
+    BILATERAL_POSITIONS_FROM_VAULT,
+} from '../queries';
 
 export const collateralVaultQueriesMock = [
     {
@@ -17,25 +20,27 @@ export const collateralVaultQueriesMock = [
                     tokenAddress: '0x00000467',
                     currency: {
                         shortName: 'ETH',
-                        name: "Ethereum"
+                        name: 'Ethereum',
                     },
-                    collateralBooks: [{
-                        id: '',
-                        address: '0x01',
-                        independentCollateral: 1000,
-                        lockedCollateral: 5000,
-                    }]
+                    collateralBooks: [
+                        {
+                            id: '',
+                            address: '0x01',
+                            independentCollateral: 1000,
+                            lockedCollateral: 5000,
+                        },
+                    ],
                 },
             },
         },
     },
     {
         request: {
-          query: COLLATERAL_BOOK_FROM_VAULT,
-          variables: {
-            vaultId: '0xWETH',
-            address: '0x01',
-          },
+            query: COLLATERAL_BOOK_FROM_VAULT,
+            variables: {
+                vaultId: '0xWETH',
+                address: '0x01',
+            },
         },
         error: new Error('Network error'),
     },
@@ -55,27 +60,29 @@ export const collateralVaultQueriesMock = [
                     tokenAddress: '0x00000467',
                     currency: {
                         shortName: 'ETH',
-                        name: "Ethereum"
+                        name: 'Ethereum',
                     },
-                    collateralPositions: [{
-                        id: '',
-                        address0: '0x010012',
-                        address1: '0x01',
-                        packedAddresses: '0x002141012',
-                        lockedCollateral0: 10000,
-                        lockedCollateral1: 50000,
-                    }]
+                    collateralPositions: [
+                        {
+                            id: '',
+                            address0: '0x010012',
+                            address1: '0x01',
+                            packedAddresses: '0x002141012',
+                            lockedCollateral0: 10000,
+                            lockedCollateral1: 50000,
+                        },
+                    ],
                 },
             },
         },
     },
     {
         request: {
-          query: BILATERAL_POSITIONS_FROM_VAULT,
-          variables: {
-            vaultId: '0xWETH',
-            address: '0x01',
-          },
+            query: BILATERAL_POSITIONS_FROM_VAULT,
+            variables: {
+                vaultId: '0xWETH',
+                address: '0x01',
+            },
         },
         error: new Error('Network error'),
     },

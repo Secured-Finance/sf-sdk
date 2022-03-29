@@ -1,6 +1,6 @@
-import { DocumentNode } from "@apollo/client";
+import { DocumentNode } from '@apollo/client';
 
 export interface MockComponentProps {
-    query: DocumentNode,
-    variables: any,
+    query: DocumentNode;
+    variables: any;
 }

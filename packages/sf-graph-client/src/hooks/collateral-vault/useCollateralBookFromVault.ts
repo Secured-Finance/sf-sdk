@@ -1,5 +1,5 @@
-import { useQuery } from "@apollo/client"
-import { COLLATERAL_VAULT } from "../../queries"
+import { useQuery } from '@apollo/client';
+import { COLLATERAL_VAULT } from '../../queries';
 
 export const useCollateralBookFromVault = (vault: string, user: string) => {
     const variables = {
@@ -7,7 +7,9 @@ export const useCollateralBookFromVault = (vault: string, user: string) => {
         address: user.toLowerCase(),
     };
 
-    const { loading, error, data } = useQuery(COLLATERAL_VAULT, { variables: variables });
+    const { loading, error, data } = useQuery(COLLATERAL_VAULT, {
+        variables: variables,
+    });
 
     if (error) {
         console.log(error);
@@ -16,4 +18,4 @@ export const useCollateralBookFromVault = (vault: string, user: string) => {
     if (data?.collateralVault) {
         return data.collateralVault;
     }
-}
+};

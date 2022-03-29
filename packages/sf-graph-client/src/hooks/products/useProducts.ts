@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react"
-import { client } from "../../client"
-import { PRODUCTS } from "../../queries"
+import { useCallback, useEffect, useState } from 'react';
+import { client } from '../../client';
+import { PRODUCTS } from '../../queries';
 
 export const useProducts = (skip: number = 0) => {
-    const [products, setProducts] = useState()
+    const [products, setProducts] = useState();
 
     const fetchProducts = useCallback(async () => {
         try {
@@ -13,25 +13,24 @@ export const useProducts = (skip: number = 0) => {
                     skip: skip,
                 },
                 fetchPolicy: 'cache-first',
-            })
+            });
             if (res?.data.products) {
                 setProducts(res?.data.products);
             }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-	}, [skip])
-    
-	useEffect(() => {
+    }, [skip]);
+
+    useEffect(() => {
         let isMounted = true;
-		if (client) {
-			fetchProducts();
+        if (client) {
+            fetchProducts();
         }
         return () => {
-            isMounted = false
+            isMounted = false;
         };
-	}, [client, skip])
+    }, [client, skip]);
 
-    return products
-}
+    return products;
+};

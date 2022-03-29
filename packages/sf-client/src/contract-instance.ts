@@ -1,8 +1,17 @@
 import { Signer } from 'ethers';
 import { BaseProvider } from '@ethersproject/providers';
 
-import { CollateralVaultItem, CollateralVaults, collateralVaults } from './lib/collateral-vaults';
-import { LendingMarketItem, LendingMarkets, lendingMarkets, Market } from './lib/lending-markets';
+import {
+    CollateralVaultItem,
+    CollateralVaults,
+    collateralVaults,
+} from './lib/collateral-vaults';
+import {
+    LendingMarketItem,
+    LendingMarkets,
+    lendingMarkets,
+    Market,
+} from './lib/lending-markets';
 import { addresses, ContractAddresses } from './lib/addresses';
 import { CollateralVault, contracts, LendingMarket } from './contracts';
 
@@ -10,9 +19,12 @@ export class ContractsInstance {
     addresses: ContractAddresses;
     lendingMarkets: LendingMarkets = {};
     collateralVaults: CollateralVaults = {};
-    [contract: string]: any
+    [contract: string]: any;
 
-    async init(signerOrProvider: Signer | BaseProvider, networkId?: number):Promise<void> {
+    async init(
+        signerOrProvider: Signer | BaseProvider,
+        networkId?: number
+    ): Promise<void> {
         this.addresses = addresses[networkId];
 
         const contractForEnv = contracts;
@@ -21,17 +33,17 @@ export class ContractsInstance {
             const Contract = contractForEnv[contract];
             this[contract] = new Contract(signerOrProvider, networkId);
         });
-    
+
         collateralVaults[networkId].forEach((vault: CollateralVaultItem) => {
-            const address = vault.address
+            const address = vault.address;
 
             this.collateralVaults[address] = {
-                ccy : vault.ccy,
+                ccy: vault.ccy,
                 address: address,
                 tokenAddress: vault.tokenAddress,
                 contract: new CollateralVault(
                     vault.ccy,
-                    this.wallet || this.provider, 
+                    this.wallet || this.provider,
                     networkId
                 ),
             };
@@ -48,16 +60,16 @@ export class ContractsInstance {
                     contract: new LendingMarket(
                         marketItem.ccy,
                         lendingMarket.term,
-                        this.wallet || this.provider, 
+                        this.wallet || this.provider,
                         networkId
-                    ),    
-                }
+                    ),
+                };
             });
-    
+
             this.lendingMarkets[marketItem.ccy] = {
-                ccy : marketItem.ccy,
+                ccy: marketItem.ccy,
                 markets: markets,
-            }
+            };
         });
     }
 }

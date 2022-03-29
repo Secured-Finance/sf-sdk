@@ -1,6 +1,6 @@
-import { BigNumber } from "@ethersproject/bignumber";
+import { BigNumber } from '@ethersproject/bignumber';
 
-export const NETWORKS: {[key: number]: string} = {
+export const NETWORKS: { [key: number]: string } = {
     1: 'mainnet',
     3: 'ropsten',
     1337: 'localhost',
