@@ -6,8 +6,8 @@
     "bootstrap": "lerna bootstrap --hoist",
     "lint": "eslint --ignore-path .gitignore './packages/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint --ignore-path .gitignore './packages/**/*.{js,ts,tsx}' --fix",
-    "format": "prettier --ignore-path .gitignore --check '**/*.{js,jsx,ts,tsx,json}' '*.{js,jsx,ts,tsx,json}' ",
-    "format:fix": "prettier --ignore-path .gitignore --write '**/*.{js,jsx,ts,tsx,json} '*.{js,jsx,ts,tsx,json}''",
+    "format": "prettier --ignore-path .gitignore --check '**/*.{js,jsx,ts,tsx,json}' '*.{js,jsx,ts,tsx,json}' '!package-lock.json'",
+    "format:fix": "prettier --ignore-path .gitignore --write '**/*.{js,jsx,ts,tsx,json} '*.{js,jsx,ts,tsx,json}' '!package-lock.json'",
     "test-all": "lerna run test",
     "build": "lerna run build",
     "publish": "lerna publish"
