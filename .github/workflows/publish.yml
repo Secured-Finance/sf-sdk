@@ -9,14 +9,16 @@ jobs:
     name: Publish to NPM
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          ref: ${{ github.event.release.tag_name }}
       - name: Install Dependencies
         run: npm install
-      - name: Bootstrap Repo
+      - name: Bootstrap Repository
         run: npm run bootstrap
-      - name: "Version and publish"
+      - name: Version and Publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
