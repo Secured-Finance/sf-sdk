@@ -87,6 +87,8 @@ type User @entity {
   madeOrders: [FilledLendingMarketOrder!] @derivedFrom(field: "makerUser")
   takenOrders: [FilledLendingMarketOrder!] @derivedFrom(field: "takerUser")
   # canceledOrders: [LendingMarketOrder!] @derivedFrom(field: "makerUser")
+
+  crosschainAddresses: [CrosschainAddress!] @derivedFrom(field: "user")
 }
 
 type LendingMarketController @entity {
@@ -385,4 +387,12 @@ type CollateralVaultPosition @entity {
   vault: CollateralVault!
   lockedCollateral0: BigInt!
   lockedCollateral1: BigInt!
+}
+
+type CrosschainAddress @entity {
+  id: ID!
+  ethAddress: Bytes!
+  user: User!
+  chainID: BigInt!
+  address: String!
 }
