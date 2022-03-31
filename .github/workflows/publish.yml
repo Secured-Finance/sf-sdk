@@ -3,16 +3,11 @@ name: Publish to NPM
 on:
   push:
     branches:
-      - SF-71-automate-publish
-  pull_request:
-    types: [closed]
-    branches:
       - main
       - development
 
 jobs:
   publish-npm:
-    #if: github.event.pull_request.merged == true
     name: Publish to NPM
     runs-on: ubuntu-latest
     steps:
@@ -37,9 +32,9 @@ jobs:
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
-          if [ "${{ steps.extract_branch.outputs.branch }}" != "main" ]; then
-            npx lerna version --conventional-commits --conventional-prerelease --preid beta --yes
-          else
+          if [ "${{ steps.extract_branch.outputs.branch }}" = "main" ]; then
             npx lerna version --conventional-commits --conventional-graduate --yes
+          else
+            npx lerna version --conventional-commits --conventional-prerelease --preid beta --yes
           fi
           npx lerna publish --conventional-commits --yes
