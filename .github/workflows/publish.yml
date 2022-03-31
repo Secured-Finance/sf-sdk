@@ -33,9 +33,9 @@ jobs:
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
-          if [ ${{ github.base_ref }} != main ]; then
+          if [ ${{ github.base_ref }} -ne main ]; then
             npx lerna version --conventional-commits --conventional-prerelease --preid beta --yes
           else
             npx lerna version --conventional-commits --conventional-graduate --yes
           fi
-          npm lerna publish --conventional-commits --yes
+          npx lerna publish --conventional-commits --yes
