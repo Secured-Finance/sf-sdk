@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
       - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
       - name: Bootstrap Repository
         run: npm run bootstrap
       - name: Extract branch name
