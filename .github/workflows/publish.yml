@@ -1,15 +1,13 @@
 name: Publish to NPM
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - main
       - development
 
 jobs:
   publish-npm:
-    if: github.event.pull_request.merged == true
     name: Publish to NPM
     runs-on: ubuntu-latest
     steps:
@@ -17,10 +15,15 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
       - name: Bootstrap Repository
         run: npm run bootstrap
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Version and Publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -29,9 +32,9 @@ jobs:
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
-          if [ ${{ github.base_ref }} = development ]; then
-            npx lerna version --conventional-commits --conventional-prerelease --preid beta --yes
-          else
+          if [ "${{ steps.extract_branch.outputs.branch }}" = "main" ]; then
             npx lerna version --conventional-commits --conventional-graduate --yes
+          else
+            npx lerna version --conventional-commits --conventional-prerelease --preid beta --yes
           fi
-          npm lerna publish from-git --yes
+          npx lerna publish from-git --conventional-commits --yes
