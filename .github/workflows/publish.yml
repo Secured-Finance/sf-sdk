@@ -38,8 +38,8 @@ jobs:
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
           if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
-            npx lerna version --conventional-commits --conventional-graduate --yes
+            npx lerna version --conventional-commits --conventional-graduate --yes --force-publish
           else
-            npx lerna version --conventional-commits --conventional-prerelease --preid beta --yes
+            npx lerna version --conventional-commits --conventional-prerelease --preid beta --yes --force-publish
           fi
-          npx lerna publish from-git --conventional-commits --yes --force-publish
+          npx lerna publish from-git --conventional-commits --yes
