@@ -43,6 +43,7 @@ export function handleTimeSlotPaymentIncrease(event: RegisterPayment): void {
     let payment1: BigInt
     let address0: Bytes
     let address1: Bytes
+    let addresses: string
 
     const timeSlot = getTimeSlot(id)
 
@@ -50,11 +51,13 @@ export function handleTimeSlotPaymentIncrease(event: RegisterPayment): void {
         if (flippedAddr) {
             address0 = event.params.party1
             address1 = event.params.party0
+            addresses = event.params.party1.toHex() + '-' + event.params.party0.toHex()
             payment0 = event.params.payment1
             payment1 = event.params.payment0
         } else {
             address0 = event.params.party0
             address1 = event.params.party1
+            addresses = event.params.party0.toHex() + '-' + event.params.party1.toHex()
             payment0 = event.params.payment0
             payment1 = event.params.payment1
         }
@@ -62,6 +65,7 @@ export function handleTimeSlotPaymentIncrease(event: RegisterPayment): void {
         if (timeSlot.position == ZERO_BYTES) {
             timeSlot.address0 = address0
             timeSlot.address1 = address1
+            timeSlot.addresses = addresses
             timeSlot.position = event.params.timeSlot
             timeSlot.year = event.params.year
             timeSlot.month = event.params.month

@@ -187,16 +187,19 @@ export function handleCollateralPositionUse(event: UseCollateral): void {
             let amount1: BigInt
             let address0: Bytes
             let address1: Bytes
+            let addresses: string
             let isSettled = event.params.isSettled
 
             if (flipped) {
                 address0 = event.params.partyB
                 address1 = event.params.partyA
+                addresses = event.params.partyB.toHex() + '-' + event.params.partyA.toHex()
                 amount0 = event.params.amount1
                 amount1 = event.params.amount0
             } else {
                 address0 = event.params.partyA
                 address1 = event.params.partyB
+                addresses = event.params.partyA.toHex() + '-' + event.params.partyB.toHex()
                 amount0 = event.params.amount0
                 amount1 = event.params.amount1
             }
@@ -204,6 +207,7 @@ export function handleCollateralPositionUse(event: UseCollateral): void {
             if (netting.address0 == ADDRESS_ZERO) {
                 netting.address0 = address0
                 netting.address1 = address1
+                netting.addresses = addresses
             }
 
             if (amount0.gt(BIG_INT_ZERO)) {
