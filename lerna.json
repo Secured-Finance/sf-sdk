@@ -24,6 +24,7 @@
   "packages": [
     "packages/*"
   ],
-  "version": "0.1.4-beta.4",
-  "npmClient": "yarn"
+  "version": "0.1.4",
+  "npmClient": "yarn",
+  "useWorkspaces": true
 }
