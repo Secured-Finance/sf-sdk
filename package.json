@@ -9,8 +9,7 @@
     "format": "prettier --ignore-path .gitignore --check '**/*.{js,jsx,ts,tsx,json}' '*.{js,jsx,ts,tsx,json}' '!package-lock.json' '!lerna.json' '!yarn.lock'",
     "format:fix": "prettier --ignore-path .gitignore --write '**/*.{js,jsx,ts,tsx,json} '*.{js,jsx,ts,tsx,json}' '!package-lock.json' '!lerna.json' '!yarn.lock'",
     "test-all": "lerna run test",
-    "build": "lerna run build",
-    "publish": "lerna publish from-git --yes"
+    "build": "lerna run build"
   },
   "author": "Secured Finance",
   "bugs": {
