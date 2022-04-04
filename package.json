@@ -3,7 +3,7 @@
   "private": true,
   "description": "Monorepo of Javascript libraries for working with Secured Finance protocol",
   "scripts": {
-    "bootstrap": "lerna bootstrap --hoist",
+    "bootstrap": "lerna bootstrap --use-workspaces",
     "lint": "eslint --ignore-path .gitignore './packages/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint --ignore-path .gitignore './packages/**/*.{js,ts,tsx}' --fix",
     "format": "prettier --ignore-path .gitignore --check '**/*.{js,jsx,ts,tsx,json}' '*.{js,jsx,ts,tsx,json}' '!package-lock.json' '!lerna.json'",
