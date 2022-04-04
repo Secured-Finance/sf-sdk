@@ -45,5 +45,6 @@
   },
   "ts-node": {
     "files": true
-  }
+  },
+  "workspaces": ["packages/*"]
 }
