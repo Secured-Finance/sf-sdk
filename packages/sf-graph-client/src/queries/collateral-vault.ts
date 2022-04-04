@@ -57,10 +57,7 @@ export const COLLATERAL_VAULT = gql`
 export const COLLATERAL_BOOK_FROM_VAULT = gql`
     query CollateralVault($vaultId: Bytes!, $address: Bytes!) {
         collateralBooks(
-            where: {
-                vault_contains: $vaultId,
-                address_contains: $address,
-            }
+            where: { vault_contains: $vaultId, address_contains: $address }
         ) {
             id
             address
@@ -81,10 +78,7 @@ export const COLLATERAL_BOOK_FROM_VAULT = gql`
 export const BILATERAL_POSITIONS_FROM_VAULT = gql`
     query CollateralVault($vaultId: Bytes!, $address: Bytes!) {
         collateralVaultPositions(
-            where: {
-                vault_contains: $vaultId,
-                addresses_contains: $address,
-            }
+            where: { vault_contains: $vaultId, addresses_contains: $address }
         ) {
             id
             address0

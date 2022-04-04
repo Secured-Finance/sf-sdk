@@ -3,10 +3,7 @@ import {
     CollateralVaultItem,
     collateralVaults,
 } from '../lib/collateral-vaults';
-import {
-    LendingMarketItem,
-    lendingMarkets,
-} from '../lib/lending-markets';
+import { LendingMarketItem, lendingMarkets } from '../lib/lending-markets';
 
 export const packAddresses = (
     addr0: string,
@@ -38,7 +35,7 @@ export const packAddresses = (
 
 export const getCollateralVaultByCcy = (
     ccy: string,
-    networkID: number,
+    networkID: number
 ): CollateralVaultItem => {
     return collateralVaults[networkID].find(
         (collateralVault: CollateralVaultItem) => {
@@ -49,7 +46,7 @@ export const getCollateralVaultByCcy = (
 
 export const getCollateralVaultAddressByCcy = (
     ccy: string,
-    networkID: number,
+    networkID: number
 ): string => {
     return getCollateralVaultByCcy(ccy, networkID).address;
 };
@@ -57,19 +54,17 @@ export const getCollateralVaultAddressByCcy = (
 export const getLendingMarketByCcyAndTerm = (
     ccy: string,
     term: string,
-    networkID: number,
+    networkID: number
 ): LendingMarketItem => {
-    return lendingMarkets[networkID].find(
-        (market: LendingMarketItem) => {
-            return ccy === market.ccy && term === market.term;
-        }
-    );
+    return lendingMarkets[networkID].find((market: LendingMarketItem) => {
+        return ccy === market.ccy && term === market.term;
+    });
 };
 
 export const getLendingMarketAddressByCcyAndTerm = (
     ccy: string,
     term: string,
-    networkID: number,
+    networkID: number
 ): string => {
     return getLendingMarketByCcyAndTerm(ccy, term, networkID).address;
 };

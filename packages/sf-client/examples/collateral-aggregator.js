@@ -11,9 +11,9 @@ require('dotenv/config');
     await sfClient.init();
 
     const user = '0x8f4db50f2eb35016bd0e35efd18db15bc46419cb';
-    const contract = sfClient.contracts.CollateralAggregator
+    const contract = sfClient.contracts.CollateralAggregator;
 
-    let vaults = await contract.getUsedVaults(user)
+    let vaults = await contract.getUsedVaults(user);
     console.log(vaults);
 
     let status = await contract.checkRegisteredUser(wallet.address);

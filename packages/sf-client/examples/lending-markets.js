@@ -12,8 +12,9 @@ require('dotenv/config');
 
     const market = utils.getLendingMarketByCcyAndTerm('FIL', '3 month', 1337);
     const contractAddress = market.address;
-    const contract = sfClient.contracts.lendingMarkets[contractAddress].contract;
+    const contract =
+        sfClient.contracts.lendingMarkets[contractAddress].contract;
 
-    const rate = await contract.getLendRate()
+    const rate = await contract.getLendRate();
     console.log(rate.toString());
 })();

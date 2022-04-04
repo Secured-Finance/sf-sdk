@@ -21,7 +21,7 @@ export {
     LENDING_LEND_ORDERBOOK,
     LENDING_MARKET_INFO,
     LENDING_TRADING_HISTORY,
-    LENDING_MARKETS_BY_CCY
+    LENDING_MARKETS_BY_CCY,
 } from './lending-market';
 
 export {
@@ -40,5 +40,5 @@ export {
 
 export {
     CROSSCHAIN_ADDRESSES_BY_USER,
-    CROSSCHAIN_ADDRESS_BY_ID
+    CROSSCHAIN_ADDRESS_BY_ID,
 } from './crosschain-address-resolver';

@@ -13,7 +13,7 @@ export const useTimeSlotInfo = (
 ) => {
     const [timeSlotInfo, setTimeSlotInfo] = useState();
     const timeSlotId = generateTimeSlotId(
-        user, 
+        user,
         counterparty,
         ccyShortName,
         year,
@@ -48,7 +48,16 @@ export const useTimeSlotInfo = (
         return () => {
             isMounted = false;
         };
-    }, [client, user, counterparty, ccyShortName, year, month, day, timeSlotId]);
+    }, [
+        client,
+        user,
+        counterparty,
+        ccyShortName,
+        year,
+        month,
+        day,
+        timeSlotId,
+    ]);
 
     return timeSlotInfo;
 };

@@ -69,10 +69,7 @@ export const LOAN_INFO = gql`
 
 export const LOAN_TERMINATION = gql`
     query LoanTermination($id: String!, $skip: Int!) {
-        loanTerminations(
-            where: {loan_contains: $id},
-            skip: $skip
-        ) {
+        loanTerminations(where: { loan_contains: $id }, skip: $skip) {
             id
             terminationAsker
             terminationSubmitter
@@ -84,10 +81,7 @@ export const LOAN_TERMINATION = gql`
 
 export const LOAN_NOVATION_HISTORY = gql`
     query LoanNovationHistory($id: String!, $skip: Int!) {
-        loanNovations (
-            where: {loan_contains: $id},
-            skip: $skip
-        ) {
+        loanNovations(where: { loan_contains: $id }, skip: $skip) {
             id
             previousLender
             newLender

@@ -17,5 +17,4 @@ export const useCollateralVaults = (skip: number = 0) => {
     if (data?.collateralVaults) {
         return data.collateralVaults;
     }
-
 };

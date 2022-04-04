@@ -1,32 +1,29 @@
-export { 
-    packAddresses, 
-    getCollateralVaultAddressByCcy, 
-    getCollateralVaultByCcy, 
-    getLendingMarketAddressByCcyAndTerm, 
-    getLendingMarketByCcyAndTerm 
+export {
+    packAddresses,
+    getCollateralVaultAddressByCcy,
+    getCollateralVaultByCcy,
+    getLendingMarketAddressByCcyAndTerm,
+    getLendingMarketByCcyAndTerm,
 } from './addresses';
 
-export { 
+export {
     DEFAULT_ADDRESS,
     DEFAULT_CHAIN_ID,
     DEFAULT_MNEMONIC,
-    DEFAULT_NETWORK
+    DEFAULT_NETWORK,
 } from './constants';
 
-export { 
-    generateId,
-    generatePrefix
-} from './deal-id';
+export { generateId, generatePrefix } from './deal-id';
 
-export { 
+export {
     populateTx,
     TxBase,
     TxOptions,
     ethTransaction,
-    signTranaction
+    signTranaction,
 } from './eth-tx';
 
-export { 
+export {
     estimateGasLimit,
     estimateGasPrice,
     GasPriceOracleOptions,
@@ -35,7 +32,7 @@ export {
     getDefaultOracle,
     currentGasPrices,
     SUBTRACT_GAS_LIMIT,
-    DEFAULT_GAS_PRICES
+    DEFAULT_GAS_PRICES,
 } from './gas';
 
 export { NETWORKS } from './networks';

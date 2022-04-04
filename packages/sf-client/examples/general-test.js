@@ -16,6 +16,9 @@ require('dotenv/config');
 
     const contracts = sfClient.contracts;
 
-    let address = await contracts.CrosschainAddressResolver.getUserAddress('0x8f4db50f2eb35016bd0e35efd18db15bc46419cb', 0)
+    let address = await contracts.CrosschainAddressResolver.getUserAddress(
+        '0x8f4db50f2eb35016bd0e35efd18db15bc46419cb',
+        0
+    );
     console.log(address);
 })();

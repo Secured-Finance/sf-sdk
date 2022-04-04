@@ -1,7 +1,10 @@
 import { useQuery } from '@apollo/client';
 import { CROSSCHAIN_ADDRESSES_BY_USER } from '../../queries';
 
-export const useCrosschainAddressesByUser = (user: string, skip: number = 0) => {
+export const useCrosschainAddressesByUser = (
+    user: string,
+    skip: number = 0
+) => {
     const variables = {
         user: user.toLowerCase(),
         skip: skip,

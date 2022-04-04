@@ -1,7 +1,4 @@
-import {
-    UNSETTLED_POSITIONS,
-    BILATERAL_POSITIONS,
-} from '../queries';
+import { UNSETTLED_POSITIONS, BILATERAL_POSITIONS } from '../queries';
 
 export const collateralAggregatorQueriesMock = [
     {

@@ -31,7 +31,10 @@ export const generateTermId = (numberOfDays: number) => {
     return ethersUtils.hexValue(numberOfDays);
 };
 
-export const generateCrosschainAddressID = (address: string, chainId: number | string) => {
+export const generateCrosschainAddressID = (
+    address: string,
+    chainId: number | string
+) => {
     return address + '-' + chainId.toString();
 };
 
@@ -39,20 +42,30 @@ export const generateTimeSlotId = (
     address0: string,
     address1: string,
     ccy: string,
-    year: number, 
-    month: number, 
+    year: number,
+    month: number,
     day: number
 ) => {
-    const packedAddresses = packAddresses(address0,address1);
+    const packedAddresses = packAddresses(address0, address1);
     const currencyId = generateCurrencyId(ccy);
 
-    return packedAddresses[0] + '-' + currencyId + '-' + year + '-' + month + '-' + day 
+    return (
+        packedAddresses[0] +
+        '-' +
+        currencyId +
+        '-' +
+        year +
+        '-' +
+        month +
+        '-' +
+        day
+    );
 };
 
 export const generateCloseOutNettingId = (
-    user: string, 
+    user: string,
     counterparty: string,
-    ccyShortName: string,
+    ccyShortName: string
 ) => {
     const packedAddresses = packAddresses(user, counterparty);
     const currencyId = generateCurrencyId(ccyShortName);

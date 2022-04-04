@@ -47,24 +47,20 @@ export const BilateralNettingMock: React.FC<MockComponentProps> = ({
     }
 
     return data
-        ? data.bilateralPositions.map(
-              (item: BilateralNetting) => (
-                  <div key={item.id}>
-                      {item.collateralNettings.map(
-                          (netting: CollateralNetting) => {
-                              return (
-                                  <div key={netting.currency.name}>
-                                      <p>{`Unsettled PV for ${item.address0} is ${netting.unsettled0PV}`}</p>
-                                      <p>{`Settled PV for ${item.address0} is ${netting.party0PV}`}</p>
-                                      <p>{`Unsettled PV for ${item.address1} is ${netting.unsettled1PV}`}</p>
-                                      <p>{`Settled PV for ${item.address1} is ${netting.party1PV}`}</p>
-                                      <p>{`Net PV for ${item.address0} and ${item.address1} is ${netting.netPV}`}</p>
-                                  </div>
-                              );
-                          }
-                      )}
-                  </div>
-              )
-          )
+        ? data.bilateralPositions.map((item: BilateralNetting) => (
+              <div key={item.id}>
+                  {item.collateralNettings.map((netting: CollateralNetting) => {
+                      return (
+                          <div key={netting.currency.name}>
+                              <p>{`Unsettled PV for ${item.address0} is ${netting.unsettled0PV}`}</p>
+                              <p>{`Settled PV for ${item.address0} is ${netting.party0PV}`}</p>
+                              <p>{`Unsettled PV for ${item.address1} is ${netting.unsettled1PV}`}</p>
+                              <p>{`Settled PV for ${item.address1} is ${netting.party1PV}`}</p>
+                              <p>{`Net PV for ${item.address0} and ${item.address1} is ${netting.netPV}`}</p>
+                          </div>
+                      );
+                  })}
+              </div>
+          ))
         : null;
 };

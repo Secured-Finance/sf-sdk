@@ -9,7 +9,11 @@ export const useCloseOutNetting = (
     ccyShortName: string
 ) => {
     const [closeOutNetting, setCloseOutNetting] = useState();
-    const closeOutNettingId = generateCloseOutNettingId(user, counterparty, ccyShortName);
+    const closeOutNettingId = generateCloseOutNettingId(
+        user,
+        counterparty,
+        ccyShortName
+    );
 
     const fetchCloseOutNetting = useCallback(async () => {
         try {

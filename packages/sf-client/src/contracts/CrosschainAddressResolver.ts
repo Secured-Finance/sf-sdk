@@ -18,10 +18,16 @@ export class CrosschainAddressResolver {
         chainId: number | string | BigInt,
         address: string
     ) => {
-        return await this.contract.functions['updateAddress(uint256,string)'](chainId, address);
+        return await this.contract.functions['updateAddress(uint256,string)'](
+            chainId,
+            address
+        );
     };
 
-    getUserAddress = async (user: string, chainId: number | string | BigInt) => {
+    getUserAddress = async (
+        user: string,
+        chainId: number | string | BigInt
+    ) => {
         return await this.contract.getUserAddress(user, chainId);
     };
 }

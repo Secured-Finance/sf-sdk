@@ -4,7 +4,7 @@ import { generateCrosschainAddressID } from '../../utils';
 
 export const useCrosschainAddressById = (user: string, chainId: number) => {
     const crosschainAddressId = generateCrosschainAddressID(user, chainId);
-    
+
     const variables = {
         crosschainAddressId: crosschainAddressId.toLowerCase(),
     };

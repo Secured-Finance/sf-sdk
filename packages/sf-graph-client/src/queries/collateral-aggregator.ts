@@ -15,9 +15,7 @@ export const COLLATERAL_AGGREGATOR = gql`
 
 export const BILATERAL_POSITIONS = gql`
     query BilateralPositions($address: Bytes!) {
-        bilateralPositions(
-            where: { addresses_contains: $address }
-        ) {
+        bilateralPositions(where: { addresses_contains: $address }) {
             id
             address0
             address1

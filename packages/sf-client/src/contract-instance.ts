@@ -57,9 +57,11 @@ export class ContractsInstance {
                         signerOrProvider,
                         networkId
                     ),
-            }, marketItem) as LendingMarketItem;
+                },
+                marketItem
+            ) as LendingMarketItem;
 
-            this.lendingMarkets[marketItem.address] = market
+            this.lendingMarkets[marketItem.address] = market;
         });
     }
 }

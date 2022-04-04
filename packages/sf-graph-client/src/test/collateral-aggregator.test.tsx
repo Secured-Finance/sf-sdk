@@ -6,10 +6,7 @@ import {
     BilateralNettingMock,
 } from '../mocks/components';
 import { collateralAggregatorQueriesMock } from '../mocks';
-import {
-    BILATERAL_POSITIONS,
-    UNSETTLED_POSITIONS,
-} from '../queries';
+import { BILATERAL_POSITIONS, UNSETTLED_POSITIONS } from '../queries';
 import { expect } from 'chai';
 
 it('Should render unsettled collateral position component with network error query', async () => {

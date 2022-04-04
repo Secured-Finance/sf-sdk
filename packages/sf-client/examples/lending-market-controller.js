@@ -12,6 +12,6 @@ require('dotenv/config');
 
     const contract = sfClient.contracts.LendingMarketController.contract;
 
-    const terms = await contract.getSupportedTerms(utils.toBytes32('FIL'))
+    const terms = await contract.getSupportedTerms(utils.toBytes32('FIL'));
     console.log(terms.toString());
 })();

@@ -16,7 +16,7 @@ require('dotenv/config');
     const contractAddress = vault.address;
     const contract = contracts.collateralVaults[contractAddress].contract;
 
-    const independentCollateral = await contract.getIndependentCollateral(user)
+    const independentCollateral = await contract.getIndependentCollateral(user);
     console.log(independentCollateral.toString());
 
     const lockedCollateral = await contract.getLockedCollateral(user);
