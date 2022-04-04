@@ -1,6 +1,6 @@
 {
   "name": "@secured-finance/sf-graph-client",
-  "version": "0.1.4-beta.2",
+  "version": "0.1.4-beta.3",
   "description": "GraphQL react client for querying Secured Finance subgraph",
   "main": "index.js",
   "scripts": {

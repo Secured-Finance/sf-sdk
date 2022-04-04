@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4-beta.3](https://github.com/secured-finance/sf-sdk/compare/v0.1.4-beta.2...v0.1.4-beta.3) (2022-04-04)
+
+
+### Bug Fixes
+
+* replace npm with yarn ([13a9548](https://github.com/secured-finance/sf-sdk/commit/13a954803d4ea1bde9879f4910667068e0425416))
+
+
+
+
+
 ## [0.1.4-beta.2](https://github.com/secured-finance/sf-sdk/compare/v0.1.4-beta.1...v0.1.4-beta.2) (2022-04-04)
 
 
