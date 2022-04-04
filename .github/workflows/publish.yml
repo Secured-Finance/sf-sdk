@@ -42,4 +42,4 @@ jobs:
           else
             npx lerna version --conventional-commits --conventional-prerelease --preid beta --yes --force-publish
           fi
-          npx lerna publish from-package --conventional-commits --yes --contents dist
+          npx lerna publish from-package --conventional-commits --yes
