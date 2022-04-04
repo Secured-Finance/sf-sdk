@@ -52,5 +52,6 @@
     "ts-mocha": "^9.0.2",
     "ts-node": "^10.4.0",
     "web3-utils": "^1.7.0"
-  }
+  },
+  "types": "dist/index.d.ts"
 }
