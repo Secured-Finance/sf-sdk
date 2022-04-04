@@ -27,6 +27,11 @@ npm run build
 
 This will compile and build all packages inside the monorepo. To build invididual package please run the same command from an individual repository
 
+Make sure you fix formating of the code before merging it to the main branches by running:  
+```
+npm run format:fix
+```
+
 # License
 
 This project is licensed under the MIT license, Copyright (c) 2022 Secured Finance. For more information see `LICENSE.md`.
