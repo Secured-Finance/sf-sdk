@@ -37,6 +37,7 @@ export function handleCloseOutPaymentIncrease(event: AddCloseOutPayments): void 
     let payment1: BigInt
     let address0: Bytes
     let address1: Bytes
+    let addresses: string
 
     const closeOut = getCloseOutNetting(closeOutID)
 
@@ -44,11 +45,13 @@ export function handleCloseOutPaymentIncrease(event: AddCloseOutPayments): void 
         if (flippedAddr) {
             address0 = event.params.party1
             address1 = event.params.party0
+            addresses = event.params.party1.toHex() + '-' + event.params.party0.toHex()
             payment0 = event.params.payment1
             payment1 = event.params.payment0
         } else {
             address0 = event.params.party0
             address1 = event.params.party1
+            addresses = event.params.party0.toHex() + '-' + event.params.party1.toHex()
             payment0 = event.params.payment0
             payment1 = event.params.payment1
         }
@@ -56,6 +59,7 @@ export function handleCloseOutPaymentIncrease(event: AddCloseOutPayments): void 
         if (closeOut.packedAddresses == ZERO_BYTES) {
             closeOut.address0 = address0
             closeOut.address1 = address1
+            closeOut.addresses = addresses
             closeOut.packedAddresses = packedAddr
             closeOut.currency = event.params.ccy.toHexString()
         }

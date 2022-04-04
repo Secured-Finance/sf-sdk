@@ -256,6 +256,7 @@ type CloseOutNetting @entity {
   id: ID!
   address0: Bytes!
   address1: Bytes!
+  addresses: String!
   packedAddresses: Bytes!
   aggregatedPayment0: BigInt!
   aggregatedPayment1: BigInt!
@@ -268,6 +269,7 @@ type TimeSlot @entity {
   id: ID!
   address0: Bytes!
   address1: Bytes!
+  addresses: String!
   totalPayment0: BigInt!
   totalPayment1: BigInt!
   netPayment: BigInt!
@@ -325,6 +327,7 @@ type BilateralPosition @entity {
   id: ID!
   address0: Bytes!
   address1: Bytes!
+  addresses: String!
   packedAddresses: Bytes!
   collateralNettings: [CollateralNetting!] @derivedFrom(field: "bilateralPosition")
   aggregator: CollateralAggregator!
@@ -334,6 +337,7 @@ type CollateralNetting @entity {
   id: ID!
   address0: Bytes!
   address1: Bytes!
+  addresses: String!
   currencyIdentifier: Bytes!
   currency: Currency!
   packedAddresses: Bytes!
@@ -381,6 +385,7 @@ type CollateralVaultPosition @entity {
   id: ID!
   address0: Bytes!
   address1: Bytes!
+  addresses: String!
   packedAddresses: Bytes!
   currency: Currency!
   currencyIdentifier: Bytes!
