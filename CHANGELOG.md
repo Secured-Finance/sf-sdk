@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6-beta.0](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.5...v0.1.6-beta.0) (2022-04-04)
+
+
+### Bug Fixes
+
+* update github publish action ([d140f61](https://github.com/Secured-Finance/sf-sdk/commit/d140f61c2be1cb42d67a9ea7dff3789b6b151ca0))
+
+
+
+
+
 ## [0.1.5](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.4...v0.1.5) (2022-04-04)
 
 
