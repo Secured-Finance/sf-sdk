@@ -20,6 +20,8 @@ jobs:
         run: yarn install
       - name: Bootstrap Repository
         run: yarn run bootstrap
+      - name: Build packages
+        run: yarn run build
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
