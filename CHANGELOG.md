@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.4...v0.1.5) (2022-04-04)
+
+
+### Bug Fixes
+
+* add yarn workspaces into package.json ([d74867a](https://github.com/Secured-Finance/sf-sdk/commit/d74867a3ed7a1b082444ed785af1f950dcc7895d))
+* remove hoist and add yarn workspaces, fix github action ([1479363](https://github.com/Secured-Finance/sf-sdk/commit/1479363a1f33bd7a9eb2d83fb63fb79a38e53fc1))
+
+
+
+
+
 ## [0.1.4](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.4-beta.4...v0.1.4) (2022-04-04)
 
 **Note:** Version bump only for package sf-sdk
