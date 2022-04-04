@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { client } from '../../client';
 import { LOAN_TERMINATION } from '../../queries';
 
-export const useLoanTermination = (id: string) => {
+export const useLoanTermination = (id: string, skip: number = 0) => {
     const [loanTermination, setLoanTermination] = useState();
 
     const fetchLoanTermination = useCallback(async () => {
@@ -11,11 +11,12 @@ export const useLoanTermination = (id: string) => {
                 query: LOAN_TERMINATION,
                 variables: {
                     id: id,
+                    skip: skip,
                 },
                 fetchPolicy: 'cache-first',
             });
-            if (res?.data.loan.termination) {
-                setLoanTermination(res?.data.loan.termination);
+            if (res?.data.loanTerminations) {
+                setLoanTermination(res?.data.loanTerminations);
             }
         } catch (err) {
             console.log(err);

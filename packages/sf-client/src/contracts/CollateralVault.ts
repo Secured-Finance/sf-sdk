@@ -57,25 +57,19 @@ export class CollateralVault {
     };
 
     getLockedCollateral = async (user: string) => {
-        return await this.contract.getLockedCollateral(user);
+        return await this.contract.functions['getLockedCollateral(address)'](user);
+    };
+
+    getLockedCollateralFromPosition = async (user: string, counterparty: string) => {
+        return await this.contract.functions['getLockedCollateral(address,address)'](user, counterparty);
     };
 
     getLockedCollateralInETH = async (user: string) => {
-        return await this.contract.getLockedCollateralInETH(user);
+        return await this.contract.functions['getLockedCollateralInETH(address)'](user);
     };
 
-    getLockedCollateralFromPosition = async (
-        party0: string,
-        party1: string
-    ) => {
-        return await this.contract.getLockedCollateral(party0, party1);
-    };
-
-    getLockedCollateralFromPositionInETH = async (
-        party0: string,
-        party1: string
-    ) => {
-        return await this.contract.getLockedCollateralInETH(party0, party1);
+    getLockedCollateralFromPositionInETH = async (user: string, counterparty: string) => {
+        return await this.contract.functions['getLockedCollateralInETH(address,address)'](user, counterparty);
     };
 }
 

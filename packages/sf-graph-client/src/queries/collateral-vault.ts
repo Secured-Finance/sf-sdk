@@ -29,7 +29,7 @@ export const COLLATERAL_VAULTS = gql`
 
 export const COLLATERAL_VAULT = gql`
     query CollateralVault($vaultId: Bytes!) {
-        collateralVault(id: $id) {
+        collateralVault(id: $vaultId) {
             id
             address
             tokenAddress
@@ -56,21 +56,23 @@ export const COLLATERAL_VAULT = gql`
 
 export const COLLATERAL_BOOK_FROM_VAULT = gql`
     query CollateralVault($vaultId: Bytes!, $address: Bytes!) {
-        collateralVault(id: $vaultId) {
+        collateralBooks(
+            where: {
+                vault_contains: $vaultId,
+                address_contains: $address,
+            }
+        ) {
             id
             address
-            tokenAddress
+            independentCollateral
+            lockedCollateral
             currency {
                 shortName
                 name
             }
-            collateralBooks(
-                filters: { address0: $address, or: { address1: $address } }
-            ) {
-                id
+            vault {
+                tokenAddress
                 address
-                independentCollateral
-                lockedCollateral
             }
         }
     }
@@ -78,45 +80,48 @@ export const COLLATERAL_BOOK_FROM_VAULT = gql`
 
 export const BILATERAL_POSITIONS_FROM_VAULT = gql`
     query CollateralVault($vaultId: Bytes!, $address: Bytes!) {
-        collateralVault(id: $vaultId) {
+        collateralVaultPositions(
+            where: {
+                vault_contains: $vaultId,
+                addresses_contains: $address,
+            }
+        ) {
             id
-            address
-            tokenAddress
+            address0
+            address1
+            vault {
+                tokenAddress
+                address
+            }
+            packedAddresses
+            lockedCollateral0
+            lockedCollateral1
             currency {
                 shortName
                 name
-            }
-            collateralPositions(
-                filters: { address0: $address, or: { address1: $address } }
-            ) {
-                id
-                address0
-                address1
-                packedAddresses
-                lockedCollateral0
-                lockedCollateral1
+                identifier
             }
         }
     }
 `;
 
 export const BILATERAL_POSITION_FROM_VAULT = gql`
-    query CollateralVault($vaultId: Bytes!, $positionId: Bytes!) {
-        collateralVault(id: $vaultId) {
+    query CollateralVault($positionId: Bytes!) {
+        collateralVaultPosition(id: $positionId) {
             id
-            address
-            tokenAddress
+            address0
+            address1
+            vault {
+                tokenAddress
+                address
+            }
+            packedAddresses
+            lockedCollateral0
+            lockedCollateral1
             currency {
                 shortName
                 name
-            }
-            collateralPosition(id: $positionId) {
-                id
-                address0
-                address1
-                packedAddresses
-                lockedCollateral0
-                lockedCollateral1
+                identifier
             }
         }
     }

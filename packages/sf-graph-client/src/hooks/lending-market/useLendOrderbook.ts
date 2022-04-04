@@ -28,10 +28,10 @@ export const useLendOrderbook = (
                             res.data.lendingMarket.lendOrderbook[index]
                                 .totalAmount
                         ).mul(toBN(assetUsdPrice));
-                        const usdAmount = usdAmountBN.toNumber();
+                        const usdAmount = usdAmountBN.toString();
                         const orderbookItem = Object.assign(
                             {},
-                            res.data.lendingMarket.borrowOrderbook[index],
+                            res.data.lendingMarket.lendOrderbook[index],
                             { usdAmount: usdAmount }
                         );
                         parsedOrderbook.push(orderbookItem);

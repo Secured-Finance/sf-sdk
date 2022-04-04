@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { client } from '../../client';
 import { TIME_SLOT } from '../../queries';
-import { generateCurrencyId, packAddresses } from '../../utils';
+import { generateTimeSlotId } from '../../utils';
 
 export const useTimeSlotInfo = (
     user: string,
@@ -12,18 +12,16 @@ export const useTimeSlotInfo = (
     day: number
 ) => {
     const [timeSlotInfo, setTimeSlotInfo] = useState();
-    const packedAddresses = packAddresses(user, counterparty);
-    const ccyId = generateCurrencyId(ccyShortName);
-    const timeSlotId =
-        packedAddresses +
-        '-' +
-        ccyId +
-        '-' +
-        year.toString() +
-        '-' +
-        month.toString() +
-        '-' +
-        day.toString();
+    const timeSlotId = generateTimeSlotId(
+        user, 
+        counterparty,
+        ccyShortName,
+        year,
+        month,
+        day
+    );
+
+    console.log(timeSlotId);
 
     const fetchTimeSlotInfo = useCallback(async () => {
         try {
@@ -40,17 +38,17 @@ export const useTimeSlotInfo = (
         } catch (err) {
             console.log(err);
         }
-    }, [user, counterparty, ccyShortName, year, month, day]);
+    }, [user, counterparty, ccyShortName, year, month, day, timeSlotId]);
 
     useEffect(() => {
         let isMounted = true;
-        if (client) {
+        if (client && timeSlotId) {
             fetchTimeSlotInfo();
         }
         return () => {
             isMounted = false;
         };
-    }, [client, user, counterparty, ccyShortName, year, month, day]);
+    }, [client, user, counterparty, ccyShortName, year, month, day, timeSlotId]);
 
     return timeSlotInfo;
 };

@@ -21,6 +21,7 @@ export {
     LENDING_LEND_ORDERBOOK,
     LENDING_MARKET_INFO,
     LENDING_TRADING_HISTORY,
+    LENDING_MARKETS_BY_CCY
 } from './lending-market';
 
 export {
@@ -32,7 +33,12 @@ export {
 } from './collateral-vault';
 
 export {
-    UNSETTLED_POSITIONS_FROM_COLLATERAL_AGGREGATOR,
+    UNSETTLED_POSITIONS,
     COLLATERAL_AGGREGATOR,
-    BILATERAL_POSITIONS_FROM_COLLATERAL_AGGREGATOR,
+    BILATERAL_POSITIONS,
 } from './collateral-aggregator';
+
+export {
+    CROSSCHAIN_ADDRESSES_BY_USER,
+    CROSSCHAIN_ADDRESS_BY_ID
+} from './crosschain-address-resolver';

@@ -30,9 +30,9 @@ const ROPSTEN_GATEWAY_TOKENS: CollateralVaultItem[] = [
 
 const LOCALHOST_GATEWAY_TOKENS: CollateralVaultItem[] = [
     {
-        address: DEFAULT_ADDRESS,
+        address: '0xbf5753ec480ec88b214ca7007068dd9d91ba6307',
         ccy: 'ETH',
-        tokenAddress: '0x0',
+        tokenAddress: '0x7d5a6b3c3e2e70fb13c2ad495a065f5c59b3bf15',
     },
 ];
 

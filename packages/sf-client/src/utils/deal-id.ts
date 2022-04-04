@@ -8,7 +8,13 @@ export const generatePrefix = (val: string) => {
     return hash.slice(0, 10);
 };
 
-export const generateId = (value: number | string, prefix: string) => {
+export const generateId = (value: number | string, prefixOrName: string) => {
+    let prefix;
+    if (utils.isHexString(prefixOrName)) {
+        prefix = prefixOrName;
+    } else {
+        prefix = generatePrefix(prefixOrName);
+    }
     let right = toBN(rightPad(prefix, 64));
     let left = toBN(leftPad(value, 64));
 

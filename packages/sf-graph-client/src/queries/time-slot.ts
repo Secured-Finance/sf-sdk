@@ -3,7 +3,7 @@ import { gql } from '@apollo/client';
 export const TIME_SLOTS = gql`
     query TimeSlots($address: Bytes!, $skip: Int!) {
         timeSlots(
-            filters: { address0: $address, or: { address1: $address } }
+            where: { addresses_contains: $address }
             skip: $skip
         ) {
             id

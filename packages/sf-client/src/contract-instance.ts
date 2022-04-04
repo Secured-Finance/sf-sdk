@@ -10,7 +10,6 @@ import {
     LendingMarketItem,
     LendingMarkets,
     lendingMarkets,
-    Market,
 } from './lib/lending-markets';
 import { addresses, ContractAddresses } from './lib/addresses';
 import { CollateralVault, contracts, LendingMarket } from './contracts';
@@ -43,33 +42,24 @@ export class ContractsInstance {
                 tokenAddress: vault.tokenAddress,
                 contract: new CollateralVault(
                     vault.ccy,
-                    this.wallet || this.provider,
+                    signerOrProvider,
                     networkId
                 ),
             };
         });
 
         lendingMarkets[networkId].map((marketItem: LendingMarketItem) => {
-            let markets;
-
-            marketItem.markets.map((lendingMarket: Market) => {
-                markets = {
-                    term: lendingMarket.term,
-                    termIndex: lendingMarket.termIndex,
-                    address: lendingMarket.address,
+            let market = Object.assign(
+                {
                     contract: new LendingMarket(
                         marketItem.ccy,
-                        lendingMarket.term,
-                        this.wallet || this.provider,
+                        marketItem.term,
+                        signerOrProvider,
                         networkId
                     ),
-                };
-            });
+            }, marketItem) as LendingMarketItem;
 
-            this.lendingMarkets[marketItem.ccy] = {
-                ccy: marketItem.ccy,
-                markets: markets,
-            };
+            this.lendingMarkets[marketItem.address] = market
         });
     }
 }

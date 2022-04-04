@@ -9,6 +9,7 @@ import PaymentAggregator from './PaymentAggregator';
 import ProductAddressResolver from './ProductAddressResolver';
 import MarkToMarket from './MarkToMarket';
 import TermStructure from './TermStructure';
+import CrosschainAddressResolver from './CrosschainAddressResolver';
 
 export {
     CollateralVault,
@@ -22,6 +23,7 @@ export {
     ProductAddressResolver,
     MarkToMarket,
     TermStructure,
+    CrosschainAddressResolver,
 };
 
 export const contracts: { [key: string]: any } = {
@@ -34,4 +36,5 @@ export const contracts: { [key: string]: any } = {
     ProductAddressResolver: ProductAddressResolver,
     MarkToMarket: MarkToMarket,
     TermStructure: TermStructure,
+    CrosschainAddressResolver: CrosschainAddressResolver,
 };

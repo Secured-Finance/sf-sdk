@@ -1,5 +1,27 @@
 import { gql } from '@apollo/client';
 
+export const LENDING_MARKETS_BY_CCY = gql`
+    query LendingMarkets($currency: Bytes!, $skip: Int!) {
+        lendingMarkets(
+            skip: $skip, 
+            orderBy: term,
+            where: {
+                currency_contains: $currency
+            }
+        ) {
+            id
+            marketRate
+            spread
+            term
+            spread
+            totalLiquidity
+            totalLiquidityInUSD
+            totalAvailableLiquidity
+            totalAvailableLiquidityInUSD
+        }
+    }
+`;
+
 export const LENDING_MARKET_INFO = gql`
     query LendingMarket($market: Bytes!) {
         lendingMarket(id: $market) {

@@ -21,8 +21,8 @@ export const UnsettledPositionMock: React.FC<MockComponentProps> = ({
         return <p>GraphQL Network Error</p>;
     }
 
-    return data.collateralAggregator
-        ? data.collateralAggregator.collateralPositions.map(
+    return data
+        ? data.collateralPositions.map(
               (item: UnsettledCollateral, index: number) => (
                   <div key={item.id}>
                       <p>{`Unsettled present value for ${item.address} is ${item.unsettledPV}`}</p>
@@ -46,8 +46,8 @@ export const BilateralNettingMock: React.FC<MockComponentProps> = ({
         return <p>GraphQL Network Error</p>;
     }
 
-    return data.collateralAggregator
-        ? data.collateralAggregator.bilateralPositions.map(
+    return data
+        ? data.bilateralPositions.map(
               (item: BilateralNetting) => (
                   <div key={item.id}>
                       {item.collateralNettings.map(

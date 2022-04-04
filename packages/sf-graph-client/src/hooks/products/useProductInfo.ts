@@ -3,9 +3,9 @@ import { client } from '../../client';
 import { PRODUCT } from '../../queries';
 import { generateProductId } from '../../utils';
 
-export const useProductInfo = (prefix: string) => {
+export const useProductInfo = (prefixOrName: string) => {
     const [product, setProduct] = useState();
-    const productId = generateProductId(prefix);
+    const productId = generateProductId(prefixOrName);
 
     const fetchProductInfo = useCallback(async () => {
         try {

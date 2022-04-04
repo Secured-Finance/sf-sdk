@@ -13,6 +13,8 @@ export {
     generateProductId,
     generateCurrencyId,
     generateTermId,
+    generateCrosschainAddressID,
+    generateTimeSlotId,
 } from './id';
 export {
     CurrencyQueryResponse,

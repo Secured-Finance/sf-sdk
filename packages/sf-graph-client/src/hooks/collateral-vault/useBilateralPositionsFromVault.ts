@@ -15,7 +15,7 @@ export const useBilateralPositionsFromVault = (vault: string, user: string) => {
         console.log(error);
     }
 
-    if (data?.collateralVault) {
-        return data.collateralVault;
+    if (data?.collateralVaultPositions) {
+        return data.collateralVaultPositions;
     }
 };

@@ -1,11 +1,13 @@
 import { SFClient } from './SF-Client';
-import { utils, Wallet } from 'ethers';
-import * as util from './utils';
+import { utils as ethersUtils, Wallet } from 'ethers';
 import { BaseProvider } from '@ethersproject/providers';
 
+import * as utils from './utils';
+export { utils };
+
 export class SecuredFinanceClient extends SFClient {
+    ethersUtils: any;
     utils: any;
-    util: any;
 
     /**
      * Creates an instance for accessing Secured Finance protocol on Ethereum chain.
@@ -15,7 +17,7 @@ export class SecuredFinanceClient extends SFClient {
      * @constructor
      * @param provider {Ethers provider, default on mainnet}
      * @param wallet {Ethers wallet instance}
-     * @notice utils {Ethers utils}
+     * @notice ethersUtils {Ethers utils}
      */
     constructor(
         provider: BaseProvider,
@@ -23,7 +25,7 @@ export class SecuredFinanceClient extends SFClient {
         options?: { defaultGas?: number; defaultGasPrice?: any }
     ) {
         super(provider, wallet, options);
+        this.ethersUtils = ethersUtils;
         this.utils = utils;
-        this.util = util;
     }
 }

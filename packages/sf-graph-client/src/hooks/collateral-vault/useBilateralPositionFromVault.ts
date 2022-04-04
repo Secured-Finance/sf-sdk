@@ -10,10 +10,9 @@ export const useBilateralPositionFromVault = (
 ) => {
     const packedAddresses = packAddresses(user, counterparty);
     const currencyId = generateCurrencyId(ccyShortName);
-    const positionId = packedAddresses + vault + '-' + currencyId;
+    const positionId = packedAddresses[0] + '-' + vault.toLowerCase() + '-' + currencyId;
 
     const variables = {
-        vaultId: vault.toLowerCase(),
         positionId: positionId,
     };
 
@@ -25,7 +24,7 @@ export const useBilateralPositionFromVault = (
         console.log(error);
     }
 
-    if (data?.collateralVault) {
-        return data.collateralVault;
+    if (data?.collateralVaultPosition) {
+        return data.collateralVaultPosition;
     }
 };

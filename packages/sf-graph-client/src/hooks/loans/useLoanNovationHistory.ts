@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { client } from '../../client';
 import { LOAN_NOVATION_HISTORY } from '../../queries';
 
-export const useLoanNovationHistory = (id: string, skip: number) => {
+export const useLoanNovationHistory = (id: string, skip: number = 0) => {
     const [novationHistory, setNovationHistory] = useState();
 
     const fetchLoanNovationHistory = useCallback(async () => {
@@ -15,8 +15,8 @@ export const useLoanNovationHistory = (id: string, skip: number) => {
                 },
                 fetchPolicy: 'cache-first',
             });
-            if (res?.data.loan.novationHistory) {
-                setNovationHistory(res?.data.loan.novationHistory);
+            if (res?.data.loanNovations) {
+                setNovationHistory(res?.data.loanNovations);
             }
         } catch (err) {
             console.log(err);

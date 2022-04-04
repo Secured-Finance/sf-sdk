@@ -1,7 +1,7 @@
 export interface OrderbookRow {
     rate: number;
     totalAmount: number;
-    usdAmount: number;
+    usdAmount: number | string;
 }
 
 export interface LoanQueryResponse {
