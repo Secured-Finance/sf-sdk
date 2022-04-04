@@ -92,9 +92,11 @@ function createCollateralBilateralPosition(
         if (flippedAddr) {
             bilateralPosition.address0 = address1
             bilateralPosition.address1 = address0
+            bilateralPosition.addresses = address1.toHex() + '-' + address0.toHex()
         } else {
             bilateralPosition.address0 = address0
             bilateralPosition.address1 = address1
+            bilateralPosition.addresses = address0.toHex() + '-' + address1.toHex()
         }
 
         bilateralPosition.packedAddresses = packedAddr
@@ -205,9 +207,11 @@ function createCollateralVaultPosition(
         if (flippedAddr) {
             vaultPosition.address0 = address1
             vaultPosition.address1 = address0
+            vaultPosition.addresses = address1.toHex() + '-' + address0.toHex()
         } else {
             vaultPosition.address0 = address0
             vaultPosition.address1 = address1
+            vaultPosition.addresses = address0.toHex() + '-' + address1.toHex()
         }
 
         vaultPosition.vault = vault.toHexString()

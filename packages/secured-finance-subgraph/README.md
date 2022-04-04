@@ -17,7 +17,7 @@ Follow the steps bellow to start the subgraph on a local machine
 
 * Clone the graph node from this [repository](https://github.com/graphprotocol/graph-node)
 * Run the docker container by executing `docker compose up` in the docker/ folder
-* Start local ethereum network using [Ganache] (https://github.com/trufflesuite/ganache)
+* Start local ethereum network using [Ganache](https://github.com/trufflesuite/ganache)
 * Deploy the Secured Finance Protocol [protocol](https://github.com/Secured-Finance/smart-contracts) localy by running deployment script or integation test
 * Run `yarn run create-local` to create a local subgraph on the graph node 
 * Run `yarn run deploy-local` to deploy the subgraph on the local graph node

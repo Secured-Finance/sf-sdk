@@ -8,7 +8,7 @@ dataSources:
     name: LoanV2
     network: mainnet
     source:
-      address: '0xf231d3904fB685F5D5440900373D8657dE386AB2'
+      address: '0x71c5fb4914e5D9F1756F6F9Bef320020145E6f76'
       abi: LoanV2
     mapping:
       kind: ethereum/events
@@ -41,7 +41,7 @@ dataSources:
     name: TermStructure
     network: mainnet
     source:
-      address: '0x50682610a1129A13045a5Fe659Cc585c0318A9f4'
+      address: '0xBb9c1fe31BF38B87727197e6fdFe84a45F132431'
       abi: TermStructure
     mapping:
       kind: ethereum/events
@@ -62,7 +62,7 @@ dataSources:
     name: ProductAddressResolver
     network: mainnet
     source:
-      address: '0x906987649b8f5784B959f6ADe5f6a110E70d013c'
+      address: '0x674e55dEFfef3d6621Af83fB2F8BEB10D5e96Cf9'
       abi: ProductAddressResolver
     mapping:
       kind: ethereum/events
@@ -81,7 +81,7 @@ dataSources:
     name: CurrencyController
     network: mainnet
     source:
-      address: '0x32c01519BA4DB126024a635A744c7DcD60c399ea'
+      address: '0xD5A3b0b7E1Bcd00260e644D623cacc625690c813'
       abi: CurrencyController
     mapping:
       kind: ethereum/events
@@ -112,7 +112,7 @@ dataSources:
     name: CloseOutNetting
     network: mainnet
     source:
-      address: '0x3Bd1881Ed23a02AA2265190DfbC660Ba72fF15E2'
+      address: '0x24de19E5A9A7b1089Fd27662A4CB8579B887290a'
       abi: CloseOutNetting
     mapping:
       kind: ethereum/events
@@ -133,7 +133,7 @@ dataSources:
     name: PaymentAggregator
     network: mainnet
     source:
-      address: '0xE783Ab1159931aCab8209e1Fcd2DDaB1C56eCe1a'
+      address: '0xC904506d6C52676d7A2572c5C76cb6bD3B33B58e'
       abi: PaymentAggregator
     mapping:
       kind: ethereum/events
@@ -158,7 +158,7 @@ dataSources:
     name: CollateralAggregator
     network: mainnet
     source:
-      address: '0x3AbA7f3F9682C5Fd7134FC82BFce94cA0f8D7823'
+      address: '0x3A622a4a83b832D422529185596F97cf1E718820'
       abi: CollateralAggregator
     mapping:
       kind: ethereum/events
@@ -210,7 +210,7 @@ dataSources:
     name: LendingMarketController
     network: mainnet
     source:
-      address: '0x73777Db2117d67CBF5975975d9c2514Fb010D3b4'
+      address: '0xfF57Ea13383B4284f749F718a889Af922B00B1a0'
       abi: LendingMarketController
       # startBlock: 10026125
     mapping:
@@ -230,7 +230,7 @@ dataSources:
     name: CrosschainAddressResolver
     network: mainnet
     source:
-      address: '0xC940F5C41135B99c6dcfCc6894b98dF7b9dc233A'
+      address: '0x9623EdC69b56FfED2928a2500aD7DD6f974Afa92'
       abi: CrosschainAddressResolver
     mapping:
       kind: ethereum/events
