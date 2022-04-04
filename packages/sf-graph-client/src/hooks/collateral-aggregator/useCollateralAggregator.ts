@@ -1,9 +1,9 @@
 import { useQuery } from '@apollo/client';
 import { COLLATERAL_AGGREGATOR } from '../../queries';
 
-export const useCollateralAggregator = (aggregator: string) => {
+export const useCollateralAggregator = () => {
     const variables = {
-        id: aggregator.toLowerCase(),
+        first: 1,
     };
 
     const { loading, error, data } = useQuery(COLLATERAL_AGGREGATOR, {
@@ -14,7 +14,7 @@ export const useCollateralAggregator = (aggregator: string) => {
         console.log(error);
     }
 
-    if (data?.collateralAggregator) {
-        return data.collateralAggregator;
+    if (data?.collateralAggregators) {
+        return data.collateralAggregators[0];
     }
 };

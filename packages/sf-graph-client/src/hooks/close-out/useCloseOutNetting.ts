@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { client } from '../../client';
 import { CLOSE_OUT_NETTING } from '../../queries';
-import { generateCurrencyId, packAddresses } from '../../utils';
+import { generateCloseOutNettingId } from '../../utils/id';
 
 export const useCloseOutNetting = (
     user: string,
@@ -9,9 +9,11 @@ export const useCloseOutNetting = (
     ccyShortName: string
 ) => {
     const [closeOutNetting, setCloseOutNetting] = useState();
-    const packedAddresses = packAddresses(user, counterparty);
-    const currencyId = generateCurrencyId(ccyShortName);
-    const closeOutNettingId = packedAddresses + '-' + currencyId;
+    const closeOutNettingId = generateCloseOutNettingId(
+        user,
+        counterparty,
+        ccyShortName
+    );
 
     const fetchCloseOutNetting = useCallback(async () => {
         try {

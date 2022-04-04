@@ -100,6 +100,19 @@ export default [
             {
                 indexed: true,
                 internalType: 'address',
+                name: 'crosschainAddressResolver',
+                type: 'address',
+            },
+        ],
+        name: 'CrosschainAddressResolverUpdated',
+        type: 'event',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
+                internalType: 'address',
                 name: 'controller',
                 type: 'address',
             },
@@ -186,18 +199,6 @@ export default [
                 name: 'addr',
                 type: 'address',
             },
-            {
-                indexed: false,
-                internalType: 'uint256',
-                name: 'id',
-                type: 'uint256',
-            },
-            {
-                indexed: false,
-                internalType: 'uint256',
-                name: 'amount',
-                type: 'uint256',
-            },
         ],
         name: 'Register',
         type: 'event',
@@ -234,6 +235,12 @@ export default [
                 internalType: 'uint256',
                 name: 'amount1',
                 type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'bool',
+                name: 'isSettled',
+                type: 'bool',
             },
         ],
         name: 'Release',
@@ -503,6 +510,19 @@ export default [
                 internalType: 'bool',
                 name: '',
                 type: 'bool',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'crosschainAddressResolver',
+        outputs: [
+            {
+                internalType: 'contract ICrosschainAddressResolver',
+                name: '',
+                type: 'address',
             },
         ],
         stateMutability: 'view',
@@ -1104,9 +1124,14 @@ export default [
     {
         inputs: [
             {
-                internalType: 'uint256',
-                name: 'id',
-                type: 'uint256',
+                internalType: 'string[]',
+                name: '_addresses',
+                type: 'string[]',
+            },
+            {
+                internalType: 'uint256[]',
+                name: '_chainIds',
+                type: 'uint256[]',
             },
         ],
         name: 'register',
@@ -1221,7 +1246,20 @@ export default [
                 type: 'address',
             },
         ],
-        name: 'setCurrencyControler',
+        name: 'setCrosschainAddressResolver',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '_addr',
+                type: 'address',
+            },
+        ],
+        name: 'setCurrencyController',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -1270,6 +1308,30 @@ export default [
         name: 'settleCollateral',
         outputs: [],
         stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '',
+                type: 'address',
+            },
+            {
+                internalType: 'bytes32',
+                name: '',
+                type: 'bytes32',
+            },
+        ],
+        name: 'unsettledCollateral',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
         type: 'function',
     },
     {

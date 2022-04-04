@@ -1,7 +1,6 @@
 import { BigNumber, getDefaultProvider, Signer, Wallet } from 'ethers';
 import { BaseProvider } from '@ethersproject/providers';
 
-import { toBytes32 } from './utils/string';
 import { NETWORKS } from './utils/networks';
 import { ContractsInstance } from './contract-instance';
 
@@ -35,7 +34,7 @@ export class SFClient {
         this.network = NETWORKS[this.networkId];
 
         const contractsInstance = new ContractsInstance();
-        await contractsInstance.init(this.provider, this.networkId);
+        await contractsInstance.init(this.wallet, this.networkId);
         this.contracts = contractsInstance;
     }
 }

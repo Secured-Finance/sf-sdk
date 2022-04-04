@@ -1,36 +1,20 @@
-import { useCallback, useEffect, useState } from 'react';
-import { client } from '../../client';
+import { useQuery } from '@apollo/client';
 import { COLLATERAL_VAULT } from '../../queries';
 
 export const useCollateralVault = (vault: string) => {
-    const [collateralVault, setCollateralVault] = useState();
+    const variables = {
+        vaultId: vault.toLowerCase(),
+    };
 
-    const fetchCollateralVault = useCallback(async () => {
-        try {
-            let res = await client.query({
-                query: COLLATERAL_VAULT,
-                variables: {
-                    vaultId: vault.toLowerCase(),
-                },
-                fetchPolicy: 'cache-first',
-            });
-            if (res?.data.collateralVault) {
-                setCollateralVault(res?.data.collateralVault);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [vault]);
+    const { loading, error, data } = useQuery(COLLATERAL_VAULT, {
+        variables: variables,
+    });
 
-    useEffect(() => {
-        let isMounted = true;
-        if (client) {
-            fetchCollateralVault();
-        }
-        return () => {
-            isMounted = false;
-        };
-    }, [client, vault]);
+    if (error) {
+        console.log(error);
+    }
 
-    return collateralVault;
+    if (data?.collateralVault) {
+        return data.collateralVault;
+    }
 };

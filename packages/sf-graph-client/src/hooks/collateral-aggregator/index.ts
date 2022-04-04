@@ -1,3 +1,3 @@
 export { useCollateralAggregator } from './useCollateralAggregator';
-export { useBilateralPositionFromCollateralAggregator } from './useBilateralPositionFromCollateralAggregator';
-export { useUnsettledPositionsFromCollateralAggregator } from './useUnsettledPositionsFromCollateralAggregator';
+export { useBilateralPosition } from './useBilateralPosition';
+export { useUnsettledPositions } from './useUnsettledPositions';

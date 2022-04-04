@@ -23,6 +23,15 @@ export {
     useTerms,
     useTimeSlotInfo,
     useTimeSlots,
+    useBilateralPosition,
+    useBilateralPositionFromVault,
+    useBilateralPositionsFromVault,
+    useCollateralAggregator,
+    useCollateralBookFromVault,
+    useCollateralVault,
+    useCrosschainAddressById,
+    useCrosschainAddressesByUser,
+    useUnsettledPositions,
 } from './hooks';
 
 export { utils, client };

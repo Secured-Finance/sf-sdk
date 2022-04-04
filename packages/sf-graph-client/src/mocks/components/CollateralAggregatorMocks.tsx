@@ -21,8 +21,8 @@ export const UnsettledPositionMock: React.FC<MockComponentProps> = ({
         return <p>GraphQL Network Error</p>;
     }
 
-    return data.collateralAggregator
-        ? data.collateralAggregator.collateralPositions.map(
+    return data
+        ? data.collateralPositions.map(
               (item: UnsettledCollateral, index: number) => (
                   <div key={item.id}>
                       <p>{`Unsettled present value for ${item.address} is ${item.unsettledPV}`}</p>
@@ -46,25 +46,21 @@ export const BilateralNettingMock: React.FC<MockComponentProps> = ({
         return <p>GraphQL Network Error</p>;
     }
 
-    return data.collateralAggregator
-        ? data.collateralAggregator.bilateralPositions.map(
-              (item: BilateralNetting) => (
-                  <div key={item.id}>
-                      {item.collateralNettings.map(
-                          (netting: CollateralNetting) => {
-                              return (
-                                  <div key={netting.currency.name}>
-                                      <p>{`Unsettled PV for ${item.address0} is ${netting.unsettled0PV}`}</p>
-                                      <p>{`Settled PV for ${item.address0} is ${netting.party0PV}`}</p>
-                                      <p>{`Unsettled PV for ${item.address1} is ${netting.unsettled1PV}`}</p>
-                                      <p>{`Settled PV for ${item.address1} is ${netting.party1PV}`}</p>
-                                      <p>{`Net PV for ${item.address0} and ${item.address1} is ${netting.netPV}`}</p>
-                                  </div>
-                              );
-                          }
-                      )}
-                  </div>
-              )
-          )
+    return data
+        ? data.bilateralPositions.map((item: BilateralNetting) => (
+              <div key={item.id}>
+                  {item.collateralNettings.map((netting: CollateralNetting) => {
+                      return (
+                          <div key={netting.currency.name}>
+                              <p>{`Unsettled PV for ${item.address0} is ${netting.unsettled0PV}`}</p>
+                              <p>{`Settled PV for ${item.address0} is ${netting.party0PV}`}</p>
+                              <p>{`Unsettled PV for ${item.address1} is ${netting.unsettled1PV}`}</p>
+                              <p>{`Settled PV for ${item.address1} is ${netting.party1PV}`}</p>
+                              <p>{`Net PV for ${item.address0} and ${item.address1} is ${netting.netPV}`}</p>
+                          </div>
+                      );
+                  })}
+              </div>
+          ))
         : null;
 };

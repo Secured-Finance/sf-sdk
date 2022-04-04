@@ -1,16 +1,12 @@
 import { LendingMarket } from '../contracts';
 import { DEFAULT_ADDRESS } from '../utils/constants';
 
-export interface LendingMarketItem {
-    ccy: string;
-    markets: Market[];
-}
-
 export interface LendingMarkets {
     [address: string]: LendingMarketItem;
 }
 
-export interface Market {
+export interface LendingMarketItem {
+    ccy: string;
     term: string;
     termIndex: string | number;
     address: string;
@@ -20,39 +16,33 @@ export interface Market {
 const MAINNET_GATEWAY_TOKENS: LendingMarketItem[] = [
     {
         ccy: 'ETH',
-        markets: [
-            {
-                term: '3 month',
-                termIndex: 0,
-                address: DEFAULT_ADDRESS,
-            },
-        ],
+        term: '3 month',
+        termIndex: 0,
+        address: DEFAULT_ADDRESS,
     },
 ];
 
 const ROPSTEN_GATEWAY_TOKENS: LendingMarketItem[] = [
     {
         ccy: 'ETH',
-        markets: [
-            {
-                term: '3 month',
-                termIndex: 0,
-                address: DEFAULT_ADDRESS,
-            },
-        ],
+        term: '3 month',
+        termIndex: 0,
+        address: DEFAULT_ADDRESS,
     },
 ];
 
 const LOCALHOST_GATEWAY_TOKENS: LendingMarketItem[] = [
     {
-        ccy: 'ETH',
-        markets: [
-            {
-                term: '3 month',
-                termIndex: 0,
-                address: DEFAULT_ADDRESS,
-            },
-        ],
+        ccy: 'FIL',
+        term: '3 month',
+        termIndex: 0,
+        address: '0xdf12940a13c08715ab481e97cb521c3b395be019',
+    },
+    {
+        ccy: 'FIL',
+        term: '6 month',
+        termIndex: 0,
+        address: '0xa288c2e22bb3e9ee324b0282e7c846ea71b2ec20',
     },
 ];
 

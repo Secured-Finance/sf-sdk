@@ -14,6 +14,20 @@ export class CollateralAggregator {
         );
     }
 
+    register = async () => {
+        return await this.contract.functions['register()']();
+    };
+
+    registerWithCrosschainAddresses = async (
+        addresses: string[],
+        chainIds: number[] | BigNumber[]
+    ) => {
+        return await this.contract.functions['register(string[],uint256[])'](
+            addresses,
+            chainIds
+        );
+    };
+
     checkRegisteredUser = async (user: string) => {
         return await this.contract.checkRegisteredUser(user);
     };

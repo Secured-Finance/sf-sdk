@@ -21,6 +21,11 @@ export default [
                 name: '_currencyController',
                 type: 'address',
             },
+            {
+                internalType: 'address',
+                name: '_WETH9',
+                type: 'address',
+            },
         ],
         stateMutability: 'nonpayable',
         type: 'constructor',
@@ -75,25 +80,44 @@ export default [
             {
                 indexed: false,
                 internalType: 'address',
-                name: 'party0',
+                name: 'from',
                 type: 'address',
             },
             {
                 indexed: false,
                 internalType: 'address',
-                name: 'party1',
+                name: 'to',
                 type: 'address',
             },
             {
                 indexed: false,
                 internalType: 'uint256',
-                name: 'amount0',
+                name: 'amount',
                 type: 'uint256',
+            },
+        ],
+        name: 'LiquidateIndependent',
+        type: 'event',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: 'address',
+                name: 'user',
+                type: 'address',
+            },
+            {
+                indexed: false,
+                internalType: 'address',
+                name: 'counterparty',
+                type: 'address',
             },
             {
                 indexed: false,
                 internalType: 'uint256',
-                name: 'amount1',
+                name: 'amount',
                 type: 'uint256',
             },
         ],
@@ -227,6 +251,19 @@ export default [
     },
     {
         inputs: [],
+        name: 'WETH9',
+        outputs: [
+            {
+                internalType: 'address',
+                name: '',
+                type: 'address',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
         name: 'ccy',
         outputs: [
             {
@@ -292,7 +329,7 @@ export default [
         ],
         name: 'deposit',
         outputs: [],
-        stateMutability: 'nonpayable',
+        stateMutability: 'payable',
         type: 'function',
     },
     {
@@ -606,5 +643,9 @@ export default [
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
+    },
+    {
+        stateMutability: 'payable',
+        type: 'receive',
     },
 ];

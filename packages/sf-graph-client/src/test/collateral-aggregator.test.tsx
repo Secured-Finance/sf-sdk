@@ -6,10 +6,7 @@ import {
     BilateralNettingMock,
 } from '../mocks/components';
 import { collateralAggregatorQueriesMock } from '../mocks';
-import {
-    BILATERAL_POSITIONS_FROM_COLLATERAL_AGGREGATOR,
-    UNSETTLED_POSITIONS_FROM_COLLATERAL_AGGREGATOR,
-} from '../queries';
+import { BILATERAL_POSITIONS, UNSETTLED_POSITIONS } from '../queries';
 import { expect } from 'chai';
 
 it('Should render unsettled collateral position component with network error query', async () => {
@@ -21,7 +18,7 @@ it('Should render unsettled collateral position component with network error que
     const testComponent = renderer.create(
         <MockedProvider mocks={collateralAggregatorQueriesMock}>
             <UnsettledPositionMock
-                query={UNSETTLED_POSITIONS_FROM_COLLATERAL_AGGREGATOR}
+                query={UNSETTLED_POSITIONS}
                 variables={variables}
             />
         </MockedProvider>
@@ -43,7 +40,7 @@ it('Should render mock unsettled collateral position component and succesfully g
     const testComponent = renderer.create(
         <MockedProvider mocks={collateralAggregatorQueriesMock}>
             <UnsettledPositionMock
-                query={UNSETTLED_POSITIONS_FROM_COLLATERAL_AGGREGATOR}
+                query={UNSETTLED_POSITIONS}
                 variables={variables}
             />
         </MockedProvider>
@@ -66,7 +63,7 @@ it('Should render mock unsettled collateral position component and succesfully g
     const testComponent = renderer.create(
         <MockedProvider mocks={collateralAggregatorQueriesMock}>
             <BilateralNettingMock
-                query={BILATERAL_POSITIONS_FROM_COLLATERAL_AGGREGATOR}
+                query={BILATERAL_POSITIONS}
                 variables={variables}
             />
         </MockedProvider>
