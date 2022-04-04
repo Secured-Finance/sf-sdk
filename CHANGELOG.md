@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4-beta.1](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.4-beta.0...v0.1.4-beta.1) (2022-04-04)
+
+
+### Bug Fixes
+
+* readme prettier fix, npm login for package publish workflow ([e24c8af](https://github.com/Secured-Finance/sf-sdk/commit/e24c8af7f095136b22628e46b1b9235f3243496b))
+
+
+
+
+
 ## [0.1.4-beta.0](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.2...v0.1.4-beta.0) (2022-04-04)
 
 
