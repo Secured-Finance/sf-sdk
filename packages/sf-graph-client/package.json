@@ -7,7 +7,7 @@
     "precompile": "rm -rf dist",
     "compile": "tsc -p tsconfig.json",
     "lint": "eslint lib/ src/ test/ --ext .ts",
-    "build": "npm run compile && tsc -b",
+    "build": "yarn run compile && tsc -b",
     "test": "ts-mocha src/*.test.{js,jsx,ts,tsx} src/**/*.test.{js,jsx,ts,tsx}",
     "posttest": "eslint . --ext .ts --config .eslintrc"
   },
@@ -33,7 +33,7 @@
     "@graphql-codegen/typescript-operations": "2.3.0",
     "@graphql-codegen/typescript-react-apollo": "3.2.5",
     "@types/mocha": "^9.1.0",
-    "@types/react": "^17.0.39",
+    "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.11",
     "@types/react-test-renderer": "^17.0.1",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
