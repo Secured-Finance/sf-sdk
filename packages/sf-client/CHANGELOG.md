@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6-beta.5](https://github.com/secured-finance/sf-sdk/compare/v0.1.6-beta.4...v0.1.6-beta.5) (2022-04-05)
+
+
+### Bug Fixes
+
+* replaced wallet with signer for client library, package.json for graph client ([b62fcf2](https://github.com/secured-finance/sf-sdk/commit/b62fcf2c6f27d8ebc853e4d4172c486ac58bccf1))
+
+
+
+
+
 ## [0.1.6-beta.4](https://github.com/secured-finance/sf-sdk/compare/v0.1.6-beta.3...v0.1.6-beta.4) (2022-04-04)
 
 **Note:** Version bump only for package @secured-finance/sf-client
