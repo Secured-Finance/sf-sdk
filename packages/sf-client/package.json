@@ -1,6 +1,6 @@
 {
   "name": "@secured-finance/sf-client",
-  "version": "0.1.6-beta.5",
+  "version": "0.1.6-beta.6",
   "description": "Javascript client library for the Secured Finance protocol",
   "main": "dist/index.js",
   "source": "./src/index.ts",

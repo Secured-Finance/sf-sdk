@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6-beta.6](https://github.com/secured-finance/sf-sdk/compare/v0.1.6-beta.5...v0.1.6-beta.6) (2022-04-05)
+
+
+### Bug Fixes
+
+* client library signer extended, added deployed ropsten addresses ([be98942](https://github.com/secured-finance/sf-sdk/commit/be9894257df3e9e90939620deb5af97ad8395167))
+
+
+
+
+
 ## [0.1.6-beta.5](https://github.com/secured-finance/sf-sdk/compare/v0.1.6-beta.4...v0.1.6-beta.5) (2022-04-05)
 
 
