@@ -1,24 +1,15 @@
 {
   "command": {
     "publish": {
-      "allowBranch": [
-        "main",
-        "development"
-      ],
-      "ignoreChanges": [
-        "ignored-file",
-        "*.md"
-      ],
-      "message": "chore(release): updated release notes and package versions",
+      "allowBranch": ["main", "development"],
+      "ignoreChanges": ["ignored-file", "*.md"],
+      "message": "chore(release): update release notes and package versions",
       "conventionalCommits": true,
       "registry": "https://npm.pkg.github.com"
     },
     "bootstrap": {
       "ignore": "component-*",
-      "npmClientArgs": [
-        "--no-package-lock",
-        "--legacy-peer-deps"
-      ]
+      "npmClientArgs": ["--no-package-lock", "--legacy-peer-deps"]
     }
   },
   "packages": [
