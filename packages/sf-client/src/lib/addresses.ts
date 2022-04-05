@@ -27,16 +27,16 @@ const MAINNET_ADDRESSES: ContractAddresses = {
 };
 
 const ROPSTEN_ADDRESSES: ContractAddresses = {
-    collateralAggregator: DEFAULT_ADDRESS,
-    loan: DEFAULT_ADDRESS,
-    lendingMarketController: DEFAULT_ADDRESS,
-    currencyController: DEFAULT_ADDRESS,
-    closeOutNetting: DEFAULT_ADDRESS,
-    paymentAggregator: DEFAULT_ADDRESS,
-    productAddressResolver: DEFAULT_ADDRESS,
+    collateralAggregator: '0x74B405Ec5dC45e5c7ea9d581D4A3907e60B724d4',
+    loan: '0x884254b0fc1e7bF2fE14177CFd63fd4f50a93528',
+    lendingMarketController: '0x80143B3C92b635cF8A5892899a6634eEE731cff5',
+    currencyController: '0x8682Fa83785B7F51A14101122CCb1DCb4A247B80',
+    closeOutNetting: '0xB26348D051da2dd8AE9402b3E3060A48F632114e',
+    paymentAggregator: '0xbf5c6641ab47307F48Ca74644011B8a76e37241b',
+    productAddressResolver: '0x3Bb006345DA94AA05BEBD0Ec70CBe6f28A017cEe',
     markToMarket: DEFAULT_ADDRESS,
-    termStructure: DEFAULT_ADDRESS,
-    crosschainAddressResolver: DEFAULT_ADDRESS,
+    termStructure: '0xB6AD6A3a356f208832e46aF4409e59B53287E44E',
+    crosschainAddressResolver: '0x93E72CE258eB0a47aC0de06f012162afa5D84f15',
 };
 
 const LOCALHOST_ADDRESSES: ContractAddresses = {

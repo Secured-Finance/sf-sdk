@@ -41,4 +41,4 @@ export { getLocalhostProvider, getProvider } from './providers';
 export { readPrivateKey, privateKeySigner, mnemonicSigner } from './signer';
 export { toBytes32 } from './string';
 export { hashPosition } from './timeslot';
-export { MarketOrder, SFContract } from './types';
+export { MarketOrder, SFContract, SignerOrProvider } from './types';

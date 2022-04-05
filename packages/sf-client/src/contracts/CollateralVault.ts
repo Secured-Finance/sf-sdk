@@ -1,15 +1,15 @@
-import { BigNumber, Contract, Signer } from 'ethers';
-import { BaseProvider } from '@ethersproject/providers';
+import { BigNumber, Contract } from 'ethers';
 import CollateralVaultAbi from '../lib/abis/CollateralVault';
 import { TxBase } from '../utils/eth-tx';
 import { getCollateralVaultByCcy } from '../utils/addresses';
+import { SignerOrProvider } from '../utils';
 
 export class CollateralVault {
     contract: Contract;
 
     constructor(
         ccy: string,
-        signerOrProvider: Signer | BaseProvider,
+        signerOrProvider: SignerOrProvider,
         network: number
     ) {
         let vault = getCollateralVaultByCcy(ccy, network);

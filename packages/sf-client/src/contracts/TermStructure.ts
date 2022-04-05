@@ -1,12 +1,12 @@
-import { BigNumber, Contract, Signer } from 'ethers';
-import { BaseProvider } from '@ethersproject/providers';
+import { BigNumber, Contract } from 'ethers';
 import TermStructureAbi from '../lib/abis/TermStructure';
 import { addresses } from '../lib/addresses';
+import { SignerOrProvider } from '../utils';
 
 export class TermStructure {
     contract: Contract;
 
-    constructor(signerOrProvider: Signer | BaseProvider, network: number) {
+    constructor(signerOrProvider: SignerOrProvider, network: number) {
         this.contract = new Contract(
             addresses[network].termStructure,
             TermStructureAbi,

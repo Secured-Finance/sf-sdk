@@ -11,8 +11,13 @@ require('dotenv/config');
 
     const sfClient = new SecuredFinanceClient(provider, signer, network);
 
-    const market = utils.getLendingMarketByCcyAndTerm('FIL', '3 month', 1337);
+    const market = utils.getLendingMarketByCcyAndTerm(
+        'FIL',
+        '3 month',
+        network.chainId
+    );
     const contractAddress = market.address;
+    console.log(sfClient.contracts.lendingMarkets);
     const contract =
         sfClient.contracts.lendingMarkets[contractAddress].contract;
 

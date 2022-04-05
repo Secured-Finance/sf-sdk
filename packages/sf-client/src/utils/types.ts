@@ -1,4 +1,5 @@
-import { BigNumber, Contract } from 'ethers';
+import { BigNumber, Contract, Signer } from 'ethers';
+import { BaseProvider, JsonRpcSigner } from '@ethersproject/providers';
 
 export interface SFContract {
     contract: Contract;
@@ -11,3 +12,5 @@ export interface MarketOrder {
     amount: number | BigNumber;
     rate: number | BigNumber;
 }
+
+export type SignerOrProvider = Signer | JsonRpcSigner | BaseProvider;

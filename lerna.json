@@ -12,8 +12,10 @@
       "npmClientArgs": ["--no-package-lock", "--legacy-peer-deps"]
     }
   },
-  "packages": ["packages/*"],
-  "version": "0.1.6-beta.0",
+  "packages": [
+    "packages/*"
+  ],
+  "version": "0.1.6-beta.6",
   "npmClient": "npm",
   "useWorkspaces": true
 }

@@ -12,7 +12,7 @@ export interface CollateralVaults {
     [address: string]: CollateralVaultItem;
 }
 
-const MAINNET_GATEWAY_TOKENS: CollateralVaultItem[] = [
+const MAINNET_COLLATERAL_VAULTS: CollateralVaultItem[] = [
     {
         address: DEFAULT_ADDRESS,
         ccy: 'ETH',
@@ -20,15 +20,15 @@ const MAINNET_GATEWAY_TOKENS: CollateralVaultItem[] = [
     },
 ];
 
-const ROPSTEN_GATEWAY_TOKENS: CollateralVaultItem[] = [
+const ROPSTEN_COLLATERAL_VAULTS: CollateralVaultItem[] = [
     {
-        address: DEFAULT_ADDRESS,
+        address: '0x62E09A147445AF26EDB7a67F51AE11E09eD37407',
         ccy: 'ETH',
-        tokenAddress: '0x0',
+        tokenAddress: '0x088E36970FC2222b244c0480671171e7E7C3a9eA',
     },
 ];
 
-const LOCALHOST_GATEWAY_TOKENS: CollateralVaultItem[] = [
+const LOCALHOST_COLLATERAL_VAULTS: CollateralVaultItem[] = [
     {
         address: '0xbf5753ec480ec88b214ca7007068dd9d91ba6307',
         ccy: 'ETH',
@@ -37,7 +37,7 @@ const LOCALHOST_GATEWAY_TOKENS: CollateralVaultItem[] = [
 ];
 
 export const collateralVaults: { [key: number]: CollateralVaultItem[] } = {
-    1: MAINNET_GATEWAY_TOKENS,
-    3: ROPSTEN_GATEWAY_TOKENS,
-    1337: LOCALHOST_GATEWAY_TOKENS,
+    1: MAINNET_COLLATERAL_VAULTS,
+    3: ROPSTEN_COLLATERAL_VAULTS,
+    1337: LOCALHOST_COLLATERAL_VAULTS,
 };

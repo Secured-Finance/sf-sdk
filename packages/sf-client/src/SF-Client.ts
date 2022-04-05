@@ -1,5 +1,5 @@
 import { BigNumber, getDefaultProvider, Signer } from 'ethers';
-import { BaseProvider } from '@ethersproject/providers';
+import { BaseProvider, JsonRpcSigner } from '@ethersproject/providers';
 import { Network } from '@ethersproject/networks';
 
 import { NETWORKS } from './utils/networks';
@@ -17,7 +17,7 @@ export class SFClient {
 
     constructor(
         provider: BaseProvider,
-        wallet?: Signer,
+        wallet?: Signer | JsonRpcSigner,
         network?: Network,
         options?: { defaultGas?: number; defaultGasPrice?: any }
     ) {
@@ -31,8 +31,10 @@ export class SFClient {
         this.networkId = network.chainId;
         this.network = NETWORKS[this.networkId];
 
-        const contractsInstance = new ContractsInstance();
-        contractsInstance.init(this.wallet, this.networkId);
+        const contractsInstance = new ContractsInstance(
+            wallet,
+            network.chainId
+        );
         this.contracts = contractsInstance;
     }
 }
