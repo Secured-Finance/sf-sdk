@@ -1,12 +1,12 @@
-import { Contract, Signer } from 'ethers';
-import { BaseProvider } from '@ethersproject/providers';
+import { Contract } from 'ethers';
+import { SignerOrProvider } from '../utils';
 import CloseOutNettingAbi from '../lib/abis/CloseOutNetting';
 import { addresses } from '../lib/addresses';
 
 export class CloseOutNetting {
     contract: Contract;
 
-    constructor(signerOrProvider: Signer | BaseProvider, network: number) {
+    constructor(signerOrProvider: SignerOrProvider, network: number) {
         this.contract = new Contract(
             addresses[network].closeOutNetting,
             CloseOutNettingAbi,

@@ -1,12 +1,12 @@
-import { Contract, Signer } from 'ethers';
-import { BaseProvider } from '@ethersproject/providers';
+import { Contract } from 'ethers';
 import ProductAddressResolverAbi from '../lib/abis/ProductAddressResolver';
 import { addresses } from '../lib/addresses';
+import { SignerOrProvider } from '../utils';
 
 export class ProductAddressResolver {
     contract: Contract;
 
-    constructor(signerOrProvider: Signer | BaseProvider, network: number) {
+    constructor(signerOrProvider: SignerOrProvider, network: number) {
         this.contract = new Contract(
             addresses[network].productAddressResolver,
             ProductAddressResolverAbi,

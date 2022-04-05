@@ -1,6 +1,3 @@
-import { Signer } from 'ethers';
-import { BaseProvider } from '@ethersproject/providers';
-
 import {
     CollateralVaultItem,
     CollateralVaults,
@@ -13,6 +10,7 @@ import {
 } from './lib/lending-markets';
 import { addresses, ContractAddresses } from './lib/addresses';
 import { CollateralVault, contracts, LendingMarket } from './contracts';
+import { SignerOrProvider } from './utils';
 
 export class ContractsInstance {
     addresses: ContractAddresses;
@@ -20,12 +18,8 @@ export class ContractsInstance {
     collateralVaults: CollateralVaults = {};
     [contract: string]: any;
 
-    async init(
-        signerOrProvider: Signer | BaseProvider,
-        networkId?: number
-    ): Promise<void> {
+    constructor(signerOrProvider: SignerOrProvider, networkId?: number) {
         this.addresses = addresses[networkId];
-
         const contractForEnv = contracts;
 
         Object.keys(contractForEnv).forEach(contract => {

@@ -1,4 +1,5 @@
 import { utils } from 'ethers/lib/ethers';
+import { DEFAULT_ADDRESS } from '.';
 import {
     CollateralVaultItem,
     collateralVaults,
@@ -48,7 +49,13 @@ export const getCollateralVaultAddressByCcy = (
     ccy: string,
     networkID: number
 ): string => {
-    return getCollateralVaultByCcy(ccy, networkID).address;
+    const vault = getCollateralVaultByCcy(ccy, networkID);
+
+    if (vault) {
+        return vault.address;
+    } else {
+        return DEFAULT_ADDRESS;
+    }
 };
 
 export const getLendingMarketByCcyAndTerm = (
@@ -66,5 +73,11 @@ export const getLendingMarketAddressByCcyAndTerm = (
     term: string,
     networkID: number
 ): string => {
-    return getLendingMarketByCcyAndTerm(ccy, term, networkID).address;
+    const lendingMarket = getLendingMarketByCcyAndTerm(ccy, term, networkID);
+
+    if (lendingMarket) {
+        return lendingMarket.address;
+    } else {
+        return DEFAULT_ADDRESS;
+    }
 };

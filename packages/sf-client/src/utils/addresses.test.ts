@@ -6,6 +6,7 @@ import {
 } from './addresses';
 import assert = require('assert');
 import { DEFAULT_ADDRESS } from './constants';
+import { addresses } from '../lib/addresses';
 
 describe('Check addresses utils functions', function () {
     const userAddress: string = '0x8f4db50f2eb35016bd0e35efd18db15bc46419cb';
@@ -36,11 +37,10 @@ describe('Check addresses utils functions', function () {
         assert.equal(result, expectedResult);
 
         result = getCollateralVaultAddressByCcy('ETH', ropstenNetworkID);
-        assert.equal(result, DEFAULT_ADDRESS);
+        assert.equal(result, '0x62E09A147445AF26EDB7a67F51AE11E09eD37407');
 
-        assert.throws(() => {
-            getCollateralVaultAddressByCcy('FIL', mainnetNetworkID);
-        });
+        result = getCollateralVaultAddressByCcy('FIL', ropstenNetworkID);
+        assert.equal(result, DEFAULT_ADDRESS);
     });
 
     it('Try get lending market addresses by currency and term, check addresses', async () => {
@@ -59,12 +59,11 @@ describe('Check addresses utils functions', function () {
         );
         assert.equal(result, DEFAULT_ADDRESS);
 
-        assert.throws(() => {
-            getLendingMarketAddressByCcyAndTerm(
-                'BTC',
-                '1 year',
-                mainnetNetworkID
-            );
-        });
+        result = getLendingMarketAddressByCcyAndTerm(
+            'BTC',
+            '1 year',
+            ropstenNetworkID
+        );
+        assert.equal(result, DEFAULT_ADDRESS);
     });
 });
