@@ -1,4 +1,3 @@
-import { utils } from 'ethers/lib/ethers';
 import assert = require('assert');
 import { timeSlotPosition } from './time-slot';
 import { timeSlotPositionByTimestamp } from '.';

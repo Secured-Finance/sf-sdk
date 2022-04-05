@@ -16,7 +16,7 @@
     "checkJs": true
   },
   "include": ["src"],
-  "exclude": ["node_modules/**/*"],
+  "exclude": ["node_modules/**/*", "src/**/*test.tsx"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"

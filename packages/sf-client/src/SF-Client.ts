@@ -1,5 +1,6 @@
-import { BigNumber, getDefaultProvider, Signer, Wallet } from 'ethers';
+import { BigNumber, getDefaultProvider, Signer } from 'ethers';
 import { BaseProvider } from '@ethersproject/providers';
+import { Network } from '@ethersproject/networks';
 
 import { NETWORKS } from './utils/networks';
 import { ContractsInstance } from './contract-instance';
@@ -11,12 +12,13 @@ export class SFClient {
     defaultGas: number;
     defaultGasPrice: number;
     network: string;
-    wallet: Wallet;
+    wallet: Signer;
     contracts: ContractsInstance;
 
     constructor(
         provider: BaseProvider,
-        wallet?: Wallet,
+        wallet?: Signer,
+        network?: Network,
         options?: { defaultGas?: number; defaultGasPrice?: any }
     ) {
         this.defaultGas = options?.defaultGas || 6000000;
@@ -25,16 +27,12 @@ export class SFClient {
         this.wallet = wallet;
 
         this.provider = provider || getDefaultProvider();
-    }
-
-    async init(): Promise<void> {
-        const network = await this.provider.getNetwork();
 
         this.networkId = network.chainId;
         this.network = NETWORKS[this.networkId];
 
         const contractsInstance = new ContractsInstance();
-        await contractsInstance.init(this.wallet, this.networkId);
+        contractsInstance.init(this.wallet, this.networkId);
         this.contracts = contractsInstance;
     }
 }
