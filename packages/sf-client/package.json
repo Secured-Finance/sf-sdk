@@ -8,7 +8,7 @@
     "precompile": "rm -rf dist",
     "compile": "tsc -p tsconfig.json",
     "lint": "eslint lib/ src/ test/ --ext .ts",
-    "build": "yarn run compile && tsc -b",
+    "build": "npm run compile && tsc -b",
     "test": "ts-mocha src/*.test.ts src/**/*.test.ts",
     "posttest": "eslint . --ext .ts --config .eslintrc"
   },
