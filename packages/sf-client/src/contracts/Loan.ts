@@ -1,13 +1,13 @@
-import { Contract } from 'ethers';
+import { Contract, Signer } from 'ethers';
 import LoanAbi from '../lib/abis/Loan';
 import { addresses } from '../lib/addresses';
 import { TxBase } from '../utils/eth-tx';
-import { SignerOrProvider } from '../utils';
+import { Provider } from '@ethersproject/providers';
 
 export class Loan {
     contract: Contract;
 
-    constructor(signerOrProvider: SignerOrProvider, network: number) {
+    constructor(signerOrProvider: Signer | Provider, network: number) {
         this.contract = new Contract(
             addresses[network].loan,
             LoanAbi,

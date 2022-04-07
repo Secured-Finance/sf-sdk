@@ -1,6 +1,6 @@
 import { SFClient } from './SF-Client';
 import { Signer, utils as ethersUtils } from 'ethers';
-import { BaseProvider } from '@ethersproject/providers';
+import { Provider } from '@ethersproject/providers';
 import { Network } from '@ethersproject/networks';
 
 import * as utils from './utils';
@@ -16,17 +16,16 @@ export class SecuredFinanceClient extends SFClient {
      * const {SecuredFinanceClient} = require('SecuredFinanceClient');
      * const sfClient = new SecuredFinanceClient();
      * @constructor
-     * @param provider {Ethers provider, default on mainnet}
-     * @param wallet {Ethers wallet instance}
+     * @param signerOrProvider {Ethers provider or signer}
+     * @param network {Ethers provider network object}
      * @notice ethersUtils {Ethers utils}
      */
     constructor(
-        provider: BaseProvider,
-        wallet?: Signer,
+        signerOrProvider: Signer | Provider,
         network?: Network,
         options?: { defaultGas?: number; defaultGasPrice?: any }
     ) {
-        super(provider, wallet, network, options);
+        super(signerOrProvider, network, options);
         this.ethersUtils = ethersUtils;
         this.utils = utils;
     }

@@ -1,13 +1,14 @@
-import { Contract } from 'ethers';
+import { Contract, Signer } from 'ethers';
 import LendingMarketControllerAbi from '../lib/abis/LendingMarketController';
 import { TxBase } from '../utils/eth-tx';
 import { addresses } from '../lib/addresses';
-import { MarketOrder, SignerOrProvider } from '../utils/types';
+import { MarketOrder } from '../utils/types';
+import { Provider } from '@ethersproject/providers';
 
 export class LendingMarketController {
     contract: Contract;
 
-    constructor(signerOrProvider: SignerOrProvider, network: number) {
+    constructor(signerOrProvider: Signer | Provider, network: number) {
         this.contract = new Contract(
             addresses[network].lendingMarketController,
             LendingMarketControllerAbi,

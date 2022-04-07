@@ -1,12 +1,12 @@
-import { BigNumber, Contract } from 'ethers';
+import { BigNumber, Contract, Signer } from 'ethers';
 import CollateralAggregatorAbi from '../lib/abis/CollateralAggregator';
 import { addresses } from '../lib/addresses';
-import { SignerOrProvider } from '../utils';
+import { Provider } from '@ethersproject/providers';
 
 export class CollateralAggregator {
     contract: Contract;
 
-    constructor(signerOrProvider: SignerOrProvider, network: number) {
+    constructor(signerOrProvider: Signer | Provider, network: number) {
         this.contract = new Contract(
             addresses[network].collateralAggregator,
             CollateralAggregatorAbi,

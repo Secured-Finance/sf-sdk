@@ -1,8 +1,8 @@
-import { BigNumber, Contract } from 'ethers';
+import { BigNumber, Contract, Signer } from 'ethers';
 import LendingMarketAbi from '../lib/abis/LendingMarket';
 import { TxBase } from '../utils/eth-tx';
 import { getLendingMarketByCcyAndTerm } from '../utils/addresses';
-import { SignerOrProvider } from '../utils';
+import { Provider } from '@ethersproject/providers';
 
 export class LendingMarket {
     contract: Contract;
@@ -10,7 +10,7 @@ export class LendingMarket {
     constructor(
         ccy: string,
         term: string,
-        signerOrProvider: SignerOrProvider,
+        signerOrProvider: Signer | Provider,
         network: number
     ) {
         let marketAddress = getLendingMarketByCcyAndTerm(ccy, term, network);
