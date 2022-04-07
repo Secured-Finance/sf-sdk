@@ -16,12 +16,14 @@ require('dotenv/config');
     );
     let network = await ropsten.getNetwork();
 
-    const sfClient = new SecuredFinanceClient(ropsten, wallet, network);
+    const sfClient = new SecuredFinanceClient(ropsten, network);
     const contracts = sfClient.contracts;
 
-    let address = await contracts.CrosschainAddressResolver.getUserAddress(
+    let address = await contracts.crosschainAddressResolver.getUserAddress(
         '0x8f4db50f2eb35016bd0e35efd18db15bc46419cb',
         0
     );
+
     console.log(address);
+    console.log(await sfClient.getBorrowYieldCurve('FIL'));
 })();

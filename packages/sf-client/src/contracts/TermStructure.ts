@@ -15,27 +15,27 @@ export class TermStructure {
     }
 
     getTerm = async (termIndex: number | BigNumber) => {
-        return await this.contract.getTerm(termIndex);
+        return this.contract.getTerm(termIndex);
     };
 
     getTermSchedule = async (termIndex: number | BigNumber) => {
-        return await this.contract.getTermSchedule(termIndex);
+        return this.contract.getTermSchedule(termIndex);
     };
 
     getNumDays = async (termIndex: number | BigNumber) => {
-        return await this.contract.getNumDays(termIndex);
+        return this.contract.getNumDays(termIndex);
     };
 
     getDfFrac = async (termIndex: number | BigNumber) => {
-        return await this.contract.getDfFrac(termIndex);
+        return this.contract.getDfFrac(termIndex);
     };
 
     getNumPayments = async (termIndex: number | BigNumber) => {
-        return await this.contract.getNumPayments(termIndex);
+        return this.contract.getNumPayments(termIndex);
     };
 
     isSupportedTerm = async (termIndex: number | BigNumber) => {
-        return await this.contract.isSupportedTerm(termIndex);
+        return this.contract.isSupportedTerm(termIndex);
     };
 
     getTermsForProductAndCcy = async (
@@ -43,7 +43,7 @@ export class TermStructure {
         ccy: string,
         isSort: boolean
     ) => {
-        return await this.contract.getTermsForProductAndCcy(
+        return this.contract.getTermsForProductAndCcy(
             productPrefix,
             ccy,
             isSort

@@ -9,10 +9,10 @@ require('dotenv/config');
     let signer = provider.getSigner();
     let network = await provider.getNetwork();
 
-    const sfClient = new SecuredFinanceClient(provider, wallet, network);
+    const sfClient = new SecuredFinanceClient(signer, network);
 
     const user = '0x8f4db50f2eb35016bd0e35efd18db15bc46419cb';
-    const contract = sfClient.contracts.CollateralAggregator;
+    const contract = sfClient.contracts.collateralAggregator;
 
     let vaults = await contract.getUsedVaults(user);
     console.log(vaults);

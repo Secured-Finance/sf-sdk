@@ -1,4 +1,4 @@
-import { BigNumber, Contract, Signer } from 'ethers';
+import { BigNumber, Contract, Overrides, Signer } from 'ethers';
 import CollateralAggregatorAbi from '../lib/abis/CollateralAggregator';
 import { addresses } from '../lib/addresses';
 import { Provider } from '@ethersproject/providers';
@@ -14,34 +14,36 @@ export class CollateralAggregator {
         );
     }
 
-    register = async () => {
-        return await this.contract.functions['register()']();
+    register = async (options?: Overrides): Promise<void> => {
+        return this.contract.functions['register()'](options) as Promise<void>;
     };
 
     registerWithCrosschainAddresses = async (
         addresses: string[],
-        chainIds: number[] | BigNumber[]
+        chainIds: number[] | BigNumber[],
+        options?: Overrides
     ) => {
-        return await this.contract.functions['register(string[],uint256[])'](
+        return this.contract.functions['register(string[],uint256[])'](
             addresses,
-            chainIds
+            chainIds,
+            options
         );
     };
 
     checkRegisteredUser = async (user: string) => {
-        return await this.contract.checkRegisteredUser(user);
+        return this.contract.checkRegisteredUser(user);
     };
 
     getTotalUnsettledExp = async (user: string) => {
-        return await this.contract.getTotalUnsettledExp(user);
+        return this.contract.getTotalUnsettledExp(user);
     };
 
     getUnsettledCoverage = async (user: string) => {
-        return await this.contract.getUnsettledCoverage(user);
+        return this.contract.getUnsettledCoverage(user);
     };
 
     getNetAndTotalPV = async (party0: string, party1: string) => {
-        return await this.contract.getNetAndTotalPV(party0, party1);
+        return this.contract.getNetAndTotalPV(party0, party1);
     };
 
     isCoveredUnsettled = async (
@@ -49,7 +51,7 @@ export class CollateralAggregator {
         ccy: string,
         unsettledExp?: number | BigNumber
     ) => {
-        return await this.contract.isCoveredUnsettled(user, ccy, unsettledExp);
+        return this.contract.isCoveredUnsettled(user, ccy, unsettledExp);
     };
 
     isCovered = async (
@@ -60,7 +62,7 @@ export class CollateralAggregator {
         party1PV: number | BigNumber,
         isSettled: boolean
     ) => {
-        return await this.contract.isCovered(
+        return this.contract.isCovered(
             party0,
             party1,
             ccy,
@@ -71,41 +73,37 @@ export class CollateralAggregator {
     };
 
     getMaxCollateralBookWidthdraw = async (user: string) => {
-        return await this.contract.getMaxCollateralBookWidthdraw(user);
+        return this.contract.getMaxCollateralBookWidthdraw(user);
     };
-
     getMaxCollateralWidthdraw = async (party0: string, party1: string) => {
-        return await this.contract.getMaxCollateralWidthdraw(party0, party1);
+        return this.contract.getMaxCollateralWidthdraw(party0, party1);
     };
 
     getRebalanceCollateralAmounts = async (party0: string, party1: string) => {
-        return await this.contract.getRebalanceCollateralAmounts(
-            party0,
-            party1
-        );
+        return this.contract.getRebalanceCollateralAmounts(party0, party1);
     };
 
     getCoverage = async (party0: string, party1: string) => {
-        return await this.contract.getCoverage(party0, party1);
+        return this.contract.getCoverage(party0, party1);
     };
 
     getCcyExposures = async (party0: string, party1: string, ccy: string) => {
-        return await this.contract.getCcyExposures(party0, party1, ccy);
+        return this.contract.getCcyExposures(party0, party1, ccy);
     };
 
     getExposedCurrencies = async (party0: string, party1: string) => {
-        return await this.contract.getExposedCurrencies(party0, party1);
+        return this.contract.getExposedCurrencies(party0, party1);
     };
 
     getUsedVaultsInPosition = async (party0: string, party1: string) => {
-        return await this.contract.functions['getUsedVaults(address, address)'](
+        return this.contract.functions['getUsedVaults(address, address)'](
             party0,
             party1
         );
     };
 
     getUsedVaults = async (user: string) => {
-        return await this.contract.functions['getUsedVaults(address)'](user);
+        return this.contract.functions['getUsedVaults(address)'](user);
     };
 }
 

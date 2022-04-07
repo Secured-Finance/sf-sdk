@@ -1,4 +1,4 @@
-import { BigNumber, Contract, Signer } from 'ethers';
+import { BigNumber, Contract, Overrides, Signer } from 'ethers';
 import LendingMarketAbi from '../lib/abis/LendingMarket';
 import { TxBase } from '../utils/eth-tx';
 import { getLendingMarketByCcyAndTerm } from '../utils/addresses';
@@ -23,61 +23,61 @@ export class LendingMarket {
     }
 
     getOrder = async (orderID: number | BigNumber) => {
-        return await this.contract.getOrder(orderID);
+        return this.contract.getOrder(orderID);
     };
 
     getOrderFromTree = async (orderID: number | BigNumber) => {
-        return await this.contract.getOrderFromTree(orderID);
+        return this.contract.getOrderFromTree(orderID);
     };
 
     getLastOrderID = async () => {
-        return await this.contract.last_order_id();
+        return this.contract.last_order_id();
     };
 
     getLendingMarketCurrency = async () => {
-        return await this.contract.MarketCcy();
+        return this.contract.MarketCcy();
     };
 
     getLendingMarketTerm = async () => {
-        return await this.contract.MarketTerm();
+        return this.contract.MarketTerm();
     };
 
     getMaker = async (orderID: number | BigNumber) => {
-        return await this.contract.getMaker(orderID);
+        return this.contract.getMaker(orderID);
     };
 
     getBorrowRate = async () => {
-        return await this.contract.getBorrowRate();
+        return this.contract.getBorrowRate();
     };
 
     getLendRate = async () => {
-        return await this.contract.getLendRate();
+        return this.contract.getLendRate();
     };
 
     getMidRate = async () => {
-        return await this.contract.getMidRate();
+        return this.contract.getMidRate();
     };
 
-    cancelOrder = async (orderID: number | BigNumber, txParams?: TxBase) => {
-        return await this.contract.cancelOrder(orderID);
+    cancelOrder = async (orderID: number | BigNumber, options?: Overrides) => {
+        return this.contract.cancelOrder(orderID);
     };
 
     makeOrder = async (
         side: number,
         amount: number | BigNumber,
         rate: number | BigNumber,
-        txParams?: TxBase
+        options?: Overrides
     ) => {
-        return await this.contract.makeOrder(side, amount, rate, txParams);
+        return this.contract.makeOrder(side, amount, rate, options);
     };
 
     takeOrder = async (
         side: number,
         orderID: number | BigNumber,
         amount: number | BigNumber,
-        txParams?: TxBase
+        options?: Overrides
     ) => {
-        return await this.contract.takeOrder(side, orderID, amount, txParams);
+        return this.contract.takeOrder(side, orderID, amount, options);
     };
 
     matchOrders = async (
@@ -85,16 +85,16 @@ export class LendingMarket {
         amount: number | BigNumber,
         rate: number | BigNumber
     ) => {
-        return await this.contract.matchOrders(side, amount, rate);
+        return this.contract.matchOrders(side, amount, rate);
     };
 
     order = async (
         side: number,
         amount: number | BigNumber,
         rate: number | BigNumber,
-        txParams?: TxBase
+        options?: Overrides
     ) => {
-        return await this.contract.order(side, amount, rate, txParams);
+        return this.contract.order(side, amount, rate, options);
     };
 }
 

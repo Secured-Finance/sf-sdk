@@ -15,27 +15,27 @@ export class ProductAddressResolver {
     }
 
     getProductContract = async (prefix: string) => {
-        return await this.contract.getProductContract(prefix);
+        return this.contract.getProductContract(prefix);
     };
 
     getProductContractByDealId = async (dealID: string) => {
-        return await this.contract.getProductContractByDealId(dealID);
+        return this.contract.getProductContractByDealId(dealID);
     };
 
     getControllerContract = async (prefix: string) => {
-        return await this.contract.getControllerContract(prefix);
+        return this.contract.getControllerContract(prefix);
     };
 
     getControllerContractByDealId = async (dealID: string) => {
-        return await this.contract.getControllerContractByDealId(dealID);
+        return this.contract.getControllerContractByDealId(dealID);
     };
 
     isSupportedProduct = async (prefix: string) => {
-        return await this.contract.isSupportedProduct(prefix);
+        return this.contract.isSupportedProduct(prefix);
     };
 
     isSupportedProductByDealId = async (dealID: string) => {
-        return await this.contract.isSupportedProductByDealId(dealID);
+        return this.contract.isSupportedProductByDealId(dealID);
     };
 }
 

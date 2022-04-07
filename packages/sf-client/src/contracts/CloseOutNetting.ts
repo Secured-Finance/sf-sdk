@@ -19,11 +19,11 @@ export class CloseOutNetting {
         party1: string,
         ccy: string
     ) => {
-        return await this.contract.getCloseOutPayment(party0, party1, ccy);
+        return this.contract.getCloseOutPayment(party0, party1, ccy);
     };
 
     checkDefaultStatus = async (user: string) => {
-        return await this.contract.checkDefault(user);
+        return this.contract.checkDefault(user);
     };
 }
 

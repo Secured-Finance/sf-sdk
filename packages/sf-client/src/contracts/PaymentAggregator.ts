@@ -1,4 +1,4 @@
-import { BigNumber, Contract, Signer } from 'ethers';
+import { BigNumber, Contract, Overrides, Signer } from 'ethers';
 import PaymentAggregatorAbi from '../lib/abis/PaymentAggregator';
 import { addresses } from '../lib/addresses';
 import { TxBase } from '../utils/eth-tx';
@@ -22,16 +22,16 @@ export class PaymentAggregator {
         timestamp: number | BigNumber,
         payment: number | BigNumber,
         txHash: string,
-        txParams: TxBase
+        options?: Overrides
     ) => {
-        return await this.contract.verifyPayment(
+        return this.contract.verifyPayment(
             verifier,
             counterparty,
             ccy,
             timestamp,
             payment,
             txHash,
-            txParams
+            options
         );
     };
 
@@ -41,15 +41,15 @@ export class PaymentAggregator {
         ccy: string,
         timestamp: number | BigNumber,
         txHash: string,
-        txParams: TxBase
+        options?: Overrides
     ) => {
-        return await this.contract.settlePayment(
+        return this.contract.settlePayment(
             verifier,
             counterparty,
             ccy,
             timestamp,
             txHash,
-            txParams
+            options
         );
     };
 
@@ -61,7 +61,7 @@ export class PaymentAggregator {
         month: number | BigNumber,
         day: number | BigNumber
     ) => {
-        return await this.contract.getTimeSlotByDate(
+        return this.contract.getTimeSlotByDate(
             party0,
             party1,
             ccy,
@@ -77,12 +77,7 @@ export class PaymentAggregator {
         ccy: string,
         slot: string
     ) => {
-        return await this.contract.getTimeSlotBySlotId(
-            party0,
-            party1,
-            ccy,
-            slot
-        );
+        return this.contract.getTimeSlotBySlotId(party0, party1, ccy, slot);
     };
 
     isSettled = async (
@@ -91,7 +86,7 @@ export class PaymentAggregator {
         ccy: string,
         timestamp: number | BigNumber
     ) => {
-        return await this.contract.isSettled(party0, party1, ccy, timestamp);
+        return this.contract.isSettled(party0, party1, ccy, timestamp);
     };
 
     getDealsFromSlot = async (
@@ -100,7 +95,7 @@ export class PaymentAggregator {
         ccy: string,
         slot: string
     ) => {
-        return await this.contract.getDealsFromSlot(party0, party1, ccy, slot);
+        return this.contract.getDealsFromSlot(party0, party1, ccy, slot);
     };
 }
 
