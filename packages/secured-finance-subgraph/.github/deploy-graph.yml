@@ -25,7 +25,6 @@ jobs:
       - uses: gtaschuk/graph-deploy@v0.1.0
         with:
           graph_access_token: ${{secrets.GRAPH_ACCESS_TOKEN}}
-          graph_subgraph_name: 'secured-finance-protocol'
-          graph_deploy_studio: 'true'
-          graph_account: 'secured-finance'
-          graph_config_file: 'subgraph.yaml'
+          graph_subgraph_name: secured-finance-protocol
+          graph_account: secured-finance
+          graph_config_file: subgraph.yaml
