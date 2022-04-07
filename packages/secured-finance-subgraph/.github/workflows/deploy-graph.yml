@@ -3,10 +3,11 @@ name: Deploy Graph
 on:
   push:
     branches:
-      - SF-*
+      - main
 
 jobs:
   deploy:
+    name: Deploy Graph
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
