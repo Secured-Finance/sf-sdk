@@ -9,9 +9,9 @@ require('dotenv/config');
     let signer = provider.getSigner();
     let network = await provider.getNetwork();
 
-    const sfClient = new SecuredFinanceClient(provider, signer, network);
+    const sfClient = new SecuredFinanceClient(provider, network);
 
-    const contract = sfClient.contracts.LendingMarketController.contract;
+    const contract = sfClient.contracts.lendingMarketController.contract;
 
     const terms = await contract.getSupportedTerms(utils.toBytes32('FIL'));
     console.log(terms.toString());

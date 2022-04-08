@@ -27,14 +27,14 @@ export {
 };
 
 export const contracts: { [key: string]: any } = {
-    CollateralAggregator: CollateralAggregator,
-    Loan: Loan,
-    LendingMarketController: LendingMarketController,
-    CurrencyController: CurrencyController,
-    CloseOutNetting: CloseOutNetting,
-    PaymentAggregator: PaymentAggregator,
-    ProductAddressResolver: ProductAddressResolver,
-    MarkToMarket: MarkToMarket,
-    TermStructure: TermStructure,
-    CrosschainAddressResolver: CrosschainAddressResolver,
+    collateralAggregator: CollateralAggregator,
+    loan: Loan,
+    lendingMarketController: LendingMarketController,
+    currencyController: CurrencyController,
+    closeOutNetting: CloseOutNetting,
+    paymentAggregator: PaymentAggregator,
+    productAddressResolver: ProductAddressResolver,
+    markToMarket: MarkToMarket,
+    termStructure: TermStructure,
+    crosschainAddressResolver: CrosschainAddressResolver,
 };

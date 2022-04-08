@@ -1,12 +1,12 @@
-import { Contract } from 'ethers';
-import { SignerOrProvider } from '../utils';
+import { Contract, Signer } from 'ethers';
 import CloseOutNettingAbi from '../lib/abis/CloseOutNetting';
 import { addresses } from '../lib/addresses';
+import { Provider } from '@ethersproject/providers';
 
 export class CloseOutNetting {
     contract: Contract;
 
-    constructor(signerOrProvider: SignerOrProvider, network: number) {
+    constructor(signerOrProvider: Signer | Provider, network: number) {
         this.contract = new Contract(
             addresses[network].closeOutNetting,
             CloseOutNettingAbi,
@@ -19,11 +19,11 @@ export class CloseOutNetting {
         party1: string,
         ccy: string
     ) => {
-        return await this.contract.getCloseOutPayment(party0, party1, ccy);
+        return this.contract.getCloseOutPayment(party0, party1, ccy);
     };
 
     checkDefaultStatus = async (user: string) => {
-        return await this.contract.checkDefault(user);
+        return this.contract.checkDefault(user);
     };
 }
 

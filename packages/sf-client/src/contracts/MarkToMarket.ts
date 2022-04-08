@@ -1,13 +1,13 @@
-import { Contract } from 'ethers';
+import { Contract, Overrides, Signer } from 'ethers';
 import MarkToMarketAbi from '../lib/abis/MarkToMarket';
 import { addresses } from '../lib/addresses';
 import { TxBase } from '../utils/eth-tx';
-import { SignerOrProvider } from '../utils';
+import { Provider } from '@ethersproject/providers';
 
 export class MarkToMarket {
     contract: Contract;
 
-    constructor(signerOrProvider: SignerOrProvider, network: number) {
+    constructor(signerOrProvider: Signer | Provider, network: number) {
         this.contract = new Contract(
             addresses[network].markToMarket,
             MarkToMarketAbi,
@@ -15,12 +15,12 @@ export class MarkToMarket {
         );
     }
 
-    updatePV = async (dealId: string, txParams?: TxBase) => {
-        return await this.contract.updatePV(dealId, txParams);
+    updatePV = async (dealId: string, options?: Overrides) => {
+        return this.contract.updatePV(dealId, options);
     };
 
-    updatePVs = async (dealIds: string[], txParams?: TxBase) => {
-        return await this.contract.updatePVs(dealIds);
+    updatePVs = async (dealIds: string[], options?: Overrides) => {
+        return this.contract.updatePVs(dealIds, options);
     };
 }
 

@@ -34,7 +34,7 @@ const ROPSTEN_ADDRESSES: ContractAddresses = {
     closeOutNetting: '0xB26348D051da2dd8AE9402b3E3060A48F632114e',
     paymentAggregator: '0xbf5c6641ab47307F48Ca74644011B8a76e37241b',
     productAddressResolver: '0x3Bb006345DA94AA05BEBD0Ec70CBe6f28A017cEe',
-    markToMarket: DEFAULT_ADDRESS,
+    markToMarket: '0x4E599754188C4772696BB9A85F435Df02275cE29',
     termStructure: '0xB6AD6A3a356f208832e46aF4409e59B53287E44E',
     crosschainAddressResolver: '0x93E72CE258eB0a47aC0de06f012162afa5D84f15',
 };

@@ -1,13 +1,14 @@
-import { Contract } from 'ethers';
+import { Contract, Overrides, Signer } from 'ethers';
 import LendingMarketControllerAbi from '../lib/abis/LendingMarketController';
 import { TxBase } from '../utils/eth-tx';
 import { addresses } from '../lib/addresses';
-import { MarketOrder, SignerOrProvider } from '../utils/types';
+import { MarketOrder } from '../utils/types';
+import { Provider } from '@ethersproject/providers';
 
 export class LendingMarketController {
     contract: Contract;
 
-    constructor(signerOrProvider: SignerOrProvider, network: number) {
+    constructor(signerOrProvider: Signer | Provider, network: number) {
         this.contract = new Contract(
             addresses[network].lendingMarketController,
             LendingMarketControllerAbi,
@@ -16,43 +17,43 @@ export class LendingMarketController {
     }
 
     getBorrowRatesForCcy = async (ccy: string) => {
-        return await this.contract.getBorrowRatesForCcy(ccy);
+        return this.contract.getBorrowRatesForCcy(ccy);
     };
 
     getLendRatesForCcy = async (ccy: string) => {
-        return await this.contract.getLendRatesForCcy(ccy);
+        return this.contract.getLendRatesForCcy(ccy);
     };
 
     getMidRatesForCcy = async (ccy: string) => {
-        return await this.contract.getMidRatesForCcy(ccy);
+        return this.contract.getMidRatesForCcy(ccy);
     };
 
     getDiscountFactorsForCcy = async (ccy: string) => {
-        return await this.contract.getDiscountFactorsForCcy(ccy);
+        return this.contract.getDiscountFactorsForCcy(ccy);
     };
 
     getSupportedTerms = async (ccy: string) => {
-        return await this.contract.getSupportedTerms(ccy);
+        return this.contract.getSupportedTerms(ccy);
     };
 
     deployLendingMarket = async (
         ccy: string,
         term: string,
-        txParams?: TxBase
+        options?: Overrides
     ) => {
-        return await this.contract.deployLendingMarket(ccy, term, txParams);
+        return this.contract.deployLendingMarket(ccy, term, options);
     };
 
-    pauseLendingMarkets = async (ccy: string, txParams?: TxBase) => {
-        return await this.contract.pauseLendingMarkets(ccy, txParams);
+    pauseLendingMarkets = async (ccy: string, options?: Overrides) => {
+        return this.contract.pauseLendingMarkets(ccy, options);
     };
 
-    unpauseLendingMarkets = async (ccy: string, txParams?: TxBase) => {
-        return await this.contract.unpauseLendingMarkets(ccy, txParams);
+    unpauseLendingMarkets = async (ccy: string, options?: Overrides) => {
+        return this.contract.unpauseLendingMarkets(ccy, options);
     };
 
-    placeBulkOrders = async (orders: MarketOrder[], txParams?: TxBase) => {
-        return await this.contract.placeBulkOrders(orders, txParams);
+    placeBulkOrders = async (orders: MarketOrder[], options?: Overrides) => {
+        return this.contract.placeBulkOrders(orders, options);
     };
 }
 
