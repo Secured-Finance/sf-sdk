@@ -15,7 +15,7 @@ export const useCollateralBookFromVault = (vault: string, user: string) => {
         console.log(error);
     }
 
-    if (data?.collateralBooks) {
-        return data.collateralBooks;
+    if (data?.collateralBooks[0]) {
+        return data.collateralBooks[0];
     }
 };

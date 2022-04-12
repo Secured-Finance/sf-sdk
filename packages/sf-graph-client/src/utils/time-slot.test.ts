@@ -1,4 +1,4 @@
-import assert = require('assert');
+import * as assert from 'assert';
 import { timeSlotPosition } from './time-slot';
 import { timeSlotPositionByTimestamp } from '.';
 

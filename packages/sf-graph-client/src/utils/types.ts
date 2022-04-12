@@ -1,3 +1,5 @@
+import { BigNumber } from 'ethers';
+
 export interface OrderbookRow {
     rate: number;
     totalAmount: number;
@@ -96,4 +98,16 @@ export interface CollateralNetting {
     party1PV: number;
     netPV: number;
     currency: CurrencyInfo;
+}
+
+export interface CollateralBookResponse {
+    ccyIndex: number;
+    ccyName: string;
+    collateral: BigNumber;
+    usdCollateral: BigNumber;
+    vault: string;
+    locked?: BigNumber;
+    usdLocked?: BigNumber;
+    borrowed?: BigNumber;
+    usdBorrowed?: BigNumber;
 }

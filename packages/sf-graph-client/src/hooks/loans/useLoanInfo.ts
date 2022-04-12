@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { client } from '../../client';
-import { BORROW_DEALS } from '../../queries';
+import { LOAN_INFO } from '../../queries';
 
 export const useLoanInfo = (id: string) => {
     const [loanInfo, setLoanInfo] = useState();
@@ -8,7 +8,7 @@ export const useLoanInfo = (id: string) => {
     const fetchLoanInformation = useCallback(async () => {
         try {
             let res = await client.query({
-                query: BORROW_DEALS,
+                query: LOAN_INFO,
                 variables: {
                     id: id,
                 },
@@ -24,7 +24,7 @@ export const useLoanInfo = (id: string) => {
 
     useEffect(() => {
         let isMounted = true;
-        if (client) {
+        if (client && id !== '' && id !== null) {
             fetchLoanInformation();
         }
         return () => {

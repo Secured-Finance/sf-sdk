@@ -4,7 +4,6 @@ import { generateCurrencyId } from '../../utils';
 
 export const useLendingMarkets = (ccyShortName: string, skip: number = 0) => {
     let currencyId = generateCurrencyId(ccyShortName);
-    console.log(currencyId);
 
     const variables = {
         currency: currencyId,

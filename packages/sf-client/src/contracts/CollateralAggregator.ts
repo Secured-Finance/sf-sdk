@@ -14,19 +14,17 @@ export class CollateralAggregator {
         );
     }
 
-    register = async (options?: Overrides): Promise<void> => {
-        return this.contract.functions['register()'](options) as Promise<void>;
+    register = async (): Promise<void> => {
+        return this.contract.functions['register()']() as Promise<any>;
     };
 
     registerWithCrosschainAddresses = async (
         addresses: string[],
-        chainIds: number[] | BigNumber[],
-        options?: Overrides
+        chainIds: number[] | BigNumber[]
     ) => {
         return this.contract.functions['register(string[],uint256[])'](
             addresses,
-            chainIds,
-            options
+            chainIds
         );
     };
 

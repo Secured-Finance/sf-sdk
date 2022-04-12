@@ -62,11 +62,11 @@ export const currentGasPrices = async (
     oracle?: GasPriceOracle,
     fallbackGasPrices?: GasPrices
 ): Promise<GasPrices> => {
-    if (oracle == null) {
+    if (oracle === null) {
         oracle = new GasPriceOracle(options);
     }
 
-    if (oracle.configuration.chainId != 1) {
+    if (oracle.configuration.chainId !== 1) {
         return fallbackGasPrices;
     }
 
@@ -84,7 +84,7 @@ export const estimateGasPrice = async (
 ): Promise<number | BigNumber> => {
     const prices = await currentGasPrices(oracle, fallbackGasPrices);
 
-    if (prices == null) {
+    if (prices === null) {
         return DEFAULT_GAS_PRICES[DEFAULT_CHAIN_ID][priceKey];
     }
     const gweiPrice = prices[priceKey].toString();

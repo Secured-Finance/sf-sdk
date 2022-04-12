@@ -17,7 +17,7 @@ export const packAddresses = (
         ? ((_addr0 = addr0), (_addr1 = addr1))
         : ((_addr0 = addr1), (_addr1 = addr0));
 
-    if (_addr0 != addr0) {
+    if (_addr0 !== addr0) {
         encodedAddrs = utils.defaultAbiCoder.encode(
             ['address', 'address'],
             [_addr0, _addr1]

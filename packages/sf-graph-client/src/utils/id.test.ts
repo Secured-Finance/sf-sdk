@@ -7,7 +7,7 @@ import {
     generateTimeSlotId,
     generateCloseOutNettingId,
 } from './id';
-import assert = require('assert');
+import * as assert from 'assert';
 import { getProductPrefix } from './string';
 
 describe('Check id string generation functions', function () {

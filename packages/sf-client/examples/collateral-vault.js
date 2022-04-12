@@ -25,7 +25,6 @@ require('dotenv/config');
     const vault = utils.getCollateralVaultByCcy('ETH', network.chainId);
     console.log(vault);
     const contractAddress = vault.address;
-    console.log(contracts.collateralVaults);
     const contract = contracts.collateralVaults[contractAddress].contract;
 
     const independentCollateral = await contract.getIndependentCollateral(user);

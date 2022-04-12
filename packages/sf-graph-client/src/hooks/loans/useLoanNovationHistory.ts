@@ -3,7 +3,7 @@ import { client } from '../../client';
 import { LOAN_NOVATION_HISTORY } from '../../queries';
 
 export const useLoanNovationHistory = (id: string, skip: number = 0) => {
-    const [novationHistory, setNovationHistory] = useState();
+    const [novationHistory, setNovationHistory] = useState([]);
 
     const fetchLoanNovationHistory = useCallback(async () => {
         try {
@@ -25,7 +25,7 @@ export const useLoanNovationHistory = (id: string, skip: number = 0) => {
 
     useEffect(() => {
         let isMounted = true;
-        if (client) {
+        if (client && id !== '' && id !== null) {
             fetchLoanNovationHistory();
         }
         return () => {

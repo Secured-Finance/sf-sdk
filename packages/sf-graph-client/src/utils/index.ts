@@ -29,4 +29,5 @@ export {
     BilateralNetting,
     CollateralNetting,
     CurrencyInfo,
+    CollateralBookResponse,
 } from './types';

@@ -3,7 +3,7 @@ import { client } from '../../client';
 import { LOAN_TERMINATION } from '../../queries';
 
 export const useLoanTermination = (id: string, skip: number = 0) => {
-    const [loanTermination, setLoanTermination] = useState();
+    const [loanTermination, setLoanTermination] = useState([]);
 
     const fetchLoanTermination = useCallback(async () => {
         try {
@@ -25,7 +25,7 @@ export const useLoanTermination = (id: string, skip: number = 0) => {
 
     useEffect(() => {
         let isMounted = true;
-        if (client) {
+        if (client && id !== '' && id !== null) {
             fetchLoanTermination();
         }
         return () => {

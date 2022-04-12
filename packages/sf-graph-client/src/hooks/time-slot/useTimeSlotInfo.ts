@@ -21,8 +21,6 @@ export const useTimeSlotInfo = (
         day
     );
 
-    console.log(timeSlotId);
-
     const fetchTimeSlotInfo = useCallback(async () => {
         try {
             let res = await client.query({

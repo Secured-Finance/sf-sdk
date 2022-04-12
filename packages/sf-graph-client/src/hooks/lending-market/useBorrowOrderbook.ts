@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { client } from '../../client';
 import { LENDING_BORROW_ORDERBOOK } from '../../queries';
 import { OrderbookRow, toBN } from '../../utils';
+import { utils } from 'ethers';
 
 export const useBorrowOrderbook = (
     lendingMarket: string,
@@ -11,6 +12,7 @@ export const useBorrowOrderbook = (
     const [borrowOrderbook, setBorrowOrderbook] = useState<Array<OrderbookRow>>(
         []
     );
+    const fixedAssetPrice = toBN((assetUsdPrice * 100).toFixed(0));
 
     const fetchBorrowOrderbook = useCallback(async () => {
         try {
@@ -29,8 +31,8 @@ export const useBorrowOrderbook = (
                         const usdAmountBN = toBN(
                             res.data.lendingMarket.borrowOrderbook[index]
                                 .totalAmount
-                        ).mul(toBN(assetUsdPrice));
-                        const usdAmount = usdAmountBN.toString();
+                        ).mul(fixedAssetPrice);
+                        const usdAmount = utils.formatUnits(usdAmountBN, 2);
                         const orderbookItem = Object.assign(
                             {},
                             res.data.lendingMarket.borrowOrderbook[index],
