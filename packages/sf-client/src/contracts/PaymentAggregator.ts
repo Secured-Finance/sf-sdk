@@ -1,8 +1,7 @@
-import { BigNumber, Contract, Overrides, Signer } from 'ethers';
+import { Provider } from '@ethersproject/providers';
+import { BigNumber, Contract, Signer } from 'ethers';
 import PaymentAggregatorAbi from '../lib/abis/PaymentAggregator';
 import { addresses } from '../lib/addresses';
-import { TxBase } from '../utils/eth-tx';
-import { Provider } from '@ethersproject/providers';
 
 export class PaymentAggregator {
     contract: Contract;

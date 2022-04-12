@@ -60,5 +60,3 @@ typings/
 .env.production.local
 
 **/dist/
-
-.vscode
