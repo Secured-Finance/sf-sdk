@@ -3,7 +3,7 @@ import { client } from '../../client';
 import { BORROW_DEALS } from '../../queries';
 
 export const useBorrowingDeals = (account: string, skip: number = 0) => {
-    const [borrowingDeals, setBorrowingDeals] = useState();
+    const [borrowingDeals, setBorrowingDeals] = useState([]);
 
     const fetchBorrowingDeals = useCallback(async () => {
         try {
@@ -25,7 +25,7 @@ export const useBorrowingDeals = (account: string, skip: number = 0) => {
 
     useEffect(() => {
         let isMounted = true;
-        if (client) {
+        if (client && account !== '' && account !== null) {
             fetchBorrowingDeals();
         }
         return () => {

@@ -1,7 +1,6 @@
 import { Contract, Overrides, Signer } from 'ethers';
 import LoanAbi from '../lib/abis/Loan';
 import { addresses } from '../lib/addresses';
-import { TxBase } from '../utils/eth-tx';
 import { Provider } from '@ethersproject/providers';
 
 export class Loan {

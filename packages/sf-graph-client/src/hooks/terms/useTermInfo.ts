@@ -6,7 +6,6 @@ import { generateTermId } from '../../utils';
 export const useTermInfo = (numberOfDays: number) => {
     const [term, setTerm] = useState();
     const termId = generateTermId(numberOfDays);
-    console.log(termId);
 
     const fetchTermInfo = useCallback(async () => {
         try {

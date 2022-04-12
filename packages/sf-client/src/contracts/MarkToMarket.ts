@@ -15,12 +15,12 @@ export class MarkToMarket {
         );
     }
 
-    updatePV = async (dealId: string, options?: Overrides) => {
-        return this.contract.updatePV(dealId, options);
+    updatePV = async (dealId: string) => {
+        return this.contract.updatePV(dealId);
     };
 
-    updatePVs = async (dealIds: string[], options?: Overrides) => {
-        return this.contract.updatePVs(dealIds, options);
+    updatePVs = async (dealIds: string[]) => {
+        return this.contract.updatePVs(dealIds);
     };
 }
 

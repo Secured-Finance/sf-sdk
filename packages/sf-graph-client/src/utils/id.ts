@@ -1,6 +1,6 @@
 import utils from 'web3-utils';
 import { utils as ethersUtils } from 'ethers';
-import { getProductPrefix, toBytes32 } from './string';
+import { getCurrencyIdentifier, getProductPrefix, toBytes32 } from './string';
 import { packAddresses } from './address-pack';
 
 export const generateDealId = (prefixOrName: string, dealNumber: number) => {
@@ -22,9 +22,11 @@ export const generateProductId = (prefixOrName: string) => {
 };
 
 export const generateCurrencyId = (shortName: string) => {
-    let bytesShortName = toBytes32(shortName);
-    let right = utils.toBN(utils.rightPad(bytesShortName, 64));
-    return utils.numberToHex(right);
+    if (ethersUtils.isHexString(shortName) === true) {
+        return shortName;
+    } else {
+        return getCurrencyIdentifier(shortName);
+    }
 };
 
 export const generateTermId = (numberOfDays: number) => {

@@ -36,24 +36,20 @@ export class LendingMarketController {
         return this.contract.getSupportedTerms(ccy);
     };
 
-    deployLendingMarket = async (
-        ccy: string,
-        term: string,
-        options?: Overrides
-    ) => {
-        return this.contract.deployLendingMarket(ccy, term, options);
+    deployLendingMarket = async (ccy: string, term: string) => {
+        return this.contract.deployLendingMarket(ccy, term);
     };
 
-    pauseLendingMarkets = async (ccy: string, options?: Overrides) => {
-        return this.contract.pauseLendingMarkets(ccy, options);
+    pauseLendingMarkets = async (ccy: string) => {
+        return this.contract.pauseLendingMarkets(ccy);
     };
 
-    unpauseLendingMarkets = async (ccy: string, options?: Overrides) => {
-        return this.contract.unpauseLendingMarkets(ccy, options);
+    unpauseLendingMarkets = async (ccy: string) => {
+        return this.contract.unpauseLendingMarkets(ccy);
     };
 
-    placeBulkOrders = async (orders: MarketOrder[], options?: Overrides) => {
-        return this.contract.placeBulkOrders(orders, options);
+    placeBulkOrders = async (orders: MarketOrder[]) => {
+        return this.contract.placeBulkOrders(orders);
     };
 }
 

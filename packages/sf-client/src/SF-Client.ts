@@ -5,8 +5,8 @@ import { Network } from '@ethersproject/networks';
 import { NETWORKS } from './utils/networks';
 import { ContractsInstance } from './contract-instance';
 import {
-    getCollateralVaultByCcy,
-    getLendingMarketByCcyAndTerm,
+    getCollateralVaultAddressByCcy,
+    getLendingMarketAddressByCcyAndTerm,
     toBytes32,
 } from './utils';
 
@@ -43,93 +43,102 @@ export class SFClient {
         return this.contracts.collateralAggregator.checkRegisteredUser(account);
     }
 
-    async registerUser(options?: Overrides): Promise<void> {
-        return this.contracts.collateralAggregator.register(options);
+    async registerUser(): Promise<any> {
+        return this.contracts.collateralAggregator.register();
     }
 
     async registerUserWithCrosschainAddresses(
         addresses: string[],
-        chainIds: number[] | BigNumber[],
-        options?: Overrides
-    ): Promise<void> {
+        chainIds: number[] | BigNumber[]
+    ): Promise<any> {
         return this.contracts.collateralAggregator.registerWithCrosschainAddresses(
             addresses,
-            chainIds,
-            options
+            chainIds
         );
     }
 
     async depositCollateral(
         ccy: string,
-        amount: number | BigNumber,
-        options?: Overrides
-    ): Promise<void> {
-        const collateralVault = getCollateralVaultByCcy(
+        amount: number | BigNumber
+    ): Promise<any> {
+        const vaultAddress = getCollateralVaultAddressByCcy(
             ccy,
             this.networkId
-        ).contract;
+        );
 
-        return collateralVault.deposit(amount, options);
+        const collateralVault =
+            this.contracts.collateralVaults[vaultAddress].contract;
+
+        if (ccy === 'ETH') {
+            return collateralVault.contract.functions['deposit(uint256)'](
+                amount,
+                { value: amount }
+            );
+        } else {
+            return collateralVault.deposit(amount);
+        }
     }
 
     async depositCollateralIntoPosition(
         ccy: string,
         counterparty: string,
-        amount: number | BigNumber,
-        options?: Overrides
-    ): Promise<void> {
-        const collateralVault = getCollateralVaultByCcy(
+        amount: number | BigNumber
+    ): Promise<any> {
+        const vaultAddress = getCollateralVaultAddressByCcy(
             ccy,
             this.networkId
-        ).contract;
-
-        return collateralVault.depositIntoPosition(
-            counterparty,
-            amount,
-            options
         );
+
+        const collateralVault =
+            this.contracts.collateralVaults[vaultAddress].contract;
+
+        if (ccy === 'ETH') {
+            return collateralVault.contract.functions[
+                'deposit(address,uint256)'
+            ](counterparty, amount, { value: amount });
+        } else {
+            return collateralVault.depositIntoPosition(counterparty, amount);
+        }
     }
 
     async withdrawCollateral(
         ccy: string,
-        amount: number | BigNumber,
-        options?: Overrides
-    ): Promise<void> {
-        const collateralVault = getCollateralVaultByCcy(
+        amount: number | BigNumber
+    ): Promise<any> {
+        const vaultAddress = getCollateralVaultAddressByCcy(
             ccy,
             this.networkId
-        ).contract;
+        );
 
-        return collateralVault.withdraw(amount, options);
+        const collateralVault =
+            this.contracts.collateralVaults[vaultAddress].contract;
+
+        return collateralVault.withdraw(amount);
     }
 
     async withdrawCollateralFromPosition(
         ccy: string,
         counterparty: string,
-        amount: number | BigNumber,
-        options?: Overrides
-    ): Promise<void> {
-        const collateralVault = getCollateralVaultByCcy(
+        amount: number | BigNumber
+    ): Promise<any> {
+        const vaultAddress = getCollateralVaultAddressByCcy(
             ccy,
             this.networkId
-        ).contract;
-
-        return collateralVault.withdrawFromPosition(
-            counterparty,
-            amount,
-            options
         );
+
+        const collateralVault =
+            this.contracts.collateralVaults[vaultAddress].contract;
+
+        return collateralVault.withdrawFromPosition(counterparty, amount);
     }
 
     async updateCrosschainAddress(
         chainId: string | number | BigInt,
-        address: string,
-        options?: Overrides
-    ): Promise<void> {
+        address: string
+    ): Promise<any> {
         return this.contracts.crosschainAddressResolver.updateAddress(
             chainId,
-            address,
-            options
+            address
         );
     }
 
@@ -166,15 +175,18 @@ export class SFClient {
         term: string,
         side: number,
         amount: number | BigNumber,
-        rate: number | BigNumber,
-        options?: Overrides
-    ) => {
-        const lendingMarket = getLendingMarketByCcyAndTerm(
+        rate: number | BigNumber
+    ): Promise<any> => {
+        const marketAddress = getLendingMarketAddressByCcyAndTerm(
             ccy,
             term,
             this.networkId
-        ).contract;
-        return lendingMarket.makeOrder(side, amount, rate, options);
+        );
+
+        const lendingMarket =
+            this.contracts.lendingMarkets[marketAddress].contract;
+
+        return lendingMarket.makeOrder(side, amount, rate);
     };
 
     takeLendingOrder = async (
@@ -182,44 +194,53 @@ export class SFClient {
         term: string,
         side: number,
         orderID: number | BigNumber,
-        amount: number | BigNumber,
-        options?: Overrides
-    ) => {
-        const lendingMarket = getLendingMarketByCcyAndTerm(
+        amount: number | BigNumber
+    ): Promise<any> => {
+        const marketAddress = getLendingMarketAddressByCcyAndTerm(
             ccy,
             term,
             this.networkId
-        ).contract;
-        return lendingMarket.takeOrder(side, amount, orderID, options);
+        );
+
+        const lendingMarket =
+            this.contracts.lendingMarkets[marketAddress].contract;
+
+        return lendingMarket.takeOrder(side, orderID, amount);
     };
 
     placeLendingOrder = async (
         ccy: string,
         term: string,
         side: number,
-        orderID: number | BigNumber,
-        rate: number | BigNumber,
-        options?: Overrides
-    ) => {
-        const lendingMarket = getLendingMarketByCcyAndTerm(
+        amount: number | BigNumber,
+        rate: number | BigNumber
+    ): Promise<any> => {
+        const marketAddress = getLendingMarketAddressByCcyAndTerm(
             ccy,
             term,
             this.networkId
-        ).contract;
-        return lendingMarket.order(side, rate, orderID, options);
+        );
+
+        const lendingMarket =
+            this.contracts.lendingMarkets[marketAddress].contract;
+
+        return lendingMarket.order(side, amount, rate);
     };
 
     cancelLendingOrder = async (
         ccy: string,
         term: string,
-        orderID: number | BigNumber,
-        options?: Overrides
-    ) => {
-        const lendingMarket = getLendingMarketByCcyAndTerm(
+        orderID: number | BigNumber
+    ): Promise<any> => {
+        const marketAddress = getLendingMarketAddressByCcyAndTerm(
             ccy,
             term,
             this.networkId
-        ).contract;
-        return lendingMarket.cancelOrder(orderID, options);
+        );
+
+        const lendingMarket =
+            this.contracts.lendingMarkets[marketAddress].contract;
+
+        return lendingMarket.cancelOrder(orderID);
     };
 }

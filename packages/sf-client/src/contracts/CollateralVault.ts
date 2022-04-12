@@ -21,32 +21,29 @@ export class CollateralVault {
         );
     }
 
-    deposit = async (amount: number | BigNumber, options?: Overrides) => {
-        return this.contract.functions['deposit(uint256)'](amount, options);
+    deposit = async (amount: number | BigNumber) => {
+        return this.contract.functions['deposit(uint256)'](amount);
     };
 
     depositIntoPosition = async (
         counterparty: string,
-        amount: number | BigNumber,
-        options?: Overrides
+        amount: number | BigNumber
     ) => {
         return this.contract.functions['deposit(address,uint256)'](
             counterparty,
-            amount,
-            options
+            amount
         );
     };
 
-    withdraw = async (amount: number | BigNumber, options?: Overrides) => {
-        return this.contract.withdraw(amount, options);
+    withdraw = async (amount: number | BigNumber) => {
+        return this.contract.withdraw(amount);
     };
 
     withdrawFromPosition = async (
         counterparty: string,
-        amount: number | BigNumber,
-        options?: Overrides
+        amount: number | BigNumber
     ) => {
-        return this.contract.withdrawFrom(counterparty, amount, options);
+        return this.contract.withdrawFrom(counterparty, amount);
     };
 
     getIndependentCollateral = async (user: string) => {

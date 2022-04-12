@@ -58,26 +58,24 @@ export class LendingMarket {
         return this.contract.getMidRate();
     };
 
-    cancelOrder = async (orderID: number | BigNumber, options?: Overrides) => {
+    cancelOrder = async (orderID: number | BigNumber) => {
         return this.contract.cancelOrder(orderID);
     };
 
     makeOrder = async (
         side: number,
         amount: number | BigNumber,
-        rate: number | BigNumber,
-        options?: Overrides
+        rate: number | BigNumber
     ) => {
-        return this.contract.makeOrder(side, amount, rate, options);
+        return this.contract.makeOrder(side, amount, rate);
     };
 
     takeOrder = async (
         side: number,
         orderID: number | BigNumber,
-        amount: number | BigNumber,
-        options?: Overrides
+        amount: number | BigNumber
     ) => {
-        return this.contract.takeOrder(side, orderID, amount, options);
+        return this.contract.takeOrder(side, orderID, amount);
     };
 
     matchOrders = async (
@@ -91,10 +89,9 @@ export class LendingMarket {
     order = async (
         side: number,
         amount: number | BigNumber,
-        rate: number | BigNumber,
-        options?: Overrides
+        rate: number | BigNumber
     ) => {
-        return this.contract.order(side, amount, rate, options);
+        return this.contract.order(side, amount, rate);
     };
 }
 

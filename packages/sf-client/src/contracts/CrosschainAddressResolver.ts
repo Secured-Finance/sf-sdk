@@ -16,13 +16,11 @@ export class CrosschainAddressResolver {
 
     updateAddress = async (
         chainId: number | string | BigInt,
-        address: string,
-        options?: Overrides
+        address: string
     ) => {
         return this.contract.functions['updateAddress(uint256,string)'](
             chainId,
-            address,
-            options
+            address
         );
     };
 

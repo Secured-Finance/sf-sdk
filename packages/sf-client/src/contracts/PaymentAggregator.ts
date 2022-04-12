@@ -21,8 +21,7 @@ export class PaymentAggregator {
         ccy: string,
         timestamp: number | BigNumber,
         payment: number | BigNumber,
-        txHash: string,
-        options?: Overrides
+        txHash: string
     ) => {
         return this.contract.verifyPayment(
             verifier,
@@ -30,8 +29,7 @@ export class PaymentAggregator {
             ccy,
             timestamp,
             payment,
-            txHash,
-            options
+            txHash
         );
     };
 
@@ -40,16 +38,14 @@ export class PaymentAggregator {
         counterparty: string,
         ccy: string,
         timestamp: number | BigNumber,
-        txHash: string,
-        options?: Overrides
+        txHash: string
     ) => {
         return this.contract.settlePayment(
             verifier,
             counterparty,
             ccy,
             timestamp,
-            txHash,
-            options
+            txHash
         );
     };
 

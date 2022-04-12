@@ -1,5 +1,5 @@
 import { packAddresses, sortAddresses } from './address-pack';
-import assert = require('assert');
+import * as assert from 'assert';
 
 describe('Test address pack functions', function () {
     it('Try to pack addresses, check result hash', async () => {
