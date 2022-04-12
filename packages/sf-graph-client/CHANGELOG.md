@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6-beta.10](https://github.com/secured-finance/sf-sdk/compare/v0.1.6-beta.9...v0.1.6-beta.10) (2022-04-12)
+
+
+### Bug Fixes
+
+* client lib functions, graph hooks ([d0bcc86](https://github.com/secured-finance/sf-sdk/commit/d0bcc867e7316288f58733acc6ec415b9a9d0cae))
+* replace package-lock.json for github action ([feb2e88](https://github.com/secured-finance/sf-sdk/commit/feb2e88f828e62a5fdd7c94d781459fb104eecee))
+
+
+
+## 0.1.6-beta.7 (2022-04-05)
+
+
+
+
+
 ## [0.1.6-beta.8](https://github.com/secured-finance/sf-sdk/compare/v0.1.6-beta.7...v0.1.6-beta.8) (2022-04-06)
 
 **Note:** Version bump only for package @secured-finance/sf-graph-client
