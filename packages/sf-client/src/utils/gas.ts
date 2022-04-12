@@ -70,10 +70,11 @@ export const currentGasPrices = async (
         return fallbackGasPrices;
     }
 
-    oracle.gasPrices(fallbackGasPrices)
-    .then((gasPrices: GasPrices): GasPrices => {
-        return gasPrices;
-    });
+    oracle
+        .gasPrices(fallbackGasPrices)
+        .then((gasPrices: GasPrices): GasPrices => {
+            return gasPrices;
+        });
 };
 
 export const estimateGasPrice = async (

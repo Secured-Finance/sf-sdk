@@ -8,6 +8,7 @@
   "files.trimFinalNewlines": true,
   "[javascriptreact][javascript][typescriptreact][typescript][json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.organizeImports": true
     }
