@@ -11,7 +11,8 @@
     "test-all": "lerna run test",
     "build": "lerna run build",
     "prepublishOnly": "npm run build",
-    "version": "npm run format:fix"
+    "version": "npm run format:fix",
+    "prepare": "husky install"
   },
   "author": "Secured Finance",
   "bugs": {
@@ -35,6 +36,7 @@
     "eslint": "^7.31.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^7.0.4",
     "mocha": "^9.0.3",
     "prettier": "^2.3.2",
     "ts-mocha": "^8.0.0",

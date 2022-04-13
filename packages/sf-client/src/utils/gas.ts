@@ -1,9 +1,9 @@
 import { BigNumber, utils, Wallet } from 'ethers';
 import { GasPriceOracle } from 'gas-price-oracle';
 import { DEFAULT_CHAIN_ID } from './constants';
+import { TxBase } from './eth-tx';
 import { getProvider } from './providers';
 import { mnemonicSigner } from './signer';
-import { TxBase } from './eth-tx';
 
 export declare type GasPrices = {
     instant: number;
@@ -70,7 +70,7 @@ export const currentGasPrices = async (
         return fallbackGasPrices;
     }
 
-    return await oracle
+    oracle
         .gasPrices(fallbackGasPrices)
         .then((gasPrices: GasPrices): GasPrices => {
             return gasPrices;

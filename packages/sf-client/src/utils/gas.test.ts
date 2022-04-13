@@ -1,13 +1,13 @@
+import { utils } from 'ethers/lib/ethers';
+import { GasPriceOracle } from 'gas-price-oracle';
 import {
-    estimateGasPrice,
-    getDefaultOracle,
     DEFAULT_GAS_PRICES,
+    estimateGasPrice,
     GasPrices,
+    getDefaultOracle,
 } from './gas';
 import assert = require('assert');
 const { should } = require('chai');
-import { utils } from 'ethers/lib/ethers';
-import { GasPriceOracle } from 'gas-price-oracle';
 should();
 
 const parseGwei = (price: string): string => {
