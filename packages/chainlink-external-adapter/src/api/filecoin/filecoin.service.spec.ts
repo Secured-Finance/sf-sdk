@@ -35,11 +35,10 @@ describe('FilecoinService', () => {
         {
           provide: FilecoinLotusRepository,
           useClass: class {
-            constructor() {}
-            chain = { getMessage: (_: unknown) => Promise.resolve(message) };
-            state = { searchMsg: (_: unknown) => Promise.resolve() };
-            custom = { getTipSet: (_: unknown) => Promise.resolve() };
-            release() {}
+            chain = { getMessage: () => Promise.resolve(message) };
+            state = { searchMsg: () => Promise.resolve() };
+            custom = { getTipSet: () => Promise.resolve() };
+            release = jest.fn();
           },
         },
       ],

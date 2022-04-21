@@ -1,7 +1,6 @@
 import {
   registerDecorator,
   ValidationOptions,
-  ValidationArguments,
   buildMessage,
 } from 'class-validator';
 import { CID } from 'multiformats';
@@ -15,7 +14,7 @@ export function IsCID(validationOptions?: ValidationOptions) {
       constraints: [],
       options: validationOptions,
       validator: {
-        validate(value: any, _: ValidationArguments) {
+        validate(value: any) {
           try {
             CID.parse(value && value['/']);
             return true;
