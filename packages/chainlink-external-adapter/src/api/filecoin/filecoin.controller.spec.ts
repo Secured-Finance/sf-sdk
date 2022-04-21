@@ -35,8 +35,8 @@ describe('FilecoinController', () => {
   describe('root', () => {
     it('should return data', async () => {
       const response = {
-        redirect: (_: number, __: string) => {},
-      } as Response;
+        redirect: jest.fn(),
+      } as unknown as Response;
 
       expect(controller.root(response)).toBeUndefined();
     });
