@@ -14,6 +14,6 @@ export class FilecoinController {
 
   @Post('message')
   fetchMessage(@Body() { messageId }: GetMessageDto): Promise<string> {
-    return this.filecoinService.getMessage(messageId);
+    return this.filecoinService.fetchMessage(messageId);
   }
 }

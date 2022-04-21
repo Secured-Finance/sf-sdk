@@ -12,7 +12,6 @@ import { map, catchError } from 'rxjs/operators';
 import { Request } from 'express';
 import { AdapterError } from '@chainlink/external-adapter';
 import { MaxAttemptsError } from 'typescript-retry-decorator';
-import { JsonRpcError } from 'filecoin.js/builds/dist/connectors/Connector';
 
 @Injectable()
 export class ChainlinkInterceptor implements NestInterceptor {

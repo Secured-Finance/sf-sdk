@@ -1,6 +1,5 @@
 import {
   Injectable,
-  Scope,
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
@@ -12,15 +11,15 @@ import {
 } from 'filecoin.js/builds/dist/providers/Types';
 import { FilecoinLotusRepository } from '@shared/repositories';
 
-@Injectable({ scope: Scope.REQUEST })
+@Injectable()
 export class FilecoinService {
   constructor(
     private readonly filecoinLotusRepository: FilecoinLotusRepository,
   ) {}
 
-  async getMessage(messageId: Cid): Promise<string> {
+  async fetchMessage(messageId: Cid): Promise<string> {
     try {
-      const { message, block } = await this.getMessageWithBlockHeader(
+      const { message, block } = await this.fetchMessageWithBlockHeader(
         messageId,
       );
 
@@ -38,9 +37,10 @@ export class FilecoinService {
   @Retryable({
     maxAttempts: 2,
     backOff: 1000,
-    doRetry: (e: Error) => !(e instanceof NotFoundException),
+    doRetry: (e: Error) =>
+      !(e instanceof NotFoundException || e instanceof BadRequestException),
   })
-  private async getMessageWithBlockHeader(messageId: Cid): Promise<{
+  private async fetchMessageWithBlockHeader(messageId: Cid): Promise<{
     message: Message;
     block: BlockHeader;
   }> {
