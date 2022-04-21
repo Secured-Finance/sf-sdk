@@ -13,8 +13,8 @@ describe('ApiController', () => {
   });
 
   describe('root', () => {
-    it('should return empty', () => {
-      expect(apiController.root()).toBe('');
+    it('should return ok', () => {
+      expect(apiController.root()).toBe('ok');
     });
   });
 });
