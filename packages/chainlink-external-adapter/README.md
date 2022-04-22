@@ -25,6 +25,8 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+See [Chainlink Node README](./chainlink-node/README.md) in case of running with Chainlink Node in your local environment.
+
 ## Test
 
 ```bash
