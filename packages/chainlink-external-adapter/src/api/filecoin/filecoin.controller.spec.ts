@@ -4,7 +4,7 @@ import { ConfigModule } from '@shared/modules';
 import { Response } from 'express';
 
 import { FilecoinController } from './filecoin.controller';
-import { GetMessageDto } from './dtos/get-message.dto';
+import { GetMessageArgsDto } from './dtos/get-message-args.dto';
 import { FilecoinService } from './filecoin.service';
 
 describe('FilecoinController', () => {
@@ -29,7 +29,7 @@ describe('FilecoinController', () => {
 
     jest
       .spyOn(filecoinService, 'fetchMessage')
-      .mockImplementation(() => Promise.resolve('testMsg'));
+      .mockImplementation(() => Promise.resolve<any>('testMsg'));
   });
 
   describe('root', () => {
@@ -44,7 +44,7 @@ describe('FilecoinController', () => {
 
   describe('fetchMessage', () => {
     it('should return data', async () => {
-      const message: GetMessageDto = { messageId: { '/': 'testId' } };
+      const message: GetMessageArgsDto = { messageId: { '/': 'testId' } };
       expect(await controller.fetchMessage(message)).toBe('testMsg');
     });
   });

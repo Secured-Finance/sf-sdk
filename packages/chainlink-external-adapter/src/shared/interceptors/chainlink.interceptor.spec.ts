@@ -9,6 +9,7 @@ describe('ChainlinkInterceptor', () => {
     switchToHttp: jest.fn().mockReturnThis(),
     getRequest: jest.fn().mockReturnThis(),
     body: {},
+    query: {},
   } as unknown as ExecutionContext;
 
   const callHandler = {
@@ -27,7 +28,7 @@ describe('ChainlinkInterceptor', () => {
         body: { jobRunID: 'testId' },
       });
 
-      callHandler.handle.mockReturnValueOnce(of('test'));
+      callHandler.handle.mockReturnValueOnce(of({ data: 'test' }));
 
       const res = await lastValueFrom(
         interceptor.intercept(context, callHandler),

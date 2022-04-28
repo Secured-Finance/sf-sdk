@@ -19,10 +19,10 @@ export class ChainlinkInterceptor implements NestInterceptor {
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest<Request>();
-    const { jobRunID } = request.body;
+    const jobRunID = request.body.jobRunID || request.query.jobRunID || '1';
 
     return next.handle().pipe(
-      map((data) => ({ jobRunID, data })),
+      map((data) => ({ jobRunID, ...data })),
       catchError((err) => {
         let statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
         let message = err.message;

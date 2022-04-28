@@ -10,6 +10,7 @@ import {
   Message,
 } from 'filecoin.js/builds/dist/providers/Types';
 import { FilecoinLotusRepository } from '@shared/repositories';
+import { GetMessageResponseDto } from './dtos';
 
 @Injectable()
 export class FilecoinService {
@@ -17,18 +18,18 @@ export class FilecoinService {
     private readonly filecoinLotusRepository: FilecoinLotusRepository,
   ) {}
 
-  async fetchMessage(messageId: Cid): Promise<string> {
+  async fetchMessage(messageId: Cid): Promise<GetMessageResponseDto> {
     try {
       const { message, block } = await this.fetchMessageWithBlockHeader(
         messageId,
       );
 
-      return JSON.stringify({
+      return {
         to: message.To,
         from: message.From,
         value: message.Value,
         timestamp: block.Timestamp,
-      });
+      };
     } finally {
       this.filecoinLotusRepository.release();
     }
