@@ -67,9 +67,12 @@ describe('FilecoinService', () => {
         .spyOn(filecoinLotusRepository.custom, 'getTipSet')
         .mockImplementation(() => Promise.resolve(tipset) as any);
 
-      expect(await service.fetchMessage(messageId)).toBe(
-        '{"to":"toAddress","from":"fromAddress","value":"1","timestamp":123}',
-      );
+      expect(await service.fetchMessage(messageId)).toEqual({
+        to: 'toAddress',
+        from: 'fromAddress',
+        value: new BigNumber('1'),
+        timestamp: 123,
+      });
     });
 
     it('should throw BadRequestException', async () => {

@@ -1,9 +1,11 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Post, Res, UseInterceptors } from '@nestjs/common';
 import { Response } from 'express';
-import { GetMessageDto } from './dtos/get-message.dto';
+import { ChainlinkInterceptor } from '@shared/interceptors';
+import { GetMessageArgsDto, GetMessageResponseDto } from './dtos';
 import { FilecoinService } from './filecoin.service';
 
 @Controller('filecoin')
+@UseInterceptors(ChainlinkInterceptor)
 export class FilecoinController {
   constructor(private readonly filecoinService: FilecoinService) {}
 
@@ -13,7 +15,9 @@ export class FilecoinController {
   }
 
   @Post('message')
-  fetchMessage(@Body() { messageId }: GetMessageDto): Promise<string> {
+  fetchMessage(
+    @Body() { messageId }: GetMessageArgsDto,
+  ): Promise<GetMessageResponseDto> {
     return this.filecoinService.fetchMessage(messageId);
   }
 }
