@@ -16,7 +16,7 @@ observationSource   = """
   fetch [
     type="bridge"
     name="filecoin"
-    requestData="{\\"jobRunID\\": $(jobSpec.externalJobID), \\"messageId\\": $(decode_cbor.messageId)}"
+    requestData="{\\"jobRunID\\": $(jobSpec.externalJobID), \\"messageId\\": $(decode_cbor.txHash)}"
   ]
 
   decode_log -> decode_cbor -> fetch
