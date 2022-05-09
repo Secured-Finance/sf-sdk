@@ -37,8 +37,8 @@ observationSource   = """
 
   encode_data [
     type="ethabiencode"
-    abi="(bytes32 requestId, string from, string to, uint256 value, uint256 timestamp)"
-    data="{\\"requestId\\": $(decode_log.requestId), \\"from\\": $(from_address), \\"to\\": $(to_address), \\"value\\": $(value), \\"timestamp\\": $(timestamp)}"
+    abi="(bytes32 requestId, string from, string to, uint256 value, uint256 timestamp, string txHash)"
+    data="{\\"requestId\\": $(decode_log.requestId), \\"from\\": $(from_address), \\"to\\": $(to_address), \\"value\\": $(value), \\"timestamp\\": $(timestamp), \\"txHash\\": $(decode_cbor.txHash)}"
   ]
   encode_tx [
     type="ethabiencode"
