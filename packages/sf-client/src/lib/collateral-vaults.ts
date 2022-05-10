@@ -28,6 +28,14 @@ const ROPSTEN_COLLATERAL_VAULTS: CollateralVaultItem[] = [
     },
 ];
 
+const RINKEBY_COLLATERAL_VAULTS: CollateralVaultItem[] = [
+    {
+        address: '0xB210Cf89241B86FEB80bBd6209972BD3cb325914',
+        ccy: 'ETH',
+        tokenAddress: '0xcA0beb0d6F2e5759ebFeB7b70818C2891cdC4e48',
+    },
+];
+
 const LOCALHOST_COLLATERAL_VAULTS: CollateralVaultItem[] = [
     {
         address: '0xbf5753ec480ec88b214ca7007068dd9d91ba6307',
@@ -39,5 +47,6 @@ const LOCALHOST_COLLATERAL_VAULTS: CollateralVaultItem[] = [
 export const collateralVaults: { [key: number]: CollateralVaultItem[] } = {
     1: MAINNET_COLLATERAL_VAULTS,
     3: ROPSTEN_COLLATERAL_VAULTS,
+    4: RINKEBY_COLLATERAL_VAULTS,
     1337: LOCALHOST_COLLATERAL_VAULTS,
 };

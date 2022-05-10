@@ -1,14 +1,13 @@
-import { BigNumber, getDefaultProvider, Overrides, Signer } from 'ethers';
-import { Provider } from '@ethersproject/providers';
 import { Network } from '@ethersproject/networks';
-
-import { NETWORKS } from './utils/networks';
+import { Provider } from '@ethersproject/providers';
+import { BigNumber, getDefaultProvider, Signer } from 'ethers';
 import { ContractsInstance } from './contract-instance';
 import {
     getCollateralVaultAddressByCcy,
     getLendingMarketAddressByCcyAndTerm,
     toBytes32,
 } from './utils';
+import { NETWORKS } from './utils/networks';
 
 export class SFClient {
     signerOrProvider: any;
@@ -242,5 +241,23 @@ export class SFClient {
             this.contracts.lendingMarkets[marketAddress].contract;
 
         return lendingMarket.cancelOrder(orderID);
+    };
+
+    verifyPayment = async (
+        counterparty: string,
+        ccy: string,
+        amount: number | BigNumber,
+        timestamp: number | BigNumber,
+        txHash: string
+    ): Promise<any> => {
+        const ccyIdentifier = toBytes32(ccy);
+
+        return this.contracts.settlementEngine.verifyPayment(
+            counterparty,
+            ccyIdentifier,
+            amount,
+            timestamp,
+            txHash
+        );
     };
 }
