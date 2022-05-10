@@ -17,6 +17,8 @@ observationSource   = """
     type="bridge"
     name="filecoin"
     requestData="{\\"jobRunID\\": $(jobSpec.externalJobID), \\"messageId\\": $(decode_cbor.txHash)}"
+    // Settings to use Generic Adapter on NaaS
+    // requestData="{\\"id\\": $(jobSpec.externalJobID), \\"data\\": {\\"method\\": \\"post\\", \\"data\\": {\\"messageId\\": $(decode_cbor.txHash)}}}"
   ]
 
   decode_log -> decode_cbor -> fetch
@@ -29,6 +31,11 @@ observationSource   = """
   to_address [type="jsonparse" path="to" data="$(fetch)"]
   value [type="jsonparse" path="value" data="$(fetch)"]
   timestamp [type="jsonparse" path="timestamp" data="$(fetch)"]
+  // Settings to use Generic Adapter on NaaS
+  // from_address [type="jsonparse" path="result,from" data="$(fetch)"]
+  // to_address [type="jsonparse" path="result,to" data="$(fetch)"]
+  // value [type="jsonparse" path="result,value" data="$(fetch)"]
+  // timestamp [type="jsonparse" path="result,timestamp" data="$(fetch)"]
 
   from_address -> encode_data
   to_address -> encode_data
