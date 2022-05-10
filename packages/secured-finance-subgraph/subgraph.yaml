@@ -1,16 +1,16 @@
 specVersion: 0.0.2
-description: Secured Finance is decentralized P2P banking business for digital assets 
+description: Secured Finance is decentralized P2P banking business for digital assets
 repository: https://github.com/secured-finance/secured-finance-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: LoanV2
-    network: ropsten
+    network: rinkeby
     source:
-      address: '0x884254b0fc1e7bF2fE14177CFd63fd4f50a93528'
+      address: "0x2A7DCcB9856241430628331869A7d37DB37305B9"
       abi: LoanV2
-      startBlock: 12164567
+      startBlock: 10650589
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -40,11 +40,11 @@ dataSources:
       file: ./src/loan.ts
   - kind: ethereum/contract
     name: TermStructure
-    network: ropsten
+    network: rinkeby
     source:
-      address: '0xB6AD6A3a356f208832e46aF4409e59B53287E44E'
+      address: "0xE1f4BF0E576f79edf5376A2cC82396E92157AbDC"
       abi: TermStructure
-      startBlock: 12164567
+      startBlock: 10650589
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -62,11 +62,11 @@ dataSources:
       file: ./src/terms.ts
   - kind: ethereum/contract
     name: ProductAddressResolver
-    network: ropsten
+    network: rinkeby
     source:
-      address: '0x3Bb006345DA94AA05BEBD0Ec70CBe6f28A017cEe'
+      address: "0xB0D4b6A17E71F19f198859Ff6f04a9883bad2E01"
       abi: ProductAddressResolver
-      startBlock: 12164567
+      startBlock: 10650589
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -82,11 +82,11 @@ dataSources:
       file: ./src/product-resolver.ts
   - kind: ethereum/contract
     name: CurrencyController
-    network: ropsten
+    network: rinkeby
     source:
-      address: '0x8682Fa83785B7F51A14101122CCb1DCb4A247B80'
+      address: "0x2938Fcec0Ba1633a35692Fd0863a2dCe6D8F6b33"
       abi: CurrencyController
-      startBlock: 12164567
+      startBlock: 10650589
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -114,11 +114,11 @@ dataSources:
       file: ./src/currency-controller.ts
   - kind: ethereum/contract
     name: CloseOutNetting
-    network: ropsten
+    network: rinkeby
     source:
-      address: '0xB26348D051da2dd8AE9402b3E3060A48F632114e'
+      address: "0x759C97C1a517388a1cB779833C7a035E37684995"
       abi: CloseOutNetting
-      startBlock: 12164567
+      startBlock: 10650589
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -136,11 +136,11 @@ dataSources:
       file: ./src/close-out-netting.ts
   - kind: ethereum/contract
     name: PaymentAggregator
-    network: ropsten
+    network: rinkeby
     source:
-      address: '0xbf5c6641ab47307F48Ca74644011B8a76e37241b'
+      address: "0x7b97B03C3232a6560d6C9daAaE49f33037D9131C"
       abi: PaymentAggregator
-      startBlock: 12164567
+      startBlock: 10650589
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -157,16 +157,14 @@ dataSources:
           handler: handleTimeSlotPaymentDecrease
         - event: VerifyPayment(indexed address,indexed address,bytes32,bytes32,uint256,uint256,uint256,uint256,bytes32)
           handler: handleTimeSlotPaymentVerification
-        - event: SettlePayment(indexed address,indexed address,bytes32,bytes32,uint256,uint256,uint256,bytes32)
-          handler: handleTimeSlotPaymentSettlement
       file: ./src/payment-aggregator.ts
   - kind: ethereum/contract
     name: CollateralAggregator
-    network: ropsten
+    network: rinkeby
     source:
-      address: '0x74B405Ec5dC45e5c7ea9d581D4A3907e60B724d4'
+      address: "0xC616D55499aacE74cFC3005061b07d239bB22125"
       abi: CollateralAggregator
-      startBlock: 12164567
+      startBlock: 10650589
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -215,11 +213,11 @@ dataSources:
       file: ./src/collateral-aggregator.ts
   - kind: ethereum/contract
     name: LendingMarketController
-    network: ropsten
+    network: rinkeby
     source:
-      address: '0x80143B3C92b635cF8A5892899a6634eEE731cff5'
+      address: "0x64F373a1D03CFd8300a2b8B525C4350A0158e34b"
       abi: LendingMarketController
-      startBlock: 12164567
+      startBlock: 10650589
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -235,11 +233,11 @@ dataSources:
       file: ./src/lendingController.ts
   - kind: ethereum/contract
     name: CrosschainAddressResolver
-    network: ropsten
+    network: rinkeby
     source:
-      address: '0x93E72CE258eB0a47aC0de06f012162afa5D84f15'
+      address: "0x10f1B36AD1F8Fd0FACfaDBfeb78535F082868060"
       abi: CrosschainAddressResolver
-      startBlock: 12164567
+      startBlock: 10650589
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -253,10 +251,32 @@ dataSources:
         - event: UpdateAddress(address,uint256,string)
           handler: handleCrosschainAddressUpdate
       file: ./src/crosschain-address-resolver.ts
+  - kind: ethereum/contract
+    name: SettlementEngine
+    network: rinkeby
+    source:
+      address: "0x604BC283e44389549733751Fb9bcfBbcbD89E47a"
+      abi: SettlementEngine
+      startBlock: 10650589
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CrosschainSettlementRequest
+      abis:
+        - name: SettlementEngine
+          file: ./abis/SettlementEngine.json
+      eventHandlers:
+        - event: CrosschainSettlementRequested(address,address,uint16,uint256,string,bytes32)
+          handler: handleCrosschainSettlementRequest
+        - event: CrosschainSettlementRequestFulfilled(string,string,uint16,uint256,uint256,string,bytes32)
+          handler: handleFulfillCrosschainSettlementRequest
+      file: ./src/settlement-engine.ts
 templates:
   - kind: ethereum/contract
     name: LendingMarket
-    network: ropsten
+    network: rinkeby
     source:
       abi: LendingMarket
     mapping:
@@ -281,7 +301,7 @@ templates:
       file: ./src/lendingMarket.ts
   - kind: ethereum/contract
     name: CollateralVault
-    network: ropsten
+    network: rinkeby
     source:
       abi: CollateralVault
     mapping:

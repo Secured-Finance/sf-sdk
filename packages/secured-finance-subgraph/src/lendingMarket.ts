@@ -1,8 +1,7 @@
-import { Address, BigInt, Bytes, log, store } from "@graphprotocol/graph-ts"
+import { Address, BigInt, Bytes, store } from "@graphprotocol/graph-ts"
 import { MakeOrder, TakeOrder, CancelOrder } from "../generated/templates/LendingMarket/LendingMarket"
 import { LendingMarket, LendingMarketOrderRow, LendingMarketOrder, FilledLendingMarketOrder, LendingMarketController } from "../generated/schema"
-import { ADDRESS_ZERO, BIG_INT_ZERO, LENDING_MARKET_CONTROLLER_ADDR, NULL_CALL_RESULT_STRING } from "./constants"
-import { increaseLendingControllerLiquidity, reduceAvailableLiquidity } from "./lendingController"
+import { BIG_INT_ZERO, NULL_CALL_RESULT_STRING } from "./constants"
 
 export function getLendingMarket(address: Address): LendingMarket {
     let lendingMarket = LendingMarket.load(address.toHex())
@@ -13,7 +12,7 @@ export function getLendingMarket(address: Address): LendingMarket {
 export function createLendingMarketOrderRow(id: string, ccy: Bytes, side: i32, market: Bytes, term: BigInt, rate: BigInt, amount: BigInt, time: BigInt, blockNumber: BigInt): LendingMarketOrderRow {
     let marketOrder = new LendingMarketOrderRow(id)
 
-    marketOrder.currency = ccy
+    marketOrder.currency = ccy.toHexString()
     marketOrder.side = side
     marketOrder.marketAddr = market
     if (side == 0) {
@@ -56,7 +55,7 @@ export function getLendingMarketOrder(id: string, orderId: BigInt, market: Bytes
 export function createLendingMarketOrder(id: string, orderId: BigInt, market: Bytes, ccy: Bytes, side: i32, term: BigInt, rate: BigInt, amount: BigInt, makerAddr: Address, time: BigInt, blockNumber: BigInt): LendingMarketOrder {
     let orderItem = new LendingMarketOrder(id)
 
-    orderItem.currency = ccy
+    orderItem.currency = ccy.toHexString()
     orderItem.orderId = orderId
     orderItem.marketAddr = market
     orderItem.side = side
@@ -92,8 +91,6 @@ export function handleMakeLendingOrder(event: MakeOrder): void {
     if (lendingMarket) {
         lendingMarket.totalLiquidity = lendingMarket.totalLiquidity.plus(event.params.amount)
         lendingMarket.totalAvailableLiquidity = lendingMarket.totalAvailableLiquidity.plus(event.params.amount)
-    
-        increaseLendingControllerLiquidity(event.params.ccy, event.params.amount)
     
         lendingMarket.orderCount = lendingMarket.orderCount + 1
         lendingMarket.save()
@@ -148,8 +145,6 @@ export function handleTakeLendingOrder(event: TakeOrder): void {
         if (orderItem) {
             orderItem.amount = orderItem.amount.minus(event.params.amount)
             lendingMarket.totalAvailableLiquidity = lendingMarket.totalAvailableLiquidity.minus(event.params.amount)
-
-            reduceAvailableLiquidity(orderItem.currency, event.params.amount)
 
             let filledId = event.params.orderId.toString().concat("-").concat(event.params.amount.toString())
 
@@ -207,8 +202,6 @@ export function handleCancelLendingOrder(event: CancelOrder): void {
         let orderItem = LendingMarketOrder.load(orderId)
 
         if (orderItem) {
-            reduceAvailableLiquidity(orderItem.currency, event.params.amount)
-
             orderItem.cancelMarket = lendingMarket.marketAddr.toHex()
             orderItem.lendingMarket = NULL_CALL_RESULT_STRING
             orderItem.borrowingMarket = NULL_CALL_RESULT_STRING
