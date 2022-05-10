@@ -63,7 +63,7 @@ function constructSchedule(id: string, term: BigInt, rate: BigInt, amount: BigIn
 export function handleLoanRegister(event: Register): void {
     let loanId = event.params.dealId.toHexString()
     let loan = new Loan(loanId)
-    loan.currency = event.params.ccy
+    loan.currency = event.params.ccy.toHexString()
 
     loan.term = event.params.term
     loan.notional = event.params.notional

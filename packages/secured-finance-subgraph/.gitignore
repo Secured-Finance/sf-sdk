@@ -58,3 +58,5 @@ typings/
 
 # Generated code
 generated/
+
+src/.DS_Store
