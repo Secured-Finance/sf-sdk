@@ -1,8 +1,8 @@
 import { BigInt, Bytes } from "@graphprotocol/graph-ts"
-import { TimeSlot } from "../generated/schema"
+import { TimeSlot, TimeSlotPaymentConfirmation } from "../generated/schema"
 import { RegisterPayment, RemovePayment, VerifyPayment, SettlePayment } from '../generated/PaymentAggregator/PaymentAggregator'
 import { isFlippedAddresses, packAddresses } from "./helpers"
-import { ZERO_BYTES } from "./constants"
+import { BIG_INT_ZERO, ZERO_BYTES } from "./constants"
 
 function createTimeSlot(id: string): TimeSlot {
     const timeSlot = new TimeSlot(id)
@@ -135,26 +135,24 @@ export function handleTimeSlotPaymentVerification(event: VerifyPayment): void {
     const timeSlot = getTimeSlot(id)
 
     if (timeSlot) {
-        timeSlot.paymentProof = event.params.txHash
-        timeSlot.verificationParty = event.params.verifier
-        timeSlot.verificationTimestamp = event.block.timestamp
+        timeSlot.paidAmount = timeSlot.paidAmount.plus(event.params.payment)
+
+        const confirmationId = event.params.settlementId.toHex()
+
+        const paymentConfirmation = new TimeSlotPaymentConfirmation(confirmationId)
+        paymentConfirmation.timeslot = id
+        paymentConfirmation.amount = event.params.payment
+        paymentConfirmation.payer = event.params.verifier
+        paymentConfirmation.receiver = event.params.counterparty
+        paymentConfirmation.settlementId = event.params.settlementId
+        paymentConfirmation.settledAt = event.block.timestamp
+      
+        paymentConfirmation.save()
+
+        if (timeSlot.netPayment.minus(timeSlot.paidAmount).equals(BIG_INT_ZERO)) {
+            timeSlot.isSettled = true;
+        }
 
         timeSlot.save()
-    }
-}
-
-export function handleTimeSlotPaymentSettlement(event: SettlePayment): void {
-    let packedAddr = packAddresses(event.params.verifier, event.params.counterparty)
-    let id = getTimeSlotID(packedAddr, event.params.ccy, event.params.year, event.params.month, event.params.day)
-
-    const timeSlot = getTimeSlot(id)
-
-    if (timeSlot) {
-        if (timeSlot.paymentProof == event.params.txHash) {
-            timeSlot.settlementParty = event.params.verifier
-            timeSlot.settlementTimestamp = event.block.timestamp
-    
-            timeSlot.save()    
-        }
     }
 }

@@ -4,7 +4,8 @@ type Loan @entity {
   lenderUser: User!
   borrower: Bytes!
   borrowUser: User!
-  currency: Bytes!
+  currencyIdentifier: Bytes!
+  currency: Currency!
   term: BigInt!
   notional: BigInt!
   couponPayment: BigInt!
@@ -24,7 +25,7 @@ type Loan @entity {
 
 type LoanSchedule @entity {
   id: ID!
-  
+
   payments: [SchedulePayment!]! @derivedFrom(field: "schedule")
   loan: Loan!
 }
@@ -97,7 +98,7 @@ type LendingMarketController @entity {
   # liquidity
   totalAvailableLiquidityETH: BigInt!
   totalLiquidityETH: BigInt!
-  
+
   totalAvailableLiquidityFIL: BigInt!
   totalLiquidityFIL: BigInt!
 
@@ -119,7 +120,8 @@ type LendingMarket @entity {
   id: ID!
   marketAddr: Bytes!
   controller: LendingMarketController!
-  currency: Bytes!
+  currencyIdentifier: Bytes!
+  currency: Currency!
   term: BigInt!
   spread: BigInt!
   marketRate: BigInt!
@@ -150,7 +152,8 @@ type LendingMarket @entity {
 
 type LendingMarketOrderRow @entity {
   id: ID!
-  currency: Bytes!
+  currencyIdentifier: Bytes!
+  currency: Currency!
   side: Int!
   marketAddr: Bytes!
   lendMarket: LendingMarket!
@@ -169,7 +172,8 @@ type LendingMarketOrderRow @entity {
 type LendingMarketOrder @entity {
   id: ID!
   orderId: BigInt!
-  currency: Bytes!
+  currencyIdentifier: Bytes!
+  currency: Currency!
   side: Int!
   row: LendingMarketOrderRow
   marketAddr: Bytes!
@@ -195,7 +199,8 @@ type LendingMarketOrder @entity {
 type FilledLendingMarketOrder @entity {
   id: ID!
   orderId: BigInt!
-  currency: Bytes!
+  currencyIdentifier: Bytes!
+  currency: Currency!
   side: Int!
   market: LendingMarket!
   marketAddr: Bytes!
@@ -273,21 +278,28 @@ type TimeSlot @entity {
   totalPayment0: BigInt!
   totalPayment1: BigInt!
   netPayment: BigInt!
+  paidAmount: BigInt!
 
   year: BigInt!
   month: BigInt!
   day: BigInt!
   position: Bytes!
   flipped: Boolean!
-  paymentProof: Bytes!
-  verificationParty: Bytes!
-  verificationTimestamp: BigInt!
-
-  settlementParty: Bytes!
-  settlementTimestamp: BigInt!
-
   isSettled: Boolean!
   currency: Currency!
+
+  paymentConfirmations: [TimeSlotPaymentConfirmation!]
+    @derivedFrom(field: "timeslot")
+}
+
+type TimeSlotPaymentConfirmation @entity {
+  id: ID!
+  timeslot: TimeSlot!
+  settlementId: Bytes!
+  payer: Bytes!
+  receiver: Bytes!
+  amount: BigInt!
+  settledAt: BigInt!
 }
 
 type CollateralAggregator @entity {
@@ -300,7 +312,8 @@ type CollateralAggregator @entity {
   collateralPositions: [CollateralPosition!] @derivedFrom(field: "aggregator")
   bilateralPositions: [BilateralPosition!] @derivedFrom(field: "aggregator")
   collateralVaults: [CollateralVault!] @derivedFrom(field: "aggregator")
-  collateralUserContracts: [CollateralUserContract!] @derivedFrom(field: "aggregator")
+  collateralUserContracts: [CollateralUserContract!]
+    @derivedFrom(field: "aggregator")
 }
 
 type CollateralPosition @entity {
@@ -309,7 +322,8 @@ type CollateralPosition @entity {
   isRegistered: Boolean!
   user: User!
   aggregator: CollateralAggregator!
-  collateralPositions: [CollateralPositionCurrencyState!] @derivedFrom(field: "position")
+  collateralPositions: [CollateralPositionCurrencyState!]
+    @derivedFrom(field: "position")
 }
 
 type CollateralPositionCurrencyState @entity {
@@ -329,7 +343,8 @@ type BilateralPosition @entity {
   address1: Bytes!
   addresses: String!
   packedAddresses: Bytes!
-  collateralNettings: [CollateralNetting!] @derivedFrom(field: "bilateralPosition")
+  collateralNettings: [CollateralNetting!]
+    @derivedFrom(field: "bilateralPosition")
   aggregator: CollateralAggregator!
 }
 
@@ -359,7 +374,7 @@ type CollateralVault @entity {
   collateralBooks: [CollateralBook!] @derivedFrom(field: "vault")
   collateralPositions: [CollateralVaultPosition!] @derivedFrom(field: "vault")
   aggregator: CollateralAggregator!
-  isSupported: Boolean! 
+  isSupported: Boolean!
 }
 
 type CollateralUserContract @entity {
@@ -400,4 +415,23 @@ type CrosschainAddress @entity {
   user: User!
   chainID: BigInt!
   address: String!
+}
+
+type CrosschainSettlementRequest @entity {
+  id: ID!
+  payer: Bytes!
+  crosschainPayerAddress: String!
+  payerUser: User!
+  receiver: Bytes!
+  crosschainReceiverAddress: String!
+  receiverUser: User!
+  chainId: Int!
+  timestamp: BigInt!
+  createdAt: BigInt!
+  settledAt: BigInt!
+  amount: BigInt!
+  txHash: String!
+  settlementId: Bytes!
+  requestId: Bytes!
+  paymentConfirmation: TimeSlotPaymentConfirmation!
 }
