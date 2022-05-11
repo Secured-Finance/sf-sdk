@@ -1,14 +1,5 @@
-import {
-    CollateralVaultItem,
-    CollateralVaults,
-    collateralVaults,
-} from './lib/collateral-vaults';
-import {
-    LendingMarketItem,
-    LendingMarkets,
-    lendingMarkets,
-} from './lib/lending-markets';
-import { addresses, ContractAddresses } from './lib/addresses';
+import { Provider } from '@ethersproject/providers';
+import { Signer } from 'ethers';
 import {
     CloseOutNetting,
     CollateralAggregator,
@@ -22,10 +13,20 @@ import {
     MarkToMarket,
     PaymentAggregator,
     ProductAddressResolver,
+    SettlementEngine,
     TermStructure,
 } from './contracts';
-import { Signer } from 'ethers';
-import { Provider } from '@ethersproject/providers';
+import { addresses, ContractAddresses } from './lib/addresses';
+import {
+    CollateralVaultItem,
+    CollateralVaults,
+    collateralVaults,
+} from './lib/collateral-vaults';
+import {
+    LendingMarketItem,
+    LendingMarkets,
+    lendingMarkets,
+} from './lib/lending-markets';
 
 export class ContractsInstance {
     addresses: ContractAddresses;
@@ -41,6 +42,7 @@ export class ContractsInstance {
     markToMarket: MarkToMarket;
     termStructure: TermStructure;
     crosschainAddressResolver: CrosschainAddressResolver;
+    settlementEngine: SettlementEngine;
 
     constructor(signerOrProvider: Signer | Provider, networkId?: number) {
         this.addresses = addresses[networkId];

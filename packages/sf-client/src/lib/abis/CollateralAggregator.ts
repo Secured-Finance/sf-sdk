@@ -126,6 +126,37 @@ export default [
             {
                 indexed: true,
                 internalType: 'address',
+                name: 'from',
+                type: 'address',
+            },
+            {
+                indexed: true,
+                internalType: 'address',
+                name: 'to',
+                type: 'address',
+            },
+            {
+                indexed: false,
+                internalType: 'bytes32',
+                name: 'ccy',
+                type: 'bytes32',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'amount',
+                type: 'uint256',
+            },
+        ],
+        name: 'Liquidate',
+        type: 'event',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
+                internalType: 'address',
                 name: 'liquidations',
                 type: 'address',
             },
@@ -1075,6 +1106,11 @@ export default [
             {
                 internalType: 'uint256',
                 name: 'liquidationAmount',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'pv',
                 type: 'uint256',
             },
             {

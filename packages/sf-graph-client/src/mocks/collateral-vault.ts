@@ -1,6 +1,6 @@
 import {
-    COLLATERAL_BOOK_FROM_VAULT,
     BILATERAL_POSITIONS_FROM_VAULT,
+    COLLATERAL_BOOK_FROM_VAULT,
 } from '../queries';
 
 export const collateralVaultQueriesMock = [
@@ -14,23 +14,22 @@ export const collateralVaultQueriesMock = [
         },
         result: {
             data: {
-                collateralVault: {
-                    id: '',
-                    address: '0x01212',
-                    tokenAddress: '0x00000467',
-                    currency: {
-                        shortName: 'ETH',
-                        name: 'Ethereum',
-                    },
-                    collateralBooks: [
-                        {
-                            id: '',
-                            address: '0x01',
-                            independentCollateral: 1000,
-                            lockedCollateral: 5000,
+                collateralBooks: [
+                    {
+                        id: '',
+                        address: '0x01',
+                        independentCollateral: 1000,
+                        lockedCollateral: 5000,
+                        currency: {
+                            shortName: 'ETH',
+                            name: 'Ethereum',
                         },
-                    ],
-                },
+                        vault: {
+                            tokenAddress: '0x00000467',
+                            address: '0x01212',
+                        },
+                    },
+                ],
             },
         },
     },
@@ -54,25 +53,25 @@ export const collateralVaultQueriesMock = [
         },
         result: {
             data: {
-                collateralVault: {
-                    id: '',
-                    address: '0x01212',
-                    tokenAddress: '0x00000467',
-                    currency: {
-                        shortName: 'ETH',
-                        name: 'Ethereum',
-                    },
-                    collateralPositions: [
-                        {
-                            id: '',
-                            address0: '0x010012',
-                            address1: '0x01',
-                            packedAddresses: '0x002141012',
-                            lockedCollateral0: 10000,
-                            lockedCollateral1: 50000,
+                collateralVaultPositions: [
+                    {
+                        id: '',
+                        address0: '0x010012',
+                        address1: '0x01',
+                        packedAddresses: '0x002141012',
+                        lockedCollateral0: 10000,
+                        lockedCollateral1: 50000,
+                        vault: {
+                            address: '0x01212',
+                            tokenAddress: '0x00000467',
                         },
-                    ],
-                },
+                        currency: {
+                            shortName: 'ETH',
+                            name: 'Ethereum',
+                            identifier: '0xTestCcy',
+                        },
+                    },
+                ],
             },
         },
     },

@@ -1,4 +1,4 @@
-import { UNSETTLED_POSITIONS, BILATERAL_POSITIONS } from '../queries';
+import { BILATERAL_POSITIONS, UNSETTLED_POSITIONS } from '../queries';
 
 export const collateralAggregatorQueriesMock = [
     {
@@ -15,11 +15,16 @@ export const collateralAggregatorQueriesMock = [
                     {
                         id: '',
                         address: '0x01',
-                        unsettledPV: 5500,
-                        currency: {
-                            shortName: 'ETH',
-                            name: 'Ethereum',
-                        },
+                        collateralPositions: [
+                            {
+                                unsettledPV: 5500,
+                                currencyIdentifier: '0xTestCcy',
+                                currency: {
+                                    shortName: 'ETH',
+                                    name: 'Ethereum',
+                                },
+                            },
+                        ],
                     },
                 ],
             },

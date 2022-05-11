@@ -61,6 +61,45 @@ const ROPSTEN_LENDING_MARKETS: LendingMarketItem[] = [
     },
 ];
 
+const RINKEBY_LENDING_MARKETS: LendingMarketItem[] = [
+    {
+        ccy: 'FIL',
+        term: '3 month',
+        termIndex: 0,
+        address: '0x412e5fd69305a0B5dfE949FBfE2464958F6bCfe3',
+    },
+    {
+        ccy: 'FIL',
+        term: '6 month',
+        termIndex: 1,
+        address: '0xF53D59B639cdD9A9e949986E6960F0Db04A94EbE',
+    },
+    {
+        ccy: 'FIL',
+        term: '1 year',
+        termIndex: 2,
+        address: '0x80f604Ba89164295fA246768C96CdD8E5f17577E',
+    },
+    {
+        ccy: 'FIL',
+        term: '2 year',
+        termIndex: 3,
+        address: '0x6735ee886b39f124F37544238D0a9d1A036F26a2',
+    },
+    {
+        ccy: 'FIL',
+        term: '3 year',
+        termIndex: 4,
+        address: '0x325545412158ba3Ddcd2d67c9E23B2D4CB600521',
+    },
+    {
+        ccy: 'FIL',
+        term: '5 year',
+        termIndex: 5,
+        address: '0x0b2B5f157a7cd0F03908f58B3d795Ae4E83003CC',
+    },
+];
+
 const LOCALHOST_LENDING_MARKETS: LendingMarketItem[] = [
     {
         ccy: 'FIL',
@@ -79,5 +118,6 @@ const LOCALHOST_LENDING_MARKETS: LendingMarketItem[] = [
 export const lendingMarkets: { [key: number]: LendingMarketItem[] } = {
     1: MAINNET_LENDING_MARKETS,
     3: ROPSTEN_LENDING_MARKETS,
+    4: RINKEBY_LENDING_MARKETS,
     1337: LOCALHOST_LENDING_MARKETS,
 };
