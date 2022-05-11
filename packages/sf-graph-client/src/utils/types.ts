@@ -76,7 +76,12 @@ export interface UnsettledExposureQueryResponse {
 export interface UnsettledCollateral {
     id: string;
     address: string;
+    collateralPositions: Array<CollateralPositions>;
+}
+
+export interface CollateralPositions {
     unsettledPV: number;
+    currencyIdentifier: string;
     currency: CurrencyInfo;
 }
 

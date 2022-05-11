@@ -2,6 +2,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { expect } from 'chai';
 import React from 'react';
 import renderer from 'react-test-renderer';
+import waitForExpect from 'wait-for-expect';
 import { collateralVaultQueriesMock } from '../mocks';
 import { BilateralPositionMock, CollateralBookMock } from '../mocks/components';
 import {
@@ -43,11 +44,17 @@ it('Should render collateral book component with network error query', async () 
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 100));
+    await new Promise<void>(res =>
+        setTimeout(() => {
+            res();
+        }, 100)
+    );
 
     const testInstance =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
-    expect(testInstance.children).contain('GraphQL Network Error');
+    await waitForExpect(() => {
+        expect(testInstance.children).contain('GraphQL Network Error');
+    });
 });
 
 it('Should render mock collateral book component and succesfully get data from query', async () => {
@@ -65,19 +72,26 @@ it('Should render mock collateral book component and succesfully get data from q
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 100));
+    await new Promise<void>(res =>
+        setTimeout(() => {
+            res();
+        }, 100)
+    );
 
     const testInstances =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
 
     let instant0 = testInstances.children[0] as renderer.ReactTestRendererJSON;
     let instant1 = testInstances.children[1] as renderer.ReactTestRendererJSON;
-    expect(instant0.children.toString()).equal(
-        'Independent collateral for 0x01 is 1000'
-    );
-    expect(instant1.children.toString()).equal(
-        'Locked collateral for 0x01 is 5000'
-    );
+
+    await waitForExpect(() => {
+        expect(instant0.children.toString()).equal(
+            'Independent collateral for 0x01 is 1000'
+        );
+        expect(instant1.children.toString()).equal(
+            'Locked collateral for 0x01 is 5000'
+        );
+    });
 });
 
 it('Should render mock bilateral position component and succesfully get data from query', async () => {
@@ -95,17 +109,24 @@ it('Should render mock bilateral position component and succesfully get data fro
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 100));
+    await new Promise<void>(res =>
+        setTimeout(() => {
+            res();
+        }, 100)
+    );
 
     const testInstances =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
 
     let instant0 = testInstances.children[0] as renderer.ReactTestRendererJSON;
     let instant1 = testInstances.children[1] as renderer.ReactTestRendererJSON;
-    expect(instant0.children.toString()).equal(
-        'Locked collateral for 0x010012 is 10000'
-    );
-    expect(instant1.children.toString()).equal(
-        'Locked collateral for 0x01 is 50000'
-    );
+
+    await waitForExpect(() => {
+        expect(instant0.children.toString()).equal(
+            'Locked collateral for 0x010012 is 10000'
+        );
+        expect(instant1.children.toString()).equal(
+            'Locked collateral for 0x01 is 50000'
+        );
+    });
 });

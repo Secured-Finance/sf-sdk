@@ -1,11 +1,11 @@
-import React from 'react';
 import { useQuery } from '@apollo/client';
-import { MockComponentProps } from './types';
+import React from 'react';
 import {
     BilateralNetting,
     CollateralNetting,
     UnsettledCollateral,
 } from '../../utils';
+import { MockComponentProps } from './types';
 
 export const UnsettledPositionMock: React.FC<MockComponentProps> = ({
     query,
@@ -23,11 +23,13 @@ export const UnsettledPositionMock: React.FC<MockComponentProps> = ({
 
     return data
         ? data.collateralPositions.map(
-              (item: UnsettledCollateral, index: number) => (
-                  <div key={item.id}>
-                      <p>{`Unsettled present value for ${item.address} is ${item.unsettledPV}`}</p>
-                  </div>
-              )
+              (item: UnsettledCollateral, index: number) => {
+                  return (
+                      <div key={item.id}>
+                          <p>{`Unsettled present value for ${item.address} is ${item.collateralPositions[0].unsettledPV}`}</p>
+                      </div>
+                  );
+              }
           )
         : null;
 };
