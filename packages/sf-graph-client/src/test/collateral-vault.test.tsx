@@ -43,7 +43,7 @@ it('Should render collateral book component with network error query', async () 
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 30));
+    await new Promise(r => setTimeout(r, 100));
 
     const testInstance =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
@@ -65,7 +65,7 @@ it('Should render mock collateral book component and succesfully get data from q
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 30));
+    await new Promise(r => setTimeout(r, 100));
 
     const testInstances =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
@@ -95,7 +95,7 @@ it('Should render mock bilateral position component and succesfully get data fro
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 30));
+    await new Promise(r => setTimeout(r, 100));
 
     const testInstances =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;

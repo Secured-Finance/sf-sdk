@@ -24,7 +24,7 @@ it('Should render unsettled collateral position component with network error que
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 30));
+    await new Promise(r => setTimeout(r, 100));
 
     const testInstance =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
@@ -46,7 +46,7 @@ it('Should render mock unsettled collateral position component and succesfully g
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 30));
+    await new Promise(r => setTimeout(r, 100));
 
     const testInstance = testComponent.root.findByType('p');
     expect(testInstance.children).contain(
@@ -69,7 +69,7 @@ it('Should render mock unsettled collateral position component and succesfully g
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 30));
+    await new Promise(r => setTimeout(r, 100));
 
     const testInstances = testComponent.root.findAllByType('p');
     expect(testInstances[0].children.toString()).equal(

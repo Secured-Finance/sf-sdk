@@ -34,7 +34,7 @@ it('Should render loans component with network error query', async () => {
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 30));
+    await new Promise(r => setTimeout(r, 100));
 
     const testInstance =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
@@ -53,7 +53,7 @@ it('Should render mock loans component and succesfully get data from query', asy
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 30));
+    await new Promise(r => setTimeout(r, 100));
 
     const testInstance = testComponent.root.findByType('p');
     expect(testInstance.children).contain('10000: 5000');

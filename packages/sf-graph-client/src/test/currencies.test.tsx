@@ -32,7 +32,7 @@ it('Should render currency component with network error query', async () => {
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 30));
+    await new Promise(r => setTimeout(r, 100));
 
     const testInstance =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
@@ -50,7 +50,7 @@ it('Should render currency mock component and succesfully get data from query', 
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 30));
+    await new Promise(r => setTimeout(r, 100));
 
     const testInstance = testComponent.root.findByType('p');
     expect(testInstance.children).contain('Ethereum: ETH');
