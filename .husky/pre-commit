@@ -5,4 +5,4 @@ SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 npm run format
 npm run lint
 npm run test-all
-sh $SCRIPTPATH/check-package-lock.sh
+#sh $SCRIPTPATH/check-package-lock.sh
