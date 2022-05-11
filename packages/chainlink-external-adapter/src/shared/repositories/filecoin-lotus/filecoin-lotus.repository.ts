@@ -10,7 +10,7 @@ export class FilecoinLotusRepository extends LotusClient {
 
   constructor(private configUtil: ConfigUtil) {
     const conn = new WsJsonRpcConnector({
-      url: configUtil.get('filecoin.rpcEndpoint', { infer: true }),
+      url: configUtil.get('filecoin.rpcEndpoint'),
     });
     super(conn);
     this.custom = new LotusCustomClient(conn);
