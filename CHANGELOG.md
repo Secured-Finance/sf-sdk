@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6-beta.11](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.6-beta.10...v0.1.6-beta.11) (2022-05-11)
+
+
+### Bug Fixes
+
+* add delay flag to mocha tests ([2220300](https://github.com/Secured-Finance/sf-sdk/commit/2220300ad7c47577bc3a89ce8c48c7287ae7025a))
+* graph client mocks and component tests ([84b0d7b](https://github.com/Secured-Finance/sf-sdk/commit/84b0d7b662d648fd957ad2462cb9976aef9f6cde))
+* increase graph client test timeouts ([06c8d79](https://github.com/Secured-Finance/sf-sdk/commit/06c8d799a69a1581c9d4f3a5209fd8eed4e55a06))
+* increase timeouts on graph client test ([e4caa94](https://github.com/Secured-Finance/sf-sdk/commit/e4caa94cf0e12a55c41f205a8f1c0639c6b396d3))
+* mocha test timeout ([220bb2a](https://github.com/Secured-Finance/sf-sdk/commit/220bb2a3d135861968c0002539c6c8e0dcde58e9))
+* update package-lock files ([1186c9f](https://github.com/Secured-Finance/sf-sdk/commit/1186c9f0327ce3ad56d62db5877db474cd54c6b3))
+
+
+
+
+
 ## [0.1.6-beta.10](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.6-beta.9...v0.1.6-beta.10) (2022-04-12)
 
 
