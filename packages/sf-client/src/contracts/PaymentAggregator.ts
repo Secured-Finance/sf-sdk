@@ -14,40 +14,6 @@ export class PaymentAggregator {
         );
     }
 
-    verifyPayment = async (
-        verifier: string,
-        counterparty: string,
-        ccy: string,
-        timestamp: number | BigNumber,
-        payment: number | BigNumber,
-        txHash: string
-    ) => {
-        return this.contract.verifyPayment(
-            verifier,
-            counterparty,
-            ccy,
-            timestamp,
-            payment,
-            txHash
-        );
-    };
-
-    settlePayment = async (
-        verifier: string,
-        counterparty: string,
-        ccy: string,
-        timestamp: number | BigNumber,
-        txHash: string
-    ) => {
-        return this.contract.settlePayment(
-            verifier,
-            counterparty,
-            ccy,
-            timestamp,
-            txHash
-        );
-    };
-
     getTimeSlotByDate = async (
         party0: string,
         party1: string,

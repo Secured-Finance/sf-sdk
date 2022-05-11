@@ -1,7 +1,7 @@
-import React from 'react';
 import { useQuery } from '@apollo/client';
-import { MockComponentProps } from './types';
+import React from 'react';
 import { BilateralPosition, CollateralBook } from '../../utils';
+import { MockComponentProps } from './types';
 
 export const CollateralBookMock: React.FC<MockComponentProps> = ({
     query,
@@ -17,15 +17,13 @@ export const CollateralBookMock: React.FC<MockComponentProps> = ({
         return <p>GraphQL Network Error</p>;
     }
 
-    return data.collateralVault
-        ? data.collateralVault.collateralBooks.map(
-              (item: CollateralBook, index: number) => (
-                  <div key={item.id}>
-                      <p>{`Independent collateral for ${item.address} is ${item.independentCollateral}`}</p>
-                      <p>{`Locked collateral for ${item.address} is ${item.lockedCollateral}`}</p>
-                  </div>
-              )
-          )
+    return data.collateralBooks
+        ? data.collateralBooks.map((item: CollateralBook, index: number) => (
+              <div key={item.id}>
+                  <p>{`Independent collateral for ${item.address} is ${item.independentCollateral}`}</p>
+                  <p>{`Locked collateral for ${item.address} is ${item.lockedCollateral}`}</p>
+              </div>
+          ))
         : null;
 };
 
@@ -43,8 +41,8 @@ export const BilateralPositionMock: React.FC<MockComponentProps> = ({
         return <p>GraphQL Network Error</p>;
     }
 
-    return data.collateralVault
-        ? data.collateralVault.collateralPositions.map(
+    return data.collateralVaultPositions
+        ? data.collateralVaultPositions.map(
               (item: BilateralPosition, index: number) => (
                   <div key={item.id}>
                       <p>{`Locked collateral for ${item.address0} is ${item.lockedCollateral0}`}</p>

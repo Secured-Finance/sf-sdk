@@ -34,6 +34,24 @@ export default [
             {
                 indexed: false,
                 internalType: 'uint256',
+                name: 'year',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'month',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'day',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
                 name: 'payment0',
                 type: 'uint256',
             },
@@ -73,6 +91,24 @@ export default [
                 internalType: 'bytes32',
                 name: 'timeSlot',
                 type: 'bytes32',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'year',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'month',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'day',
+                type: 'uint256',
             },
             {
                 indexed: false,
@@ -120,13 +156,25 @@ export default [
             {
                 indexed: false,
                 internalType: 'uint256',
-                name: 'payment',
+                name: 'year',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'month',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'day',
                 type: 'uint256',
             },
             {
                 indexed: false,
                 internalType: 'bytes32',
-                name: 'txHash',
+                name: 'settlementId',
                 type: 'bytes32',
             },
         ],
@@ -177,6 +225,25 @@ export default [
             {
                 indexed: true,
                 internalType: 'address',
+                name: 'prevContract',
+                type: 'address',
+            },
+            {
+                indexed: true,
+                internalType: 'address',
+                name: 'settlementEngine',
+                type: 'address',
+            },
+        ],
+        name: 'UpdateSettlementEngine',
+        type: 'event',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
+                internalType: 'address',
                 name: 'verifier',
                 type: 'address',
             },
@@ -201,13 +268,31 @@ export default [
             {
                 indexed: false,
                 internalType: 'uint256',
+                name: 'year',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'month',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'day',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
                 name: 'payment',
                 type: 'uint256',
             },
             {
                 indexed: false,
                 internalType: 'bytes32',
-                name: 'txHash',
+                name: 'settlementId',
                 type: 'bytes32',
             },
         ],
@@ -231,6 +316,25 @@ export default [
             },
         ],
         stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'uint256',
+                name: 'targetTime',
+                type: 'uint256',
+            },
+        ],
+        name: 'checkSettlementWindow',
+        outputs: [
+            {
+                internalType: 'bool',
+                name: '',
+                type: 'bool',
+            },
+        ],
+        stateMutability: 'view',
         type: 'function',
     },
     {
@@ -303,46 +407,34 @@ export default [
         name: 'getTimeSlotByDate',
         outputs: [
             {
-                components: [
-                    {
-                        internalType: 'uint256',
-                        name: 'totalPayment0',
-                        type: 'uint256',
-                    },
-                    {
-                        internalType: 'uint256',
-                        name: 'totalPayment1',
-                        type: 'uint256',
-                    },
-                    {
-                        internalType: 'uint256',
-                        name: 'netPayment',
-                        type: 'uint256',
-                    },
-                    {
-                        internalType: 'bool',
-                        name: 'flipped',
-                        type: 'bool',
-                    },
-                    {
-                        internalType: 'bytes32',
-                        name: 'paymentProof',
-                        type: 'bytes32',
-                    },
-                    {
-                        internalType: 'address',
-                        name: 'verificationParty',
-                        type: 'address',
-                    },
-                    {
-                        internalType: 'bool',
-                        name: 'isSettled',
-                        type: 'bool',
-                    },
-                ],
-                internalType: 'struct TimeSlot.Slot',
-                name: 'timeSlot',
-                type: 'tuple',
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+            {
+                internalType: 'bool',
+                name: '',
+                type: 'bool',
+            },
+            {
+                internalType: 'bool',
+                name: '',
+                type: 'bool',
             },
         ],
         stateMutability: 'view',
@@ -374,46 +466,132 @@ export default [
         name: 'getTimeSlotBySlotId',
         outputs: [
             {
-                components: [
-                    {
-                        internalType: 'uint256',
-                        name: 'totalPayment0',
-                        type: 'uint256',
-                    },
-                    {
-                        internalType: 'uint256',
-                        name: 'totalPayment1',
-                        type: 'uint256',
-                    },
-                    {
-                        internalType: 'uint256',
-                        name: 'netPayment',
-                        type: 'uint256',
-                    },
-                    {
-                        internalType: 'bool',
-                        name: 'flipped',
-                        type: 'bool',
-                    },
-                    {
-                        internalType: 'bytes32',
-                        name: 'paymentProof',
-                        type: 'bytes32',
-                    },
-                    {
-                        internalType: 'address',
-                        name: 'verificationParty',
-                        type: 'address',
-                    },
-                    {
-                        internalType: 'bool',
-                        name: 'isSettled',
-                        type: 'bool',
-                    },
-                ],
-                internalType: 'struct TimeSlot.Slot',
-                name: 'timeSlot',
-                type: 'tuple',
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+            {
+                internalType: 'bool',
+                name: '',
+                type: 'bool',
+            },
+            {
+                internalType: 'bool',
+                name: '',
+                type: 'bool',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: 'party0',
+                type: 'address',
+            },
+            {
+                internalType: 'address',
+                name: 'party1',
+                type: 'address',
+            },
+            {
+                internalType: 'bytes32',
+                name: 'ccy',
+                type: 'bytes32',
+            },
+            {
+                internalType: 'uint256',
+                name: 'year',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'month',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'day',
+                type: 'uint256',
+            },
+            {
+                internalType: 'bytes32',
+                name: 'settlementId',
+                type: 'bytes32',
+            },
+        ],
+        name: 'getTimeSlotPaymentConfirmation',
+        outputs: [
+            {
+                internalType: 'address',
+                name: '',
+                type: 'address',
+            },
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: 'party0',
+                type: 'address',
+            },
+            {
+                internalType: 'address',
+                name: 'party1',
+                type: 'address',
+            },
+            {
+                internalType: 'bytes32',
+                name: 'ccy',
+                type: 'bytes32',
+            },
+            {
+                internalType: 'bytes32',
+                name: 'slot',
+                type: 'bytes32',
+            },
+            {
+                internalType: 'bytes32',
+                name: 'settlementId',
+                type: 'bytes32',
+            },
+        ],
+        name: 'getTimeSlotPaymentConfirmationById',
+        outputs: [
+            {
+                internalType: 'address',
+                name: '',
+                type: 'address',
+            },
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
             },
         ],
         stateMutability: 'view',
@@ -508,19 +686,19 @@ export default [
                 type: 'bytes32',
             },
             {
-                internalType: 'uint256[6]',
+                internalType: 'uint256[]',
                 name: 'timestamps',
-                type: 'uint256[6]',
+                type: 'uint256[]',
             },
             {
-                internalType: 'uint256[6]',
+                internalType: 'uint256[]',
                 name: 'payments0',
-                type: 'uint256[6]',
+                type: 'uint256[]',
             },
             {
-                internalType: 'uint256[6]',
+                internalType: 'uint256[]',
                 name: 'payments1',
-                type: 'uint256[6]',
+                type: 'uint256[]',
             },
         ],
         name: 'registerPayments',
@@ -570,19 +748,19 @@ export default [
                 type: 'bytes32',
             },
             {
-                internalType: 'uint256[6]',
+                internalType: 'uint256[]',
                 name: 'timestamps',
-                type: 'uint256[6]',
+                type: 'uint256[]',
             },
             {
-                internalType: 'uint256[6]',
+                internalType: 'uint256[]',
                 name: 'payments0',
-                type: 'uint256[6]',
+                type: 'uint256[]',
             },
             {
-                internalType: 'uint256[6]',
+                internalType: 'uint256[]',
                 name: 'payments1',
-                type: 'uint256[6]',
+                type: 'uint256[]',
             },
         ],
         name: 'removePayments',
@@ -620,31 +798,11 @@ export default [
         inputs: [
             {
                 internalType: 'address',
-                name: 'verifier',
+                name: '_contract',
                 type: 'address',
-            },
-            {
-                internalType: 'address',
-                name: 'counterparty',
-                type: 'address',
-            },
-            {
-                internalType: 'bytes32',
-                name: 'ccy',
-                type: 'bytes32',
-            },
-            {
-                internalType: 'uint256',
-                name: 'timestamp',
-                type: 'uint256',
-            },
-            {
-                internalType: 'bytes32',
-                name: 'txHash',
-                type: 'bytes32',
             },
         ],
-        name: 'settlePayment',
+        name: 'setSettlementEngine',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -691,7 +849,7 @@ export default [
             },
             {
                 internalType: 'bytes32',
-                name: 'txHash',
+                name: 'settlementId',
                 type: 'bytes32',
             },
         ],

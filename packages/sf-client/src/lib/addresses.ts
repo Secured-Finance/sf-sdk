@@ -11,6 +11,7 @@ export interface ContractAddresses {
     markToMarket: string;
     termStructure: string;
     crosschainAddressResolver: string;
+    settlementEngine: string;
 }
 
 const MAINNET_ADDRESSES: ContractAddresses = {
@@ -24,6 +25,7 @@ const MAINNET_ADDRESSES: ContractAddresses = {
     markToMarket: DEFAULT_ADDRESS,
     termStructure: DEFAULT_ADDRESS,
     crosschainAddressResolver: DEFAULT_ADDRESS,
+    settlementEngine: DEFAULT_ADDRESS,
 };
 
 const ROPSTEN_ADDRESSES: ContractAddresses = {
@@ -37,6 +39,21 @@ const ROPSTEN_ADDRESSES: ContractAddresses = {
     markToMarket: '0x4E599754188C4772696BB9A85F435Df02275cE29',
     termStructure: '0xB6AD6A3a356f208832e46aF4409e59B53287E44E',
     crosschainAddressResolver: '0x93E72CE258eB0a47aC0de06f012162afa5D84f15',
+    settlementEngine: DEFAULT_ADDRESS,
+};
+
+const RINKEBY_ADDRESSES: ContractAddresses = {
+    collateralAggregator: '0xC616D55499aacE74cFC3005061b07d239bB22125',
+    loan: '0x2A7DCcB9856241430628331869A7d37DB37305B9',
+    lendingMarketController: '0x64F373a1D03CFd8300a2b8B525C4350A0158e34b',
+    currencyController: '0x2938Fcec0Ba1633a35692Fd0863a2dCe6D8F6b33',
+    closeOutNetting: '0x759C97C1a517388a1cB779833C7a035E37684995',
+    paymentAggregator: '0x7b97B03C3232a6560d6C9daAaE49f33037D9131C',
+    productAddressResolver: '0xB0D4b6A17E71F19f198859Ff6f04a9883bad2E01',
+    markToMarket: '0xAd07541C73F0911726Fe64227D12f799e667Bb15',
+    termStructure: '0xE1f4BF0E576f79edf5376A2cC82396E92157AbDC',
+    crosschainAddressResolver: '0x10f1B36AD1F8Fd0FACfaDBfeb78535F082868060',
+    settlementEngine: '0x604BC283e44389549733751Fb9bcfBbcbD89E47a',
 };
 
 const LOCALHOST_ADDRESSES: ContractAddresses = {
@@ -50,10 +67,12 @@ const LOCALHOST_ADDRESSES: ContractAddresses = {
     markToMarket: DEFAULT_ADDRESS,
     termStructure: '0xBb9c1fe31BF38B87727197e6fdFe84a45F132431',
     crosschainAddressResolver: '0x9623EdC69b56FfED2928a2500aD7DD6f974Afa92',
+    settlementEngine: DEFAULT_ADDRESS,
 };
 
 export const addresses: { [key: number]: ContractAddresses } = {
     1: MAINNET_ADDRESSES,
     3: ROPSTEN_ADDRESSES,
+    4: RINKEBY_ADDRESSES,
     1337: LOCALHOST_ADDRESSES,
 };
