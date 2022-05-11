@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { ConfigUtil } from '@shared/modules/config';
+import { AuthGuard } from '@nestjs/passport';
+import { ConfigUtil, BasicAuthGuard } from '@shared/modules';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -12,6 +13,7 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
+  app.useGlobalGuards(new BasicAuthGuard());
   const configUtil = app.get(ConfigUtil);
 
   await app.listen(configUtil.get('port'));
