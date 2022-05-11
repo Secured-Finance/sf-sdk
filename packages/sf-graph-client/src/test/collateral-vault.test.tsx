@@ -2,7 +2,6 @@ import { MockedProvider } from '@apollo/client/testing';
 import { expect } from 'chai';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import waitForExpect from 'wait-for-expect';
 import { collateralVaultQueriesMock } from '../mocks';
 import { BilateralPositionMock, CollateralBookMock } from '../mocks/components';
 import {
@@ -52,9 +51,7 @@ it('Should render collateral book component with network error query', async () 
 
     const testInstance =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
-    await waitForExpect(() => {
-        expect(testInstance.children).contain('GraphQL Network Error');
-    });
+    expect(testInstance.children).contain('GraphQL Network Error');
 });
 
 it('Should render mock collateral book component and succesfully get data from query', async () => {
@@ -84,14 +81,12 @@ it('Should render mock collateral book component and succesfully get data from q
     let instant0 = testInstances.children[0] as renderer.ReactTestRendererJSON;
     let instant1 = testInstances.children[1] as renderer.ReactTestRendererJSON;
 
-    await waitForExpect(() => {
-        expect(instant0.children.toString()).equal(
-            'Independent collateral for 0x01 is 1000'
-        );
-        expect(instant1.children.toString()).equal(
-            'Locked collateral for 0x01 is 5000'
-        );
-    });
+    expect(instant0.children.toString()).equal(
+        'Independent collateral for 0x01 is 1000'
+    );
+    expect(instant1.children.toString()).equal(
+        'Locked collateral for 0x01 is 5000'
+    );
 });
 
 it('Should render mock bilateral position component and succesfully get data from query', async () => {
@@ -121,12 +116,10 @@ it('Should render mock bilateral position component and succesfully get data fro
     let instant0 = testInstances.children[0] as renderer.ReactTestRendererJSON;
     let instant1 = testInstances.children[1] as renderer.ReactTestRendererJSON;
 
-    await waitForExpect(() => {
-        expect(instant0.children.toString()).equal(
-            'Locked collateral for 0x010012 is 10000'
-        );
-        expect(instant1.children.toString()).equal(
-            'Locked collateral for 0x01 is 50000'
-        );
-    });
+    expect(instant0.children.toString()).equal(
+        'Locked collateral for 0x010012 is 10000'
+    );
+    expect(instant1.children.toString()).equal(
+        'Locked collateral for 0x01 is 50000'
+    );
 });

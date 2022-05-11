@@ -2,7 +2,6 @@ import { MockedProvider } from '@apollo/client/testing';
 import { expect } from 'chai';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import waitForExpect from 'wait-for-expect';
 import { currencyQueriesMock } from '../mocks';
 import { CurrencyMock } from '../mocks/components';
 import { CURRENCY } from '../queries';
@@ -42,9 +41,7 @@ it('Should render currency component with network error query', async () => {
     const testInstance =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
 
-    await waitForExpect(() => {
-        expect(testInstance.children).contain('GraphQL Network Error');
-    });
+    expect(testInstance.children).contain('GraphQL Network Error');
 });
 
 it('Should render currency mock component and succesfully get data from query', async () => {
@@ -66,7 +63,5 @@ it('Should render currency mock component and succesfully get data from query', 
 
     const testInstance = testComponent.root.findByType('p');
 
-    await waitForExpect(() => {
-        expect(testInstance.children).contain('Ethereum: ETH');
-    });
+    expect(testInstance.children).contain('Ethereum: ETH');
 });

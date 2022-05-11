@@ -2,7 +2,6 @@ import { MockedProvider } from '@apollo/client/testing';
 import { expect } from 'chai';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import waitForExpect from 'wait-for-expect';
 import { loanQueriesMock } from '../mocks';
 import { LoanMock } from '../mocks/components';
 import { LOAN_DEALS } from '../queries';
@@ -44,9 +43,7 @@ it('Should render loans component with network error query', async () => {
     const testInstance =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
 
-    await waitForExpect(() => {
-        expect(testInstance.children).contain('GraphQL Network Error');
-    });
+    expect(testInstance.children).contain('GraphQL Network Error');
 });
 
 it('Should render mock loans component and succesfully get data from query', async () => {
@@ -69,7 +66,5 @@ it('Should render mock loans component and succesfully get data from query', asy
 
     const testInstance = testComponent.root.findByType('p');
 
-    await waitForExpect(() => {
-        expect(testInstance.children).contain('10000: 5000');
-    });
+    expect(testInstance.children).contain('10000: 5000');
 });
