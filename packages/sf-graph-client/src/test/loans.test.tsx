@@ -1,10 +1,10 @@
-import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
-import renderer from 'react-test-renderer';
-import { LoanMock } from '../mocks/components';
 import { expect } from 'chai';
-import { LOAN_DEALS } from '../queries';
+import React from 'react';
+import renderer from 'react-test-renderer';
 import { loanQueriesMock } from '../mocks';
+import { LoanMock } from '../mocks/components';
+import { LOAN_DEALS } from '../queries';
 
 it('Should successfully render loans component ', () => {
     let variables = {
@@ -34,7 +34,7 @@ it('Should render loans component with network error query', async () => {
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 10));
+    await new Promise(r => setTimeout(r, 30));
 
     const testInstance =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
@@ -53,7 +53,7 @@ it('Should render mock loans component and succesfully get data from query', asy
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 10));
+    await new Promise(r => setTimeout(r, 30));
 
     const testInstance = testComponent.root.findByType('p');
     expect(testInstance.children).contain('10000: 5000');

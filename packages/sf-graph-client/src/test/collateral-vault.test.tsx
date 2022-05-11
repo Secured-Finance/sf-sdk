@@ -1,12 +1,12 @@
-import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
-import renderer from 'react-test-renderer';
-import { CollateralBookMock, BilateralPositionMock } from '../mocks/components';
 import { expect } from 'chai';
+import React from 'react';
+import renderer from 'react-test-renderer';
 import { collateralVaultQueriesMock } from '../mocks';
+import { BilateralPositionMock, CollateralBookMock } from '../mocks/components';
 import {
-    COLLATERAL_BOOK_FROM_VAULT,
     BILATERAL_POSITIONS_FROM_VAULT,
+    COLLATERAL_BOOK_FROM_VAULT,
 } from '../queries';
 
 it('Should successfully render collateral book component ', () => {
@@ -43,7 +43,7 @@ it('Should render collateral book component with network error query', async () 
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 10));
+    await new Promise(r => setTimeout(r, 30));
 
     const testInstance =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
@@ -65,7 +65,7 @@ it('Should render mock collateral book component and succesfully get data from q
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 10));
+    await new Promise(r => setTimeout(r, 30));
 
     const testInstances =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
@@ -95,7 +95,7 @@ it('Should render mock bilateral position component and succesfully get data fro
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 10));
+    await new Promise(r => setTimeout(r, 30));
 
     const testInstances =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;

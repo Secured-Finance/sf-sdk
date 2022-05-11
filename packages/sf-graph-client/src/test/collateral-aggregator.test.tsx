@@ -1,13 +1,13 @@
-import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
-import renderer from 'react-test-renderer';
-import {
-    UnsettledPositionMock,
-    BilateralNettingMock,
-} from '../mocks/components';
-import { collateralAggregatorQueriesMock } from '../mocks';
-import { BILATERAL_POSITIONS, UNSETTLED_POSITIONS } from '../queries';
 import { expect } from 'chai';
+import React from 'react';
+import renderer from 'react-test-renderer';
+import { collateralAggregatorQueriesMock } from '../mocks';
+import {
+    BilateralNettingMock,
+    UnsettledPositionMock,
+} from '../mocks/components';
+import { BILATERAL_POSITIONS, UNSETTLED_POSITIONS } from '../queries';
 
 it('Should render unsettled collateral position component with network error query', async () => {
     let variables = {
@@ -24,7 +24,7 @@ it('Should render unsettled collateral position component with network error que
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 10));
+    await new Promise(r => setTimeout(r, 30));
 
     const testInstance =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
@@ -46,7 +46,7 @@ it('Should render mock unsettled collateral position component and succesfully g
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 10));
+    await new Promise(r => setTimeout(r, 30));
 
     const testInstance = testComponent.root.findByType('p');
     expect(testInstance.children).contain(
@@ -69,7 +69,7 @@ it('Should render mock unsettled collateral position component and succesfully g
         </MockedProvider>
     );
 
-    await new Promise(r => setTimeout(r, 10));
+    await new Promise(r => setTimeout(r, 30));
 
     const testInstances = testComponent.root.findAllByType('p');
     expect(testInstances[0].children.toString()).equal(
