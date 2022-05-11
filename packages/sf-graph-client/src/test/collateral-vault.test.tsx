@@ -34,7 +34,7 @@ it('Should render collateral book component with network error query', async () 
         vaultId: '0xWETH',
         address: '0x01',
     };
-
+    // this.timeout = 4000;
     const testComponent = renderer.create(
         <MockedProvider mocks={collateralVaultQueriesMock}>
             <CollateralBookMock
