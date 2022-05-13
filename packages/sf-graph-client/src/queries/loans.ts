@@ -6,7 +6,11 @@ export const LOAN_DEALS = gql`
             id
             lender
             borrower
-            currency
+            currency {
+                identifier
+                shortName
+                name
+            }
             term
             notional
             couponPayment
@@ -25,7 +29,11 @@ export const BORROW_DEALS = gql`
             id
             lender
             borrower
-            currency
+            currency {
+                identifier
+                shortName
+                name
+            }
             term
             notional
             couponPayment
@@ -44,7 +52,11 @@ export const LOAN_INFO = gql`
             id
             lender
             borrower
-            currency
+            currency {
+                identifier
+                shortName
+                name
+            }
             term
             notional
             couponPayment
