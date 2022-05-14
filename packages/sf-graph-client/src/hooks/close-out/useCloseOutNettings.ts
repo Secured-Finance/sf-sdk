@@ -31,13 +31,9 @@ export const useCloseOutNettings = (
     }, [user, counterparty, skip]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client) {
             fetchCloseOutNettings();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [client, user, counterparty, skip]);
 
     return closeOutNettings;

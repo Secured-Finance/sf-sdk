@@ -25,13 +25,9 @@ export const useProductInfo = (prefixOrName: string) => {
     }, [productId]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client) {
             fetchProductInfo();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [client, productId]);
 
     return product;

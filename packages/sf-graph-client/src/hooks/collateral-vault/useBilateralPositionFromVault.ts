@@ -17,7 +17,7 @@ export const useBilateralPositionFromVault = (
         positionId: positionId,
     };
 
-    const { loading, error, data } = useQuery(BILATERAL_POSITION_FROM_VAULT, {
+    const { error, data } = useQuery(BILATERAL_POSITION_FROM_VAULT, {
         variables: variables,
     });
 

@@ -1,7 +1,7 @@
-import { Contract, Overrides, Signer } from 'ethers';
+import { Provider } from '@ethersproject/providers';
+import { Contract, Signer } from 'ethers';
 import CrosschainAddressResolverAbi from '../lib/abis/CrosschainAddressResolver';
 import { addresses } from '../lib/addresses';
-import { Provider } from '@ethersproject/providers';
 
 export class CrosschainAddressResolver {
     contract: Contract;

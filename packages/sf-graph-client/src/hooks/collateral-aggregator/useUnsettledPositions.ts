@@ -6,7 +6,7 @@ export const useUnsettledPositions = (user: string) => {
         address: user.toLowerCase(),
     };
 
-    const { loading, error, data } = useQuery(UNSETTLED_POSITIONS, {
+    const { error, data } = useQuery(UNSETTLED_POSITIONS, {
         variables: variables,
     });
 

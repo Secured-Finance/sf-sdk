@@ -1,8 +1,7 @@
-import { BigNumber, Contract, Overrides, Signer } from 'ethers';
-import LendingMarketAbi from '../lib/abis/LendingMarket';
-import { TxBase } from '../utils/eth-tx';
-import { getLendingMarketByCcyAndTerm } from '../utils/addresses';
 import { Provider } from '@ethersproject/providers';
+import { BigNumber, Contract, Signer } from 'ethers';
+import LendingMarketAbi from '../lib/abis/LendingMarket';
+import { getLendingMarketByCcyAndTerm } from '../utils/addresses';
 
 export class LendingMarket {
     contract: Contract;

@@ -25,13 +25,9 @@ export const useCurrencyInfo = (ccyShortName: string) => {
     }, [ccyShortName]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client) {
             fetchCurrencyInfo();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [client, ccyShortName]);
 
     return currency;

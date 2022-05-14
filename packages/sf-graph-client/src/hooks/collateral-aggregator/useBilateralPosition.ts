@@ -6,7 +6,7 @@ export const useBilateralPosition = (user: string) => {
         address: user.toLowerCase(),
     };
 
-    const { loading, error, data } = useQuery(BILATERAL_POSITIONS, {
+    const { error, data } = useQuery(BILATERAL_POSITIONS, {
         variables: variables,
     });
 

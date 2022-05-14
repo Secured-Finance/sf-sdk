@@ -1,5 +1,5 @@
 const { SecuredFinanceClient } = require('../dist/index');
-const { Wallet, providers, BigNumber } = require('ethers');
+const { Wallet, providers } = require('ethers');
 const { toBytes32 } = require('../dist/utils');
 require('dotenv/config');
 

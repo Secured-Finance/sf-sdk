@@ -33,13 +33,9 @@ export const useCloseOutNetting = (
     }, [user, counterparty, ccyShortName]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client) {
             fetchCloseOutNetting();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [client, user, counterparty, ccyShortName]);
 
     return closeOutNetting;

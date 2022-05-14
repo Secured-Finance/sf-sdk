@@ -24,13 +24,9 @@ export const useTimeSlots = (user: string, skip: number = 0) => {
     }, [user, skip]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client) {
             fetchTimeSlots();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [client, user, skip]);
 
     return timeSlots;

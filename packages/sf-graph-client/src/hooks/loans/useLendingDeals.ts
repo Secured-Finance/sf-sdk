@@ -24,13 +24,9 @@ export const useLendingDeals = (account: string, skip: number = 0) => {
     }, [account, skip]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client && account !== '' && account !== null) {
             fetchLendingDeals();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [account, client]);
 
     return lendingDeals;

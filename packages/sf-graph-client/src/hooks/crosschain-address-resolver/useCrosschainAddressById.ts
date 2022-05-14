@@ -9,7 +9,7 @@ export const useCrosschainAddressById = (user: string, chainId: number) => {
         crosschainAddressId: crosschainAddressId.toLowerCase(),
     };
 
-    const { loading, error, data } = useQuery(CROSSCHAIN_ADDRESS_BY_ID, {
+    const { error, data } = useQuery(CROSSCHAIN_ADDRESS_BY_ID, {
         variables: variables,
     });
 

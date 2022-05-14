@@ -1,7 +1,7 @@
-import utils from 'web3-utils';
 import { utils as ethersUtils } from 'ethers';
-import { getCurrencyIdentifier, getProductPrefix, toBytes32 } from './string';
+import utils from 'web3-utils';
 import { packAddresses } from './address-pack';
+import { getCurrencyIdentifier, getProductPrefix } from './string';
 
 export const generateDealId = (prefixOrName: string, dealNumber: number) => {
     let prefix = generateProductId(prefixOrName);

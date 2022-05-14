@@ -24,13 +24,9 @@ export const useLoanTermination = (id: string, skip: number = 0) => {
     }, [id]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client && id !== '' && id !== null) {
             fetchLoanTermination();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [client, id]);
 
     return loanTermination;

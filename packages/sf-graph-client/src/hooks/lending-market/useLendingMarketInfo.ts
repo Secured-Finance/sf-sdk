@@ -23,13 +23,9 @@ export const useLendingMarketInfo = (lendingMarket: string) => {
     }, [lendingMarket]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client) {
             fetchLendingMarketInfo();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [lendingMarket, client]);
 
     return lendingMarketInfo;

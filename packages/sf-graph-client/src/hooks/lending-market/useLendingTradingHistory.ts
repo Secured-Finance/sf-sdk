@@ -27,13 +27,9 @@ export const useLendingTradingHistory = (
     }, [lendingMarket, skip]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client) {
             fetchLendingTradingHistory();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [lendingMarket, client]);
 
     return tradingHistory;

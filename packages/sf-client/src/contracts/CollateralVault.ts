@@ -1,8 +1,7 @@
-import { BigNumber, Contract, Overrides, Signer } from 'ethers';
-import CollateralVaultAbi from '../lib/abis/CollateralVault';
-import { TxBase } from '../utils/eth-tx';
-import { getCollateralVaultByCcy } from '../utils/addresses';
 import { Provider } from '@ethersproject/providers';
+import { BigNumber, Contract, Signer } from 'ethers';
+import CollateralVaultAbi from '../lib/abis/CollateralVault';
+import { getCollateralVaultByCcy } from '../utils/addresses';
 
 export class CollateralVault {
     contract: Contract;

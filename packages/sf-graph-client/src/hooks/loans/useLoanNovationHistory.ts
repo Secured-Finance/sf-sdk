@@ -24,13 +24,9 @@ export const useLoanNovationHistory = (id: string, skip: number = 0) => {
     }, [id, skip]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client && id !== '' && id !== null) {
             fetchLoanNovationHistory();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [client, id, skip]);
 
     return novationHistory;

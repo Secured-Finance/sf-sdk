@@ -23,13 +23,9 @@ export const useTerms = (skip: number = 0) => {
     }, [skip]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client) {
             fetchTerms();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [client, skip]);
 
     return terms;

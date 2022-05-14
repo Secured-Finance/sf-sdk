@@ -1,7 +1,7 @@
-import React from 'react';
 import { useQuery } from '@apollo/client';
-import { MockComponentProps } from './types';
+import React from 'react';
 import { LoanQueryResponse } from '../../utils';
+import { MockComponentProps } from './types';
 
 export const LoanMock: React.FC<MockComponentProps> = ({
     query,
@@ -17,7 +17,7 @@ export const LoanMock: React.FC<MockComponentProps> = ({
         return <p>GraphQL Network Error</p>;
     }
 
-    return data.loans.map((item: LoanQueryResponse, index: number) => (
+    return data.loans.map((item: LoanQueryResponse) => (
         <div key={item.id}>
             <p>{`${item.notional}: ${item.rate}`}</p>
         </div>

@@ -1,7 +1,7 @@
-import { BigNumber, Contract, Overrides, Signer } from 'ethers';
+import { Provider } from '@ethersproject/providers';
+import { BigNumber, Contract, Signer } from 'ethers';
 import CollateralAggregatorAbi from '../lib/abis/CollateralAggregator';
 import { addresses } from '../lib/addresses';
-import { Provider } from '@ethersproject/providers';
 
 export class CollateralAggregator {
     contract: Contract;

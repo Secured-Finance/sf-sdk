@@ -1,9 +1,8 @@
-import { Contract, Overrides, Signer } from 'ethers';
+import { Provider } from '@ethersproject/providers';
+import { Contract, Signer } from 'ethers';
 import LendingMarketControllerAbi from '../lib/abis/LendingMarketController';
-import { TxBase } from '../utils/eth-tx';
 import { addresses } from '../lib/addresses';
 import { MarketOrder } from '../utils/types';
-import { Provider } from '@ethersproject/providers';
 
 export class LendingMarketController {
     contract: Contract;

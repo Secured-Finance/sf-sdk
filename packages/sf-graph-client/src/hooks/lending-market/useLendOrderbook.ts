@@ -1,8 +1,8 @@
+import { utils } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import { client } from '../../client';
 import { LENDING_LEND_ORDERBOOK } from '../../queries';
 import { OrderbookRow, toBN } from '../../utils';
-import { utils } from 'ethers';
 
 export const useLendOrderbook = (
     lendingMarket: string,
@@ -47,13 +47,9 @@ export const useLendOrderbook = (
     }, [lendingMarket, skip, assetUsdPrice]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client) {
             fetchLendOrderbook();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [client, lendingMarket, skip, assetUsdPrice]);
 
     return lendOrderbook;

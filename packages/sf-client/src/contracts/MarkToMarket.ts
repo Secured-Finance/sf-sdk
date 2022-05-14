@@ -1,8 +1,7 @@
-import { Contract, Overrides, Signer } from 'ethers';
+import { Provider } from '@ethersproject/providers';
+import { Contract, Signer } from 'ethers';
 import MarkToMarketAbi from '../lib/abis/MarkToMarket';
 import { addresses } from '../lib/addresses';
-import { TxBase } from '../utils/eth-tx';
-import { Provider } from '@ethersproject/providers';
 
 export class MarkToMarket {
     contract: Contract;

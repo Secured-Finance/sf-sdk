@@ -7,7 +7,7 @@ export const useCollateralBookFromVault = (vault: string, user: string) => {
         address: user.toLowerCase(),
     };
 
-    const { loading, error, data } = useQuery(COLLATERAL_BOOK_FROM_VAULT, {
+    const { error, data } = useQuery(COLLATERAL_BOOK_FROM_VAULT, {
         variables: variables,
     });
 

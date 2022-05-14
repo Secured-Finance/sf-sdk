@@ -23,13 +23,9 @@ export const useCurrencies = (skip: number = 0) => {
     }, [skip]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client) {
             fetchCurrencies();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [client, skip]);
 
     return currencies;
