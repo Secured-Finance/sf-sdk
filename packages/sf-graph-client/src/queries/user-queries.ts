@@ -81,7 +81,7 @@ export const TRADE_HISTORY = gql`
 `;
 
 export const OPEN_LOANS = gql`
-    query OpenLoans($account: Bytes!, $currency: Int!, $term: Int!) {
+    query OpenLoans($account: Bytes!, $currency: Bytes!, $term: Int!) {
         user(id: $account) {
             loans(where: { currency: $currency, term: $term }) {
                 id
@@ -100,7 +100,7 @@ export const OPEN_LOANS = gql`
                     name
                 }
                 term
-                amount
+                notional
                 couponPayment
                 rate
                 startTimestamp
