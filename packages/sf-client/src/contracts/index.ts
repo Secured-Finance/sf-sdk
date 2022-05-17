@@ -28,7 +28,7 @@ export {
     SettlementEngine,
 };
 
-export const contracts: { [key: string]: any } = {
+export const contracts: { [key: string]: unknown } = {
     collateralAggregator: CollateralAggregator,
     loan: Loan,
     lendingMarketController: LendingMarketController,

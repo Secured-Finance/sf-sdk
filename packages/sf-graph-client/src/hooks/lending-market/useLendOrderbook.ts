@@ -25,7 +25,7 @@ export const useLendOrderbook = (
             if (res?.data.lendingMarket.lendOrderbook) {
                 let parsedOrderbook: Array<OrderbookRow> = [];
                 res.data.lendingMarket.lendOrderbook.map(
-                    (item: any, index: number) => {
+                    (_: unknown, index: number) => {
                         const usdAmountBN = toBN(
                             res.data.lendingMarket.lendOrderbook[index]
                                 .totalAmount

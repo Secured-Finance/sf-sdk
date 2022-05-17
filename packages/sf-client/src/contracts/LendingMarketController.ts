@@ -1,6 +1,9 @@
 import { Provider } from '@ethersproject/providers';
-import { Contract, Signer } from 'ethers';
-import LendingMarketControllerAbi from '../lib/abis/LendingMarketController';
+import { Signer } from 'ethers';
+import {
+    LendingMarketController as Contract,
+    LendingMarketController__factory,
+} from '../../types/ethers-contracts';
 import { addresses } from '../lib/addresses';
 import { MarketOrder } from '../utils/types';
 
@@ -8,9 +11,8 @@ export class LendingMarketController {
     contract: Contract;
 
     constructor(signerOrProvider: Signer | Provider, network: number) {
-        this.contract = new Contract(
+        this.contract = LendingMarketController__factory.connect(
             addresses[network].lendingMarketController,
-            LendingMarketControllerAbi,
             signerOrProvider
         );
     }

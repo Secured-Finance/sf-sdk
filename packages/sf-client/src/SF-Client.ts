@@ -10,7 +10,7 @@ import {
 import { NETWORKS } from './utils/networks';
 
 export class SFClient {
-    signerOrProvider: any;
+    signerOrProvider: Signer | Provider;
     networkId: number;
     blockGasLimit: BigNumber;
     defaultGas: number;
@@ -21,7 +21,7 @@ export class SFClient {
     constructor(
         signerOrProvider: Signer | Provider,
         network?: Network,
-        options?: { defaultGas?: number; defaultGasPrice?: any }
+        options?: { defaultGas?: number; defaultGasPrice?: number }
     ) {
         this.defaultGas = options?.defaultGas || 6000000;
         this.defaultGasPrice = options?.defaultGasPrice || 1000000000000;
@@ -38,28 +38,25 @@ export class SFClient {
         this.contracts = contractsInstance;
     }
 
-    async checkRegisteredUser(account: string): Promise<boolean> {
+    async checkRegisteredUser(account: string) {
         return this.contracts.collateralAggregator.checkRegisteredUser(account);
     }
 
-    async registerUser(): Promise<any> {
+    async registerUser() {
         return this.contracts.collateralAggregator.register();
     }
 
     async registerUserWithCrosschainAddresses(
         addresses: string[],
         chainIds: number[] | BigNumber[]
-    ): Promise<any> {
+    ) {
         return this.contracts.collateralAggregator.registerWithCrosschainAddresses(
             addresses,
             chainIds
         );
     }
 
-    async depositCollateral(
-        ccy: string,
-        amount: number | BigNumber
-    ): Promise<any> {
+    async depositCollateral(ccy: string, amount: number | BigNumber) {
         const vaultAddress = getCollateralVaultAddressByCcy(
             ccy,
             this.networkId
@@ -82,7 +79,7 @@ export class SFClient {
         ccy: string,
         counterparty: string,
         amount: number | BigNumber
-    ): Promise<any> {
+    ) {
         const vaultAddress = getCollateralVaultAddressByCcy(
             ccy,
             this.networkId
@@ -94,16 +91,13 @@ export class SFClient {
         if (ccy === 'ETH') {
             return collateralVault.contract.functions[
                 'deposit(address,uint256)'
-            ](counterparty, amount, { value: amount });
+            ](counterparty, amount);
         } else {
             return collateralVault.depositIntoPosition(counterparty, amount);
         }
     }
 
-    async withdrawCollateral(
-        ccy: string,
-        amount: number | BigNumber
-    ): Promise<any> {
+    async withdrawCollateral(ccy: string, amount: number | BigNumber) {
         const vaultAddress = getCollateralVaultAddressByCcy(
             ccy,
             this.networkId
@@ -119,7 +113,7 @@ export class SFClient {
         ccy: string,
         counterparty: string,
         amount: number | BigNumber
-    ): Promise<any> {
+    ) {
         const vaultAddress = getCollateralVaultAddressByCcy(
             ccy,
             this.networkId
@@ -132,79 +126,43 @@ export class SFClient {
     }
 
     async updateCrosschainAddress(
-        chainId: string | number | BigInt,
-        address: string
-    ): Promise<any> {
+        user: string,
+        chainId: (string | number)[],
+        address: string[]
+    ) {
         return this.contracts.crosschainAddressResolver.updateAddress(
+            user,
             chainId,
             address
         );
     }
 
-    getBorrowYieldCurve = async (ccy: string): Promise<BigNumber[]> => {
+    getBorrowYieldCurve = async (ccy: string) => {
         const ccyIdentifier = toBytes32(ccy);
         return this.contracts.lendingMarketController.getBorrowRatesForCcy(
             ccyIdentifier
         );
     };
 
-    getLendYieldCurve = async (ccy: string): Promise<BigNumber[]> => {
+    getLendYieldCurve = async (ccy: string) => {
         const ccyIdentifier = toBytes32(ccy);
         return this.contracts.lendingMarketController.getLendRatesForCcy(
             ccyIdentifier
         );
     };
 
-    getMidRateYieldCurve = async (ccy: string): Promise<BigNumber[]> => {
+    getMidRateYieldCurve = async (ccy: string) => {
         const ccyIdentifier = toBytes32(ccy);
         return this.contracts.lendingMarketController.getMidRatesForCcy(
             ccyIdentifier
         );
     };
 
-    getDiscountYieldCurve = async (ccy: string): Promise<BigNumber[]> => {
+    getDiscountYieldCurve = async (ccy: string) => {
         const ccyIdentifier = toBytes32(ccy);
         return this.contracts.lendingMarketController.getDiscountFactorsForCcy(
             ccyIdentifier
         );
-    };
-
-    makeLendingOrder = async (
-        ccy: string,
-        term: string,
-        side: number,
-        amount: number | BigNumber,
-        rate: number | BigNumber
-    ): Promise<any> => {
-        const marketAddress = getLendingMarketAddressByCcyAndTerm(
-            ccy,
-            term,
-            this.networkId
-        );
-
-        const lendingMarket =
-            this.contracts.lendingMarkets[marketAddress].contract;
-
-        return lendingMarket.makeOrder(side, amount, rate);
-    };
-
-    takeLendingOrder = async (
-        ccy: string,
-        term: string,
-        side: number,
-        orderID: number | BigNumber,
-        amount: number | BigNumber
-    ): Promise<any> => {
-        const marketAddress = getLendingMarketAddressByCcyAndTerm(
-            ccy,
-            term,
-            this.networkId
-        );
-
-        const lendingMarket =
-            this.contracts.lendingMarkets[marketAddress].contract;
-
-        return lendingMarket.takeOrder(side, orderID, amount);
     };
 
     placeLendingOrder = async (
@@ -213,7 +171,7 @@ export class SFClient {
         side: number,
         amount: number | BigNumber,
         rate: number | BigNumber
-    ): Promise<any> => {
+    ) => {
         const marketAddress = getLendingMarketAddressByCcyAndTerm(
             ccy,
             term,
@@ -230,7 +188,7 @@ export class SFClient {
         ccy: string,
         term: string,
         orderID: number | BigNumber
-    ): Promise<any> => {
+    ) => {
         const marketAddress = getLendingMarketAddressByCcyAndTerm(
             ccy,
             term,
@@ -249,7 +207,7 @@ export class SFClient {
         amount: number | BigNumber,
         timestamp: number | BigNumber,
         txHash: string
-    ): Promise<any> => {
+    ) => {
         const ccyIdentifier = toBytes32(ccy);
 
         return this.contracts.settlementEngine.verifyPayment(

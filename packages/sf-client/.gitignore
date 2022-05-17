@@ -58,3 +58,6 @@ typings/
 .next
 
 dist/
+
+types/
+!types/tsconfig.json
