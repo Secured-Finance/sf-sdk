@@ -125,13 +125,8 @@ export class SFClient {
         return collateralVault.withdrawFromPosition(counterparty, amount);
     }
 
-    async updateCrosschainAddress(
-        user: string,
-        chainId: (string | number)[],
-        address: string[]
-    ) {
+    async updateCrosschainAddress(chainId: string | number, address: string) {
         return this.contracts.crosschainAddressResolver.updateAddress(
-            user,
             chainId,
             address
         );

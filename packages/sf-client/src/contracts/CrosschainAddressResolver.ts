@@ -16,12 +16,8 @@ export class CrosschainAddressResolver {
         );
     }
 
-    updateAddress = async (
-        user: string,
-        chainId: (number | string)[],
-        address: string[]
-    ) => {
-        return this.contract.updateAddresses(user, chainId, address);
+    updateAddress = async (chainId: number | string, address: string) => {
+        return this.contract['updateAddress(uint256,string)'](chainId, address);
     };
 
     getUserAddress = async (user: string, chainId: number | string) => {
