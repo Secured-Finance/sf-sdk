@@ -1,36 +1,23 @@
-import { useCallback, useEffect, useState } from 'react';
-import { client } from '../../client';
+import { useQuery } from '@apollo/client';
+import { Query, Term } from '../../generated';
 import { TERMS } from '../../queries';
 
-export const useTerms = (skip: number = 0) => {
-    const [terms, setTerms] = useState();
+export const useTerms = (skip: number = 0): Array<Term> | undefined => {
+    const variables = {
+        skip: skip,
+    };
 
-    const fetchTerms = useCallback(async () => {
-        try {
-            let res = await client.query({
-                query: TERMS,
-                variables: {
-                    skip: skip,
-                },
-                fetchPolicy: 'cache-first',
-            });
-            if (res?.data.terms) {
-                setTerms(res?.data.terms);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [skip]);
+    const { error, data } = useQuery<Query>(TERMS, {
+        variables: variables,
+    });
 
-    useEffect(() => {
-        let isMounted = true;
-        if (client) {
-            fetchTerms();
-        }
-        return () => {
-            isMounted = false;
-        };
-    }, [client, skip]);
+    if (error) {
+        console.log(error);
+    }
 
-    return terms;
+    if (data?.terms) {
+        return data.terms;
+    } else {
+        return undefined;
+    }
 };

@@ -1,4 +1,3 @@
-import { use } from 'chai';
 import { utils } from 'ethers';
 import moment from 'moment';
 
@@ -20,18 +19,6 @@ export const timeSlotPositionByTimestamp = (unixTimestamp: number) => {
     let encodedPosition = utils.defaultAbiCoder.encode(
         ['uint256', 'uint256', 'uint256'],
         [year, month, day]
-    );
-    return utils.keccak256(encodedPosition);
-};
-
-export const resourceID = (
-    resourceShortCode: string | number,
-    user: string,
-    ironcoreUserId: string
-) => {
-    let encodedPosition = utils.defaultAbiCoder.encode(
-        ['bytes32', 'string', 'string'],
-        [resourceShortCode, user, ironcoreUserId]
     );
     return utils.keccak256(encodedPosition);
 };

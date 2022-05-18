@@ -17,9 +17,11 @@ export {
 export { useCurrencies, useCurrencyInfo } from './currencies';
 export {
     useBorrowOrderbook,
+    useBorrowOrderbookQuery,
     useLendingMarketInfo,
     useLendingTradingHistory,
     useLendOrderbook,
+    useLendOrderbookQuery,
 } from './lending-market';
 export {
     useBorrowingDeals,
@@ -31,4 +33,9 @@ export {
 export { useProductInfo, useProducts } from './products';
 export { useTermInfo, useTerms } from './terms';
 export { useTimeSlotInfo, useTimeSlots } from './time-slot';
-export { useOpenLoans, useOpenOrders, useOrdersTradingHistory } from './user';
+export {
+    useOpenLoans,
+    useOpenOrders,
+    useUsersTradingHistory,
+    useUsersTradingHistoryQuery,
+} from './user';

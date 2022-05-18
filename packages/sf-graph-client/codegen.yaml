@@ -1,0 +1,7 @@
+schema: https://api.thegraph.com/subgraphs/name/secured-finance/secured-finance-protocol
+generates:
+  ./src/generated.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node

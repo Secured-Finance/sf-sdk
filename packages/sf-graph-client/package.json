@@ -5,12 +5,13 @@
   "main": "dist/index.js",
   "source": "src/index.ts",
   "scripts": {
-    "precompile": "rm -rf dist",
+    "precompile": "rm -rf dist && npm run generate",
     "compile": "tsc -p tsconfig.json",
     "lint": "eslint lib/ src/ test/ --ext .ts",
     "build": "npm run compile && tsc -b",
     "test": "ts-mocha --timeout 4000 --delay src/*.test.{js,jsx,ts,tsx} src/**/*.test.{js,jsx,ts,tsx}",
-    "posttest": "eslint . --ext .ts --config .eslintrc"
+    "posttest": "eslint . --ext .ts --config .eslintrc",
+    "generate": "graphql-codegen"
   },
   "author": "Secured Finance",
   "bugs": {
@@ -24,14 +25,16 @@
   },
   "dependencies": {
     "@apollo/client": "^3.5.8",
+    "codegen-graph-ts": "^0.1.4",
     "cross-fetch": "^3.1.5",
     "graphql": "^16.3.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.6.1",
     "@graphql-codegen/introspection": "2.1.1",
-    "@graphql-codegen/typescript": "2.4.3",
-    "@graphql-codegen/typescript-operations": "2.3.0",
+    "@graphql-codegen/typed-document-node": "^2.2.11",
+    "@graphql-codegen/typescript": "^2.4.3",
+    "@graphql-codegen/typescript-operations": "^2.3.0",
     "@graphql-codegen/typescript-react-apollo": "3.2.5",
     "@types/mocha": "^9.1.0",
     "@types/react": "^17.0.43",

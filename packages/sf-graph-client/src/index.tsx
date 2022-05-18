@@ -9,6 +9,7 @@ export {
     useBilateralPositionsFromVault,
     useBorrowingDeals,
     useBorrowOrderbook,
+    useBorrowOrderbookQuery,
     useCloseOutNetting,
     useCloseOutNettings,
     useCollateralAggregator,
@@ -22,12 +23,12 @@ export {
     useLendingMarketInfo,
     useLendingTradingHistory,
     useLendOrderbook,
+    useLendOrderbookQuery,
     useLoanInfo,
     useLoanNovationHistory,
     useLoanTermination,
     useOpenLoans,
     useOpenOrders,
-    useOrdersTradingHistory,
     useProductInfo,
     useProducts,
     useTermInfo,
@@ -35,6 +36,8 @@ export {
     useTimeSlotInfo,
     useTimeSlots,
     useUnsettledPositions,
+    useUsersTradingHistory,
+    useUsersTradingHistoryQuery,
 } from './hooks';
 export { utils, client };
 

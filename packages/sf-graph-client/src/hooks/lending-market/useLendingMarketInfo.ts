@@ -1,36 +1,25 @@
-import { useCallback, useEffect, useState } from 'react';
-import { client } from '../../client';
+import { useQuery } from '@apollo/client';
+import { LendingMarket, Query } from '../../generated';
 import { LENDING_MARKET_INFO } from '../../queries';
 
-export const useLendingMarketInfo = (lendingMarket: string) => {
-    const [lendingMarketInfo, setLendingMarketInfo] = useState();
+export const useLendingMarketInfo = (
+    lendingMarket: string
+): LendingMarket | undefined => {
+    const variables = {
+        market: lendingMarket.toLowerCase(),
+    };
 
-    const fetchLendingMarketInfo = useCallback(async () => {
-        try {
-            let res = await client.query({
-                query: LENDING_MARKET_INFO,
-                variables: {
-                    market: lendingMarket.toLowerCase(),
-                },
-                fetchPolicy: 'cache-first',
-            });
-            if (res?.data.lendingMarket) {
-                setLendingMarketInfo(res?.data.lendingMarket);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [lendingMarket]);
+    const { error, data } = useQuery<Query>(LENDING_MARKET_INFO, {
+        variables: variables,
+    });
 
-    useEffect(() => {
-        let isMounted = true;
-        if (client) {
-            fetchLendingMarketInfo();
-        }
-        return () => {
-            isMounted = false;
-        };
-    }, [lendingMarket, client]);
+    if (error) {
+        console.log(error);
+    }
 
-    return lendingMarketInfo;
+    if (data?.lendingMarket) {
+        return data.lendingMarket;
+    } else {
+        return undefined;
+    }
 };

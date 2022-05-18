@@ -1,38 +1,26 @@
-import { useCallback, useEffect, useState } from 'react';
-import { client } from '../../client';
+import { useQuery } from '@apollo/client';
+import { Currency, Query } from '../../generated';
 import { CURRENCY } from '../../queries';
 import { generateCurrencyId } from '../../utils';
 
-export const useCurrencyInfo = (ccyShortName: string) => {
-    const [currency, setCurrency] = useState();
+export const useCurrencyInfo = (ccyShortName: string): Currency | undefined => {
     const currencyId = generateCurrencyId(ccyShortName);
 
-    const fetchCurrencyInfo = useCallback(async () => {
-        try {
-            let res = await client.query({
-                query: CURRENCY,
-                variables: {
-                    currency: currencyId,
-                },
-                fetchPolicy: 'cache-first',
-            });
-            if (res?.data.currency) {
-                setCurrency(res?.data.currency);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [ccyShortName]);
+    const variables = {
+        currency: currencyId,
+    };
 
-    useEffect(() => {
-        let isMounted = true;
-        if (client) {
-            fetchCurrencyInfo();
-        }
-        return () => {
-            isMounted = false;
-        };
-    }, [client, ccyShortName]);
+    const { error, data } = useQuery<Query>(CURRENCY, {
+        variables: variables,
+    });
 
-    return currency;
+    if (error) {
+        console.log(error);
+    }
+
+    if (data?.currency) {
+        return data.currency;
+    } else {
+        return undefined;
+    }
 };

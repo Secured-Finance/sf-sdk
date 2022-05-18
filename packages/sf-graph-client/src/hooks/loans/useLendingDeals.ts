@@ -1,37 +1,27 @@
-import { useCallback, useEffect, useState } from 'react';
-import { client } from '../../client';
+import { useQuery } from '@apollo/client';
+import { Loan, Query } from '../../generated';
 import { LOAN_DEALS } from '../../queries';
 
-export const useLendingDeals = (account: string, skip: number = 0) => {
-    const [lendingDeals, setLendingDeals] = useState([]);
+export const useLendingDeals = (
+    account: string,
+    skip: number = 0
+): Array<Loan> | undefined => {
+    const variables = {
+        account: account.toLowerCase(),
+        skip: skip,
+    };
 
-    const fetchLendingDeals = useCallback(async () => {
-        try {
-            let res = await client.query({
-                query: LOAN_DEALS,
-                variables: {
-                    account: account.toLowerCase(),
-                    skip: skip,
-                },
-                fetchPolicy: 'cache-first',
-            });
-            if (res?.data.loans) {
-                setLendingDeals(res?.data.loans);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [account, skip]);
+    const { error, data } = useQuery<Query>(LOAN_DEALS, {
+        variables: variables,
+    });
 
-    useEffect(() => {
-        let isMounted = true;
-        if (client && account !== '' && account !== null) {
-            fetchLendingDeals();
-        }
-        return () => {
-            isMounted = false;
-        };
-    }, [account, client]);
+    if (error) {
+        console.log(error);
+    }
 
-    return lendingDeals;
+    if (data?.loans) {
+        return data.loans;
+    } else {
+        return undefined;
+    }
 };

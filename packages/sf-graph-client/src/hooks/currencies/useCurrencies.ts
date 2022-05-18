@@ -1,36 +1,25 @@
-import { useCallback, useEffect, useState } from 'react';
-import { client } from '../../client';
+import { useQuery } from '@apollo/client';
+import { Currency, Query } from '../../generated';
 import { CURRENCIES } from '../../queries';
 
-export const useCurrencies = (skip: number = 0) => {
-    const [currencies, setCurrencies] = useState();
+export const useCurrencies = (
+    skip: number = 0
+): Array<Currency> | undefined => {
+    const variables = {
+        skip: skip,
+    };
 
-    const fetchCurrencies = useCallback(async () => {
-        try {
-            let res = await client.query({
-                query: CURRENCIES,
-                variables: {
-                    skip: skip,
-                },
-                fetchPolicy: 'cache-first',
-            });
-            if (res?.data.currencies) {
-                setCurrencies(res?.data.currencies);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [skip]);
+    const { error, data } = useQuery<Query>(CURRENCIES, {
+        variables: variables,
+    });
 
-    useEffect(() => {
-        let isMounted = true;
-        if (client) {
-            fetchCurrencies();
-        }
-        return () => {
-            isMounted = false;
-        };
-    }, [client, skip]);
+    if (error) {
+        console.log(error);
+    }
 
-    return currencies;
+    if (data?.currencies) {
+        return data.currencies;
+    } else {
+        return undefined;
+    }
 };

@@ -1,15 +1,15 @@
 import { useQuery } from '@apollo/client';
-import { useMemo, useState } from 'react';
+import { CollateralVault, Query } from '../../generated';
 import { COLLATERAL_VAULTS } from '../../queries';
 
-export const useCollateralVaults = (skip: number = 0) => {
-    const [collateralVaults, setCollateralVaults] = useState(null);
-
+export const useCollateralVaults = (
+    skip: number = 0
+): Array<CollateralVault> | undefined => {
     const variables = {
         skip: skip,
     };
 
-    const { loading, error, data } = useQuery(COLLATERAL_VAULTS, {
+    const { error, data } = useQuery<Query>(COLLATERAL_VAULTS, {
         variables: variables,
     });
 
@@ -17,11 +17,9 @@ export const useCollateralVaults = (skip: number = 0) => {
         console.log(error);
     }
 
-    useMemo(() => {
-        if (data?.collateralVaults) {
-            setCollateralVaults(data?.collateralVaults);
-        }
-    }, [data?.collateralVaults]);
-
-    return collateralVaults;
+    if (data?.collateralVaults) {
+        return data.collateralVaults;
+    } else {
+        return undefined;
+    }
 };

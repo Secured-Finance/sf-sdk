@@ -1,37 +1,27 @@
-import { useCallback, useEffect, useState } from 'react';
-import { client } from '../../client';
+import { useQuery } from '@apollo/client';
+import { LoanNovation, Query } from '../../generated';
 import { LOAN_NOVATION_HISTORY } from '../../queries';
 
-export const useLoanNovationHistory = (id: string, skip: number = 0) => {
-    const [novationHistory, setNovationHistory] = useState([]);
+export const useLoanNovationHistory = (
+    id: string,
+    skip: number = 0
+): Array<LoanNovation> | undefined => {
+    const variables = {
+        id: id,
+        skip: skip,
+    };
 
-    const fetchLoanNovationHistory = useCallback(async () => {
-        try {
-            let res = await client.query({
-                query: LOAN_NOVATION_HISTORY,
-                variables: {
-                    id: id,
-                    skip: skip,
-                },
-                fetchPolicy: 'cache-first',
-            });
-            if (res?.data.loanNovations) {
-                setNovationHistory(res?.data.loanNovations);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [id, skip]);
+    const { error, data } = useQuery<Query>(LOAN_NOVATION_HISTORY, {
+        variables: variables,
+    });
 
-    useEffect(() => {
-        let isMounted = true;
-        if (client && id !== '' && id !== null) {
-            fetchLoanNovationHistory();
-        }
-        return () => {
-            isMounted = false;
-        };
-    }, [client, id, skip]);
+    if (error) {
+        console.log(error);
+    }
 
-    return novationHistory;
+    if (data?.loanNovations) {
+        return data.loanNovations;
+    } else {
+        return undefined;
+    }
 };

@@ -1,60 +1,52 @@
-import { useCallback, useEffect, useState } from 'react';
-import { client } from '../../client';
+import { useQuery } from '@apollo/client';
+import { useMemo, useState } from 'react';
+import { LendingMarketOrderRow, Query } from '../../generated';
 import { LENDING_LEND_ORDERBOOK } from '../../queries';
 import { OrderbookRow, toBN } from '../../utils';
-import { utils } from 'ethers';
+import { modifyOrderbook } from './common';
 
 export const useLendOrderbook = (
     lendingMarket: string,
-    assetUsdPrice: number,
     skip: number = 0
-) => {
-    const [lendOrderbook, setLendOrderbook] = useState<Array<OrderbookRow>>([]);
-    const fixedAssetPrice = toBN((assetUsdPrice * 100).toFixed(0));
+): Array<LendingMarketOrderRow> | undefined => {
+    const variables = {
+        market: lendingMarket.toLowerCase(),
+        skip: skip,
+    };
 
-    const fetchLendOrderbook = useCallback(async () => {
-        try {
-            let res = await client.query({
-                query: LENDING_LEND_ORDERBOOK,
-                variables: {
-                    market: lendingMarket.toLowerCase(),
-                    skip: skip,
-                },
-                fetchPolicy: 'cache-first',
-            });
-            if (res?.data.lendingMarket.lendOrderbook) {
-                let parsedOrderbook: Array<OrderbookRow> = [];
-                res.data.lendingMarket.lendOrderbook.map(
-                    (item: any, index: number) => {
-                        const usdAmountBN = toBN(
-                            res.data.lendingMarket.lendOrderbook[index]
-                                .totalAmount
-                        ).mul(fixedAssetPrice);
-                        const usdAmount = utils.formatUnits(usdAmountBN, 2);
-                        const orderbookItem = Object.assign(
-                            {},
-                            res.data.lendingMarket.lendOrderbook[index],
-                            { usdAmount: usdAmount }
-                        );
-                        parsedOrderbook.push(orderbookItem);
-                    }
-                );
-                setLendOrderbook(parsedOrderbook);
-            }
-        } catch (err) {
-            console.log(err);
+    const { error, data } = useQuery<Query>(LENDING_LEND_ORDERBOOK, {
+        variables: variables,
+    });
+
+    if (error) {
+        console.log(error);
+    }
+
+    if (data?.lendingMarket.lendOrderbook) {
+        return data.lendingMarket.lendOrderbook;
+    } else {
+        return undefined;
+    }
+};
+
+export const useLendOrderbookQuery = (
+    lendingMarket: string,
+    assetPrice: number,
+    skip: number = 0
+): OrderbookRow[] => {
+    const [orderbook, setOrderbook] = useState<Array<OrderbookRow>>([]);
+    const lendOrders = useLendOrderbook(lendingMarket, skip);
+
+    useMemo(() => {
+        if (lendOrders) {
+            const parsedOrderbook: Array<OrderbookRow> = [];
+            const fixedAssetPrice = toBN((assetPrice * 100).toFixed(0));
+            modifyOrderbook(lendOrders, fixedAssetPrice, parsedOrderbook);
+            setOrderbook(parsedOrderbook);
+        } else {
+            return undefined;
         }
-    }, [lendingMarket, skip, assetUsdPrice]);
+    }, [lendOrders, assetPrice]);
 
-    useEffect(() => {
-        let isMounted = true;
-        if (client) {
-            fetchLendOrderbook();
-        }
-        return () => {
-            isMounted = false;
-        };
-    }, [client, lendingMarket, skip, assetUsdPrice]);
-
-    return lendOrderbook;
+    return orderbook;
 };

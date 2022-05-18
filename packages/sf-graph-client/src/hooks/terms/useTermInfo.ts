@@ -1,38 +1,26 @@
-import { useCallback, useEffect, useState } from 'react';
-import { client } from '../../client';
+import { useQuery } from '@apollo/client';
+import { Query, Term } from '../../generated';
 import { TERM } from '../../queries';
 import { generateTermId } from '../../utils';
 
-export const useTermInfo = (numberOfDays: number) => {
-    const [term, setTerm] = useState();
+export const useTermInfo = (numberOfDays: number): Term | undefined => {
     const termId = generateTermId(numberOfDays);
 
-    const fetchTermInfo = useCallback(async () => {
-        try {
-            let res = await client.query({
-                query: TERM,
-                variables: {
-                    id: termId,
-                },
-                fetchPolicy: 'cache-first',
-            });
-            if (res?.data.term) {
-                setTerm(res?.data.term);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [numberOfDays]);
+    const variables = {
+        id: termId,
+    };
 
-    useEffect(() => {
-        let isMounted = true;
-        if (client) {
-            fetchTermInfo();
-        }
-        return () => {
-            isMounted = false;
-        };
-    }, [client, numberOfDays]);
+    const { error, data } = useQuery<Query>(TERM, {
+        variables: variables,
+    });
 
-    return term;
+    if (error) {
+        console.log(error);
+    }
+
+    if (data?.term) {
+        return data.term;
+    } else {
+        return undefined;
+    }
 };

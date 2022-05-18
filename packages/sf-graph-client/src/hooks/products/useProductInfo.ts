@@ -1,38 +1,26 @@
-import { useCallback, useEffect, useState } from 'react';
-import { client } from '../../client';
+import { useQuery } from '@apollo/client';
+import { Product, Query } from '../../generated';
 import { PRODUCT } from '../../queries';
 import { generateProductId } from '../../utils';
 
-export const useProductInfo = (prefixOrName: string) => {
-    const [product, setProduct] = useState();
+export const useProductInfo = (prefixOrName: string): Product | undefined => {
     const productId = generateProductId(prefixOrName);
 
-    const fetchProductInfo = useCallback(async () => {
-        try {
-            let res = await client.query({
-                query: PRODUCT,
-                variables: {
-                    product: productId,
-                },
-                fetchPolicy: 'cache-first',
-            });
-            if (res?.data.product) {
-                setProduct(res?.data.product);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [productId]);
+    const variables = {
+        product: productId,
+    };
 
-    useEffect(() => {
-        let isMounted = true;
-        if (client) {
-            fetchProductInfo();
-        }
-        return () => {
-            isMounted = false;
-        };
-    }, [client, productId]);
+    const { error, data } = useQuery<Query>(PRODUCT, {
+        variables: variables,
+    });
 
-    return product;
+    if (error) {
+        console.log(error);
+    }
+
+    if (data?.product) {
+        return data.product;
+    } else {
+        return undefined;
+    }
 };
