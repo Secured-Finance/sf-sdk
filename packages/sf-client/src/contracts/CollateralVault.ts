@@ -1,8 +1,10 @@
-import { BigNumber, Contract, Overrides, Signer } from 'ethers';
-import CollateralVaultAbi from '../lib/abis/CollateralVault';
-import { TxBase } from '../utils/eth-tx';
-import { getCollateralVaultByCcy } from '../utils/addresses';
 import { Provider } from '@ethersproject/providers';
+import { BigNumber, Signer } from 'ethers';
+import {
+    CollateralVault as Contract,
+    CollateralVault__factory,
+} from '../../types/ethers-contracts';
+import { getCollateralVaultByCcy } from '../utils/addresses';
 
 export class CollateralVault {
     contract: Contract;
@@ -12,11 +14,10 @@ export class CollateralVault {
         signerOrProvider: Signer | Provider,
         network: number
     ) {
-        let vault = getCollateralVaultByCcy(ccy, network);
+        const vault = getCollateralVaultByCcy(ccy, network);
 
-        this.contract = new Contract(
+        this.contract = CollateralVault__factory.connect(
             vault.address,
-            CollateralVaultAbi,
             signerOrProvider
         );
     }

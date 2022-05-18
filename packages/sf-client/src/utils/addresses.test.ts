@@ -1,17 +1,14 @@
-import { BaseProvider, JsonRpcProvider } from '@ethersproject/providers';
 import {
     getCollateralVaultAddressByCcy,
     getLendingMarketAddressByCcyAndTerm,
     packAddresses,
 } from './addresses';
-import assert = require('assert');
 import { DEFAULT_ADDRESS } from './constants';
-import { addresses } from '../lib/addresses';
+import assert = require('assert');
 
 describe('Check addresses utils functions', function () {
     const userAddress: string = '0x8f4db50f2eb35016bd0e35efd18db15bc46419cb';
     let counterparty: string;
-    const mainnetNetworkID: number = 1;
     const ropstenNetworkID: number = 3;
     const localhostNetworkID: number = 1337;
 

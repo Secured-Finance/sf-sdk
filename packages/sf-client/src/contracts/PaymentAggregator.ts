@@ -1,15 +1,17 @@
 import { Provider } from '@ethersproject/providers';
-import { BigNumber, Contract, Signer } from 'ethers';
-import PaymentAggregatorAbi from '../lib/abis/PaymentAggregator';
+import { BigNumber, Signer } from 'ethers';
+import {
+    PaymentAggregator as Contract,
+    PaymentAggregator__factory,
+} from '../../types/ethers-contracts';
 import { addresses } from '../lib/addresses';
 
 export class PaymentAggregator {
     contract: Contract;
 
     constructor(signerOrProvider: Signer | Provider, network: number) {
-        this.contract = new Contract(
+        this.contract = PaymentAggregator__factory.connect(
             addresses[network].paymentAggregator,
-            PaymentAggregatorAbi,
             signerOrProvider
         );
     }

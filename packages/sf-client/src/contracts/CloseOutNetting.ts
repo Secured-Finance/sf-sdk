@@ -1,15 +1,17 @@
-import { Contract, Signer } from 'ethers';
-import CloseOutNettingAbi from '../lib/abis/CloseOutNetting';
-import { addresses } from '../lib/addresses';
 import { Provider } from '@ethersproject/providers';
+import { Signer } from 'ethers';
+import {
+    CloseOutNetting as Contract,
+    CloseOutNetting__factory,
+} from '../../types/ethers-contracts';
+import { addresses } from '../lib/addresses';
 
 export class CloseOutNetting {
     contract: Contract;
 
     constructor(signerOrProvider: Signer | Provider, network: number) {
-        this.contract = new Contract(
+        this.contract = CloseOutNetting__factory.connect(
             addresses[network].closeOutNetting,
-            CloseOutNettingAbi,
             signerOrProvider
         );
     }

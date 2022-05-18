@@ -1,15 +1,17 @@
-import { BigNumber, Contract, Signer } from 'ethers';
-import TermStructureAbi from '../lib/abis/TermStructure';
-import { addresses } from '../lib/addresses';
 import { Provider } from '@ethersproject/providers';
+import { BigNumber, Signer } from 'ethers';
+import {
+    TermStructure as Contract,
+    TermStructure__factory,
+} from '../../types/ethers-contracts';
+import { addresses } from '../lib/addresses';
 
 export class TermStructure {
     contract: Contract;
 
     constructor(signerOrProvider: Signer | Provider, network: number) {
-        this.contract = new Contract(
+        this.contract = TermStructure__factory.connect(
             addresses[network].termStructure,
-            TermStructureAbi,
             signerOrProvider
         );
     }
@@ -34,8 +36,12 @@ export class TermStructure {
         return this.contract.getNumPayments(termIndex);
     };
 
-    isSupportedTerm = async (termIndex: number | BigNumber) => {
-        return this.contract.isSupportedTerm(termIndex);
+    isSupportedTerm = async (
+        termIndex: number | BigNumber,
+        productPrefix: string,
+        ccy: string
+    ) => {
+        return this.contract.isSupportedTerm(termIndex, productPrefix, ccy);
     };
 
     getTermsForProductAndCcy = async (
