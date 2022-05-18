@@ -22,15 +22,13 @@ export const UnsettledPositionMock: React.FC<MockComponentProps> = ({
     }
 
     return data
-        ? data.collateralPositions.map(
-              (item: UnsettledCollateral, index: number) => {
-                  return (
-                      <div key={item.id}>
-                          <p>{`Unsettled present value for ${item.address} is ${item.collateralPositions[0].unsettledPV}`}</p>
-                      </div>
-                  );
-              }
-          )
+        ? data.collateralPositions.map((item: UnsettledCollateral) => {
+              return (
+                  <div key={item.id}>
+                      <p>{`Unsettled present value for ${item.address} is ${item.collateralPositions[0].unsettledPV}`}</p>
+                  </div>
+              );
+          })
         : null;
 };
 

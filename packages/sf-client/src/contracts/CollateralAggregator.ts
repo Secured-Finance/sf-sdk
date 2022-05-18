@@ -1,21 +1,23 @@
-import { BigNumber, Contract, Overrides, Signer } from 'ethers';
-import CollateralAggregatorAbi from '../lib/abis/CollateralAggregator';
-import { addresses } from '../lib/addresses';
 import { Provider } from '@ethersproject/providers';
+import { BigNumber, Signer } from 'ethers';
+import {
+    CollateralAggregator as Contract,
+    CollateralAggregator__factory,
+} from '../../types/ethers-contracts';
+import { addresses } from '../lib/addresses';
 
 export class CollateralAggregator {
     contract: Contract;
 
     constructor(signerOrProvider: Signer | Provider, network: number) {
-        this.contract = new Contract(
+        this.contract = CollateralAggregator__factory.connect(
             addresses[network].collateralAggregator,
-            CollateralAggregatorAbi,
             signerOrProvider
         );
     }
 
-    register = async (): Promise<void> => {
-        return this.contract.functions['register()']() as Promise<any>;
+    register = async () => {
+        return this.contract.functions['register()']();
     };
 
     registerWithCrosschainAddresses = async (
@@ -94,10 +96,7 @@ export class CollateralAggregator {
     };
 
     getUsedVaultsInPosition = async (party0: string, party1: string) => {
-        return this.contract.functions['getUsedVaults(address, address)'](
-            party0,
-            party1
-        );
+        return this.contract['getUsedVaults(address,address)'](party0, party1);
     };
 
     getUsedVaults = async (user: string) => {

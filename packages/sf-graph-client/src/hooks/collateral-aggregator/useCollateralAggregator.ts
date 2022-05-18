@@ -6,7 +6,7 @@ export const useCollateralAggregator = () => {
         first: 1,
     };
 
-    const { loading, error, data } = useQuery(COLLATERAL_AGGREGATOR, {
+    const { error, data } = useQuery(COLLATERAL_AGGREGATOR, {
         variables: variables,
     });
 

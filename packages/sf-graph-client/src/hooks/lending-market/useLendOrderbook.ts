@@ -1,8 +1,8 @@
+import { utils } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import { client } from '../../client';
 import { LENDING_LEND_ORDERBOOK } from '../../queries';
 import { OrderbookRow, toBN } from '../../utils';
-import { utils } from 'ethers';
 
 export const useLendOrderbook = (
     lendingMarket: string,
@@ -25,7 +25,7 @@ export const useLendOrderbook = (
             if (res?.data.lendingMarket.lendOrderbook) {
                 let parsedOrderbook: Array<OrderbookRow> = [];
                 res.data.lendingMarket.lendOrderbook.map(
-                    (item: any, index: number) => {
+                    (_: unknown, index: number) => {
                         const usdAmountBN = toBN(
                             res.data.lendingMarket.lendOrderbook[index]
                                 .totalAmount
@@ -47,13 +47,9 @@ export const useLendOrderbook = (
     }, [lendingMarket, skip, assetUsdPrice]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client) {
             fetchLendOrderbook();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [client, lendingMarket, skip, assetUsdPrice]);
 
     return lendOrderbook;

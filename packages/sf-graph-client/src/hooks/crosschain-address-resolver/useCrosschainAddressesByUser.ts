@@ -10,7 +10,7 @@ export const useCrosschainAddressesByUser = (
         skip: skip,
     };
 
-    const { loading, error, data } = useQuery(CROSSCHAIN_ADDRESSES_BY_USER, {
+    const { error, data } = useQuery(CROSSCHAIN_ADDRESSES_BY_USER, {
         variables: variables,
     });
 

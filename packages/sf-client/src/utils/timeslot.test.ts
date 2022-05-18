@@ -1,6 +1,5 @@
-import { utils } from 'ethers/lib/ethers';
-import assert = require('assert');
 import { hashPosition } from './timeslot';
+import assert = require('assert');
 
 describe('Check time slot position hash functions', function () {
     it('Try to compute time slot position, validate result', async () => {

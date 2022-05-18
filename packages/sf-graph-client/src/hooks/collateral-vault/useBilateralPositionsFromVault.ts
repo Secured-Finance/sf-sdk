@@ -7,7 +7,7 @@ export const useBilateralPositionsFromVault = (vault: string, user: string) => {
         address: user.toLowerCase(),
     };
 
-    const { loading, error, data } = useQuery(BILATERAL_POSITIONS_FROM_VAULT, {
+    const { error, data } = useQuery(BILATERAL_POSITIONS_FROM_VAULT, {
         variables: variables,
     });
 

@@ -1,16 +1,17 @@
-import { Contract, Overrides, Signer } from 'ethers';
-import MarkToMarketAbi from '../lib/abis/MarkToMarket';
-import { addresses } from '../lib/addresses';
-import { TxBase } from '../utils/eth-tx';
 import { Provider } from '@ethersproject/providers';
+import { Signer } from 'ethers';
+import {
+    MarkToMarket as Contract,
+    MarkToMarket__factory,
+} from '../../types/ethers-contracts';
+import { addresses } from '../lib/addresses';
 
 export class MarkToMarket {
     contract: Contract;
 
     constructor(signerOrProvider: Signer | Provider, network: number) {
-        this.contract = new Contract(
+        this.contract = MarkToMarket__factory.connect(
             addresses[network].markToMarket,
-            MarkToMarketAbi,
             signerOrProvider
         );
     }

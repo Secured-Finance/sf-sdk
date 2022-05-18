@@ -33,7 +33,7 @@ export interface TxOptions extends TxBase {
 export const populateTx = async (
     contract: Contract,
     method: string,
-    args: any[],
+    args: unknown[],
     options?: TxOptions
 ): Promise<PopulatedTransaction> => {
     const overrides = {
@@ -63,7 +63,7 @@ export const populateTx = async (
 export const ethTransaction = async (
     contract: Contract,
     method: string,
-    args: any[],
+    args: unknown[],
     options?: TxOptions
 ): Promise<string> => {
     const txRequest: PopulatedTransaction = await populateTx(
@@ -90,7 +90,7 @@ export const ethTransaction = async (
 export const signTranaction = async (
     contract: Contract,
     method: string,
-    args: any[],
+    args: unknown[],
     options?: TxOptions
 ): Promise<Transaction> => {
     const txRequest: PopulatedTransaction = await populateTx(

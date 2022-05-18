@@ -10,7 +10,7 @@ export const useLendingMarkets = (ccyShortName: string, skip: number = 0) => {
         skip: skip,
     };
 
-    const { loading, error, data } = useQuery(LENDING_MARKETS_BY_CCY, {
+    const { error, data } = useQuery(LENDING_MARKETS_BY_CCY, {
         variables: variables,
     });
 

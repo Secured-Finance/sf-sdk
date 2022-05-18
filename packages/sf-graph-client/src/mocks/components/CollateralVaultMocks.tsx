@@ -18,7 +18,7 @@ export const CollateralBookMock: React.FC<MockComponentProps> = ({
     }
 
     return data.collateralBooks
-        ? data.collateralBooks.map((item: CollateralBook, index: number) => (
+        ? data.collateralBooks.map((item: CollateralBook) => (
               <div key={item.id}>
                   <p>{`Independent collateral for ${item.address} is ${item.independentCollateral}`}</p>
                   <p>{`Locked collateral for ${item.address} is ${item.lockedCollateral}`}</p>
@@ -42,13 +42,11 @@ export const BilateralPositionMock: React.FC<MockComponentProps> = ({
     }
 
     return data.collateralVaultPositions
-        ? data.collateralVaultPositions.map(
-              (item: BilateralPosition, index: number) => (
-                  <div key={item.id}>
-                      <p>{`Locked collateral for ${item.address0} is ${item.lockedCollateral0}`}</p>
-                      <p>{`Locked collateral for ${item.address1} is ${item.lockedCollateral1}`}</p>
-                  </div>
-              )
-          )
+        ? data.collateralVaultPositions.map((item: BilateralPosition) => (
+              <div key={item.id}>
+                  <p>{`Locked collateral for ${item.address0} is ${item.lockedCollateral0}`}</p>
+                  <p>{`Locked collateral for ${item.address1} is ${item.lockedCollateral1}`}</p>
+              </div>
+          ))
         : null;
 };

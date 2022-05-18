@@ -39,13 +39,9 @@ export const useTimeSlotInfo = (
     }, [user, counterparty, ccyShortName, year, month, day, timeSlotId]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client && timeSlotId) {
             fetchTimeSlotInfo();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [
         client,
         user,

@@ -25,9 +25,9 @@ To build updated packages, run:
 npm run build
 ```
 
-This will compile and build all packages inside the monorepo. To build invididual package please run the same command from an individual repository
+This will compile and build all packages inside the monorepo. To build individual package please run the same command from an individual repository
 
-Make sure you fix formating of the code before merging it to the main branches by running:  
+Make sure you fix formatting of the code before merging it to the main branches by running:
 ```
 npm run format:fix
 ```

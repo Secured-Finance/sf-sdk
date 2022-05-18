@@ -9,7 +9,7 @@ export const useCollateralVaults = (skip: number = 0) => {
         skip: skip,
     };
 
-    const { loading, error, data } = useQuery(COLLATERAL_VAULTS, {
+    const { error, data } = useQuery(COLLATERAL_VAULTS, {
         variables: variables,
     });
 

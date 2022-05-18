@@ -1,8 +1,10 @@
-import { BigNumber, Contract, Overrides, Signer } from 'ethers';
-import LendingMarketAbi from '../lib/abis/LendingMarket';
-import { TxBase } from '../utils/eth-tx';
-import { getLendingMarketByCcyAndTerm } from '../utils/addresses';
 import { Provider } from '@ethersproject/providers';
+import { BigNumber, Signer } from 'ethers';
+import {
+    LendingMarket as Contract,
+    LendingMarket__factory,
+} from '../../types/ethers-contracts';
+import { getLendingMarketByCcyAndTerm } from '../utils/addresses';
 
 export class LendingMarket {
     contract: Contract;
@@ -13,11 +15,10 @@ export class LendingMarket {
         signerOrProvider: Signer | Provider,
         network: number
     ) {
-        let marketAddress = getLendingMarketByCcyAndTerm(ccy, term, network);
+        const marketAddress = getLendingMarketByCcyAndTerm(ccy, term, network);
 
-        this.contract = new Contract(
+        this.contract = LendingMarket__factory.connect(
             marketAddress.address,
-            LendingMarketAbi,
             signerOrProvider
         );
     }
@@ -60,22 +61,6 @@ export class LendingMarket {
 
     cancelOrder = async (orderID: number | BigNumber) => {
         return this.contract.cancelOrder(orderID);
-    };
-
-    makeOrder = async (
-        side: number,
-        amount: number | BigNumber,
-        rate: number | BigNumber
-    ) => {
-        return this.contract.makeOrder(side, amount, rate);
-    };
-
-    takeOrder = async (
-        side: number,
-        orderID: number | BigNumber,
-        amount: number | BigNumber
-    ) => {
-        return this.contract.takeOrder(side, orderID, amount);
     };
 
     matchOrders = async (

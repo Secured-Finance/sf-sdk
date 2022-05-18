@@ -1,33 +1,26 @@
-import { Contract, Overrides, Signer } from 'ethers';
-import CrosschainAddressResolverAbi from '../lib/abis/CrosschainAddressResolver';
-import { addresses } from '../lib/addresses';
 import { Provider } from '@ethersproject/providers';
+import { Signer } from 'ethers';
+import {
+    CrosschainAddressResolver as Contract,
+    CrosschainAddressResolver__factory,
+} from '../../types/ethers-contracts';
+import { addresses } from '../lib/addresses';
 
 export class CrosschainAddressResolver {
     contract: Contract;
 
     constructor(signerOrProvider: Signer | Provider, network: number) {
-        this.contract = new Contract(
+        this.contract = CrosschainAddressResolver__factory.connect(
             addresses[network].crosschainAddressResolver,
-            CrosschainAddressResolverAbi,
             signerOrProvider
         );
     }
 
-    updateAddress = async (
-        chainId: number | string | BigInt,
-        address: string
-    ) => {
-        return this.contract.functions['updateAddress(uint256,string)'](
-            chainId,
-            address
-        );
+    updateAddress = async (chainId: number | string, address: string) => {
+        return this.contract['updateAddress(uint256,string)'](chainId, address);
     };
 
-    getUserAddress = async (
-        user: string,
-        chainId: number | string | BigInt
-    ) => {
+    getUserAddress = async (user: string, chainId: number | string) => {
         return this.contract.getUserAddress(user, chainId);
     };
 }

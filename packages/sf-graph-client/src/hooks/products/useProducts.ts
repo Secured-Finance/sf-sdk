@@ -23,13 +23,9 @@ export const useProducts = (skip: number = 0) => {
     }, [skip]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client) {
             fetchProducts();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [client, skip]);
 
     return products;

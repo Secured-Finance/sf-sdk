@@ -25,13 +25,9 @@ export const useTermInfo = (numberOfDays: number) => {
     }, [numberOfDays]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client) {
             fetchTermInfo();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [client, numberOfDays]);
 
     return term;

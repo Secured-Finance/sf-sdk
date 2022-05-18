@@ -1,5 +1,5 @@
 const { SecuredFinanceClient } = require('../dist/index');
-const { getDefaultProvider, Wallet, providers } = require('ethers');
+const { Wallet, providers } = require('ethers');
 require('dotenv/config');
 
 (async function () {

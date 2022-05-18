@@ -1,15 +1,17 @@
 import { Provider } from '@ethersproject/providers';
-import { BigNumber, Contract, Signer } from 'ethers';
-import SettlementEngineAbi from '../lib/abis/SettlementEngine';
+import { BigNumber, Signer } from 'ethers';
+import {
+    SettlementEngine as Contract,
+    SettlementEngine__factory,
+} from '../../types/ethers-contracts';
 import { addresses } from '../lib/addresses';
 
 export class SettlementEngine {
     contract: Contract;
 
     constructor(signerOrProvider: Signer | Provider, network: number) {
-        this.contract = new Contract(
+        this.contract = SettlementEngine__factory.connect(
             addresses[network].settlementEngine,
-            SettlementEngineAbi,
             signerOrProvider
         );
     }

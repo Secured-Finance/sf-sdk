@@ -23,13 +23,9 @@ export const useLoanInfo = (id: string) => {
     }, [id]);
 
     useEffect(() => {
-        let isMounted = true;
         if (client && id !== '' && id !== null) {
             fetchLoanInformation();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [client, id]);
 
     return loanInfo;

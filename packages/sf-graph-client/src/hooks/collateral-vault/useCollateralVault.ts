@@ -6,7 +6,7 @@ export const useCollateralVault = (vault: string) => {
         vaultId: vault.toLowerCase(),
     };
 
-    const { loading, error, data } = useQuery(COLLATERAL_VAULT, {
+    const { error, data } = useQuery(COLLATERAL_VAULT, {
         variables: variables,
     });
 

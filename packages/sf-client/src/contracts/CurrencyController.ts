@@ -1,15 +1,17 @@
-import { BigNumber, Contract, Signer } from 'ethers';
-import CurrencyControllerAbi from '../lib/abis/CurrencyController';
-import { addresses } from '../lib/addresses';
 import { Provider } from '@ethersproject/providers';
+import { BigNumber, Signer } from 'ethers';
+import {
+    CurrencyController as Contract,
+    CurrencyController__factory,
+} from '../../types/ethers-contracts';
+import { addresses } from '../lib/addresses';
 
 export class CurrencyController {
     contract: Contract;
 
     constructor(signerOrProvider: Signer | Provider, network: number) {
-        this.contract = new Contract(
+        this.contract = CurrencyController__factory.connect(
             addresses[network].currencyController,
-            CurrencyControllerAbi,
             signerOrProvider
         );
     }

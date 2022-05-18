@@ -5,12 +5,12 @@
   "main": "dist/index.js",
   "source": "src/index.ts",
   "scripts": {
-    "precompile": "rm -rf dist",
-    "compile": "tsc -p tsconfig.json",
+    "prebuild": "rm -rf dist",
+    "watch": "tsc -p tsconfig.json -w",
     "lint": "eslint lib/ src/ test/ --ext .ts",
-    "build": "npm run compile && tsc -b",
+    "build": "tsc --project tsconfig.json",
     "test": "ts-mocha src/*.test.ts src/**/*.test.ts",
-    "posttest": "eslint . --ext .ts --config .eslintrc"
+    "postinstall": "typechain --target=ethers-v5 --ts-nocheck 'src/lib/abis/**.json'"
   },
   "author": "Secured Finance",
   "bugs": {
@@ -29,6 +29,7 @@
     "typescript": "^4.5.4"
   },
   "devDependencies": {
+    "@typechain/ethers-v5": "^10.0.0",
     "@types/chai": "^4.3.0",
     "@types/expect": "^24.3.0",
     "@types/mocha": "^9.0.0",
@@ -45,6 +46,7 @@
     "ts-mocha": "^8.0.0",
     "ts-node": "^10.1.0",
     "tslib": "^2.3.0",
+    "typechain": "^8.0.0",
     "web3-utils": "^1.7.0"
   },
   "engines": {
