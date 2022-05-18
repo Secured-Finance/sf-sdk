@@ -1,0 +1,8 @@
+{
+    "ignorePatterns": [
+        "node_modules",
+        "src/generated.ts",
+        "dist",
+        "test"
+    ]
+}

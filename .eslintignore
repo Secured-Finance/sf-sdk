@@ -5,3 +5,4 @@ node_modules
 /**/dist
 /**/node_modules
 packages/sf-cient/types
+packages/sf-graph-client/src/generated.ts
