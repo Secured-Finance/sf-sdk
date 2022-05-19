@@ -2,3 +2,4 @@
 package-lock.json
 packages/sf-client/types/
 **/dist/
+packages/sf-graph-client/src/generated.ts
