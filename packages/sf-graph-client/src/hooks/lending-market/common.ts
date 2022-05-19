@@ -14,7 +14,7 @@ export const modifyOrderbook = async (
         const orderbookItem = Object.assign({}, item, {
             usdAmount: usdAmount,
         });
-        parsedOrderbook.splice(parsedOrderbook.length, 0, orderbookItem);
+        parsedOrderbook.push(orderbookItem);
     });
 
     return parsedOrderbook;

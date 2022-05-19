@@ -17,7 +17,7 @@ export const modifyUsersTradingHistory = async (
                 ...order,
                 couterparty: counterparty,
             };
-            parsedHistory.splice(parsedHistory.length, 0, historyItem);
+            parsedHistory.push(historyItem);
         });
     });
 
