@@ -1,12 +1,13 @@
 import { useQuery } from '@apollo/client';
 import { Loan, Query } from '../../generated';
 import { OPEN_LOANS } from '../../queries';
+import { QueryResult } from '../../utils';
 
 export const useOpenLoans = (
     account: string,
     currency: string,
     term: number
-): Array<Loan> | undefined => {
+): QueryResult<Array<Loan>> => {
     const variables = {
         account: account.toLowerCase(),
         currency: currency,
@@ -18,12 +19,23 @@ export const useOpenLoans = (
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.user.loans) {
-        return data.user.loans;
+        return {
+            data: data.user.loans,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };

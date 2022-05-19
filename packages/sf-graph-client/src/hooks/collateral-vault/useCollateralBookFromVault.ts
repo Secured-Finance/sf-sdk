@@ -1,12 +1,12 @@
 import { useQuery } from '@apollo/client';
 import { Query } from '../../generated';
 import { COLLATERAL_BOOK_FROM_VAULT } from '../../queries';
-import { CollateralBook } from '../../utils';
+import { CollateralBook, QueryResult } from '../../utils';
 
 export const useCollateralBookFromVault = (
     vault: string,
     user: string
-): CollateralBook | undefined => {
+): QueryResult<CollateralBook> => {
     const variables = {
         vaultId: vault.toLowerCase(),
         address: user.toLowerCase(),
@@ -17,12 +17,23 @@ export const useCollateralBookFromVault = (
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.collateralBooks[0]) {
-        return data.collateralBooks[0];
+        return {
+            data: data.collateralBooks[0],
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };

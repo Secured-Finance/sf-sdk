@@ -1,11 +1,12 @@
 import { useQuery } from '@apollo/client';
 import { Query, TimeSlot } from '../../generated';
 import { TIME_SLOTS } from '../../queries';
+import { QueryResult } from '../../utils';
 
 export const useTimeSlots = (
     user: string,
     skip: number = 0
-): Array<TimeSlot> | undefined => {
+): QueryResult<Array<TimeSlot>> => {
     const variables = {
         address: user.toLowerCase(),
         skip: skip,
@@ -16,12 +17,23 @@ export const useTimeSlots = (
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.timeSlots) {
-        return data.timeSlots;
+        return {
+            data: data.timeSlots,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };

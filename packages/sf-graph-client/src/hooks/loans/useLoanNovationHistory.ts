@@ -1,11 +1,12 @@
 import { useQuery } from '@apollo/client';
 import { LoanNovation, Query } from '../../generated';
 import { LOAN_NOVATION_HISTORY } from '../../queries';
+import { QueryResult } from '../../utils';
 
 export const useLoanNovationHistory = (
     id: string,
     skip: number = 0
-): Array<LoanNovation> | undefined => {
+): QueryResult<Array<LoanNovation>> => {
     const variables = {
         id: id,
         skip: skip,
@@ -16,12 +17,23 @@ export const useLoanNovationHistory = (
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.loanNovations) {
-        return data.loanNovations;
+        return {
+            data: data.loanNovations,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };

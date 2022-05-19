@@ -1,14 +1,14 @@
 import { useQuery } from '@apollo/client';
 import { CollateralVaultPosition, Query } from '../../generated';
 import { BILATERAL_POSITION_FROM_VAULT } from '../../queries';
-import { generateCurrencyId, packAddresses } from '../../utils';
+import { generateCurrencyId, packAddresses, QueryResult } from '../../utils';
 
 export const useBilateralPositionFromVault = (
     vault: string,
     user: string,
     counterparty: string,
     ccyShortName: string
-): CollateralVaultPosition | undefined => {
+): QueryResult<CollateralVaultPosition> => {
     const packedAddresses = packAddresses(user, counterparty);
     const currencyId = generateCurrencyId(ccyShortName);
     const positionId =
@@ -23,12 +23,23 @@ export const useBilateralPositionFromVault = (
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.collateralVaultPosition) {
-        return data.collateralVaultPosition;
+        return {
+            data: data.collateralVaultPosition,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };

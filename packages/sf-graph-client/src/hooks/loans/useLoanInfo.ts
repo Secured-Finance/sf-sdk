@@ -1,8 +1,9 @@
 import { useQuery } from '@apollo/client';
 import { Loan, Query } from '../../generated';
 import { LOAN_INFO } from '../../queries';
+import { QueryResult } from '../../utils';
 
-export const useLoanInfo = (id: string): Loan | undefined => {
+export const useLoanInfo = (id: string): QueryResult<Loan> => {
     const variables = {
         id: id,
     };
@@ -12,12 +13,23 @@ export const useLoanInfo = (id: string): Loan | undefined => {
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.loan) {
-        return data.loan;
+        return {
+            data: data.loan,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };

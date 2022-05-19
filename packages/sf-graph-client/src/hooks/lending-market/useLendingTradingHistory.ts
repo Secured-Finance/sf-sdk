@@ -1,11 +1,12 @@
 import { useQuery } from '@apollo/client';
 import { FilledLendingMarketOrder, Query } from '../../generated';
 import { LENDING_TRADING_HISTORY } from '../../queries';
+import { QueryResult } from '../../utils';
 
 export const useLendingTradingHistory = (
     lendingMarket: string,
     skip: number = 0
-): Array<FilledLendingMarketOrder> | undefined => {
+): QueryResult<Array<FilledLendingMarketOrder>> => {
     const variables = {
         market: lendingMarket.toLowerCase(),
         skip: skip,
@@ -16,12 +17,23 @@ export const useLendingTradingHistory = (
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.lendingMarket.tradeHistory) {
-        return data.lendingMarket.tradeHistory;
+        return {
+            data: data.lendingMarket.tradeHistory,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };

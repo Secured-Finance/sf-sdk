@@ -1,11 +1,12 @@
 import { useQuery } from '@apollo/client';
 import { CrosschainAddress, Query } from '../../generated';
 import { CROSSCHAIN_ADDRESSES_BY_USER } from '../../queries';
+import { QueryResult } from '../../utils';
 
 export const useCrosschainAddressesByUser = (
     user: string,
     skip: number = 0
-): Array<CrosschainAddress> | undefined => {
+): QueryResult<Array<CrosschainAddress>> => {
     const variables = {
         user: user.toLowerCase(),
         skip: skip,
@@ -16,12 +17,23 @@ export const useCrosschainAddressesByUser = (
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.crosschainAddresses) {
-        return data.crosschainAddresses;
+        return {
+            data: data.crosschainAddresses,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };

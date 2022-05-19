@@ -1,10 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { LendingMarket, Query } from '../../generated';
 import { LENDING_MARKET_INFO } from '../../queries';
+import { QueryResult } from '../../utils';
 
 export const useLendingMarketInfo = (
     lendingMarket: string
-): LendingMarket | undefined => {
+): QueryResult<LendingMarket> => {
     const variables = {
         market: lendingMarket.toLowerCase(),
     };
@@ -14,12 +15,23 @@ export const useLendingMarketInfo = (
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.lendingMarket) {
-        return data.lendingMarket;
+        return {
+            data: data.lendingMarket,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };

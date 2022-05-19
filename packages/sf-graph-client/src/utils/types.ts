@@ -1,3 +1,4 @@
+import { ApolloError } from '@apollo/client';
 import { BigNumber } from 'ethers';
 
 export interface OrderbookRow {
@@ -116,3 +117,8 @@ export interface CollateralBookResponse {
     borrowed?: BigNumber;
     usdBorrowed?: BigNumber;
 }
+
+export type QueryResult<T> = {
+    data: T | undefined;
+    error: ApolloError;
+};

@@ -1,10 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { BilateralPosition, Query } from '../../generated';
 import { BILATERAL_POSITIONS } from '../../queries';
+import { QueryResult } from '../../utils';
 
 export const useBilateralPosition = (
     user: string
-): Array<BilateralPosition> | undefined => {
+): QueryResult<Array<BilateralPosition>> => {
     const variables = {
         address: user.toLowerCase(),
     };
@@ -14,12 +15,23 @@ export const useBilateralPosition = (
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.bilateralPositions) {
-        return data.bilateralPositions;
+        return {
+            data: data.bilateralPositions,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };

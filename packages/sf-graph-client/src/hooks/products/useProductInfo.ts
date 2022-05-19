@@ -1,9 +1,9 @@
 import { useQuery } from '@apollo/client';
 import { Product, Query } from '../../generated';
 import { PRODUCT } from '../../queries';
-import { generateProductId } from '../../utils';
+import { generateProductId, QueryResult } from '../../utils';
 
-export const useProductInfo = (prefixOrName: string): Product | undefined => {
+export const useProductInfo = (prefixOrName: string): QueryResult<Product> => {
     const productId = generateProductId(prefixOrName);
 
     const variables = {
@@ -15,12 +15,23 @@ export const useProductInfo = (prefixOrName: string): Product | undefined => {
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.product) {
-        return data.product;
+        return {
+            data: data.product,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };

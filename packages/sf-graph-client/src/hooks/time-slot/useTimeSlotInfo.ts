@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { Query, TimeSlot } from '../../generated';
 import { TIME_SLOT } from '../../queries';
-import { generateTimeSlotId } from '../../utils';
+import { generateTimeSlotId, QueryResult } from '../../utils';
 
 export const useTimeSlotInfo = (
     user: string,
@@ -10,7 +10,7 @@ export const useTimeSlotInfo = (
     year: number,
     month: number,
     day: number
-): TimeSlot | undefined => {
+): QueryResult<TimeSlot> => {
     const timeSlotId = generateTimeSlotId(
         user,
         counterparty,
@@ -29,12 +29,23 @@ export const useTimeSlotInfo = (
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.timeSlot) {
-        return data.timeSlot;
+        return {
+            data: data.timeSlot,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };

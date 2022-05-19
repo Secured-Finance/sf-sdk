@@ -6,3 +6,4 @@ node_modules
 /**/node_modules
 packages/sf-cient/types
 packages/sf-graph-client/src/generated.ts
+packages/sf-client/examples

@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import { useMemo, useState } from 'react';
 import { Query, User } from '../../generated';
 import { TRADE_HISTORY } from '../../queries';
+import { QueryResult } from '../../utils';
 import {
     LendingMarketExtendedOrder,
     modifyUsersTradingHistory,
@@ -10,7 +11,7 @@ import {
 export const useUsersTradingHistory = (
     account: string,
     market: string
-): User | undefined => {
+): QueryResult<User> => {
     const variables = {
         account: account.toLowerCase(),
         market: market,
@@ -21,41 +22,59 @@ export const useUsersTradingHistory = (
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.user.madeOrders && data?.user.takenOrders) {
-        return data.user;
+        return {
+            data: data.user,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };
 
 export const useUsersTradingHistoryQuery = (
     account: string,
     market: string
-): Array<LendingMarketExtendedOrder> => {
+): QueryResult<Array<LendingMarketExtendedOrder>> => {
     const [tradingHistory, setTradingHistory] = useState<
         Array<LendingMarketExtendedOrder>
     >([]);
-    const history = useUsersTradingHistory(account, market);
+    const { data, error } = useUsersTradingHistory(account, market);
+
+    if (error) {
+        return {
+            data: undefined,
+            error: error,
+        };
+    }
 
     useMemo(() => {
-        if (history) {
-            console.log(history);
+        if (data) {
             const parsedHistory: Array<LendingMarketExtendedOrder> = [];
 
-            modifyUsersTradingHistory(history, parsedHistory);
+            modifyUsersTradingHistory(data, parsedHistory);
 
             parsedHistory.sort(function (x, y) {
                 return y.createdAtTimestamp - x.createdAtTimestamp;
             });
 
             setTradingHistory(parsedHistory);
-        } else {
-            return undefined;
         }
-    }, [history]);
+    }, [data]);
 
-    return tradingHistory;
+    return {
+        data: tradingHistory,
+        error: undefined,
+    };
 };

@@ -1,10 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { Currency, Query } from '../../generated';
 import { CURRENCIES } from '../../queries';
+import { QueryResult } from '../../utils';
 
 export const useCurrencies = (
     skip: number = 0
-): Array<Currency> | undefined => {
+): QueryResult<Array<Currency>> => {
     const variables = {
         skip: skip,
     };
@@ -14,12 +15,23 @@ export const useCurrencies = (
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.currencies) {
-        return data.currencies;
+        return {
+            data: data.currencies,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };

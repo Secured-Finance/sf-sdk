@@ -2,13 +2,13 @@ import { useQuery } from '@apollo/client';
 import { useMemo, useState } from 'react';
 import { LendingMarketOrderRow, Query } from '../../generated';
 import { LENDING_LEND_ORDERBOOK } from '../../queries';
-import { OrderbookRow, toBN } from '../../utils';
+import { OrderbookRow, QueryResult, toBN } from '../../utils';
 import { modifyOrderbook } from './common';
 
 export const useLendOrderbook = (
     lendingMarket: string,
     skip: number = 0
-): Array<LendingMarketOrderRow> | undefined => {
+): QueryResult<Array<LendingMarketOrderRow>> => {
     const variables = {
         market: lendingMarket.toLowerCase(),
         skip: skip,
@@ -19,13 +19,24 @@ export const useLendOrderbook = (
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.lendingMarket.lendOrderbook) {
-        return data.lendingMarket.lendOrderbook;
+        return {
+            data: data.lendingMarket.lendOrderbook,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };
 
@@ -33,20 +44,30 @@ export const useLendOrderbookQuery = (
     lendingMarket: string,
     assetPrice: number,
     skip: number = 0
-): OrderbookRow[] => {
+): QueryResult<Array<OrderbookRow>> => {
     const [orderbook, setOrderbook] = useState<Array<OrderbookRow>>([]);
-    const lendOrders = useLendOrderbook(lendingMarket, skip);
+    const { data, error } = useLendOrderbook(lendingMarket, skip);
+
+    if (error) {
+        return {
+            data: undefined,
+            error: error,
+        };
+    }
 
     useMemo(() => {
-        if (lendOrders) {
+        if (data) {
             const parsedOrderbook: Array<OrderbookRow> = [];
             const fixedAssetPrice = toBN((assetPrice * 100).toFixed(0));
-            modifyOrderbook(lendOrders, fixedAssetPrice, parsedOrderbook);
+            modifyOrderbook(data, fixedAssetPrice, parsedOrderbook);
             setOrderbook(parsedOrderbook);
         } else {
             return undefined;
         }
-    }, [lendOrders, assetPrice]);
+    }, [data, assetPrice]);
 
-    return orderbook;
+    return {
+        data: orderbook,
+        error: undefined,
+    };
 };

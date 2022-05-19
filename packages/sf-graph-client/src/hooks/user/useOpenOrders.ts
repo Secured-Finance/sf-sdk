@@ -1,11 +1,12 @@
 import { useQuery } from '@apollo/client';
 import { LendingMarketOrder, Query } from '../../generated';
 import { OPEN_ORDERS } from '../../queries';
+import { QueryResult } from '../../utils';
 
 export const useOpenOrders = (
     account: string,
     market: string
-): Array<LendingMarketOrder> | undefined => {
+): QueryResult<Array<LendingMarketOrder>> => {
     const variables = {
         account: account.toLowerCase(),
         market: market,
@@ -16,12 +17,23 @@ export const useOpenOrders = (
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.user.openOrders) {
-        return data.user.openOrders;
+        return {
+            data: data.user.openOrders,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };

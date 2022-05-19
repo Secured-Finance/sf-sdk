@@ -1,9 +1,9 @@
 import { useQuery } from '@apollo/client';
 import { Query, Term } from '../../generated';
 import { TERM } from '../../queries';
-import { generateTermId } from '../../utils';
+import { generateTermId, QueryResult } from '../../utils';
 
-export const useTermInfo = (numberOfDays: number): Term | undefined => {
+export const useTermInfo = (numberOfDays: number): QueryResult<Term> => {
     const termId = generateTermId(numberOfDays);
 
     const variables = {
@@ -15,12 +15,23 @@ export const useTermInfo = (numberOfDays: number): Term | undefined => {
     });
 
     if (error) {
-        console.log(error);
+        console.error(error);
+
+        return {
+            data: undefined,
+            error: error,
+        };
     }
 
     if (data?.term) {
-        return data.term;
+        return {
+            data: data.term,
+            error: null,
+        };
     } else {
-        return undefined;
+        return {
+            data: undefined,
+            error: undefined,
+        };
     }
 };
