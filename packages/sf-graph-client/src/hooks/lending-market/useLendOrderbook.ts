@@ -55,11 +55,13 @@ export const useLendOrderbookQuery = (
         };
     }
 
-    useMemo(() => {
+    useMemo(async () => {
         if (data) {
-            const parsedOrderbook: Array<OrderbookRow> = [];
             const fixedAssetPrice = toBN((assetPrice * 100).toFixed(0));
-            modifyOrderbook(data, fixedAssetPrice, parsedOrderbook);
+            const parsedOrderbook = await modifyOrderbook(
+                data,
+                fixedAssetPrice
+            );
             setOrderbook(parsedOrderbook);
         } else {
             return undefined;

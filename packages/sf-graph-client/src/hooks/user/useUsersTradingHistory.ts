@@ -59,16 +59,9 @@ export const useUsersTradingHistoryQuery = (
         };
     }
 
-    useMemo(() => {
+    useMemo(async () => {
         if (data) {
-            const parsedHistory: Array<LendingMarketExtendedOrder> = [];
-
-            modifyUsersTradingHistory(data, parsedHistory);
-
-            parsedHistory.sort(function (x, y) {
-                return y.createdAtTimestamp - x.createdAtTimestamp;
-            });
-
+            const parsedHistory = await modifyUsersTradingHistory(data);
             setTradingHistory(parsedHistory);
         }
     }, [data]);

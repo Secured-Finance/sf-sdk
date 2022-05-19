@@ -5,10 +5,11 @@ export interface LendingMarketExtendedOrder extends FilledLendingMarketOrder {
 }
 
 export const modifyUsersTradingHistory = async (
-    userHistory: User,
-    parsedHistory: Array<FilledLendingMarketOrder>
-) => {
+    userHistory: User
+): Promise<Array<LendingMarketExtendedOrder>> => {
     const tradingHistory = [userHistory.madeOrders, userHistory.takenOrders];
+    const parsedHistory: Array<LendingMarketExtendedOrder> = [];
+
     tradingHistory.forEach((historyType: Array<FilledLendingMarketOrder>) => {
         historyType.forEach((order: FilledLendingMarketOrder) => {
             const counterparty = order.maker;
@@ -16,7 +17,13 @@ export const modifyUsersTradingHistory = async (
                 ...order,
                 couterparty: counterparty,
             };
-            parsedHistory.push(historyItem);
+            parsedHistory.splice(parsedHistory.length, 0, historyItem);
         });
     });
+
+    parsedHistory.sort(function (x, y) {
+        return y.createdAtTimestamp - x.createdAtTimestamp;
+    });
+
+    return parsedHistory;
 };
