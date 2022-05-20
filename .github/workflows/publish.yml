@@ -45,6 +45,6 @@ jobs:
           if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
             npx lerna version --conventional-commits --conventional-graduate --yes
           else
-            npx lerna version --conventional-commits --conventional-prerelease --preid beta --yes
+            npx lerna version --conventional-commits --conventional-prerelease --preid beta --yes --force-publish
           fi
           npx lerna publish from-package --conventional-commits --yes
