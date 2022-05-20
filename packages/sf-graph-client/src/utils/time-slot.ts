@@ -22,15 +22,3 @@ export const timeSlotPositionByTimestamp = (unixTimestamp: number) => {
     );
     return utils.keccak256(encodedPosition);
 };
-
-export const resourceID = (
-    resourceShortCode: string | number,
-    user: string,
-    ironcoreUserId: string
-) => {
-    let encodedPosition = utils.defaultAbiCoder.encode(
-        ['bytes32', 'string', 'string'],
-        [resourceShortCode, user, ironcoreUserId]
-    );
-    return utils.keccak256(encodedPosition);
-};

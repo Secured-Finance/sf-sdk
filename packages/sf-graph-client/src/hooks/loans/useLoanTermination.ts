@@ -1,33 +1,39 @@
-import { useCallback, useEffect, useState } from 'react';
-import { client } from '../../client';
+import { useQuery } from '@apollo/client';
+import { LoanTermination, Query } from '../../generated';
 import { LOAN_TERMINATION } from '../../queries';
+import { QueryResult } from '../../utils';
 
-export const useLoanTermination = (id: string, skip: number = 0) => {
-    const [loanTermination, setLoanTermination] = useState([]);
+export const useLoanTermination = (
+    id: string,
+    skip: number = 0
+): QueryResult<Array<LoanTermination>> => {
+    const variables = {
+        id: id,
+        skip: skip,
+    };
 
-    const fetchLoanTermination = useCallback(async () => {
-        try {
-            let res = await client.query({
-                query: LOAN_TERMINATION,
-                variables: {
-                    id: id,
-                    skip: skip,
-                },
-                fetchPolicy: 'cache-first',
-            });
-            if (res?.data.loanTerminations) {
-                setLoanTermination(res?.data.loanTerminations);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [id]);
+    const { error, data } = useQuery<Query>(LOAN_TERMINATION, {
+        variables: variables,
+    });
 
-    useEffect(() => {
-        if (client && id !== '' && id !== null) {
-            fetchLoanTermination();
-        }
-    }, [client, id]);
+    if (error) {
+        console.error(error);
 
-    return loanTermination;
+        return {
+            data: undefined,
+            error: error,
+        };
+    }
+
+    if (data?.loanTerminations) {
+        return {
+            data: data.loanTerminations,
+            error: null,
+        };
+    } else {
+        return {
+            data: undefined,
+            error: undefined,
+        };
+    }
 };

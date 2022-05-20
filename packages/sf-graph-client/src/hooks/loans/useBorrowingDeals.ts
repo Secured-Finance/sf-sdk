@@ -1,33 +1,39 @@
-import { useCallback, useEffect, useState } from 'react';
-import { client } from '../../client';
+import { useQuery } from '@apollo/client';
+import { Loan, Query } from '../../generated';
 import { BORROW_DEALS } from '../../queries';
+import { QueryResult } from '../../utils';
 
-export const useBorrowingDeals = (account: string, skip: number = 0) => {
-    const [borrowingDeals, setBorrowingDeals] = useState([]);
+export const useBorrowingDeals = (
+    account: string,
+    skip: number = 0
+): QueryResult<Array<Loan>> => {
+    const variables = {
+        account: account.toLowerCase(),
+        skip: skip,
+    };
 
-    const fetchBorrowingDeals = useCallback(async () => {
-        try {
-            let res = await client.query({
-                query: BORROW_DEALS,
-                variables: {
-                    account: account.toLowerCase(),
-                    skip: skip,
-                },
-                fetchPolicy: 'cache-first',
-            });
-            if (res?.data.loans) {
-                setBorrowingDeals(res?.data.loans);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [account, skip]);
+    const { error, data } = useQuery<Query>(BORROW_DEALS, {
+        variables: variables,
+    });
 
-    useEffect(() => {
-        if (client && account !== '' && account !== null) {
-            fetchBorrowingDeals();
-        }
-    }, [account, client]);
+    if (error) {
+        console.error(error);
 
-    return borrowingDeals;
+        return {
+            data: undefined,
+            error: error,
+        };
+    }
+
+    if (data?.loans) {
+        return {
+            data: data.loans,
+            error: null,
+        };
+    } else {
+        return {
+            data: undefined,
+            error: undefined,
+        };
+    }
 };

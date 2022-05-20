@@ -1,33 +1,34 @@
 export { packAddresses, sortAddresses } from './address-pack';
-export { timeSlotPosition, timeSlotPositionByTimestamp } from './time-slot';
 export {
-    toBytes32,
-    fromBytes32,
-    getProductPrefix,
-    getCurrencyIdentifier,
-} from './string';
-export { toBN } from './number';
-export { OrderbookRow } from './types';
-export {
+    generateCrosschainAddressID,
+    generateCurrencyId,
     generateDealId,
     generateProductId,
-    generateCurrencyId,
     generateTermId,
-    generateCrosschainAddressID,
     generateTimeSlotId,
 } from './id';
+export { toBN } from './number';
 export {
-    CurrencyQueryResponse,
-    LoanQueryResponse,
-    CollateralBook,
-    CollateralBookQueryResponse,
+    fromBytes32,
+    getCurrencyIdentifier,
+    getProductPrefix,
+    toBytes32,
+} from './string';
+export { timeSlotPosition, timeSlotPositionByTimestamp } from './time-slot';
+export {
+    BilateralNetting,
     BilateralPosition,
     BilateralPositionsQueryResponse,
-    UnsettledCollateral,
-    UnsettledExposureQueryResponse,
     BillateralNettingQueryResponse,
-    BilateralNetting,
+    CollateralBook,
+    CollateralBookQueryResponse,
+    CollateralBookResponse,
     CollateralNetting,
     CurrencyInfo,
-    CollateralBookResponse,
+    CurrencyQueryResponse,
+    LoanQueryResponse,
+    OrderbookRow,
+    QueryResult,
+    UnsettledCollateral,
+    UnsettledExposureQueryResponse,
 } from './types';

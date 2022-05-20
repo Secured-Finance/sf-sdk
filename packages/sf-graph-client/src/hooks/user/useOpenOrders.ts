@@ -1,14 +1,18 @@
 import { useQuery } from '@apollo/client';
-import { Loan, Query } from '../../generated';
-import { LOAN_INFO } from '../../queries';
+import { LendingMarketOrder, Query } from '../../generated';
+import { OPEN_ORDERS } from '../../queries';
 import { QueryResult } from '../../utils';
 
-export const useLoanInfo = (id: string): QueryResult<Loan> => {
+export const useOpenOrders = (
+    account: string,
+    market: string
+): QueryResult<Array<LendingMarketOrder>> => {
     const variables = {
-        id: id,
+        account: account.toLowerCase(),
+        market: market,
     };
 
-    const { error, data } = useQuery<Query>(LOAN_INFO, {
+    const { error, data } = useQuery<Query>(OPEN_ORDERS, {
         variables: variables,
     });
 
@@ -21,9 +25,9 @@ export const useLoanInfo = (id: string): QueryResult<Loan> => {
         };
     }
 
-    if (data?.loan) {
+    if (data?.user.openOrders) {
         return {
-            data: data.loan,
+            data: data.user.openOrders,
             error: null,
         };
     } else {

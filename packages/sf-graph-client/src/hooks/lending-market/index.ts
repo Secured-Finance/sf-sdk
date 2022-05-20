@@ -1,5 +1,8 @@
+export {
+    useBorrowOrderbook,
+    useBorrowOrderbookQuery,
+} from './useBorrowOrderbook';
 export { useLendingMarketInfo } from './useLendingMarketInfo';
-export { useLendOrderbook } from './useLendOrderbook';
-export { useBorrowOrderbook } from './useBorrowOrderbook';
-export { useLendingTradingHistory } from './useLendingTradingHistory';
 export { useLendingMarkets } from './useLendingMarkets';
+export { useLendingTradingHistory } from './useLendingTradingHistory';
+export { useLendOrderbook, useLendOrderbookQuery } from './useLendOrderbook';

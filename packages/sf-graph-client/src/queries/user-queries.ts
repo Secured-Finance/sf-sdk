@@ -10,7 +10,11 @@ export const OPEN_ORDERS = gql`
             ) {
                 id
                 orderId
-                currency
+                currency {
+                    identifier
+                    shortName
+                    name
+                }
                 side
                 marketAddr
                 term
@@ -35,7 +39,11 @@ export const TRADE_HISTORY = gql`
             ) {
                 id
                 orderId
-                currency
+                currency {
+                    identifier
+                    shortName
+                    name
+                }
                 side
                 marketAddr
                 term
@@ -53,7 +61,11 @@ export const TRADE_HISTORY = gql`
             ) {
                 id
                 orderId
-                currency
+                currency {
+                    identifier
+                    shortName
+                    name
+                }
                 side
                 marketAddr
                 term
@@ -69,7 +81,7 @@ export const TRADE_HISTORY = gql`
 `;
 
 export const OPEN_LOANS = gql`
-    query OpenLoans($account: Bytes!, $currency: Int!, $term: Int!) {
+    query OpenLoans($account: Bytes!, $currency: Bytes!, $term: Int!) {
         user(id: $account) {
             loans(where: { currency: $currency, term: $term }) {
                 id
@@ -82,9 +94,13 @@ export const OPEN_LOANS = gql`
                     }
                 }
                 side
-                currency
+                currency {
+                    identifier
+                    shortName
+                    name
+                }
                 term
-                amount
+                notional
                 couponPayment
                 rate
                 startTimestamp

@@ -1,36 +1,39 @@
-import { useCallback, useEffect, useState } from 'react';
-import { client } from '../../client';
+import { useQuery } from '@apollo/client';
+import { FilledLendingMarketOrder, Query } from '../../generated';
 import { LENDING_TRADING_HISTORY } from '../../queries';
+import { QueryResult } from '../../utils';
 
 export const useLendingTradingHistory = (
     lendingMarket: string,
     skip: number = 0
-) => {
-    const [tradingHistory, setTradingHistory] = useState();
+): QueryResult<Array<FilledLendingMarketOrder>> => {
+    const variables = {
+        market: lendingMarket.toLowerCase(),
+        skip: skip,
+    };
 
-    const fetchLendingTradingHistory = useCallback(async () => {
-        try {
-            let res = await client.query({
-                query: LENDING_TRADING_HISTORY,
-                variables: {
-                    market: lendingMarket.toLowerCase(),
-                    skip: skip,
-                },
-                fetchPolicy: 'cache-first',
-            });
-            if (res?.data.lendingMarket.tradeHistory) {
-                setTradingHistory(res?.data.lendingMarket.tradeHistory);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [lendingMarket, skip]);
+    const { error, data } = useQuery<Query>(LENDING_TRADING_HISTORY, {
+        variables: variables,
+    });
 
-    useEffect(() => {
-        if (client) {
-            fetchLendingTradingHistory();
-        }
-    }, [lendingMarket, client]);
+    if (error) {
+        console.error(error);
 
-    return tradingHistory;
+        return {
+            data: undefined,
+            error: error,
+        };
+    }
+
+    if (data?.lendingMarket.tradeHistory) {
+        return {
+            data: data.lendingMarket.tradeHistory,
+            error: null,
+        };
+    } else {
+        return {
+            data: undefined,
+            error: undefined,
+        };
+    }
 };
