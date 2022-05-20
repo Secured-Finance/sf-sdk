@@ -1,10 +1,10 @@
 import { Provider } from '@ethersproject/providers';
 import { BigNumber, Signer } from 'ethers';
+import { addresses } from '../lib/addresses';
 import {
     SettlementEngine as Contract,
     SettlementEngine__factory,
-} from '../../types/ethers-contracts';
-import { addresses } from '../lib/addresses';
+} from '../types';
 
 export class SettlementEngine {
     contract: Contract;

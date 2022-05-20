@@ -1,9 +1,6 @@
 import { Provider } from '@ethersproject/providers';
 import { BigNumber, Signer } from 'ethers';
-import {
-    LendingMarket as Contract,
-    LendingMarket__factory,
-} from '../../types/ethers-contracts';
+import { LendingMarket as Contract, LendingMarket__factory } from '../types';
 import { getLendingMarketByCcyAndTerm } from '../utils/addresses';
 
 export class LendingMarket {

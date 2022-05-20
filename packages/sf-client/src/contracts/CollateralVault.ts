@@ -3,7 +3,7 @@ import { BigNumber, Signer } from 'ethers';
 import {
     CollateralVault as Contract,
     CollateralVault__factory,
-} from '../../types/ethers-contracts';
+} from '../types';
 import { getCollateralVaultByCcy } from '../utils/addresses';
 
 export class CollateralVault {

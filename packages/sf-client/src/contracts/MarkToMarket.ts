@@ -1,10 +1,7 @@
 import { Provider } from '@ethersproject/providers';
 import { Signer } from 'ethers';
-import {
-    MarkToMarket as Contract,
-    MarkToMarket__factory,
-} from '../../types/ethers-contracts';
 import { addresses } from '../lib/addresses';
+import { MarkToMarket as Contract, MarkToMarket__factory } from '../types';
 
 export class MarkToMarket {
     contract: Contract;

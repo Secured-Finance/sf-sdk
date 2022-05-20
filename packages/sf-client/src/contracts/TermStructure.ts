@@ -1,10 +1,7 @@
 import { Provider } from '@ethersproject/providers';
 import { BigNumber, Signer } from 'ethers';
-import {
-    TermStructure as Contract,
-    TermStructure__factory,
-} from '../../types/ethers-contracts';
 import { addresses } from '../lib/addresses';
+import { TermStructure as Contract, TermStructure__factory } from '../types';
 
 export class TermStructure {
     contract: Contract;
