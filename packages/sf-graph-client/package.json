@@ -11,8 +11,7 @@
     "build": "npm run compile && tsc -b",
     "test": "ts-mocha --timeout 4000 --delay src/*.test.{js,jsx,ts,tsx} src/**/*.test.{js,jsx,ts,tsx}",
     "posttest": "eslint . --ext .ts --config .eslintrc",
-    "postinstall": "npm run generate",
-    "generate": "npx graphql-codegen"
+    "prepublish": "graphql-codegen"
   },
   "author": "Secured Finance",
   "bugs": {
