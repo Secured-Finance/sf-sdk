@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6-beta.15](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.6-beta.14...v0.1.6-beta.15) (2022-05-20)
+
+
+### Bug Fixes
+
+* add out directory for postinstall script ([40f8b32](https://github.com/Secured-Finance/sf-sdk/commit/40f8b324a72e64d05063fc4a2a801a7e884f1a03))
+* force publishing beta packages ([713811f](https://github.com/Secured-Finance/sf-sdk/commit/713811f077e6dff2f720881725c6005a54e9af15))
+* postinstall scripts and typechain files ([0392e91](https://github.com/Secured-Finance/sf-sdk/commit/0392e917fd1f8ea877c8b1f17364109c6051df99))
+* remove yarn workspace on lerna bootstrap ([9f8f2e6](https://github.com/Secured-Finance/sf-sdk/commit/9f8f2e68e190b6346acb2b17e875558c8dc13cd5))
+
+
+
+## 0.1.6-beta.13 (2022-05-20)
+
+
+
+
+
 ## [0.1.6-beta.14](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.6-beta.13...v0.1.6-beta.14) (2022-05-20)
 
 
