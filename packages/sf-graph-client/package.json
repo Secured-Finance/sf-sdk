@@ -12,7 +12,7 @@
     "test": "ts-mocha --timeout 4000 --delay src/*.test.{js,jsx,ts,tsx} src/**/*.test.{js,jsx,ts,tsx}",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "postinstall": "npm run generate",
-    "generate": "graphql-codegen"
+    "generate": "npx graphql-codegen"
   },
   "author": "Secured Finance",
   "bugs": {

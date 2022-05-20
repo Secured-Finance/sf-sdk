@@ -1,10 +1,10 @@
 import { Provider } from '@ethersproject/providers';
 import { BigNumber, Signer } from 'ethers';
+import { addresses } from '../lib/addresses';
 import {
     CollateralAggregator as Contract,
     CollateralAggregator__factory,
-} from '../../types/ethers-contracts';
-import { addresses } from '../lib/addresses';
+} from '../types';
 
 export class CollateralAggregator {
     contract: Contract;

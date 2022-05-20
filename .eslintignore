@@ -4,6 +4,6 @@ node_modules
 .vscode
 /**/dist
 /**/node_modules
-packages/sf-cient/types
+packages/sf-cient/src/types
 packages/sf-graph-client/src/generated.ts
 packages/sf-client/examples

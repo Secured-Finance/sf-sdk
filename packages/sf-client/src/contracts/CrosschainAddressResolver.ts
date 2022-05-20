@@ -1,10 +1,10 @@
 import { Provider } from '@ethersproject/providers';
 import { Signer } from 'ethers';
+import { addresses } from '../lib/addresses';
 import {
     CrosschainAddressResolver as Contract,
     CrosschainAddressResolver__factory,
-} from '../../types/ethers-contracts';
-import { addresses } from '../lib/addresses';
+} from '../types';
 
 export class CrosschainAddressResolver {
     contract: Contract;

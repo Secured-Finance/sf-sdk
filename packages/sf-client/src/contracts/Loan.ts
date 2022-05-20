@@ -1,7 +1,7 @@
 import { Provider } from '@ethersproject/providers';
 import { Overrides, Signer } from 'ethers';
-import { Loan as Contract, Loan__factory } from '../../types/ethers-contracts';
 import { addresses } from '../lib/addresses';
+import { Loan as Contract, Loan__factory } from '../types';
 
 export class Loan {
     contract: Contract;
