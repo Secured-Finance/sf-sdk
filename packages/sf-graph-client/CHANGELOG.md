@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6-beta.13](https://github.com/secured-finance/sf-sdk/compare/v0.1.6-beta.12...v0.1.6-beta.13) (2022-05-20)
+
+
+### Bug Fixes
+
+* change array modification on data manipulation ([d28a8d3](https://github.com/secured-finance/sf-sdk/commit/d28a8d32b363eacb3a86361043f3c0992e4bed86))
+* common type response integration ([e77cdc1](https://github.com/secured-finance/sf-sdk/commit/e77cdc11455d24fdd3ffd5142e5a64028c12e950))
+* data manipulation functions fixes for graph-client ([5a8016a](https://github.com/secured-finance/sf-sdk/commit/5a8016a20ae1585fd56e73402aae4a8640403de0))
+* ignore auto-generated types for graph-client ([56d9220](https://github.com/secured-finance/sf-sdk/commit/56d92201b57f1a8e31027743ce0c1806e68bbd87))
+* update package-lock after merge ([2ae83d7](https://github.com/secured-finance/sf-sdk/commit/2ae83d7baf3ee15abad73400f94650aae9bf2f12))
+
+
+
+## 0.1.6-beta.11 (2022-05-11)
+
+
+
+
+
 ## [0.1.6-beta.12](https://github.com/secured-finance/sf-sdk/compare/v0.1.6-beta.11...v0.1.6-beta.12) (2022-05-18)
 
 **Note:** Version bump only for package @secured-finance/sf-graph-client
