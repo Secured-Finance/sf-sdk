@@ -3,7 +3,7 @@
   "private": true,
   "description": "Monorepo of Javascript libraries for working with Secured Finance protocol",
   "scripts": {
-    "bootstrap": "lerna bootstrap --use-workspaces",
+    "bootstrap": "lerna bootstrap --hoist",
     "lint": "eslint './packages/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint './packages/**/*.{js,ts,tsx}' --fix",
     "format": "prettier --check '**/*.{js,jsx,ts,tsx,json}' '*.{js,jsx,ts,tsx,json}' '!package-lock.json' '!lerna.json'",
@@ -48,6 +48,5 @@
   },
   "ts-node": {
     "files": true
-  },
-  "workspaces": ["packages/*"]
+  }
 }
