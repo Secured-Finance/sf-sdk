@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
-import { Query } from '../../generated';
+import { CollateralBook, Query } from '../../generated';
 import { COLLATERAL_BOOK_FROM_VAULT } from '../../queries';
-import { CollateralBook, QueryResult } from '../../utils';
+import { QueryResult } from '../../utils';
 
 export const useCollateralBookFromVault = (
     vault: string,

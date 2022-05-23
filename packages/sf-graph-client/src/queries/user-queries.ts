@@ -14,6 +14,7 @@ export const OPEN_ORDERS = gql`
                     identifier
                     shortName
                     name
+                    chainID
                 }
                 side
                 marketAddr
@@ -43,6 +44,7 @@ export const TRADE_HISTORY = gql`
                     identifier
                     shortName
                     name
+                    chainID
                 }
                 side
                 marketAddr
@@ -65,6 +67,7 @@ export const TRADE_HISTORY = gql`
                     identifier
                     shortName
                     name
+                    chainID
                 }
                 side
                 marketAddr
@@ -98,6 +101,7 @@ export const OPEN_LOANS = gql`
                     identifier
                     shortName
                     name
+                    chainID
                 }
                 term
                 notional

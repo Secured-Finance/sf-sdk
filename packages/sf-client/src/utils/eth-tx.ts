@@ -1,5 +1,6 @@
 import {
     TransactionReceipt,
+    TransactionRequest,
     TransactionResponse,
 } from '@ethersproject/abstract-provider';
 import { parse, Transaction } from '@ethersproject/transactions';
@@ -10,8 +11,9 @@ import {
     BytesLike,
     Contract,
     PopulatedTransaction,
+    Signer,
 } from 'ethers/lib/ethers';
-import { estimateGasPrice, GasPriceKey } from './gas';
+import { estimateGasPrice, GasPriceKey, getDefaultOracle } from './gas';
 
 export declare type TxBase = {
     to?: string;
@@ -103,4 +105,33 @@ export const signTranaction = async (
     const tx = await contract.signer.signTransaction(txRequest);
 
     return parse(tx);
+};
+
+export const sendEther = async (
+    signer: Signer,
+    weiAmount: BigNumberish,
+    to: string,
+    gasPrice?: number | BigNumber
+): Promise<TransactionResponse> => {
+    let gasPriceWei: number | BigNumber;
+    if (!gasPrice) {
+        const chainId = await signer.getChainId();
+        const gasOracle = getDefaultOracle(chainId);
+        gasPriceWei = await estimateGasPrice('fast', gasOracle);
+    } else {
+        gasPriceWei = gasPrice;
+    }
+
+    let tx: TransactionRequest = {
+        to: to,
+        value: weiAmount,
+        gasPrice: gasPriceWei,
+    };
+
+    const gasLimit = await signer.estimateGas(tx);
+
+    tx.gasLimit = gasLimit;
+
+    const receipt = signer.sendTransaction(tx);
+    return receipt;
 };
