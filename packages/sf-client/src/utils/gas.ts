@@ -34,6 +34,12 @@ export const DEFAULT_GAS_PRICES: { [key: number]: GasPrices } = {
         standard: 3,
         low: 1,
     },
+    4: {
+        instant: 10,
+        fast: 5,
+        standard: 3,
+        low: 1,
+    },
     1337: {
         instant: 1,
         fast: 1,
@@ -64,6 +70,10 @@ export const currentGasPrices = async (
 ): Promise<GasPrices> => {
     if (oracle === null) {
         oracle = new GasPriceOracle(options);
+    }
+
+    if (!fallbackGasPrices) {
+        fallbackGasPrices = oracle.configuration.defaultFallbackGasPrices;
     }
 
     if (oracle.configuration.chainId !== 1) {

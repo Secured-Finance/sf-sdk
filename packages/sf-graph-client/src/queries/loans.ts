@@ -10,6 +10,7 @@ export const LOAN_DEALS = gql`
                 identifier
                 shortName
                 name
+                chainID
             }
             term
             notional
@@ -33,6 +34,7 @@ export const BORROW_DEALS = gql`
                 identifier
                 shortName
                 name
+                chainID
             }
             term
             notional
@@ -56,6 +58,7 @@ export const LOAN_INFO = gql`
                 identifier
                 shortName
                 name
+                chainID
             }
             term
             notional

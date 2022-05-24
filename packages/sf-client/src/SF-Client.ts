@@ -1,10 +1,11 @@
 import { Network } from '@ethersproject/networks';
-import { Provider } from '@ethersproject/providers';
+import { Provider, TransactionResponse } from '@ethersproject/providers';
 import { BigNumber, getDefaultProvider, Signer } from 'ethers';
 import { ContractsInstance } from './contract-instance';
 import {
     getCollateralVaultAddressByCcy,
     getLendingMarketAddressByCcyAndTerm,
+    sendEther,
     toBytes32,
 } from './utils';
 import { NETWORKS } from './utils/networks';
@@ -212,5 +213,22 @@ export class SFClient {
             timestamp,
             txHash
         );
+    };
+
+    sendEther = async (
+        amount: number | BigNumber,
+        to: string,
+        gasPrice?: number | BigNumber
+    ): Promise<TransactionResponse> | undefined => {
+        let signer: Signer;
+
+        if (Signer.isSigner(this.signerOrProvider)) {
+            signer = this.signerOrProvider;
+        } else {
+            console.error('signer is required for sending transaction');
+            return;
+        }
+
+        return sendEther(signer, amount, to, gasPrice);
     };
 }
