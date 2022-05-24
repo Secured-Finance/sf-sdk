@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6-beta.17](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.6-beta.16...v0.1.6-beta.17) (2022-05-24)
+
+
+### Bug Fixes
+
+* ethereum transfer function and collateral book response type ([f4eb043](https://github.com/Secured-Finance/sf-sdk/commit/f4eb043af66628d18389e8be91737d62d816cc1f))
+
+
+
+
+
 ## [0.1.6-beta.16](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.6-beta.15...v0.1.6-beta.16) (2022-05-20)
 
 
