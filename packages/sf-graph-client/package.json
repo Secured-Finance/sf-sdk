@@ -9,7 +9,7 @@
     "compile": "tsc -p tsconfig.json",
     "lint": "eslint lib/ src/ test/ --ext .ts",
     "build": "npm run compile && tsc -b",
-    "test": "ts-mocha --timeout 4000 --delay src/*.test.{js,jsx,ts,tsx} src/**/*.test.{js,jsx,ts,tsx}",
+    "test": "ts-mocha --timeout 4000 src/*.test.{js,jsx,ts,tsx} src/**/*.test.{js,jsx,ts,tsx}",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepublish": "graphql-codegen"
   },
