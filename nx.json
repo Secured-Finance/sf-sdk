@@ -1,0 +1,37 @@
+{
+  "extends": "nx/presets/npm.json",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "create",
+          "create-local",
+          "codegen",
+          "build",
+          "deploy",
+          "deploy-local",
+          "prebuild",
+          "watch",
+          "lint",
+          "test",
+          "prepublish",
+          "precompile",
+          "compile",
+          "posttest"
+        ]
+      }
+    }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "affected": {
+    "defaultBase": "main"
+  }
+}
