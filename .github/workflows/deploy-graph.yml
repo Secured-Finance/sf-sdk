@@ -33,4 +33,4 @@ jobs:
           graph_access_token: ${{secrets.GRAPH_ACCESS_TOKEN}}
           graph_subgraph_name: secured-finance-protocol
           graph_account: secured-finance
-          graph_config_file: subgraph.yaml
+          graph_config_file: /packages/secured-finance-subgraph/subgraph.yaml
