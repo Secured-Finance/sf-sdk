@@ -29,9 +29,14 @@ jobs:
       - name: Change directory
         working-directory: ./packages/secured-finance-subgraph
         run: ls
-      - uses: gtaschuk/graph-deploy@v0.1.0
-        with:
-          graph_access_token: ${{secrets.GRAPH_ACCESS_TOKEN}}
-          graph_subgraph_name: secured-finance-protocol
-          graph_account: secured-finance
-          graph_config_file: subgraph.yaml
+      - name: Install Graph CLI
+        id: install-graph-cli
+        run: |
+          yarn global add @graphprotocol/graph-cli@0.28.0
+          echo "$(yarn global bin)" >> $GITHUB_PATH
+        shell: bash
+      - name: Deploy Subgraph
+        id: deploy
+        run: |
+          graph deploy --access-token ${{secrets.GRAPH_ACCESS_TOKEN}} secured-finance/secured-finance-protocol subgraph.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/
+        shell: bash
