@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - development
+      - SF-139-only-subgraph
 
 jobs:
   deploy:
