@@ -13,6 +13,7 @@ import { ConfigModule } from '@shared/modules';
 import { FilecoinLotusRepository } from '@shared/repositories';
 import { FilecoinService } from './filecoin.service';
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 type DeepPartial<T> = T extends object
   ? { [P in keyof T]?: DeepPartial<T[P]> }
   : T;

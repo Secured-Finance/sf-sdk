@@ -4,3 +4,4 @@ packages/sf-client/src/types/
 **/dist/
 packages/sf-graph-client/src/generated.ts
 packages/secured-finance-subgraph
+packages/chainlink-external-adapter
