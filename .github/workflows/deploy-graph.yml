@@ -32,5 +32,5 @@ jobs:
           cd ./packages/secured-finance-subgraph
           yarn global add @graphprotocol/graph-cli
           echo "$(yarn global bin)" >> $GITHUB_PATH
-          graph deploy --access-token *** secured-finance/secured-finance-protocol subgraph.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/
+          graph deploy --access-token ${{secrets.GRAPH_ACCESS_TOKEN}} secured-finance/secured-finance-protocol subgraph.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/
         shell: bash
