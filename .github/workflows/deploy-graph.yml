@@ -27,7 +27,8 @@ jobs:
       - name: Build
         run: npm run build
       - name: Change directory
-        run: cd packages/secured-finance-subgraph && ls
+        working-directory: ./packages/secured-finance-subgraph
+        run: ls
       - uses: gtaschuk/graph-deploy@v0.1.0
         with:
           graph_access_token: ${{secrets.GRAPH_ACCESS_TOKEN}}
