@@ -26,9 +26,9 @@ jobs:
         run: npm run bootstrap
       - name: Build
         run: npm run build
-      - uses: gtaschuk/graph-deploy@v0.1.0
+      - uses: gtaschuk/graph-deploy@v0.1.9
         with:
           graph_access_token: ${{secrets.GRAPH_ACCESS_TOKEN}}
           graph_subgraph_name: secured-finance-protocol
           graph_account: secured-finance
-          graph_config_file: subgraph.yaml
+          graph_config_file: ../packages/secured-finance-subgraph/subgraph.yaml
