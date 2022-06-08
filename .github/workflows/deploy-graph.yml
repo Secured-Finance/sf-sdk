@@ -1,0 +1,33 @@
+name: Deploy Graph
+
+on:
+  push:
+    branches:
+      - main
+      - development
+
+jobs:
+  deploy:
+    name: Deploy Graph
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+      - name: Install Dependencies
+        run: npm ci
+      - name: Bootstrap Repo
+        run: npm run bootstrap
+      - name: Build
+        run: npm run build
+      - uses: gtaschuk/graph-deploy@v0.1.0
+        with:
+          graph_access_token: ${{secrets.GRAPH_ACCESS_TOKEN}}
+          graph_subgraph_name: secured-finance-protocol
+          graph_account: secured-finance
+          graph_config_file: subgraph.yaml
