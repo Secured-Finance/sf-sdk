@@ -10,7 +10,7 @@ function createCloseOutNetting(id: string): CloseOutNetting {
     if (closeOut) {
         closeOut.save()
     }
-  
+
     return closeOut as CloseOutNetting
 }
 
@@ -128,3 +128,6 @@ export function handleCloseOutPaymentDecrease(event: RemoveCloseOutPayments): vo
         closeOut.save()
     }
 }
+
+// eslint-disable-next-line no-unused-vars
+const a = '123';
