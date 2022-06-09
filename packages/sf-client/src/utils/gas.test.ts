@@ -30,7 +30,7 @@ describe('Test gas prices oracle', function () {
         gas.fast.should.be.a('number');
         gas.standard.should.be.a('number');
         gas.low.should.be.a('number');
-    }).timeout(10000);
+    });
 
     it('Try to check ropsten gas prices', async () => {
         fallbackGasPrices = DEFAULT_GAS_PRICES[ropstenNetworkID];
@@ -71,5 +71,5 @@ describe('Test gas prices oracle', function () {
             gasPrice.toString(),
             parseGwei(fallbackGasPrices.instant.toString())
         );
-    }).timeout(10000);
+    });
 });
