@@ -2,9 +2,9 @@ import { BigInt, Bytes } from "@graphprotocol/graph-ts"
 import { CollateralUserContract} from "../generated/schema"
 import { CollateralVault as CollateralVaultTemplate } from '../generated/templates'
 import {
-    LiquidationPriceUpdated,
-    MarginCallThresholdUpdated,
-    MinCollateralRatioUpdated,
+    LiquidationPriceUpdated, 
+    MarginCallThresholdUpdated, 
+    MinCollateralRatioUpdated, 
     AutoLiquidationThresholdUpdated,
     CollateralUserAdded,
     CollateralUserRemoved,
@@ -21,13 +21,13 @@ import {
 
 import { isFlippedAddresses } from "./helpers"
 import { ADDRESS_ZERO, BIG_INT_ZERO } from "./constants"
-import {
-    getCollateralAggregator,
-    getCollateralBilateralPosition,
-    getCollateralNetting,
-    getCollateralPosition,
-    getCollateralPositionCurrencyState,
-    getCollateralVault
+import { 
+    getCollateralAggregator, 
+    getCollateralBilateralPosition, 
+    getCollateralNetting, 
+    getCollateralPosition, 
+    getCollateralPositionCurrencyState, 
+    getCollateralVault 
 } from "./collateral-helpers"
 
 export function handleCollateralLiquidationPriceUpdate(event: LiquidationPriceUpdated): void {
@@ -203,7 +203,7 @@ export function handleCollateralPositionUse(event: UseCollateral): void {
                 amount0 = event.params.amount0
                 amount1 = event.params.amount1
             }
-
+    
             if (netting.address0 == ADDRESS_ZERO) {
                 netting.address0 = address0
                 netting.address1 = address1
@@ -213,7 +213,7 @@ export function handleCollateralPositionUse(event: UseCollateral): void {
             if (amount0.gt(BIG_INT_ZERO)) {
                 if (isSettled) {
                     netting.party0PV = netting.party0PV.plus(amount0)
-                } else {
+                } else { 
                     netting.unsettled0PV = netting.unsettled0PV.plus(amount0)
                 }
             }
@@ -221,8 +221,8 @@ export function handleCollateralPositionUse(event: UseCollateral): void {
             if (amount1.gt(BIG_INT_ZERO)) {
                 if (isSettled) {
                     netting.party1PV = netting.party1PV.plus(amount1)
-                } else {
-                    netting.unsettled1PV = netting.unsettled1PV.plus(amount1)
+                } else { 
+                    netting.unsettled1PV = netting.unsettled1PV.plus(amount1) 
                 }
             }
 
@@ -341,5 +341,3 @@ export function handleCollateralPositionUpdatePV(event: UpdatePV): void {
         }
     }
 }
-
-const a = "arpit";
