@@ -9,3 +9,6 @@ export const client = new ApolloClient({
     }),
     cache: new InMemoryCache(),
 });
+
+// eslint-disable-next-line no-unused-vars
+const a = '123';
