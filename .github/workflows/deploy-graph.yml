@@ -6,6 +6,8 @@ on:
       - main
       - development
       - SF-139-only-subgraph
+    paths:
+      - 'packages/secured-finance-subgraph/**'
 
 jobs:
   deploy:
@@ -26,11 +28,15 @@ jobs:
         run: npm run bootstrap
       - name: Build
         run: npm run build
+      - name: Install Graph CLI
+        id: install-graph-cli
+        run: |
+          yarn global add @graphprotocol/graph-cli@0.28.0
+          echo "$(yarn global bin)" >> $GITHUB_PATH
+        shell: bash
       - name: Deploy Subgraph
         id: deploy
         run: |
           cd ./packages/secured-finance-subgraph
-          yarn global add @graphprotocol/graph-cli
-          echo "$(yarn global bin)" >> $GITHUB_PATH
           graph deploy --access-token ${{secrets.GRAPH_ACCESS_TOKEN}} secured-finance/secured-finance-protocol subgraph.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/
         shell: bash
