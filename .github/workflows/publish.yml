@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - development
+      - SF-139-errors
 
 jobs:
   publish-npm:
