@@ -1,0 +1,61 @@
+type                = "directrequest"
+schemaVersion       = 1
+name                = "Get Filecoin Message"
+externalJobID = "8c5b800d-31ec-49c1-804e-f827be81c0fc"
+# externalJobID converted to byte32 without dashes:
+# 0x3863356238303064333165633439633138303465663832376265383163306663
+contractAddress     = "<YOUR_ORACLE_ADDRESS>"
+observationSource   = """
+  decode_log [
+    type="ethabidecodelog"
+    abi="OracleRequest(bytes32 indexed specId, address requester, bytes32 requestId, uint256 payment, address callbackAddr, bytes4 callbackFunctionId, uint256 cancelExpiration, uint256 dataVersion, bytes data)"
+    data="$(jobRun.logData)"
+    topics="$(jobRun.logTopics)"
+  ]
+  decode_cbor [type=cborparse data="$(decode_log.data)"]
+  fetch [
+    type="bridge"
+    name="filecoin"
+    requestData="{\\"jobRunID\\": $(jobSpec.externalJobID), \\"messageId\\": $(decode_cbor.txHash)}"
+    // Settings to use Generic Adapter on NaaS
+    // requestData="{\\"id\\": $(jobSpec.externalJobID), \\"data\\": {\\"method\\": \\"post\\", \\"data\\": {\\"messageId\\": $(decode_cbor.txHash)}}}"
+  ]
+
+  decode_log -> decode_cbor -> fetch
+  fetch -> from_address
+  fetch -> to_address
+  fetch -> value
+  fetch -> timestamp
+
+  from_address [type="jsonparse" path="from" data="$(fetch)"]
+  to_address [type="jsonparse" path="to" data="$(fetch)"]
+  value [type="jsonparse" path="value" data="$(fetch)"]
+  timestamp [type="jsonparse" path="timestamp" data="$(fetch)"]
+  // Settings to use Generic Adapter on NaaS
+  // from_address [type="jsonparse" path="result,from" data="$(fetch)"]
+  // to_address [type="jsonparse" path="result,to" data="$(fetch)"]
+  // value [type="jsonparse" path="result,value" data="$(fetch)"]
+  // timestamp [type="jsonparse" path="result,timestamp" data="$(fetch)"]
+
+  from_address -> encode_data
+  to_address -> encode_data
+  value -> encode_data
+  timestamp -> encode_data
+
+  encode_data [
+    type="ethabiencode"
+    abi="(bytes32 requestId, string from, string to, uint256 value, uint256 timestamp, string txHash)"
+    data="{\\"requestId\\": $(decode_log.requestId), \\"from\\": $(from_address), \\"to\\": $(to_address), \\"value\\": $(value), \\"timestamp\\": $(timestamp), \\"txHash\\": $(decode_cbor.txHash)}"
+  ]
+  encode_tx [
+    type="ethabiencode"
+    abi="fulfillOracleRequest2(bytes32 requestId, uint256 payment, address callbackAddress, bytes4 callbackFunctionId, uint256 expiration, bytes calldata data)"
+    data="{\\"requestId\\": $(decode_log.requestId), \\"payment\\": $(decode_log.payment), \\"callbackAddress\\": $(decode_log.callbackAddr), \\"callbackFunctionId\\": $(decode_log.callbackFunctionId), \\"expiration\\": $(decode_log.cancelExpiration), \\"data\\": $(encode_data)}"
+  ]
+  submit_tx [
+    type="ethtx" to="<YOUR_ORACLE_ADDRESS>"
+    data="$(encode_tx)"
+  ]
+
+  encode_data -> encode_tx -> submit_tx
+"""

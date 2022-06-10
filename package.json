@@ -8,8 +8,8 @@
     "lint:fix": "eslint './packages/**/*.{js,ts,tsx}' --fix",
     "format": "prettier --check '**/*.{js,jsx,ts,tsx,json}' '*.{js,jsx,ts,tsx,json}' '!package-lock.json' '!lerna.json'",
     "format:fix": "prettier --write '**/*.{js,jsx,ts,tsx,json}' '*.{js,jsx,ts,tsx,json}' '!package-lock.json' '!lerna.json'",
-    "test-all": "lerna run test",
-    "build": "lerna run build",
+    "test-all": "nx run-many --target=test --all",
+    "build": "nx run-many --target=build --all",
     "prepublishOnly": "npm run build",
     "version": "npm run format:fix",
     "prepare": "husky install"
@@ -41,7 +41,8 @@
     "prettier": "^2.3.2",
     "ts-mocha": "^8.0.0",
     "ts-node": "^10.1.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "nx": "14.2.2"
   },
   "engines": {
     "node": ">=10.0.0"
