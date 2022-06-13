@@ -27,6 +27,8 @@ jobs:
         run: npm ci
       - name: Bootstrap Repository
         run: npm run bootstrap
+      - name: Generate artifacts
+        run: npm run codegen
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
@@ -45,6 +47,6 @@ jobs:
           if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
             npx lerna version --conventional-commits --conventional-graduate --yes
           else
-            npx lerna version --conventional-commits --conventional-prerelease --preid beta --yes --force-publish
+            npx lerna version from-git --conventional-commits --conventional-prerelease --preid beta --yes --force-publish
           fi
           npx lerna publish from-package --conventional-commits --yes
