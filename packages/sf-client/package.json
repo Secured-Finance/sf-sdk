@@ -5,12 +5,13 @@
   "main": "dist/index.js",
   "source": "src/index.ts",
   "scripts": {
+    "codegen": "typechain --target=ethers-v5 --ts-nocheck 'src/lib/abis/**.json' --out-dir src/types",
     "prebuild": "rm -rf dist",
     "watch": "tsc -p tsconfig.json -w",
     "lint": "eslint lib/ src/ test/ --ext .ts",
     "build": "tsc --project tsconfig.json",
     "test": "ts-mocha src/*.test.ts src/**/*.test.ts",
-    "prepublish": "typechain --target=ethers-v5 --ts-nocheck 'src/lib/abis/**.json' --out-dir src/types"
+    "prepublish": "npm run codegen"
   },
   "author": "Secured Finance",
   "bugs": {
