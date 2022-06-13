@@ -1,8 +1,8 @@
-import { BigDecimal, BigInt, ByteArray, Bytes, ethereum, log } from '@graphprotocol/graph-ts'
-import { LoanV2 as LoanContract, Register, Liquidate, RequestTermination, EarlyTermination, RejectTermination, MarkToMarket, Novation } from '../generated/LoanV2/LoanV2'
-import { Loan, LoanNovation, LoanSchedule, LoanTermination, SchedulePayment, User } from '../generated/schema'
-import { ADDRESS_ZERO, BIG_INT_BASIS_POINTS, BIG_INT_NOTICE_PERIOD, BIG_INT_ONE, BIG_INT_ZERO, EMPTY_STRING, EMPTY_TX_HASH } from './constants'
-import { getCouponFractionsFromTerm, getLoanPaymentDeadlinesFromTerm, getLoanPaymentFrequencyFromTerm, getTerm, getTimestampFromTerm } from './helpers'
+import { BigInt } from '@graphprotocol/graph-ts'
+import { Register, Liquidate, RequestTermination, EarlyTermination, RejectTermination, MarkToMarket, Novation } from '../generated/LoanV2/LoanV2'
+import { Loan, LoanNovation, LoanSchedule, LoanTermination, SchedulePayment } from '../generated/schema'
+import { ADDRESS_ZERO, BIG_INT_BASIS_POINTS, BIG_INT_NOTICE_PERIOD, BIG_INT_ONE, BIG_INT_ZERO, EMPTY_STRING } from './constants'
+import { getCouponFractionsFromTerm, getLoanPaymentDeadlinesFromTerm, getLoanPaymentFrequencyFromTerm, getTimestampFromTerm } from './helpers'
 import { getUser } from './user'
 
 export function getLoan(id: string): Loan {
@@ -64,6 +64,7 @@ export function handleLoanRegister(event: Register): void {
     let loanId = event.params.dealId.toHexString()
     let loan = new Loan(loanId)
     loan.currency = event.params.ccy.toHexString()
+    loan.currencyIdentifier = event.params.ccy
 
     loan.term = event.params.term
     loan.notional = event.params.notional
@@ -114,12 +115,6 @@ export function handleLoanTerminationRequest(event: RequestTermination): void {
     if (loan) {
         let termination = getLoanTermination(id)
 
-        log.info('handleLoanTerminationRequest {} {}', [
-            id,
-            event.params.requestedBy.toHexString(),
-            BIG_INT_ZERO.toHexString()
-        ]);
-
         termination.loan = id
         termination.terminationAsker = event.params.requestedBy
         termination.terminationSubmitter = ADDRESS_ZERO
@@ -137,12 +132,6 @@ export function handleLoanTerminationRejection(event: RejectTermination): void {
     if (loan) {
         let termination = getLoanTermination(id)
 
-        log.info('handleLoanTerminationRejection {} {}', [
-            ADDRESS_ZERO.toHexString(),
-            BIG_INT_ZERO.toHexString(),
-            EMPTY_TX_HASH.toHexString(),
-        ]);
-
         termination.terminationAsker = ADDRESS_ZERO
         termination.terminationSubmitter = ADDRESS_ZERO
         termination.terminationDate = BIG_INT_ZERO
@@ -158,12 +147,6 @@ export function handleLoanEarlyTermination(event: EarlyTermination): void {
 
     if (loan) {
         let termination = getLoanTermination(id)
-
-        log.info('handleLoanEarlyTermination {} {} {}', [
-            event.params.acceptedBy.toHexString(),
-            event.params.dealId.toHexString(),
-            event.params.payment.toString(),
-        ]);
 
         termination.terminationSubmitter = event.params.acceptedBy
         termination.repayment = event.params.payment

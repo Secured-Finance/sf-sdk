@@ -1,17 +1,18 @@
 {
   "name": "@secured-finance/sf-graph-client",
-  "version": "0.2.3-beta.1",
+  "version": "0.1.7-beta.0",
   "description": "GraphQL react client for querying Secured Finance subgraph",
   "main": "dist/index.js",
   "source": "src/index.ts",
   "scripts": {
     "precompile": "rm -rf dist",
     "compile": "tsc -p tsconfig.json",
+    "codegen": "graphql-codegen",
     "lint": "eslint lib/ src/ test/ --ext .ts",
     "build": "npm run compile && tsc -b",
     "test": "ts-mocha --timeout 4000 src/*.test.{js,jsx,ts,tsx} src/**/*.test.{js,jsx,ts,tsx}",
     "posttest": "eslint . --ext .ts --config .eslintrc",
-    "prepublish": "graphql-codegen"
+    "prepublish": "npm run codegen"
   },
   "author": "Secured Finance",
   "bugs": {

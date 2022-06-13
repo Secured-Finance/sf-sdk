@@ -1,4 +1,4 @@
-import { Bytes } from "@graphprotocol/graph-ts"
+import { Bytes, log } from "@graphprotocol/graph-ts"
 import { Currency, PriceFeed } from "../generated/schema"
 import { 
     CcyAdded, 
@@ -9,7 +9,7 @@ import {
     PriceFeedAdded, 
     PriceFeedRemoved 
 } from '../generated/CurrencyController/CurrencyController'
-import { ADDRESS_ZERO, EMPTY_STRING } from './constants'
+import { ADDRESS_ZERO, BIG_INT_ZERO, EMPTY_STRING } from './constants'
 import { getCurrencyName } from "./helpers"
 
 function createCurrency(identifier: Bytes): Currency {
@@ -18,7 +18,15 @@ function createCurrency(identifier: Bytes): Currency {
 
     if (currency) {
         currency.identifier = identifier
-
+        currency.name = ''
+        currency.shortName = ''
+        currency.chainId = 0
+        currency.ltv = BIG_INT_ZERO
+        currency.minMargin = BIG_INT_ZERO
+        currency.isSupported = true
+        currency.isCollateral = false
+        currency.terms = []
+      
         currency.save()
     }
 
@@ -42,7 +50,7 @@ export function handleNewCurrency(event: CcyAdded): void {
 
     currency.name = event.params.name
     currency.shortName = ccyShortName
-    currency.chainID = event.params.chainId
+    currency.chainId = event.params.chainId
     currency.ltv = event.params.ltv
     currency.isSupported = true
 

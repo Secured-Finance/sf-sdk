@@ -1,6 +1,6 @@
-import { BigInt, Bytes } from "@graphprotocol/graph-ts"
+import { BigInt, Bytes, log } from "@graphprotocol/graph-ts"
 import { TimeSlot, TimeSlotPaymentConfirmation } from "../generated/schema"
-import { RegisterPayment, RemovePayment, VerifyPayment, SettlePayment } from '../generated/PaymentAggregator/PaymentAggregator'
+import { RegisterPayment, RemovePayment, VerifyPayment } from '../generated/PaymentAggregator/PaymentAggregator'
 import { isFlippedAddresses, packAddresses } from "./helpers"
 import { BIG_INT_ZERO, ZERO_BYTES } from "./constants"
 
@@ -8,13 +8,28 @@ function createTimeSlot(id: string): TimeSlot {
     const timeSlot = new TimeSlot(id)
 
     if (timeSlot) {
+        timeSlot.position = ZERO_BYTES;
+        timeSlot.address0 = ZERO_BYTES
+        timeSlot.address1 = ZERO_BYTES
+        timeSlot.addresses = ''
+        timeSlot.currency = ''
+        timeSlot.totalPayment0 = BIG_INT_ZERO
+        timeSlot.totalPayment1 = BIG_INT_ZERO
+        timeSlot.netPayment = BIG_INT_ZERO
+        timeSlot.flipped = false
+        timeSlot.paidAmount = BIG_INT_ZERO
+        timeSlot.isSettled = false
+        timeSlot.year = BIG_INT_ZERO
+        timeSlot.month = BIG_INT_ZERO
+        timeSlot.day = BIG_INT_ZERO
+
         timeSlot.save()
     }
   
     return timeSlot as TimeSlot
 }
 
-function getTimeSlotID(
+export function getTimeSlotID(
     packedAddr: Bytes, 
     ccyCode: Bytes,
     year: BigInt,
@@ -116,15 +131,24 @@ export function handleTimeSlotPaymentDecrease(event: RemovePayment): void {
         timeSlot.totalPayment0 = timeSlot.totalPayment0.minus(payment0)
         timeSlot.totalPayment1 = timeSlot.totalPayment1.minus(payment1)
 
-        if (timeSlot.totalPayment1.gt(timeSlot.totalPayment0)) {
-            timeSlot.netPayment = timeSlot.totalPayment1.minus(timeSlot.totalPayment0)
-            timeSlot.flipped = true
-        } else {
-            timeSlot.netPayment = timeSlot.totalPayment0.minus(timeSlot.totalPayment1)
-            timeSlot.flipped = false
-        }
+        if (timeSlot.totalPayment0.ge(BIG_INT_ZERO) && timeSlot.totalPayment1.ge(BIG_INT_ZERO)) {
+            if (timeSlot.totalPayment1.gt(timeSlot.totalPayment0)) {
+                timeSlot.netPayment = timeSlot.totalPayment1.minus(timeSlot.totalPayment0)
+                timeSlot.flipped = true
+            } else {
+                timeSlot.netPayment = timeSlot.totalPayment0.minus(timeSlot.totalPayment1)
+                timeSlot.flipped = false
+            }
 
-        timeSlot.save()
+            timeSlot.save()
+        } else {
+            log.error(`TimeSlot payments subtraction underflow: totalPayment0 is {} totalPayment1 is {}`,
+                [
+                    timeSlot.totalPayment0.toString(),
+                    timeSlot.totalPayment1.toString()
+                ]
+            )
+        }
     }
 }
 
@@ -146,7 +170,7 @@ export function handleTimeSlotPaymentVerification(event: VerifyPayment): void {
         paymentConfirmation.receiver = event.params.counterparty
         paymentConfirmation.settlementId = event.params.settlementId
         paymentConfirmation.settledAt = event.block.timestamp
-      
+
         paymentConfirmation.save()
 
         if (timeSlot.netPayment.minus(timeSlot.paidAmount).equals(BIG_INT_ZERO)) {
