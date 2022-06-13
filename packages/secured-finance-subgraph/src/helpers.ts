@@ -1,8 +1,10 @@
-import { BigInt, Bytes, Address, ethereum, crypto, log, ByteArray } from '@graphprotocol/graph-ts'
+import { BigInt, Bytes, Address, crypto, ethereum, ByteArray } from '@graphprotocol/graph-ts'
 import { 
     BIG_INT_BASIS_POINTS, 
     BIG_INT_ONE, 
     BIG_INT_ONE_DAY_SECONDS, 
+    BIG_INT_YEAR, 
+    BIG_INT_ZERO, 
     BTC_CCY_IDENTIFIER, 
     ETH_CCY_IDENTIFIER, 
     FIL_CCY_IDENTIFIER 
@@ -20,6 +22,7 @@ export function getLoanPaymentFrequencyFromTerm(term: BigInt): BigInt {
     }
 }
 
+// eslint-disable-next-line no-undef
 export function getLoanPaymentDeadlinesFromTerm(term: i32): BigInt[] {
     switch (term) {
         case 730:
@@ -60,6 +63,7 @@ export function getCurrencyName(identifier: string): string {
     return ""
 }
 
+// eslint-disable-next-line no-undef
 export function getTerm(termIndex: i32): string {
     switch (termIndex) {
         case 30:
@@ -77,7 +81,7 @@ export function getTerm(termIndex: i32): string {
         case 1825:
             return '_5y'
         default:
-            return null                    
+            return null
     }
 }
 
@@ -86,6 +90,34 @@ export function getCouponFractionsFromTerm(term: BigInt): BigInt {
         return BIG_INT_BASIS_POINTS.times(term).div(BigInt.fromI32(360))
     } else {
         return BIG_INT_BASIS_POINTS
+    }
+}
+
+export function getDiscountFactorFractions(term: BigInt): BigInt {
+    if (term.lt(BigInt.fromI32(365))) {
+        const sectors = BigInt.fromI32(360).div(term);
+        return BIG_INT_BASIS_POINTS.div(sectors)
+    } else {
+        return BIG_INT_BASIS_POINTS
+    }
+}
+
+export function getTermSchedule(term: BigInt): Array<BigInt> {
+    if (term.gt(BIG_INT_YEAR)) {
+        const numYears = term.div(BIG_INT_YEAR);
+        const paymentSchedule = new BigInt[numYears.toI32()];
+
+        for (let i :BigInt = BIG_INT_ZERO ; i.lt(numYears); i = i.plus(BIG_INT_ONE)) {
+            const j = i.plus(BIG_INT_ONE);
+            paymentSchedule[i] = j.times(BIG_INT_YEAR);
+        }
+
+        return paymentSchedule;
+    } else if (term.gt(BIG_INT_ZERO)) {
+        const paymentSchedule = new BigInt[1];
+        paymentSchedule[0] = term;
+
+        return paymentSchedule;
     }
 }
 
@@ -105,6 +137,25 @@ export function packAddresses(party0: Address, party1: Address): Bytes {
     encodedParams.set(_party1, 44)
 
     let hash = crypto.keccak256(encodedParams)
+    let packedHash = Bytes.fromByteArray(hash)
+
+    return packedHash
+}
+
+export function timeslotPosition(year: BigInt, month: BigInt, day: BigInt): Bytes {    
+    let yearParam = ethereum.Value.fromUnsignedBigInt(year);
+    let monthParam = ethereum.Value.fromUnsignedBigInt(month);
+    let dayParam = ethereum.Value.fromUnsignedBigInt(day);
+  
+    let token: Array<ethereum.Value> = [
+        yearParam,
+        monthParam,
+        dayParam
+    ];
+    
+    let encoded = ethereum.encode(ethereum.Value.fromTuple(changetype<ethereum.Tuple>(token)))!;
+
+    let hash = crypto.keccak256(encoded)
     let packedHash = Bytes.fromByteArray(hash)
 
     return packedHash

@@ -26,7 +26,7 @@ type Loan @entity {
 type LoanSchedule @entity {
   id: ID!
 
-  payments: [SchedulePayment!]! @derivedFrom(field: "schedule")
+  payments: [SchedulePayment!] @derivedFrom(field: "schedule")
   loan: Loan!
 }
 
@@ -77,10 +77,10 @@ type User @entity {
   updatedAt: BigInt!
 
   # collateral: Collateral! @derivedFrom(field: "user")
-  loans: [Loan!]! @derivedFrom(field: "lenderUser")
+  loans: [Loan!] @derivedFrom(field: "lenderUser")
   borrows: [Loan!] @derivedFrom(field: "borrowUser")
 
-  closedLoans: [Loan!]! @derivedFrom(field: "lenderUser")
+  closedLoans: [Loan!] @derivedFrom(field: "lenderUser")
   closedBorrows: [Loan!] @derivedFrom(field: "borrowUser")
 
   openOrders: [LendingMarketOrder!] @derivedFrom(field: "makerUser")
@@ -143,10 +143,7 @@ type LendingMarket @entity {
   lendOrderbook: [LendingMarketOrderRow!] @derivedFrom(field: "lendMarket")
   borrowOrderbook: [LendingMarketOrderRow!] @derivedFrom(field: "borrowMarket")
 
-  lendOrders: [LendingMarketOrder!] @derivedFrom(field: "lendingMarket")
-  borrowOrders: [LendingMarketOrder!] @derivedFrom(field: "borrowingMarket")
-  canceledOrders: [LendingMarketOrder!] @derivedFrom(field: "cancelMarket")
-
+  orders: [LendingMarketOrder!] @derivedFrom(field: "lendingMarket")
   tradeHistory: [FilledLendingMarketOrder!] @derivedFrom(field: "market")
 }
 
@@ -169,21 +166,24 @@ type LendingMarketOrderRow @entity {
   createdAtBlockNumber: BigInt!
 }
 
+enum OrderState {
+  ACTIVE
+  CANCELED
+}
+
 type LendingMarketOrder @entity {
   id: ID!
   orderId: BigInt!
-  currencyIdentifier: Bytes!
+  currencyName: String!
   currency: Currency!
   side: Int!
   row: LendingMarketOrderRow
   marketAddr: Bytes!
   lendingMarket: LendingMarket
-  borrowingMarket: LendingMarket
-  cancelMarket: LendingMarket
+  orderState: OrderState!
   term: BigInt!
   rate: BigInt!
   amount: BigInt!
-  deadline: BigInt!
   maker: Bytes!
   makerUser: User!
 
@@ -199,7 +199,7 @@ type LendingMarketOrder @entity {
 type FilledLendingMarketOrder @entity {
   id: ID!
   orderId: BigInt!
-  currencyIdentifier: Bytes!
+  currencyName: String!
   currency: Currency!
   side: Int!
   market: LendingMarket!
@@ -223,8 +223,8 @@ type Term @entity {
   dfFrac: BigInt!
   paymentNum: BigInt!
 
-  products: [Product!]! @derivedFrom(field: "terms")
-  currencies: [Currency!]! @derivedFrom(field: "terms")
+  products: [Product!] @derivedFrom(field: "terms")
+  currencies: [Currency!] @derivedFrom(field: "terms")
 }
 
 type Product @entity {
@@ -232,7 +232,7 @@ type Product @entity {
   prefix: Bytes!
   productImplementation: Bytes!
   productController: Bytes!
-  terms: [Term!]!
+  terms: [Term!] @derivedFrom(field: "products")
 }
 
 type Currency @entity {
@@ -240,12 +240,12 @@ type Currency @entity {
   identifier: Bytes!
   name: String!
   shortName: String!
-  chainID: Int!
+  chainId: Int!
   ltv: BigInt!
   minMargin: BigInt!
   isSupported: Boolean!
   isCollateral: Boolean!
-  terms: [Term!]!
+  terms: [Term!] @derivedFrom(field: "currencies")
 
   priceFeed: PriceFeed! @derivedFrom(field: "currency")
 }
@@ -413,7 +413,7 @@ type CrosschainAddress @entity {
   id: ID!
   ethAddress: Bytes!
   user: User!
-  chainID: BigInt!
+  chainId: BigInt!
   address: String!
 }
 

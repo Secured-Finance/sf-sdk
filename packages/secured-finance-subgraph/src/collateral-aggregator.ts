@@ -1,4 +1,4 @@
-import { BigInt, Bytes } from "@graphprotocol/graph-ts"
+import { BigInt, Bytes, log } from "@graphprotocol/graph-ts"
 import { CollateralUserContract} from "../generated/schema"
 import { CollateralVault as CollateralVaultTemplate } from '../generated/templates'
 import {
@@ -170,7 +170,15 @@ export function handleCollateralUnsettledRelease(event: ReleaseUnsettled): void 
 
         if (ccyPosition) {
             ccyPosition.unsettledPV = ccyPosition.unsettledPV.minus(event.params.amount)
-            ccyPosition.save()
+
+            if (ccyPosition.unsettledPV.lt(BIG_INT_ZERO)) {
+                log.error(
+                    `CollateralPositionCurrencyState unsettledPV subtraction underflow: unsettledPV is {}`,
+                    [ccyPosition.unsettledPV.toString()]
+                )
+            } else {
+                ccyPosition.save()
+            }
         }
     }
 }
@@ -237,6 +245,7 @@ export function handleCollateralPositionRelease(event: Release): void {
     if (position) {
         let netting = getCollateralNetting(event.params.partyA, event.params.partyB, event.params.ccy)
         let flipped = isFlippedAddresses(event.params.partyA, event.params.partyB)
+        var isErrored: boolean = false
 
         if (netting) {
             let amount0: BigInt
@@ -254,26 +263,62 @@ export function handleCollateralPositionRelease(event: Release): void {
             if (amount0.gt(BIG_INT_ZERO)) {
                 if (isSettled) {
                     netting.party0PV = netting.party0PV.minus(amount0)
+
+                    if (netting.party0PV.lt(BIG_INT_ZERO)) {
+                        log.error(
+                            `CollateralNetting party0PV subtraction underflow: party0PV is {}`,
+                            [netting.party0PV.toString()]
+                        )
+                        isErrored = true
+                    }
+    
                 } else {
                     netting.unsettled0PV = netting.unsettled0PV.minus(amount0)
+
+                    if (netting.unsettled0PV.lt(BIG_INT_ZERO)) {
+                        log.error(
+                            `CollateralNetting unsettled0PV subtraction underflow: unsettled0PV is {}`,
+                            [netting.unsettled0PV.toString()]
+                        )
+                        isErrored = true
+                    }
                 }
             }
 
             if (amount1.gt(BIG_INT_ZERO)) {
                 if (isSettled) {
                     netting.party1PV = netting.party1PV.minus(amount1)
+
+                    if (netting.party1PV.lt(BIG_INT_ZERO)) {
+                        log.error(
+                            `CollateralNetting party1PV subtraction underflow: party1PV is {}`,
+                            [netting.party1PV.toString()]
+                        )
+                        isErrored = true
+                    }
                 } else {
                     netting.unsettled1PV = netting.unsettled1PV.minus(amount1)
+
+                    if (netting.unsettled1PV.lt(BIG_INT_ZERO)) {
+                        log.error(
+                            `CollateralNetting unsettled1PV subtraction underflow: unsettled1PV is {}`,
+                            [netting.unsettled1PV.toString()]
+                        )
+                        isErrored = true
+                    }
                 }
             }
 
-            netting.save()
+            if (!isErrored) {
+                netting.save()
+            }
         }
     }
 }
 
 export function handleCollateralPositionSettle(event: SettleCollateral): void {
     const position = getCollateralBilateralPosition(event.params.partyA, event.params.partyB)
+    var isErrored: boolean = false;
 
     if (position) {
         let netting = getCollateralNetting(event.params.partyA, event.params.partyB, event.params.ccy)
@@ -293,14 +338,34 @@ export function handleCollateralPositionSettle(event: SettleCollateral): void {
 
             if (amount0.gt(BIG_INT_ZERO)) {
                 netting.unsettled0PV = netting.unsettled0PV.minus(amount0);
+
+                if (netting.unsettled0PV.lt(BIG_INT_ZERO)) {
+                    log.error(
+                        `CollateralNetting unsettled0PV subtraction underflow: unsettled0PV is {}`,
+                        [netting.unsettled0PV.toString()]
+                    )
+                    isErrored = true
+                }
+
                 netting.party0PV = netting.party0PV.plus(amount0);
             }
             if (amount1.gt(BIG_INT_ZERO)) {
                 netting.unsettled1PV = netting.unsettled1PV.minus(amount1);
+
+                if (netting.unsettled1PV.lt(BIG_INT_ZERO)) {
+                    log.error(
+                        `CollateralNetting unsettled1PV subtraction underflow: unsettled1PV is {}`,
+                        [netting.unsettled1PV.toString()]
+                    )
+                    isErrored = true
+                }
+
                 netting.party1PV = netting.party1PV.plus(amount1);
             }
 
-            netting.save()
+            if (!isErrored) {
+                netting.save()
+            }
         }
     }
 }
@@ -317,6 +382,7 @@ export function handleCollateralPositionUpdatePV(event: UpdatePV): void {
             let currentPV1: BigInt
             let prevPV0: BigInt
             let prevPV1: BigInt
+            let isErrored: boolean = false
 
             if (flipped) {
                 currentPV0 = event.params.currentPV1
@@ -332,12 +398,30 @@ export function handleCollateralPositionUpdatePV(event: UpdatePV): void {
 
             if (currentPV0.gt(BIG_INT_ZERO)) {
                 netting.party0PV = netting.party0PV.minus(prevPV0).plus(currentPV0);
+
+                if (netting.party0PV.lt(BIG_INT_ZERO)) {
+                    log.error(
+                        `CollateralNetting party0PV subtraction underflow: party0PV is {}`,
+                        [netting.party0PV.toString()]
+                    )
+                    isErrored = true
+                }
             }
             if (currentPV1.gt(BIG_INT_ZERO)) {
                 netting.party1PV = netting.party1PV.minus(prevPV1).plus(currentPV1);
+
+                if (netting.party1PV.lt(BIG_INT_ZERO)) {
+                    log.error(
+                        `CollateralNetting party1PV subtraction underflow: party1PV is {}`,
+                        [netting.party1PV.toString()]
+                    )
+                    isErrored = true
+                }
             }
 
-            netting.save()
+            if (!isErrored) {
+                netting.save()
+            }
         }
     }
 }

@@ -35,6 +35,11 @@ export const BIG_INT_THREE = BigInt.fromI32(3)
 export const BIG_INT_FOUR = BigInt.fromI32(4)
 export const BIG_INT_FIVE = BigInt.fromI32(5)
 
+export const BIG_INT_YEAR = BigInt.fromI32(365)
+export const BIG_INT_MONTH = BigInt.fromI32(30)
+export const BIG_INT_QUARTER = BigInt.fromI32(90)
+export const BIG_INT_HALF_YEAR = BigInt.fromI32(180)
+
 export const BIG_INT_PERCENT_BASE = BigInt.fromI32(10000)
 export const BIG_INT_AUTO_LIQUIDATION_LEVEL = BigInt.fromI32(12500)
 export const BIG_INT_MARGIN_CALL_LEVEL = BigInt.fromI32(15000)
@@ -56,6 +61,10 @@ export const USDC_CCY_IDENTIFIER = ''
 
 export const TUPLE_PREFIX = ByteArray.fromHexString(
     '0x0000000000000000000000000000000000000000000000000000000000000020'
+);
+
+export const EMPTY_BYTES32_PREFIX = ByteArray.fromHexString(
+    '0x0000000000000000000000000000000000000000000000000000000000000000'
 );
 
 export const ZERO_BYTES = Bytes.empty()

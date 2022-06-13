@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
 description: Secured Finance is decentralized P2P banking business for digital assets
 repository: https://github.com/secured-finance/secured-finance-subgraph
 schema:

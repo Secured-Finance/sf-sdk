@@ -1,4 +1,4 @@
-import { Address, BigInt, Bytes, log } from "@graphprotocol/graph-ts"
+import { Address } from "@graphprotocol/graph-ts"
 import { LendingMarketCreated } from "../generated/LendingMarketController/LendingMarketController"
 import { LendingMarket, LendingMarketController } from "../generated/schema"
 import { LendingMarket as LendingMarketTemplate } from '../generated/templates'
@@ -45,6 +45,7 @@ export function handleNewLendingMarket(event: LendingMarketCreated): void {
     let market = new LendingMarket(event.params.marketAddr.toHexString()) as LendingMarket
     market.marketAddr = event.params.marketAddr
     market.currency = event.params.ccy.toHexString()
+    market.currencyIdentifier = event.params.ccy
     market.term = event.params.term
     market.controller = LENDING_MARKET_CONTROLLER_ADDR.toHexString()
     market.spread = BIG_INT_ZERO

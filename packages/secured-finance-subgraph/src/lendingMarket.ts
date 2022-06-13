@@ -1,7 +1,8 @@
-import { Address, BigInt, Bytes, store } from "@graphprotocol/graph-ts"
+import { Address, BigInt, Bytes, log, store } from "@graphprotocol/graph-ts"
 import { MakeOrder, TakeOrder, CancelOrder } from "../generated/templates/LendingMarket/LendingMarket"
-import { LendingMarket, LendingMarketOrderRow, LendingMarketOrder, FilledLendingMarketOrder, LendingMarketController } from "../generated/schema"
+import { LendingMarket, LendingMarketOrderRow, LendingMarketOrder, FilledLendingMarketOrder } from "../generated/schema"
 import { BIG_INT_ZERO, NULL_CALL_RESULT_STRING } from "./constants"
+import { getUser } from "./user"
 
 export function getLendingMarket(address: Address): LendingMarket {
     let lendingMarket = LendingMarket.load(address.toHex())
@@ -13,6 +14,7 @@ export function createLendingMarketOrderRow(id: string, ccy: Bytes, side: i32, m
     let marketOrder = new LendingMarketOrderRow(id)
 
     marketOrder.currency = ccy.toHexString()
+    marketOrder.currencyIdentifier = ccy
     marketOrder.side = side
     marketOrder.marketAddr = market
     if (side == 0) {
@@ -54,32 +56,27 @@ export function getLendingMarketOrder(id: string, orderId: BigInt, market: Bytes
 
 export function createLendingMarketOrder(id: string, orderId: BigInt, market: Bytes, ccy: Bytes, side: i32, term: BigInt, rate: BigInt, amount: BigInt, makerAddr: Address, time: BigInt, blockNumber: BigInt): LendingMarketOrder {
     let orderItem = new LendingMarketOrder(id)
+    const maker = getUser(makerAddr, time)
 
-    orderItem.currency = ccy.toHexString()
+    orderItem.currency = ccy.toHex()
+    orderItem.currencyName = ccy.toString()
     orderItem.orderId = orderId
     orderItem.marketAddr = market
+    orderItem.lendingMarket = market.toHex()
     orderItem.side = side
-
-    if (side == 0) {
-        orderItem.lendingMarket = market.toHex()
-        orderItem.borrowingMarket = ''
-        orderItem.cancelMarket = ''
-    } else {
-        orderItem.borrowingMarket = market.toHex()
-        orderItem.lendingMarket = ''
-        orderItem.cancelMarket = ''
-    }
-
+    orderItem.row = ""
     orderItem.term = term
     orderItem.rate = rate
     orderItem.amount = amount
     orderItem.maker = makerAddr
-    orderItem.makerUser = makerAddr.toHex()
-
+    orderItem.makerUser = maker.id
     orderItem.createdAtTimestamp = time
+    orderItem.orderState = 'ACTIVE'
     orderItem.createdAtBlockNumber = blockNumber
     orderItem.updatedAtTimestamp = BIG_INT_ZERO
     orderItem.updatedAtBlockNumber = BIG_INT_ZERO
+  
+    maker.save()
 
     return orderItem as LendingMarketOrder
 }
@@ -146,21 +143,26 @@ export function handleTakeLendingOrder(event: TakeOrder): void {
             orderItem.amount = orderItem.amount.minus(event.params.amount)
             lendingMarket.totalAvailableLiquidity = lendingMarket.totalAvailableLiquidity.minus(event.params.amount)
 
-            let filledId = event.params.orderId.toString().concat("-").concat(event.params.amount.toString())
+            let filledId = lendingMarket.marketAddr.toHexString().concat('-').concat(event.params.orderId.toString().concat("-").concat(event.params.amount.toString()))
 
             let filledOrder = new FilledLendingMarketOrder(filledId)
             filledOrder.orderId = event.params.orderId
             filledOrder.marketAddr = lendingMarket.marketAddr
             filledOrder.amount = event.params.amount
             filledOrder.currency = orderItem.currency
+            filledOrder.currencyName = orderItem.currencyName
             filledOrder.side = event.params.side
             filledOrder.term = orderItem.term
             filledOrder.rate = event.params.rate
 
+            const taker = getUser(event.params.taker, event.block.timestamp)
+
             filledOrder.taker = event.params.taker
-            filledOrder.takerUser = event.params.taker.toHex()
+            filledOrder.takerUser = taker.id
             filledOrder.maker = orderItem.maker
             filledOrder.makerUser = orderItem.makerUser
+
+            taker.save()
 
             filledOrder.market = lendingMarket.marketAddr.toHex()
 
@@ -170,7 +172,7 @@ export function handleTakeLendingOrder(event: TakeOrder): void {
             orderItem.updatedAtTimestamp = event.block.timestamp
             orderItem.updatedAtBlockNumber = event.block.number
 
-            let rowId = orderItem.currency.toString().concat('-').concat(BigInt.fromI32(event.params.side).toString()).concat('-').concat(orderItem.term.toString()).concat('-').concat(event.params.rate.toString())
+            let rowId = orderItem.currencyName.toString().concat('-').concat(BigInt.fromI32(event.params.side).toString()).concat('-').concat(orderItem.term.toString()).concat('-').concat(event.params.rate.toString())
             
             let marketOrderRow = LendingMarketOrderRow.load(rowId)
 
@@ -202,12 +204,9 @@ export function handleCancelLendingOrder(event: CancelOrder): void {
         let orderItem = LendingMarketOrder.load(orderId)
 
         if (orderItem) {
-            orderItem.cancelMarket = lendingMarket.marketAddr.toHex()
-            orderItem.lendingMarket = NULL_CALL_RESULT_STRING
-            orderItem.borrowingMarket = NULL_CALL_RESULT_STRING
+            orderItem.orderState = 'CANCELED'
+            let rowId = orderItem.currencyName.concat('-').concat(BigInt.fromI32(event.params.side).toString()).concat('-').concat(orderItem.term.toString()).concat('-').concat(event.params.rate.toString())
 
-            let rowId = orderItem.currency.toString().concat('-').concat(BigInt.fromI32(event.params.side).toString()).concat('-').concat(orderItem.term.toString()).concat('-').concat(event.params.rate.toString())
-            
             let marketOrderRow = LendingMarketOrderRow.load(rowId)
 
             if (marketOrderRow) {

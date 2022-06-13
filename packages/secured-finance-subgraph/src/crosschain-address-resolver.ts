@@ -1,27 +1,29 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts"
 import { CrosschainAddress } from "../generated/schema"
 import { UpdateAddress } from '../generated/CrosschainAddressResolver/CrosschainAddressResolver'
+import { ZERO_BYTES } from "./constants"
 
-function createCrosschainAddress(ethAddress: Address, chainID: BigInt): CrosschainAddress {
-    const id = ethAddress.toHexString() + '-' + chainID.toString()
+function createCrosschainAddress(ethAddress: Address, chainId: BigInt): CrosschainAddress {
+    const id = ethAddress.toHexString() + '-' + chainId.toString()
     const crosschainAddress = new CrosschainAddress(id)
 
     if (crosschainAddress) {
         crosschainAddress.ethAddress = ethAddress
         crosschainAddress.user = ethAddress.toHex()
-        crosschainAddress.chainID = chainID
+        crosschainAddress.chainId = chainId
+        crosschainAddress.address = ''
         crosschainAddress.save()
     }
-
+  
     return crosschainAddress as CrosschainAddress
 }
 
-export function getCrosschainAddress(ethAddress: Address, chainID: BigInt): CrosschainAddress | null {
-    const id = ethAddress.toHexString() + '-' + chainID.toString()
+export function getCrosschainAddress(ethAddress: Address, chainId: BigInt): CrosschainAddress | null {
+    const id = ethAddress.toHexString() + '-' + chainId.toString()
     let crosschainAddress = CrosschainAddress.load(id)
 
     if (!crosschainAddress) {
-        crosschainAddress = createCrosschainAddress(ethAddress, chainID)
+        crosschainAddress = createCrosschainAddress(ethAddress, chainId)
     }
 
     return crosschainAddress as CrosschainAddress
