@@ -1,5 +1,6 @@
 import { CrosschainSettlementRequest } from "../generated/schema"
 import { CrosschainSettlementRequested, CrosschainSettlementRequestFulfilled } from '../generated/SettlementEngine/SettlementEngine'
+import { BIG_INT_ZERO, ZERO_BYTES } from "./constants"
 
 function createSettlementRequest(txHash: string): CrosschainSettlementRequest {
     const settlementRequest = new CrosschainSettlementRequest(txHash)
@@ -27,15 +28,20 @@ export function handleCrosschainSettlementRequest(event: CrosschainSettlementReq
 
     if (settlementRequest) {
         settlementRequest.payer = event.params.payer
+        settlementRequest.crosschainPayerAddress = ''
         settlementRequest.payerUser = event.params.payer.toHex()
         settlementRequest.receiver = event.params.receiver
         settlementRequest.receiverUser = event.params.receiver.toHex()
+        settlementRequest.crosschainReceiverAddress = ''
         settlementRequest.chainId = event.params.chainId
         settlementRequest.createdAt = event.block.timestamp
+        settlementRequest.settledAt = BIG_INT_ZERO
+        settlementRequest.amount = BIG_INT_ZERO
         settlementRequest.timestamp = event.params.timestamp
         settlementRequest.txHash = event.params.txHash
         settlementRequest.requestId = event.params.requestId
-    
+        settlementRequest.settlementId = ZERO_BYTES
+
         settlementRequest.save()
     }
 }

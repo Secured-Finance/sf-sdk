@@ -1,6 +1,7 @@
 import { Bytes } from "@graphprotocol/graph-ts"
 import { Product } from "../generated/schema"
 import { RegisterProduct } from '../generated/ProductAddressResolver/ProductAddressResolver'
+import { ZERO_BYTES } from "./constants"
 
 function createProduct(prefix: Bytes): Product {
     const id = prefix.toHexString()
@@ -8,6 +9,9 @@ function createProduct(prefix: Bytes): Product {
 
     if (product) {
         product.prefix = prefix
+        product.productImplementation = ZERO_BYTES
+        product.productController = ZERO_BYTES
+        product.terms = []
         product.save()
     }
 

@@ -25,5 +25,7 @@ jobs:
         run: npm run lint
       - name: Format Code
         run: npm run format
+      - name: Generate artifacts
+        run: npm run codegen
       - name: Execute Test
         run: npm run test-all

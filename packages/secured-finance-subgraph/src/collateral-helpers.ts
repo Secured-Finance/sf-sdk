@@ -1,6 +1,6 @@
-import { Address, Bytes } from "@graphprotocol/graph-ts"
+import { Address, BigInt, Bytes } from "@graphprotocol/graph-ts"
 import { BilateralPosition, CollateralAggregator, CollateralBook, CollateralNetting, CollateralPosition, CollateralPositionCurrencyState, CollateralVault, CollateralVaultPosition } from "../generated/schema"
-import { COLLATERAL_AGGREGATOR_ADDR } from "./constants"
+import { BIG_INT_ZERO, COLLATERAL_AGGREGATOR_ADDR, ZERO_BYTES } from "./constants"
 import { isFlippedAddresses, packAddresses } from "./helpers"
 
 function createCollateralAggregator(address: Address): CollateralAggregator {
@@ -8,6 +8,10 @@ function createCollateralAggregator(address: Address): CollateralAggregator {
 
     if (aggregator) {
         aggregator.address = address
+        aggregator.liquidationPrice = BigInt.fromI32(12000)
+        aggregator.marginCall = BigInt.fromI32(15000)
+        aggregator.autoLiquidation = BigInt.fromI32(12500)
+        aggregator.minCollateralRequirements = BigInt.fromI32(2500)
         aggregator.save()
     }
   
@@ -26,9 +30,11 @@ export function getCollateralAggregator(address: Address): CollateralAggregator 
 
 function createCollateralPosition(address: Address): CollateralPosition {
     const position = new CollateralPosition(address.toHexString())
-
+  
     if (position) {
         position.address = address
+        position.isRegistered = false
+        position.user = address.toHex()
         position.aggregator = COLLATERAL_AGGREGATOR_ADDR.toHexString()
         position.save()
     }
@@ -59,6 +65,7 @@ function createCollateralPositionCurrencyState(
         ccyPosition.currencyIdentifier = ccy
         ccyPosition.user = address.toHexString()
         ccyPosition.position = address.toHexString()
+        ccyPosition.unsettledPV = BIG_INT_ZERO
         ccyPosition.aggregator = COLLATERAL_AGGREGATOR_ADDR.toHexString()
         ccyPosition.save()
     }
@@ -129,11 +136,19 @@ function createCollateralNetting(
     const netting = new CollateralNetting(id)
 
     if (netting) {
+        netting.address0 = ZERO_BYTES
+        netting.address1 = ZERO_BYTES
+        netting.addresses = ''
         netting.packedAddresses = packedAddr
         netting.aggregator = COLLATERAL_AGGREGATOR_ADDR.toHexString()
         netting.bilateralPosition = packedAddr.toHexString()
         netting.currencyIdentifier = ccy
         netting.currency = ccy.toHexString()
+        netting.unsettled0PV = BIG_INT_ZERO
+        netting.unsettled1PV = BIG_INT_ZERO
+        netting.party0PV = BIG_INT_ZERO
+        netting.party1PV = BIG_INT_ZERO
+        netting.netPV = BIG_INT_ZERO
         netting.save()
     }
 
@@ -163,7 +178,7 @@ function createCollateralBook(
 ): CollateralBook {
     const id = address.toHexString() + '-' + vault.toHexString() + '-' + ccy.toHexString()
     const book = new CollateralBook(id)
-
+  
     if (book) {
         book.address = address
         book.user = address.toHexString()
@@ -171,6 +186,8 @@ function createCollateralBook(
         book.isDefaulted = false
         book.currency = ccy.toHexString()
         book.currencyIdentifier = ccy
+        book.independentCollateral = BIG_INT_ZERO
+        book.lockedCollateral = BIG_INT_ZERO
         book.save()
     }
 
@@ -218,6 +235,9 @@ function createCollateralVaultPosition(
         vaultPosition.packedAddresses = packedAddr
         vaultPosition.currencyIdentifier = ccy
         vaultPosition.currency = ccy.toHexString()
+        vaultPosition.lockedCollateral0 = BIG_INT_ZERO
+        vaultPosition.lockedCollateral1 = BIG_INT_ZERO
+        
         vaultPosition.save()
     }
 
@@ -246,6 +266,12 @@ function createCollateralVault(vault: Address): CollateralVault {
 
     if (vaultEntity) {
         vaultEntity.address = vault
+        vaultEntity.currency = ''
+        vaultEntity.currencyIdentifier = ZERO_BYTES
+        vaultEntity.tokenAddress = ZERO_BYTES
+        vaultEntity.aggregator = ''
+        vaultEntity.isSupported = true
+      
         vaultEntity.save()
     }
 

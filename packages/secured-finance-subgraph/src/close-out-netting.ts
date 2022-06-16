@@ -1,13 +1,23 @@
-import { BigInt, Bytes } from "@graphprotocol/graph-ts"
+import { BigInt, Bytes, log } from "@graphprotocol/graph-ts"
 import { CloseOutNetting } from "../generated/schema"
 import { AddCloseOutPayments, RemoveCloseOutPayments } from '../generated/CloseOutNetting/CloseOutNetting'
 import { isFlippedAddresses, packAddresses } from "./helpers"
-import { ZERO_BYTES } from "./constants"
+import { BIG_INT_ZERO, ZERO_BYTES } from "./constants"
 
 function createCloseOutNetting(id: string): CloseOutNetting {
     const closeOut = new CloseOutNetting(id)
 
     if (closeOut) {
+        const packedAddresses = id.split('0')[0];
+        closeOut.packedAddresses = Bytes.fromHexString(packedAddresses);
+        closeOut.address0 = ZERO_BYTES
+        closeOut.address1 = ZERO_BYTES
+        closeOut.currency = ''
+        closeOut.addresses = ''
+        closeOut.aggregatedPayment0 = BIG_INT_ZERO
+        closeOut.aggregatedPayment1 = BIG_INT_ZERO
+        closeOut.netPayment = BIG_INT_ZERO
+        closeOut.flipped = false      
         closeOut.save()
     }
   
@@ -56,7 +66,7 @@ export function handleCloseOutPaymentIncrease(event: AddCloseOutPayments): void 
             payment1 = event.params.payment1
         }
 
-        if (closeOut.packedAddresses == ZERO_BYTES) {
+        if (closeOut.address0 == ZERO_BYTES || closeOut.address1 == ZERO_BYTES) {
             closeOut.address0 = address0
             closeOut.address1 = address1
             closeOut.addresses = addresses
@@ -109,22 +119,31 @@ export function handleCloseOutPaymentDecrease(event: RemoveCloseOutPayments): vo
         closeOut.aggregatedPayment0 = closeOut.aggregatedPayment0.minus(payment0)
         closeOut.aggregatedPayment1 = closeOut.aggregatedPayment1.minus(payment1)
 
-        let paymentDelta = payment0.gt(payment1)  ? payment0.minus(payment1) : payment1.minus(payment0)
-        let substraction: boolean
-
-        if (closeOut.flipped) {
-            substraction = payment0.ge(payment1) ? false : true
+        if (closeOut.aggregatedPayment0.ge(BIG_INT_ZERO) && closeOut.aggregatedPayment1.ge(BIG_INT_ZERO)) {
+            let paymentDelta = payment0.gt(payment1) ? payment0.minus(payment1) : payment1.minus(payment0)
+            let subtraction: boolean
+    
+            if (closeOut.flipped) {
+                subtraction = payment0.ge(payment1) ? false : true
+            } else {
+                subtraction = payment0.ge(payment1) ? true : false
+            }
+        
+            if (paymentDelta.ge(closeOut.netPayment) && subtraction) {
+                closeOut.netPayment = paymentDelta.minus(closeOut.netPayment)
+                closeOut.flipped = !closeOut.flipped
+            } else {
+                closeOut.netPayment = subtraction ? closeOut.netPayment.minus(paymentDelta) : closeOut.netPayment.plus(paymentDelta)
+            }
+    
+            closeOut.save()    
         } else {
-            substraction = payment0.ge(payment1) ? true : false
+            log.error(`CloseOutNetting payments subtraction underflow: aggregatedPayment0 is {} aggregatedPayment1 is {}`,
+                [
+                    closeOut.aggregatedPayment0.toString(),
+                    closeOut.aggregatedPayment1.toString()
+                ]
+            )
         }
-
-        if (paymentDelta.ge(closeOut.netPayment) && substraction) {
-            closeOut.netPayment = paymentDelta.minus(closeOut.netPayment)
-            closeOut.flipped = !closeOut.flipped
-        } else {
-            closeOut.netPayment = substraction ? closeOut.netPayment.minus(paymentDelta) : closeOut.netPayment.plus(paymentDelta)
-        }
-
-        closeOut.save()
     }
 }
