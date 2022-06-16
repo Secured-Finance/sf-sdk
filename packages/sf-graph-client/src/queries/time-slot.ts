@@ -6,19 +6,16 @@ export const TIME_SLOTS = gql`
             id
             address0
             address1
+            addresses
             totalPayment0
             totalPayment1
             netPayment
+            paidAmount
             year
             month
             day
             position
             flipped
-            paymentProof
-            verificationParty
-            verificationTimestamp
-            settlementParty
-            settlementTimestamp
             isSettled
             currency {
                 shortName
@@ -34,19 +31,16 @@ export const TIME_SLOT = gql`
             id
             address0
             address1
+            addresses
             totalPayment0
             totalPayment1
             netPayment
+            paidAmount
             year
             month
             day
             position
             flipped
-            paymentProof
-            verificationParty
-            verificationTimestamp
-            settlementParty
-            settlementTimestamp
             isSettled
             currency {
                 shortName

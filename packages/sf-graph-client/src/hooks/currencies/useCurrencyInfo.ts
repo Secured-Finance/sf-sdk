@@ -1,19 +1,20 @@
 import { useQuery } from '@apollo/client';
-import { Currency, Query } from '../../generated';
-import { CURRENCY } from '../../queries';
+import { CurrencyDocument, CurrencyQuery } from '../../../.graphclient';
+import { client } from '../../client';
 import { generateCurrencyId, QueryResult } from '../../utils';
 
 export const useCurrencyInfo = (
     ccyShortName: string
-): QueryResult<Currency> => {
+): QueryResult<CurrencyQuery> => {
     const currencyId = generateCurrencyId(ccyShortName);
 
     const variables = {
         currency: currencyId,
     };
 
-    const { error, data } = useQuery<Query>(CURRENCY, {
+    const { error, data } = useQuery<CurrencyQuery>(CurrencyDocument, {
         variables: variables,
+        client: client,
     });
 
     if (error) {
@@ -27,7 +28,7 @@ export const useCurrencyInfo = (
 
     if (data?.currency) {
         return {
-            data: data.currency,
+            data: data,
             error: null,
         };
     } else {

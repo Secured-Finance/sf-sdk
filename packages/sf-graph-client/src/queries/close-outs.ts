@@ -9,6 +9,7 @@ export const CLOSE_OUT_NETTINGS = gql`
             id
             address0
             address1
+            addresses
             packedAddresses
             aggregatedPayment0
             aggregatedPayment1
@@ -28,6 +29,7 @@ export const CLOSE_OUT_NETTING = gql`
             id
             address0
             address1
+            addresses
             packedAddresses
             aggregatedPayment0
             aggregatedPayment1

@@ -1,15 +1,16 @@
 import { useQuery } from '@apollo/client';
-import { Product, Query } from '../../generated';
-import { PRODUCTS } from '../../queries';
+import { ProductsDocument, ProductsQuery } from '../../../.graphclient';
+import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
-export const useProducts = (skip: number = 0): QueryResult<Array<Product>> => {
+export const useProducts = (skip: number = 0): QueryResult<ProductsQuery> => {
     const variables = {
         skip: skip,
     };
 
-    const { error, data } = useQuery<Query>(PRODUCTS, {
+    const { error, data } = useQuery<ProductsQuery>(ProductsDocument, {
         variables: variables,
+        client: client,
     });
 
     if (error) {
@@ -23,7 +24,7 @@ export const useProducts = (skip: number = 0): QueryResult<Array<Product>> => {
 
     if (data?.products) {
         return {
-            data: data.products,
+            data: data,
             error: null,
         };
     } else {

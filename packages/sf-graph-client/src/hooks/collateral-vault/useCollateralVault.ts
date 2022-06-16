@@ -1,18 +1,25 @@
 import { useQuery } from '@apollo/client';
-import { CollateralVault, Query } from '../../generated';
-import { COLLATERAL_VAULT } from '../../queries';
+import {
+    CollateralVaultDocument,
+    CollateralVaultQuery,
+} from '../../../.graphclient';
+import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
 export const useCollateralVault = (
     vault: string
-): QueryResult<CollateralVault> => {
+): QueryResult<CollateralVaultQuery> => {
     const variables = {
         vaultId: vault.toLowerCase(),
     };
 
-    const { error, data } = useQuery<Query>(COLLATERAL_VAULT, {
-        variables: variables,
-    });
+    const { error, data } = useQuery<CollateralVaultQuery>(
+        CollateralVaultDocument,
+        {
+            variables: variables,
+            client: client,
+        }
+    );
 
     if (error) {
         console.error(error);
@@ -25,7 +32,7 @@ export const useCollateralVault = (
 
     if (data?.collateralVault) {
         return {
-            data: data.collateralVault,
+            data: data,
             error: null,
         };
     } else {

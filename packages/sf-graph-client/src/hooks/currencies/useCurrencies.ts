@@ -1,17 +1,18 @@
 import { useQuery } from '@apollo/client';
-import { Currency, Query } from '../../generated';
-import { CURRENCIES } from '../../queries';
+import { CurrenciesDocument, CurrenciesQuery } from '../../../.graphclient';
+import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
 export const useCurrencies = (
     skip: number = 0
-): QueryResult<Array<Currency>> => {
+): QueryResult<CurrenciesQuery> => {
     const variables = {
         skip: skip,
     };
 
-    const { error, data } = useQuery<Query>(CURRENCIES, {
+    const { error, data } = useQuery<CurrenciesQuery>(CurrenciesDocument, {
         variables: variables,
+        client: client,
     });
 
     if (error) {
@@ -25,7 +26,7 @@ export const useCurrencies = (
 
     if (data?.currencies) {
         return {
-            data: data.currencies,
+            data: data,
             error: null,
         };
     } else {

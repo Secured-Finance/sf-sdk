@@ -1,18 +1,25 @@
 import { useQuery } from '@apollo/client';
-import { BilateralPosition, Query } from '../../generated';
-import { BILATERAL_POSITIONS } from '../../queries';
+import {
+    BilateralPositionsDocument,
+    BilateralPositionsQuery,
+} from '../../../.graphclient';
+import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
 export const useBilateralPosition = (
     user: string
-): QueryResult<Array<BilateralPosition>> => {
+): QueryResult<BilateralPositionsQuery> => {
     const variables = {
         address: user.toLowerCase(),
     };
 
-    const { error, data } = useQuery<Query>(BILATERAL_POSITIONS, {
-        variables: variables,
-    });
+    const { error, data } = useQuery<BilateralPositionsQuery>(
+        BilateralPositionsDocument,
+        {
+            variables: variables,
+            client: client,
+        }
+    );
 
     if (error) {
         console.error(error);
@@ -25,7 +32,7 @@ export const useBilateralPosition = (
 
     if (data?.bilateralPositions) {
         return {
-            data: data.bilateralPositions,
+            data: data,
             error: null,
         };
     } else {

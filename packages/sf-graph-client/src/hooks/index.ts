@@ -9,6 +9,7 @@ export {
     useBilateralPositionsFromVault,
     useCollateralBookFromVault,
     useCollateralVault,
+    useCollateralVaults,
 } from './collateral-vault';
 export {
     useCrosschainAddressById,
@@ -19,6 +20,7 @@ export {
     useBorrowOrderbook,
     useBorrowOrderbookQuery,
     useLendingMarketInfo,
+    useLendingMarkets,
     useLendingTradingHistory,
     useLendOrderbook,
     useLendOrderbookQuery,
