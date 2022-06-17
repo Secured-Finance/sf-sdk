@@ -32,7 +32,7 @@ export const useLendingTradingHistory = (
         };
     }
 
-    if (data?.lendingMarket.tradeHistory) {
+    if (data?.lendingMarket?.tradeHistory) {
         return {
             data: data,
             error: null,

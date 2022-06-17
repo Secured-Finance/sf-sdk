@@ -6,7 +6,7 @@ export const CROSSCHAIN_ADDRESSES_BY_USER = gql`
             id
             address
             ethAddress
-            chainID
+            chainId
         }
     }
 `;
@@ -17,7 +17,7 @@ export const CROSSCHAIN_ADDRESS_BY_ID = gql`
             id
             address
             ethAddress
-            chainID
+            chainId
         }
     }
 `;

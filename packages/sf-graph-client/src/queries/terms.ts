@@ -27,7 +27,7 @@ export const TERM = gql`
                 identifier
                 name
                 shortName
-                chainID
+                chainId
                 ltv
                 minMargin
                 isSupported

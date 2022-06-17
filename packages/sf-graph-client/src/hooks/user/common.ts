@@ -23,7 +23,7 @@ type FilledLendingMarketOrderLocal = Maybe<
     > & {
         currency: Pick<
             Currency,
-            'identifier' | 'shortName' | 'name' | 'chainID'
+            'identifier' | 'shortName' | 'name' | 'chainId'
         >;
     }
 >;

@@ -60,8 +60,8 @@ describe('useOpenLoans hook test', () => {
 });
 
 describe('useOpenOrders hook test', () => {
-    const user = '0xf5afe18ce2556c8709753883d9ba77b02e37400f';
-    const market = '0x412e5fd69305a0b5dfe949fbfe2464958f6bcfe3';
+    const user = '0x57ab42d4fa756b6956b0caf986a5f53ba90d9e28';
+    const market = '0xf53d59b639cdd9a9e949986e6960f0db04a94ebe';
 
     it('Should get all open orders for a user from a subgraph', async () => {
         const { result } = renderHook(() => useOpenOrders(user, market));

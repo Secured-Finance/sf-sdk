@@ -37,7 +37,7 @@ export const useUsersTradingHistory = (
         };
     }
 
-    if (data?.user.madeOrders && data?.user.takenOrders) {
+    if (data?.user?.madeOrders && data?.user?.takenOrders) {
         return {
             data: data,
             error: null,

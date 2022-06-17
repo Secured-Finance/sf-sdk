@@ -1,8 +1,9 @@
+// eslint-disable  @typescript-eslint/no-explicit-any
 import { expectType } from './types';
 
 export const validateCrosschainAddress = crosschainAddress => {
     expectType(crosschainAddress.id, 'string');
-    expectType(crosschainAddress.chainID, 'string');
+    expectType(crosschainAddress.chainId, 'string');
     expectType(crosschainAddress.ethAddress, 'string');
     expectType(crosschainAddress.address, 'string');
 };
@@ -22,7 +23,7 @@ export const validateTerm = term => {
 };
 
 export const validateCurrency = currency => {
-    expectType(currency.chainID, 'number');
+    expectType(currency.chainId, 'number');
     expectType(currency.id, 'string');
     expectType(currency.identifier, 'string');
     expectType(currency.isCollateral, 'boolean');
@@ -110,6 +111,8 @@ export const validateOrder = order => {
     expectType(order.createdAtBlockNumber, 'string');
     expectType(order.createdAtTimestamp, 'string');
     expectType(order.amount, 'string');
+    expectType(order.currencyName, 'string');
+    expectType(order.orderState, 'string');
 };
 
 export const validateCollateralVaultPosition = collateralVaultPosition => {

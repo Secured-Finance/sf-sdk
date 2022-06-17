@@ -34,7 +34,7 @@ export const useLendOrderbook = (
         };
     }
 
-    if (data?.lendingMarket.lendOrderbook) {
+    if (data?.lendingMarket?.lendOrderbook) {
         return {
             data: data,
             error: null,
