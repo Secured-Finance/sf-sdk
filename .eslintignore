@@ -6,5 +6,6 @@ node_modules
 /**/node_modules
 packages/sf-cient/src/types
 packages/sf-graph-client/src/generated.ts
+packages/sf-graph-client/.graphclient
 packages/sf-client/examples
 packages/secured-finance-subgraph

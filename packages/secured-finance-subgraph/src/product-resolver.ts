@@ -1,6 +1,6 @@
 import { Bytes } from "@graphprotocol/graph-ts"
-import { Product } from "../generated/schema"
 import { RegisterProduct } from '../generated/ProductAddressResolver/ProductAddressResolver'
+import { Product } from "../generated/schema"
 import { ZERO_BYTES } from "./constants"
 
 function createProduct(prefix: Bytes): Product {
@@ -11,7 +11,6 @@ function createProduct(prefix: Bytes): Product {
         product.prefix = prefix
         product.productImplementation = ZERO_BYTES
         product.productController = ZERO_BYTES
-        product.terms = []
         product.save()
     }
 
@@ -35,7 +34,7 @@ export function handleNewProduct(event: RegisterProduct): void {
     if (product) {
         product.productImplementation = event.params.product
         product.productController = event.params.controller
-    
+
         product.save()
     }
 }

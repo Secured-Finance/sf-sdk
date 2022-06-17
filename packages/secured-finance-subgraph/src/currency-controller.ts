@@ -1,14 +1,10 @@
-import { Bytes, log } from "@graphprotocol/graph-ts"
-import { Currency, PriceFeed } from "../generated/schema"
-import { 
-    CcyAdded, 
-    LTVUpdated, 
-    MinMarginUpdated, 
-    CcySupportUpdate, 
-    CcyCollateralUpdate, 
-    PriceFeedAdded, 
-    PriceFeedRemoved 
+import { Bytes } from "@graphprotocol/graph-ts"
+import {
+    CcyAdded, CcyCollateralUpdate, CcySupportUpdate, LTVUpdated,
+    MinMarginUpdated, PriceFeedAdded,
+    PriceFeedRemoved
 } from '../generated/CurrencyController/CurrencyController'
+import { Currency, PriceFeed } from "../generated/schema"
 import { ADDRESS_ZERO, BIG_INT_ZERO, EMPTY_STRING } from './constants'
 import { getCurrencyName } from "./helpers"
 
@@ -25,8 +21,7 @@ function createCurrency(identifier: Bytes): Currency {
         currency.minMargin = BIG_INT_ZERO
         currency.isSupported = true
         currency.isCollateral = false
-        currency.terms = []
-      
+
         currency.save()
     }
 
@@ -99,7 +94,7 @@ export function handleCurrencyPriceFeed(event: PriceFeedAdded): void {
     if (ccy) {
         const id = event.params.ccy.toHexString()
         const priceFeed = new PriceFeed(id)
-    
+
         if (priceFeed) {
             let ccyShortName = getCurrencyName(ccy.identifier.toHexString());
             let pair = ccyShortName + '-' + event.params.secondCcy
@@ -109,7 +104,7 @@ export function handleCurrencyPriceFeed(event: PriceFeedAdded): void {
             priceFeed.pair = pair
 
             priceFeed.save()
-        }    
+        }
     }
 }
 
@@ -119,13 +114,13 @@ export function handleCurrencyPriceFeedRemove(event: PriceFeedRemoved): void {
     if (ccy) {
         const id = event.params.ccy.toHexString()
         const priceFeed = new PriceFeed(id)
-    
+
         if (priceFeed) {
             priceFeed.contract = ADDRESS_ZERO
             priceFeed.currency = event.params.ccy.toHexString()
             priceFeed.pair = EMPTY_STRING.toHexString()
 
             priceFeed.save()
-        }    
+        }
     }
 }

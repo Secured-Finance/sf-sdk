@@ -27,6 +27,8 @@ jobs:
         run: npm ci
       - name: Bootstrap Repository
         run: npm run bootstrap
+      - name: Generate artifacts
+        run: npm run codegen
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
