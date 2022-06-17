@@ -17,9 +17,9 @@ export {
 export { timeSlotPosition, timeSlotPositionByTimestamp } from './time-slot';
 export {
     BilateralNetting,
+    BilateralNettingQueryResponse,
     BilateralPosition,
     BilateralPositionsQueryResponse,
-    BillateralNettingQueryResponse,
     CollateralBook,
     CollateralBookQueryResponse,
     CollateralBookResponse,

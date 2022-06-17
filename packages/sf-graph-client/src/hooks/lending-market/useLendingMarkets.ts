@@ -1,12 +1,15 @@
 import { useQuery } from '@apollo/client';
-import { LendingMarket, Query } from '../../generated';
-import { LENDING_MARKETS_BY_CCY } from '../../queries';
+import {
+    LendingMarketsDocument,
+    LendingMarketsQuery,
+} from '../../../.graphclient';
+import { client } from '../../client';
 import { generateCurrencyId, QueryResult } from '../../utils';
 
 export const useLendingMarkets = (
     ccyShortName: string,
     skip: number = 0
-): QueryResult<Array<LendingMarket>> => {
+): QueryResult<LendingMarketsQuery> => {
     let currencyId = generateCurrencyId(ccyShortName);
 
     const variables = {
@@ -14,9 +17,13 @@ export const useLendingMarkets = (
         skip: skip,
     };
 
-    const { error, data } = useQuery<Query>(LENDING_MARKETS_BY_CCY, {
-        variables: variables,
-    });
+    const { error, data } = useQuery<LendingMarketsQuery>(
+        LendingMarketsDocument,
+        {
+            variables: variables,
+            client: client,
+        }
+    );
 
     if (error) {
         console.error(error);
@@ -29,7 +36,7 @@ export const useLendingMarkets = (
 
     if (data?.lendingMarkets) {
         return {
-            data: data.lendingMarkets,
+            data: data,
             error: null,
         };
     } else {

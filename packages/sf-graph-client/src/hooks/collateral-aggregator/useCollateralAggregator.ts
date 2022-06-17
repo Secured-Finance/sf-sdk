@@ -1,6 +1,10 @@
 import { useQuery } from '@apollo/client';
-import { CollateralAggregator, Query } from '../../generated';
-import { COLLATERAL_AGGREGATOR } from '../../queries';
+import {
+    CollateralAggregator,
+    CollateralAggregatorDocument,
+    CollateralAggregatorQuery,
+} from '../../../.graphclient';
+import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
 export const useCollateralAggregator =
@@ -9,9 +13,13 @@ export const useCollateralAggregator =
             first: 1,
         };
 
-        const { error, data } = useQuery<Query>(COLLATERAL_AGGREGATOR, {
-            variables: variables,
-        });
+        const { error, data } = useQuery<CollateralAggregatorQuery>(
+            CollateralAggregatorDocument,
+            {
+                variables: variables,
+                client: client,
+            }
+        );
 
         if (error) {
             console.error(error);

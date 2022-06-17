@@ -1,13 +1,16 @@
 import { useQuery } from '@apollo/client';
-import { CloseOutNetting, Query } from '../../generated';
-import { CLOSE_OUT_NETTINGS } from '../../queries';
+import {
+    CloseOutNettingsDocument,
+    CloseOutNettingsQuery,
+} from '../../../.graphclient';
+import { client } from '../../client';
 import { QueryResult, sortAddresses } from '../../utils';
 
 export const useCloseOutNettings = (
     user: string,
     counterparty: string,
     skip: number = 0
-): QueryResult<Array<CloseOutNetting>> => {
+): QueryResult<CloseOutNettingsQuery> => {
     const sortedAddresses = sortAddresses(user, counterparty);
 
     const variables = {
@@ -16,9 +19,13 @@ export const useCloseOutNettings = (
         skip: skip,
     };
 
-    const { error, data } = useQuery<Query>(CLOSE_OUT_NETTINGS, {
-        variables: variables,
-    });
+    const { error, data } = useQuery<CloseOutNettingsQuery>(
+        CloseOutNettingsDocument,
+        {
+            variables: variables,
+            client: client,
+        }
+    );
 
     if (error) {
         console.error(error);
@@ -31,7 +38,7 @@ export const useCloseOutNettings = (
 
     if (data?.closeOutNettings) {
         return {
-            data: data.closeOutNettings,
+            data: data,
             error: null,
         };
     } else {

@@ -36,7 +36,7 @@ it('Should render unsettled collateral position component with network error que
     expect(testInstance.children).contain('GraphQL Network Error');
 });
 
-it('Should render mock unsettled collateral position component and succesfully get data from query', async () => {
+it('Should render mock unsettled collateral position component and successfully get data from query', async () => {
     let variables = {
         id: '0x000111',
         address: '0x01',
@@ -63,7 +63,7 @@ it('Should render mock unsettled collateral position component and succesfully g
     );
 });
 
-it('Should render mock unsettled collateral position component and succesfully get data from query', async () => {
+it('Should render mock unsettled collateral position component and successfully get data from query', async () => {
     let variables = {
         id: '0x000111',
         address: '0x01',

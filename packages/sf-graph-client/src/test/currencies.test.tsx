@@ -44,7 +44,7 @@ it('Should render currency component with network error query', async () => {
     expect(testInstance.children).contain('GraphQL Network Error');
 });
 
-it('Should render currency mock component and succesfully get data from query', async () => {
+it('Should render currency mock component and successfully get data from query', async () => {
     let variables = {
         currency: '0xETH',
     };

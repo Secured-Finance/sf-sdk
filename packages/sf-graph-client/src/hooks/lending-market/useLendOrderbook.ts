@@ -1,22 +1,29 @@
 import { useQuery } from '@apollo/client';
 import { useMemo, useState } from 'react';
-import { LendingMarketOrderRow, Query } from '../../generated';
-import { LENDING_LEND_ORDERBOOK } from '../../queries';
+import {
+    LendOrderbookDocument,
+    LendOrderbookQuery,
+} from '../../../.graphclient';
+import { client } from '../../client';
 import { OrderbookRow, QueryResult, toBN } from '../../utils';
 import { modifyOrderbook } from './common';
 
 export const useLendOrderbook = (
     lendingMarket: string,
     skip: number = 0
-): QueryResult<Array<LendingMarketOrderRow>> => {
+): QueryResult<LendOrderbookQuery> => {
     const variables = {
         market: lendingMarket.toLowerCase(),
         skip: skip,
     };
 
-    const { error, data } = useQuery<Query>(LENDING_LEND_ORDERBOOK, {
-        variables: variables,
-    });
+    const { error, data } = useQuery<LendOrderbookQuery>(
+        LendOrderbookDocument,
+        {
+            variables: variables,
+            client: client,
+        }
+    );
 
     if (error) {
         console.error(error);
@@ -29,7 +36,7 @@ export const useLendOrderbook = (
 
     if (data?.lendingMarket.lendOrderbook) {
         return {
-            data: data.lendingMarket.lendOrderbook,
+            data: data,
             error: null,
         };
     } else {
@@ -60,8 +67,10 @@ export const useLendOrderbookQuery = (
             const fixedAssetPrice = toBN((assetPrice * 100).toFixed(0));
             const parsedOrderbook = await modifyOrderbook(
                 data,
+                'lend',
                 fixedAssetPrice
             );
+
             setOrderbook(parsedOrderbook);
         } else {
             return undefined;

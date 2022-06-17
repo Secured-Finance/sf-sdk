@@ -31,7 +31,7 @@ export const OPEN_ORDERS = gql`
 `;
 
 export const TRADE_HISTORY = gql`
-    query TradingHistory($account: Bytes!, $market: Bytes!) {
+    query UserTradingHistory($account: Bytes!, $market: Bytes!) {
         user(id: $account) {
             takenOrders(
                 where: { marketAddr: $market }
@@ -90,13 +90,6 @@ export const OPEN_LOANS = gql`
                 id
                 lender
                 borrower
-                borrowerUser {
-                    collateral {
-                        inuseETH
-                        coverage
-                    }
-                }
-                side
                 currency {
                     identifier
                     shortName
