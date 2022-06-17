@@ -61,3 +61,4 @@ dist/
 
 # graph ql generated types based on subgraph schema
 src/generated.ts
+.graphclient

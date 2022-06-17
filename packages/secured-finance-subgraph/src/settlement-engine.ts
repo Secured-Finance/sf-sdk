@@ -1,3 +1,4 @@
+import { Bytes } from "@graphprotocol/graph-ts"
 import { CrosschainSettlementRequest } from "../generated/schema"
 import { CrosschainSettlementRequested, CrosschainSettlementRequestFulfilled } from '../generated/SettlementEngine/SettlementEngine'
 import { BIG_INT_ZERO, ZERO_BYTES } from "./constants"
@@ -6,7 +7,21 @@ function createSettlementRequest(txHash: string): CrosschainSettlementRequest {
     const settlementRequest = new CrosschainSettlementRequest(txHash)
 
     if (settlementRequest) {
+        settlementRequest.payer = Bytes.empty()
+        settlementRequest.crosschainPayerAddress = ''
+        settlementRequest.payerUser = ''
+        settlementRequest.receiver = Bytes.empty()
+        settlementRequest.receiverUser = ''
+        settlementRequest.crosschainReceiverAddress = ''
+        settlementRequest.chainId = 0
+        settlementRequest.createdAt = BIG_INT_ZERO
+        settlementRequest.settledAt = BIG_INT_ZERO
+        settlementRequest.amount = BIG_INT_ZERO
+        settlementRequest.timestamp = BIG_INT_ZERO
+        settlementRequest.requestId = Bytes.empty()
+        settlementRequest.settlementId = ZERO_BYTES
         settlementRequest.txHash = txHash
+        settlementRequest.paymentConfirmation = ''
         settlementRequest.save()
     }
 

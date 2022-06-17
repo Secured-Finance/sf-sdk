@@ -223,8 +223,8 @@ type Term @entity {
   dfFrac: BigInt!
   paymentNum: BigInt!
 
-  products: [Product!] @derivedFrom(field: "terms")
-  currencies: [Currency!] @derivedFrom(field: "terms")
+  products: [Product!]
+  currencies: [Currency!]
 }
 
 type Product @entity {
