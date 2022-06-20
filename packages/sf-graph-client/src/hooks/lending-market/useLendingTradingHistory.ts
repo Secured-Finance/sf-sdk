@@ -1,20 +1,27 @@
 import { useQuery } from '@apollo/client';
-import { FilledLendingMarketOrder, Query } from '../../generated';
-import { LENDING_TRADING_HISTORY } from '../../queries';
+import {
+    TradingHistoryDocument,
+    TradingHistoryQuery,
+} from '../../.graphclient';
+import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
 export const useLendingTradingHistory = (
     lendingMarket: string,
     skip: number = 0
-): QueryResult<Array<FilledLendingMarketOrder>> => {
+): QueryResult<TradingHistoryQuery> => {
     const variables = {
         market: lendingMarket.toLowerCase(),
         skip: skip,
     };
 
-    const { error, data } = useQuery<Query>(LENDING_TRADING_HISTORY, {
-        variables: variables,
-    });
+    const { error, data } = useQuery<TradingHistoryQuery>(
+        TradingHistoryDocument,
+        {
+            variables: variables,
+            client: client,
+        }
+    );
 
     if (error) {
         console.error(error);
@@ -25,9 +32,9 @@ export const useLendingTradingHistory = (
         };
     }
 
-    if (data?.lendingMarket.tradeHistory) {
+    if (data?.lendingMarket?.tradeHistory) {
         return {
-            data: data.lendingMarket.tradeHistory,
+            data: data,
             error: null,
         };
     } else {

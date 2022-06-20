@@ -1,20 +1,27 @@
 import { useQuery } from '@apollo/client';
-import { LoanTermination, Query } from '../../generated';
-import { LOAN_TERMINATION } from '../../queries';
+import {
+    LoanTerminationDocument,
+    LoanTerminationQuery,
+} from '../../.graphclient';
+import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
 export const useLoanTermination = (
     id: string,
     skip: number = 0
-): QueryResult<Array<LoanTermination>> => {
+): QueryResult<LoanTerminationQuery> => {
     const variables = {
         id: id,
         skip: skip,
     };
 
-    const { error, data } = useQuery<Query>(LOAN_TERMINATION, {
-        variables: variables,
-    });
+    const { error, data } = useQuery<LoanTerminationQuery>(
+        LoanTerminationDocument,
+        {
+            variables: variables,
+            client: client,
+        }
+    );
 
     if (error) {
         console.error(error);
@@ -27,7 +34,7 @@ export const useLoanTermination = (
 
     if (data?.loanTerminations) {
         return {
-            data: data.loanTerminations,
+            data: data,
             error: null,
         };
     } else {

@@ -1,0 +1,13 @@
+sources:
+  - name: secured-finance-protocol
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/secured-finance/secured-finance-protocol
+    transforms:
+      - blockTracking:
+          validateSchema: true
+      - autoPagination:
+          validateSchema: true
+documents:
+  - './queries/*.{ts,tsx,js,jsx}'
+  - './queries/*.graphql'

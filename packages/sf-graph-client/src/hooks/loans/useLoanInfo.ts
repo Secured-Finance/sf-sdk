@@ -1,15 +1,16 @@
 import { useQuery } from '@apollo/client';
-import { Loan, Query } from '../../generated';
-import { LOAN_INFO } from '../../queries';
+import { LoanDocument, LoanQuery } from '../../.graphclient';
+import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
-export const useLoanInfo = (id: string): QueryResult<Loan> => {
+export const useLoanInfo = (id: string): QueryResult<LoanQuery> => {
     const variables = {
         id: id,
     };
 
-    const { error, data } = useQuery<Query>(LOAN_INFO, {
+    const { error, data } = useQuery<LoanQuery>(LoanDocument, {
         variables: variables,
+        client: client,
     });
 
     if (error) {
@@ -23,7 +24,7 @@ export const useLoanInfo = (id: string): QueryResult<Loan> => {
 
     if (data?.loan) {
         return {
-            data: data.loan,
+            data: data,
             error: null,
         };
     } else {

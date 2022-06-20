@@ -10,18 +10,19 @@ export const OPEN_ORDERS = gql`
             ) {
                 id
                 orderId
+                currencyName
                 currency {
                     identifier
                     shortName
                     name
-                    chainID
+                    chainId
                 }
                 side
                 marketAddr
+                orderState
                 term
                 rate
                 amount
-                deadline
                 maker
                 createdAtTimestamp
                 createdAtBlockNumber
@@ -31,7 +32,7 @@ export const OPEN_ORDERS = gql`
 `;
 
 export const TRADE_HISTORY = gql`
-    query TradingHistory($account: Bytes!, $market: Bytes!) {
+    query UserTradingHistory($account: Bytes!, $market: Bytes!) {
         user(id: $account) {
             takenOrders(
                 where: { marketAddr: $market }
@@ -44,7 +45,7 @@ export const TRADE_HISTORY = gql`
                     identifier
                     shortName
                     name
-                    chainID
+                    chainId
                 }
                 side
                 marketAddr
@@ -67,7 +68,7 @@ export const TRADE_HISTORY = gql`
                     identifier
                     shortName
                     name
-                    chainID
+                    chainId
                 }
                 side
                 marketAddr
@@ -90,18 +91,11 @@ export const OPEN_LOANS = gql`
                 id
                 lender
                 borrower
-                borrowerUser {
-                    collateral {
-                        inuseETH
-                        coverage
-                    }
-                }
-                side
                 currency {
                     identifier
                     shortName
                     name
-                    chainID
+                    chainId
                 }
                 term
                 notional

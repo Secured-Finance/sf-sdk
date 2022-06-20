@@ -1,19 +1,20 @@
 import { useQuery } from '@apollo/client';
-import { LendingMarketOrder, Query } from '../../generated';
-import { OPEN_ORDERS } from '../../queries';
+import { OpenOrdersDocument, OpenOrdersQuery } from '../../.graphclient';
+import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
 export const useOpenOrders = (
     account: string,
     market: string
-): QueryResult<Array<LendingMarketOrder>> => {
+): QueryResult<OpenOrdersQuery> => {
     const variables = {
         account: account.toLowerCase(),
         market: market,
     };
 
-    const { error, data } = useQuery<Query>(OPEN_ORDERS, {
+    const { error, data } = useQuery<OpenOrdersQuery>(OpenOrdersDocument, {
         variables: variables,
+        client: client,
     });
 
     if (error) {
@@ -25,9 +26,9 @@ export const useOpenOrders = (
         };
     }
 
-    if (data?.user.openOrders) {
+    if (data?.user?.openOrders) {
         return {
-            data: data.user.openOrders,
+            data: data,
             error: null,
         };
     } else {

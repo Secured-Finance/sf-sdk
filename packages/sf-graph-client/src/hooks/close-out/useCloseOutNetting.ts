@@ -1,6 +1,9 @@
 import { useQuery } from '@apollo/client';
-import { CloseOutNetting, Query } from '../../generated';
-import { CLOSE_OUT_NETTING } from '../../queries';
+import {
+    CloseOutNettingDocument,
+    CloseOutNettingQuery,
+} from '../../.graphclient';
+import { client } from '../../client';
 import { QueryResult } from '../../utils';
 import { generateCloseOutNettingId } from '../../utils/id';
 
@@ -8,7 +11,7 @@ export const useCloseOutNetting = (
     user: string,
     counterparty: string,
     ccyShortName: string
-): QueryResult<CloseOutNetting> => {
+): QueryResult<CloseOutNettingQuery> => {
     const closeOutNettingId = generateCloseOutNettingId(
         user,
         counterparty,
@@ -19,9 +22,13 @@ export const useCloseOutNetting = (
         id: closeOutNettingId,
     };
 
-    const { error, data } = useQuery<Query>(CLOSE_OUT_NETTING, {
-        variables: variables,
-    });
+    const { error, data } = useQuery<CloseOutNettingQuery>(
+        CloseOutNettingDocument,
+        {
+            variables: variables,
+            client: client,
+        }
+    );
 
     if (error) {
         console.error(error);
@@ -34,7 +41,7 @@ export const useCloseOutNetting = (
 
     if (data?.closeOutNetting) {
         return {
-            data: data.closeOutNetting,
+            data: data,
             error: null,
         };
     } else {

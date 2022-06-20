@@ -1,17 +1,20 @@
 import { useQuery } from '@apollo/client';
-import { Product, Query } from '../../generated';
-import { PRODUCT } from '../../queries';
+import { ProductDocument, ProductQuery } from '../../.graphclient';
+import { client } from '../../client';
 import { generateProductId, QueryResult } from '../../utils';
 
-export const useProductInfo = (prefixOrName: string): QueryResult<Product> => {
+export const useProductInfo = (
+    prefixOrName: string
+): QueryResult<ProductQuery> => {
     const productId = generateProductId(prefixOrName);
 
     const variables = {
         product: productId,
     };
 
-    const { error, data } = useQuery<Query>(PRODUCT, {
+    const { error, data } = useQuery<ProductQuery>(ProductDocument, {
         variables: variables,
+        client: client,
     });
 
     if (error) {
@@ -25,7 +28,7 @@ export const useProductInfo = (prefixOrName: string): QueryResult<Product> => {
 
     if (data?.product) {
         return {
-            data: data.product,
+            data: data,
             error: null,
         };
     } else {

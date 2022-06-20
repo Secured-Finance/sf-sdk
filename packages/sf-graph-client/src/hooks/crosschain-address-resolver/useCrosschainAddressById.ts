@@ -1,21 +1,28 @@
 import { useQuery } from '@apollo/client';
-import { CrosschainAddress, Query } from '../../generated';
-import { CROSSCHAIN_ADDRESS_BY_ID } from '../../queries';
+import {
+    CrosschainAddressByIdDocument,
+    CrosschainAddressByIdQuery,
+} from '../../.graphclient';
+import { client } from '../../client';
 import { generateCrosschainAddressID, QueryResult } from '../../utils';
 
 export const useCrosschainAddressById = (
     user: string,
     chainId: number
-): QueryResult<CrosschainAddress> => {
+): QueryResult<CrosschainAddressByIdQuery> => {
     const crosschainAddressId = generateCrosschainAddressID(user, chainId);
 
     const variables = {
         crosschainAddressId: crosschainAddressId.toLowerCase(),
     };
 
-    const { error, data } = useQuery<Query>(CROSSCHAIN_ADDRESS_BY_ID, {
-        variables: variables,
-    });
+    const { error, data } = useQuery<CrosschainAddressByIdQuery>(
+        CrosschainAddressByIdDocument,
+        {
+            variables: variables,
+            client: client,
+        }
+    );
 
     if (error) {
         console.error(error);
@@ -28,7 +35,7 @@ export const useCrosschainAddressById = (
 
     if (data?.crosschainAddress) {
         return {
-            data: data.crosschainAddress,
+            data: data,
             error: null,
         };
     } else {

@@ -1,20 +1,27 @@
 import { useQuery } from '@apollo/client';
-import { LoanNovation, Query } from '../../generated';
-import { LOAN_NOVATION_HISTORY } from '../../queries';
+import {
+    LoanNovationHistoryDocument,
+    LoanNovationHistoryQuery,
+} from '../../.graphclient';
+import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
 export const useLoanNovationHistory = (
     id: string,
     skip: number = 0
-): QueryResult<Array<LoanNovation>> => {
+): QueryResult<LoanNovationHistoryQuery> => {
     const variables = {
         id: id,
         skip: skip,
     };
 
-    const { error, data } = useQuery<Query>(LOAN_NOVATION_HISTORY, {
-        variables: variables,
-    });
+    const { error, data } = useQuery<LoanNovationHistoryQuery>(
+        LoanNovationHistoryDocument,
+        {
+            variables: variables,
+            client: client,
+        }
+    );
 
     if (error) {
         console.error(error);
@@ -27,7 +34,7 @@ export const useLoanNovationHistory = (
 
     if (data?.loanNovations) {
         return {
-            data: data.loanNovations,
+            data: data,
             error: null,
         };
     } else {

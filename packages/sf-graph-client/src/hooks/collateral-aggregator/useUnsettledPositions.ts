@@ -1,18 +1,25 @@
 import { useQuery } from '@apollo/client';
-import { CollateralPosition, Query } from '../../generated';
-import { UNSETTLED_POSITIONS } from '../../queries';
+import {
+    UnsettledPositionsDocument,
+    UnsettledPositionsQuery,
+} from '../../.graphclient';
+import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
 export const useUnsettledPositions = (
     user: string
-): QueryResult<Array<CollateralPosition>> => {
+): QueryResult<UnsettledPositionsQuery> => {
     const variables = {
         address: user.toLowerCase(),
     };
 
-    const { error, data } = useQuery<Query>(UNSETTLED_POSITIONS, {
-        variables: variables,
-    });
+    const { error, data } = useQuery<UnsettledPositionsQuery>(
+        UnsettledPositionsDocument,
+        {
+            variables: variables,
+            client: client,
+        }
+    );
 
     if (error) {
         console.error(error);
@@ -25,7 +32,7 @@ export const useUnsettledPositions = (
 
     if (data?.collateralPositions) {
         return {
-            data: data.collateralPositions,
+            data: data,
             error: null,
         };
     } else {

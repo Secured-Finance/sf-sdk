@@ -1,7 +1,10 @@
 import { useQuery } from '@apollo/client';
 import { useMemo, useState } from 'react';
-import { Query, User } from '../../generated';
-import { TRADE_HISTORY } from '../../queries';
+import {
+    UserTradingHistoryDocument,
+    UserTradingHistoryQuery,
+} from '../../.graphclient';
+import { client } from '../../client';
 import { QueryResult } from '../../utils';
 import {
     LendingMarketExtendedOrder,
@@ -11,15 +14,19 @@ import {
 export const useUsersTradingHistory = (
     account: string,
     market: string
-): QueryResult<User> => {
+): QueryResult<UserTradingHistoryQuery> => {
     const variables = {
         account: account.toLowerCase(),
         market: market,
     };
 
-    const { error, data } = useQuery<Query>(TRADE_HISTORY, {
-        variables: variables,
-    });
+    const { error, data } = useQuery<UserTradingHistoryQuery>(
+        UserTradingHistoryDocument,
+        {
+            variables: variables,
+            client: client,
+        }
+    );
 
     if (error) {
         console.error(error);
@@ -30,9 +37,9 @@ export const useUsersTradingHistory = (
         };
     }
 
-    if (data?.user.madeOrders && data?.user.takenOrders) {
+    if (data?.user?.madeOrders && data?.user?.takenOrders) {
         return {
-            data: data.user,
+            data: data,
             error: null,
         };
     } else {
@@ -61,7 +68,11 @@ export const useUsersTradingHistoryQuery = (
 
     useMemo(async () => {
         if (data) {
-            const parsedHistory = await modifyUsersTradingHistory(data);
+            const parsedHistory = await modifyUsersTradingHistory(
+                data,
+                account
+            );
+
             setTradingHistory(parsedHistory);
         }
     }, [data]);

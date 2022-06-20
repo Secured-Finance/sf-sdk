@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
-import { Query, TimeSlot } from '../../generated';
-import { TIME_SLOT } from '../../queries';
+import { TimeSlotDocument, TimeSlotQuery } from '../../.graphclient';
+import { client } from '../../client';
 import { generateTimeSlotId, QueryResult } from '../../utils';
 
 export const useTimeSlotInfo = (
@@ -10,7 +10,7 @@ export const useTimeSlotInfo = (
     year: number,
     month: number,
     day: number
-): QueryResult<TimeSlot> => {
+): QueryResult<TimeSlotQuery> => {
     const timeSlotId = generateTimeSlotId(
         user,
         counterparty,
@@ -24,8 +24,9 @@ export const useTimeSlotInfo = (
         id: timeSlotId,
     };
 
-    const { error, data } = useQuery<Query>(TIME_SLOT, {
+    const { error, data } = useQuery<TimeSlotQuery>(TimeSlotDocument, {
         variables: variables,
+        client: client,
     });
 
     if (error) {
@@ -39,7 +40,7 @@ export const useTimeSlotInfo = (
 
     if (data?.timeSlot) {
         return {
-            data: data.timeSlot,
+            data: data,
             error: null,
         };
     } else {

@@ -1,19 +1,20 @@
 import { useQuery } from '@apollo/client';
-import { Loan, Query } from '../../generated';
-import { BORROW_DEALS } from '../../queries';
+import { BorrowDealsDocument, BorrowDealsQuery } from '../../.graphclient';
+import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
 export const useBorrowingDeals = (
     account: string,
     skip: number = 0
-): QueryResult<Array<Loan>> => {
+): QueryResult<BorrowDealsQuery> => {
     const variables = {
         account: account.toLowerCase(),
         skip: skip,
     };
 
-    const { error, data } = useQuery<Query>(BORROW_DEALS, {
+    const { error, data } = useQuery<BorrowDealsQuery>(BorrowDealsDocument, {
         variables: variables,
+        client: client,
     });
 
     if (error) {
@@ -27,7 +28,7 @@ export const useBorrowingDeals = (
 
     if (data?.loans) {
         return {
-            data: data.loans,
+            data: data,
             error: null,
         };
     } else {

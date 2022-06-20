@@ -86,7 +86,7 @@ export interface CollateralPositions {
     currency: CurrencyInfo;
 }
 
-export interface BillateralNettingQueryResponse {
+export interface BilateralNettingQueryResponse {
     bilateralPositions: Array<BilateralNetting>;
 }
 

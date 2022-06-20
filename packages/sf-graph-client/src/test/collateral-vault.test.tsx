@@ -54,7 +54,7 @@ it('Should render collateral book component with network error query', async () 
     expect(testInstance.children).contain('GraphQL Network Error');
 });
 
-it('Should render mock collateral book component and succesfully get data from query', async () => {
+it('Should render mock collateral book component and successfully get data from query', async () => {
     let variables = {
         vaultId: '0xETH',
         address: '0x01',
@@ -89,7 +89,7 @@ it('Should render mock collateral book component and succesfully get data from q
     );
 });
 
-it('Should render mock bilateral position component and succesfully get data from query', async () => {
+it('Should render mock bilateral position component and successfully get data from query', async () => {
     let variables = {
         vaultId: '0xETH',
         address: '0x01',

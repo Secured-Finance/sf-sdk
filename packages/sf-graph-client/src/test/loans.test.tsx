@@ -46,7 +46,7 @@ it('Should render loans component with network error query', async () => {
     expect(testInstance.children).contain('GraphQL Network Error');
 });
 
-it('Should render mock loans component and succesfully get data from query', async () => {
+it('Should render mock loans component and successfully get data from query', async () => {
     let variables = {
         account: '0x1',
         skip: 0,

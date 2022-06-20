@@ -1,11 +1,8 @@
-import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
-import fetch from 'cross-fetch';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { GraphApolloLink } from '@graphprotocol/client-apollo';
+import * as GraphClient from './.graphclient';
 
 export const client = new ApolloClient({
-    link: new HttpLink({
-        uri: 'https://api.thegraph.com/subgraphs/name/secured-finance/secured-finance-protocol',
-        // uri: 'http://127.0.0.1:8000/subgraphs/name/bahadylbekov/secured-finance-protocol',
-        fetch: fetch,
-    }),
+    link: new GraphApolloLink(GraphClient),
     cache: new InMemoryCache(),
 });

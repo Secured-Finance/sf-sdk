@@ -15,7 +15,7 @@ export const currencyQueriesMock = [
                     identifier: '0x',
                     name: 'Ethereum',
                     shortName: 'ETH',
-                    chainID: 417,
+                    chainId: 417,
                     ltv: 7500,
                     minMargin: 2500,
                     isSupported: true,
