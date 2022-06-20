@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { OpenOrdersDocument, OpenOrdersQuery } from '../../../.graphclient';
+import { OpenOrdersDocument, OpenOrdersQuery } from '../../.graphclient';
 import { client } from '../../client';
 import { QueryResult } from '../../utils';
 

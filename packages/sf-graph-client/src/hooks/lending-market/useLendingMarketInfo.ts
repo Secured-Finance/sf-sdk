@@ -1,8 +1,5 @@
 import { useQuery } from '@apollo/client';
-import {
-    LendingMarketDocument,
-    LendingMarketQuery,
-} from '../../../.graphclient';
+import { LendingMarketDocument, LendingMarketQuery } from '../../.graphclient';
 import { client } from '../../client';
 import { QueryResult } from '../../utils';
 

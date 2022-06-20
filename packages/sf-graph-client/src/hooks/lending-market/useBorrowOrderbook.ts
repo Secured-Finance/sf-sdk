@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import {
     BorrowOrderbookDocument,
     BorrowOrderbookQuery,
-} from '../../../.graphclient';
+} from '../../.graphclient';
 import { client } from '../../client';
 import { OrderbookRow, QueryResult, toBN } from '../../utils';
 import { modifyOrderbook } from './common';

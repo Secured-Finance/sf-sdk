@@ -3,7 +3,7 @@ import {
     CollateralAggregator,
     CollateralAggregatorDocument,
     CollateralAggregatorQuery,
-} from '../../../.graphclient';
+} from '../../.graphclient';
 import { client } from '../../client';
 import { QueryResult } from '../../utils';
 

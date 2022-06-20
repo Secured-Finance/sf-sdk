@@ -20,7 +20,7 @@ describe('useCrosschainAddressById hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.crosschainAddress != undefined) {
+        if (result.current.data?.crosschainAddress !== undefined) {
             const crosschainAddress = result.current.data.crosschainAddress;
             validateCrosschainAddress(crosschainAddress);
         }
@@ -51,7 +51,7 @@ describe('useCrosschainAddressesByUser hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.crosschainAddresses != undefined) {
+        if (result.current.data?.crosschainAddresses !== undefined) {
             const crosschainAddresses = result.current.data.crosschainAddresses;
 
             for (let i = 0; i < crosschainAddresses.length; i++) {
@@ -69,6 +69,8 @@ describe('useCrosschainAddressesByUser hook test', () => {
             }, 1000)
         );
 
-        expect(result.current.data?.crosschainAddresses).to.not.be.empty;
+        if (result.current.data?.crosschainAddresses !== undefined) {
+            expect(result.current.data?.crosschainAddresses).to.not.be.empty;
+        }
     });
 });

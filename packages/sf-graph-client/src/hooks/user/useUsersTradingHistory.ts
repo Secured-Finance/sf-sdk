@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import {
     UserTradingHistoryDocument,
     UserTradingHistoryQuery,
-} from '../../../.graphclient';
+} from '../../.graphclient';
 import { client } from '../../client';
 import { QueryResult } from '../../utils';
 import {

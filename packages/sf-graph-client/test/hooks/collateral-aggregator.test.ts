@@ -24,7 +24,9 @@ describe('useBilateralPosition hook test', () => {
             }, 1000)
         );
 
-        expect(result.current.data?.bilateralPositions).to.not.be.empty;
+        if (result.current.data?.bilateralPositions !== undefined) {
+            expect(result.current.data?.bilateralPositions).to.not.empty;
+        }
     });
 
     it("Should get data for user's existing BilateralPositions from subgraph", async () => {
@@ -36,7 +38,7 @@ describe('useBilateralPosition hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.bilateralPositions != undefined) {
+        if (result.current.data?.bilateralPositions !== undefined) {
             const bilateralPositions = result.current.data.bilateralPositions;
 
             for (let i = 0; i < bilateralPositions.length; i++) {
@@ -64,7 +66,7 @@ describe('useCollateralAggregator hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data != undefined) {
+        if (result.current.data !== undefined) {
             const collateralAggregator = result.current.data;
             validateCollateralAggregator(collateralAggregator);
         }
@@ -74,7 +76,7 @@ describe('useCollateralAggregator hook test', () => {
 describe('useUnsettledPositions hook test', () => {
     const user = '0x57ab42d4fa756b6956b0caf986a5f53ba90d9e28';
 
-    it("Should return all bilateral positions if user's address is empty", async () => {
+    it("Should return all unsettled positions if user's address is empty", async () => {
         const { result } = renderHook(() => useUnsettledPositions(''));
 
         await new Promise<void>(res =>
@@ -83,10 +85,12 @@ describe('useUnsettledPositions hook test', () => {
             }, 1000)
         );
 
-        expect(result.current.data?.collateralPositions).to.be.empty;
+        if (result.current.data?.collateralPositions !== undefined) {
+            expect(result.current.data?.collateralPositions).to.be.empty;
+        }
     });
 
-    it("Should get data for user's existing BilateralPositions from subgraph", async () => {
+    it("Should get data for user's existing UnsettledPositions from subgraph", async () => {
         const { result } = renderHook(() => useUnsettledPositions(user));
 
         await new Promise<void>(res =>
@@ -95,7 +99,7 @@ describe('useUnsettledPositions hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.collateralPositions != undefined) {
+        if (result.current.data?.collateralPositions !== undefined) {
             const data = result.current.data.collateralPositions[0];
             expectType(data.address, 'string');
 

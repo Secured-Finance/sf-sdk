@@ -12,7 +12,7 @@ describe('useCurrencies hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.currencies != undefined) {
+        if (result.current.data?.currencies !== undefined) {
             const currencies = result.current.data.currencies;
 
             for (let i = 0; i < currencies.length; i++) {
@@ -32,7 +32,7 @@ describe('useCurrencyInfo hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.currency != undefined) {
+        if (result.current.data?.currency !== undefined) {
             const currency = result.current.data.currency;
             validateCurrency(currency);
 

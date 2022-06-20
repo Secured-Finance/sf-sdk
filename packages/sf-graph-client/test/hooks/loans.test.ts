@@ -18,7 +18,7 @@ import {
 } from '../utils';
 
 describe('useBorrowingDeals hook test', () => {
-    it("Should return all bilateral positions if user's address is empty", async () => {
+    it("Should return all borrowing deals if user's address is empty", async () => {
         const { result } = renderHook(() => useBorrowingDeals(''));
 
         await new Promise<void>(res =>
@@ -27,10 +27,12 @@ describe('useBorrowingDeals hook test', () => {
             }, 1000)
         );
 
-        expect(result.current.data?.loans).to.be.empty;
+        if (result.current.data?.loans !== undefined) {
+            expect(result.current.data?.loans).to.be.empty;
+        }
     });
 
-    it("Should get data for user's existing BilateralPositions from subgraph", async () => {
+    it("Should return user's borrowing deals from subgraph", async () => {
         const { result } = renderHook(() => useBorrowingDeals(user));
 
         await new Promise<void>(res =>
@@ -39,7 +41,7 @@ describe('useBorrowingDeals hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.loans != undefined) {
+        if (result.current.data?.loans !== undefined) {
             const loans = result.current.data.loans;
 
             for (let i = 0; i < loans.length; i++) {
@@ -53,7 +55,7 @@ describe('useBorrowingDeals hook test', () => {
 describe('useLendingDeals hook test', () => {
     const user = '0x57ab42d4fa756b6956b0caf986a5f53ba90d9e28';
 
-    it("Should return all bilateral positions if user's address is empty", async () => {
+    it("Should return all lend deals if user's address is empty", async () => {
         const { result } = renderHook(() => useLendingDeals(''));
 
         await new Promise<void>(res =>
@@ -62,10 +64,12 @@ describe('useLendingDeals hook test', () => {
             }, 1000)
         );
 
-        expect(result.current.data?.loans).to.be.empty;
+        if (result.current.data?.loans !== undefined) {
+            expect(result.current.data?.loans).to.be.empty;
+        }
     });
 
-    it("Should get data for user's existing BilateralPositions from subgraph", async () => {
+    it("Should return user's existing lend deals from subgraph", async () => {
         const { result } = renderHook(() => useLendingDeals(user));
 
         await new Promise<void>(res =>
@@ -74,7 +78,7 @@ describe('useLendingDeals hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.loans != undefined) {
+        if (result.current.data?.loans !== undefined) {
             const loans = result.current.data.loans;
 
             for (let i = 0; i < loans.length; i++) {
@@ -85,7 +89,7 @@ describe('useLendingDeals hook test', () => {
 });
 
 describe('useLoanInfo hook test', () => {
-    it("Should return all bilateral positions if user's address is empty", async () => {
+    it("Should return undefined if user's address is empty", async () => {
         const { result } = renderHook(() => useLoanInfo(''));
 
         await new Promise<void>(res =>
@@ -97,7 +101,7 @@ describe('useLoanInfo hook test', () => {
         expect(result.current.data?.loan).to.be.undefined;
     });
 
-    it("Should get data for user's existing BilateralPositions from subgraph", async () => {
+    it('Should return loan information from subgraph', async () => {
         const { result } = renderHook(() => useLoanInfo(dealId));
 
         await new Promise<void>(res =>
@@ -106,9 +110,9 @@ describe('useLoanInfo hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.loan != undefined) {
+        if (result.current.data?.loan !== undefined) {
             const loan = result.current.data.loan;
-            const paymentSchedule = loan.schedule.payments;
+            const paymentSchedule = loan?.schedule?.payments;
 
             validateLoan(loan);
 
@@ -116,13 +120,13 @@ describe('useLoanInfo hook test', () => {
                 validateLoanPaymentSchedule(paymentSchedule[i]);
             }
 
-            validateCurrency(loan.currency);
+            validateCurrency(loan?.currency);
         }
     });
 });
 
 describe('useLoanNovationHistory hook test', () => {
-    it("Should return all bilateral positions if user's address is empty", async () => {
+    it('Should return empty array if loan deal is empty', async () => {
         const { result } = renderHook(() => useLoanNovationHistory(''));
 
         await new Promise<void>(res =>
@@ -131,10 +135,12 @@ describe('useLoanNovationHistory hook test', () => {
             }, 1000)
         );
 
-        expect(result.current.data?.loanNovations).to.be.empty;
+        if (result.current.data?.loanNovations !== undefined) {
+            expect(result.current.data?.loanNovations).to.be.empty;
+        }
     });
 
-    it("Should get data for user's existing BilateralPositions from subgraph", async () => {
+    it('Should return loan novation history from subgraph', async () => {
         const { result } = renderHook(() => useLoanNovationHistory(dealId));
 
         await new Promise<void>(res =>
@@ -143,7 +149,7 @@ describe('useLoanNovationHistory hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.loanNovations != undefined) {
+        if (result.current.data?.loanNovations !== undefined) {
             const loanNovations = result.current.data.loanNovations;
 
             for (let i = 0; i < loanNovations.length; i++) {
@@ -155,7 +161,7 @@ describe('useLoanNovationHistory hook test', () => {
 });
 
 describe('useLoanTermination hook test', () => {
-    it("Should return all bilateral positions if user's address is empty", async () => {
+    it('Should return empty array if loan deal id is empty', async () => {
         const { result } = renderHook(() => useLoanTermination(''));
 
         await new Promise<void>(res =>
@@ -164,10 +170,12 @@ describe('useLoanTermination hook test', () => {
             }, 1000)
         );
 
-        expect(result.current.data?.loanTerminations).to.be.empty;
+        if (result.current.data?.loanTerminations !== undefined) {
+            expect(result.current.data?.loanTerminations).to.be.empty;
+        }
     });
 
-    it("Should get data for user's existing BilateralPositions from subgraph", async () => {
+    it('Should return loan termination data from subgraph', async () => {
         const { result } = renderHook(() => useLoanTermination(dealId));
 
         await new Promise<void>(res =>
@@ -176,7 +184,7 @@ describe('useLoanTermination hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.loanTerminations != undefined) {
+        if (result.current.data?.loanTerminations !== undefined) {
             const terminations = result.current.data.loanTerminations;
 
             for (let i = 0; i < terminations.length; i++) {

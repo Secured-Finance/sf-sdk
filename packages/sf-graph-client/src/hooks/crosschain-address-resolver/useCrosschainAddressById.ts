@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import {
     CrosschainAddressByIdDocument,
     CrosschainAddressByIdQuery,
-} from '../../../.graphclient';
+} from '../../.graphclient';
 import { client } from '../../client';
 import { generateCrosschainAddressID, QueryResult } from '../../utils';
 

@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { TermDocument, TermQuery } from '../../../.graphclient';
+import { TermDocument, TermQuery } from '../../.graphclient';
 import { client } from '../../client';
 import { generateTermId, QueryResult } from '../../utils';
 

@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { CurrencyDocument, CurrencyQuery } from '../../../.graphclient';
+import { CurrencyDocument, CurrencyQuery } from '../../.graphclient';
 import { client } from '../../client';
 import { generateCurrencyId, QueryResult } from '../../utils';
 

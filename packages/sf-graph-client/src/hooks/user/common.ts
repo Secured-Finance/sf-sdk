@@ -4,7 +4,7 @@ import {
     Maybe,
     Scalars,
     UserTradingHistoryQuery,
-} from '../../../.graphclient';
+} from '../../.graphclient';
 
 type FilledLendingMarketOrderLocal = Maybe<
     Pick<

@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import {
     LendingMarketsDocument,
     LendingMarketsQuery,
-} from '../../../.graphclient';
+} from '../../.graphclient';
 import { client } from '../../client';
 import { generateCurrencyId, QueryResult } from '../../utils';
 

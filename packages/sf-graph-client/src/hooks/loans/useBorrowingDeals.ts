@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { BorrowDealsDocument, BorrowDealsQuery } from '../../../.graphclient';
+import { BorrowDealsDocument, BorrowDealsQuery } from '../../.graphclient';
 import { client } from '../../client';
 import { QueryResult } from '../../utils';
 

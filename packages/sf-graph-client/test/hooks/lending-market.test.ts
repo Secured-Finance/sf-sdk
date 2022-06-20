@@ -18,13 +18,13 @@ import {
 } from '../utils';
 
 describe('useLendingMarkets hook test', () => {
-    it('Should return undefined if vault address is empty', async () => {
+    it('Should return undefined if lending market address is empty', async () => {
         const { result } = renderHook(() => useLendingMarkets(''));
 
         expect(result.current.data).to.be.undefined;
     });
 
-    it('Should get collateral vault data from subgraph', async () => {
+    it('Should get array of lending markets from subgraph', async () => {
         const { result } = renderHook(() => useLendingMarkets(ccy));
 
         await new Promise<void>(res =>
@@ -33,7 +33,7 @@ describe('useLendingMarkets hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.lendingMarkets != undefined) {
+        if (result.current.data?.lendingMarkets !== undefined) {
             const markets = result.current.data.lendingMarkets;
 
             for (let i = 0; i < markets.length; i++) {
@@ -44,13 +44,13 @@ describe('useLendingMarkets hook test', () => {
 });
 
 describe('useLendingMarketInfo hook test', () => {
-    it('Should return undefined if vault address is empty', async () => {
+    it('Should return undefined if lending market address is empty', async () => {
         const { result } = renderHook(() => useLendingMarketInfo(''));
 
         expect(result.current.data).to.be.undefined;
     });
 
-    it('Should get collateral vault data from subgraph', async () => {
+    it('Should return lending market data from subgraph', async () => {
         const { result } = renderHook(() => useLendingMarketInfo(market));
 
         await new Promise<void>(res =>
@@ -59,7 +59,7 @@ describe('useLendingMarketInfo hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.lendingMarket != undefined) {
+        if (result.current.data?.lendingMarket !== undefined) {
             const market = result.current.data.lendingMarket;
 
             validateLendingMarket(market);
@@ -69,15 +69,17 @@ describe('useLendingMarketInfo hook test', () => {
 });
 
 describe('useLendOrderbook hook test', () => {
-    it('Should return undefined if vault address is empty', async () => {
+    it('Should return undefined if lending market address is empty', async () => {
         const { result } = renderHook(() =>
             useLendOrderbookQuery('', assetPrice)
         );
 
-        expect(result.current.data).to.be.empty;
+        if (result.current.data !== undefined) {
+            expect(result.current.data).to.be.empty;
+        }
     });
 
-    it('Should get collateral vault data from subgraph', async () => {
+    it('Should get lending market lend orderbook data from subgraph', async () => {
         const { result } = renderHook(() =>
             useLendOrderbookQuery(market, assetPrice)
         );
@@ -88,7 +90,7 @@ describe('useLendOrderbook hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data != undefined) {
+        if (result.current.data !== undefined) {
             const orderbook = result.current.data;
 
             for (let i = 0; i < orderbook.length; i++) {
@@ -99,15 +101,17 @@ describe('useLendOrderbook hook test', () => {
 });
 
 describe('useBorrowOrderbookQuery hook test', () => {
-    it('Should return undefined if vault address is empty', async () => {
+    it('Should return undefined if lending market address is empty', async () => {
         const { result } = renderHook(() =>
             useBorrowOrderbookQuery('', assetPrice)
         );
 
-        expect(result.current.data).to.be.empty;
+        if (result.current.data !== undefined) {
+            expect(result.current.data).to.be.empty;
+        }
     });
 
-    it('Should get collateral vault data from subgraph', async () => {
+    it('Should get lending market borrow orderbook data from subgraph', async () => {
         const { result } = renderHook(() =>
             useBorrowOrderbookQuery(market, assetPrice)
         );
@@ -118,7 +122,7 @@ describe('useBorrowOrderbookQuery hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data != undefined) {
+        if (result.current.data !== undefined) {
             const orderbook = result.current.data;
 
             for (let i = 0; i < orderbook.length; i++) {
@@ -129,7 +133,7 @@ describe('useBorrowOrderbookQuery hook test', () => {
 });
 
 describe('useLendingTradingHistory hook test', () => {
-    it('Should return undefined if vault address is empty', async () => {
+    it('Should return undefined if lending market address is empty', async () => {
         const { result } = renderHook(() =>
             useLendingTradingHistory('', assetPrice)
         );
@@ -137,7 +141,7 @@ describe('useLendingTradingHistory hook test', () => {
         expect(result.current.data).to.be.undefined;
     });
 
-    it('Should get collateral vault data from subgraph', async () => {
+    it('Should get lending market trading history data from subgraph', async () => {
         const { result } = renderHook(() =>
             useLendingTradingHistory(market, assetPrice)
         );
@@ -148,7 +152,7 @@ describe('useLendingTradingHistory hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data.lendingMarket.tradeHistory != undefined) {
+        if (result.current.data?.lendingMarket?.tradeHistory !== undefined) {
             const history = result.current.data.lendingMarket.tradeHistory;
 
             for (let i = 0; i < history.length; i++) {
