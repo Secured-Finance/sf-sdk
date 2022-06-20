@@ -1,8 +1,5 @@
 import { BigNumber, utils } from 'ethers';
-import {
-    BorrowOrderbookQuery,
-    LendOrderbookQuery,
-} from '../../../.graphclient';
+import { BorrowOrderbookQuery, LendOrderbookQuery } from '../../.graphclient';
 import { LendingMarketOrderRow } from '../../generated';
 import { OrderbookRow, toBN } from '../../utils';
 

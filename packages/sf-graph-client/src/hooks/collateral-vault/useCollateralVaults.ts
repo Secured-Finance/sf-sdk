@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import {
     CollateralVaultsDocument,
     CollateralVaultsQuery,
-} from '../../../.graphclient';
+} from '../../.graphclient';
 import { client } from '../../client';
 import { QueryResult } from '../../utils';
 

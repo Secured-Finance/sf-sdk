@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import {
     LoanNovationHistoryDocument,
     LoanNovationHistoryQuery,
-} from '../../../.graphclient';
+} from '../../.graphclient';
 import { client } from '../../client';
 import { QueryResult } from '../../utils';
 

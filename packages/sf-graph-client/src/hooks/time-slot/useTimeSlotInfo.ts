@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { TimeSlotDocument, TimeSlotQuery } from '../../../.graphclient';
+import { TimeSlotDocument, TimeSlotQuery } from '../../.graphclient';
 import { client } from '../../client';
 import { generateTimeSlotId, QueryResult } from '../../utils';
 

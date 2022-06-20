@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { OpenLoansDocument, OpenLoansQuery } from '../../../.graphclient';
+import { OpenLoansDocument, OpenLoansQuery } from '../../.graphclient';
 import { client } from '../../client';
 import { generateCurrencyId, QueryResult } from '../../utils';
 

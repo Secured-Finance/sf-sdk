@@ -30,7 +30,7 @@ describe('useTermInfo hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.term != undefined) {
+        if (result.current.data?.term !== undefined) {
             const term = result.current.data.term;
 
             validateTerm(term);
@@ -60,7 +60,7 @@ describe('useTerms hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.terms != undefined) {
+        if (result.current.data?.terms !== undefined) {
             const terms = result.current.data.terms;
 
             for (let i = 0; i < terms.length; i++) {

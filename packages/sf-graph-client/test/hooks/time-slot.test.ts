@@ -24,7 +24,7 @@ describe('useTimeSlotInfo hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.timeSlot != undefined) {
+        if (result.current.data?.timeSlot !== undefined) {
             const timeSlot = result.current.data.timeSlot;
 
             validateTimeSlot(timeSlot);
@@ -37,7 +37,7 @@ describe('useTimeSlotInfo hook test', () => {
             useTimeSlotInfo(user, '', ccy, year, month, day)
         );
 
-        expect(result.error.message).to.contain('invalid address');
+        expect(result.error?.message).to.contain('invalid address');
     });
 
     it('Should return undefined result from subgraph for empty ccy', async () => {
@@ -80,7 +80,7 @@ describe('useTimeSlots hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.timeSlots != undefined) {
+        if (result.current.data?.timeSlots !== undefined) {
             const timeSlots = result.current.data.timeSlots;
 
             for (let i = 0; i < timeSlots.length; i++) {
@@ -100,6 +100,8 @@ describe('useTimeSlots hook test', () => {
             }, 1000)
         );
 
-        expect(result.current.data.timeSlots).to.not.be.empty;
+        if (result.current.data?.timeSlots !== undefined) {
+            expect(result.current.data?.timeSlots).to.not.be.empty;
+        }
     });
 });

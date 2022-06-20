@@ -12,7 +12,7 @@ describe('useProductInfo hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.product != undefined) {
+        if (result.current.data?.product !== undefined) {
             const product = result.current.data.product;
 
             validateProduct(product);
@@ -36,7 +36,7 @@ describe('useProducts hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.products != undefined) {
+        if (result.current.data?.products !== undefined) {
             const products = result.current.data.products;
 
             for (let i = 0; i < products.length; i++) {

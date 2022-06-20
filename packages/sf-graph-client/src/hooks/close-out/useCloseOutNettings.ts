@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import {
     CloseOutNettingsDocument,
     CloseOutNettingsQuery,
-} from '../../../.graphclient';
+} from '../../.graphclient';
 import { client } from '../../client';
 import { QueryResult, sortAddresses } from '../../utils';
 

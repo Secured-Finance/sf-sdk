@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import {
     BilateralPositionsDocument,
     BilateralPositionsQuery,
-} from '../../../.graphclient';
+} from '../../.graphclient';
 import { client } from '../../client';
 import { QueryResult } from '../../utils';
 

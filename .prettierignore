@@ -3,5 +3,5 @@ package-lock.json
 packages/sf-client/src/types/
 **/dist/
 packages/sf-graph-client/src/generated.ts
-packages/sf-graph-client/.graphclient
+packages/sf-graph-client/src/.graphclient
 packages/secured-finance-subgraph

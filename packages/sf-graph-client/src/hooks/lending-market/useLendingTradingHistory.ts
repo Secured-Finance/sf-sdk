@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import {
     TradingHistoryDocument,
     TradingHistoryQuery,
-} from '../../../.graphclient';
+} from '../../.graphclient';
 import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
@@ -32,7 +32,7 @@ export const useLendingTradingHistory = (
         };
     }
 
-    if (data?.lendingMarket.tradeHistory) {
+    if (data?.lendingMarket?.tradeHistory) {
         return {
             data: data,
             error: null,

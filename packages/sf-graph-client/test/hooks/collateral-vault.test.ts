@@ -34,7 +34,7 @@ describe('useCollateralVault hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.collateralVault != undefined) {
+        if (result.current.data?.collateralVault !== undefined) {
             const collateralVault = result.current.data.collateralVault;
 
             validateCollateralVault(collateralVault);
@@ -64,7 +64,7 @@ describe('useCollateralVaults hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.collateralVaults != undefined) {
+        if (result.current.data?.collateralVaults !== undefined) {
             const collateralVaults = result.current.data.collateralVaults;
 
             for (let i = 0; i < collateralVaults.length; i++) {
@@ -98,7 +98,7 @@ describe('useCollateralBookFromVault hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.collateralBooks != undefined) {
+        if (result.current.data?.collateralBooks !== undefined) {
             const collateralBooks = result.current.data.collateralBooks;
 
             for (let i = 0; i < collateralBooks.length; i++) {
@@ -138,7 +138,7 @@ describe('useBilateralPositionsFromVault hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.collateralVaultPositions != undefined) {
+        if (result.current.data?.collateralVaultPositions !== undefined) {
             const collateralVaultPositions =
                 result.current.data.collateralVaultPositions;
 
@@ -157,7 +157,7 @@ describe('useBilateralPositionFromVault hook test', () => {
             useBilateralPositionFromVault(vault, '', counterparty, vaultCcy)
         );
 
-        expect(result.error.message).to.contain('invalid address');
+        expect(result.error?.message).to.contain('invalid address');
     });
 
     it("Should return error if counterparty's address is empty", async () => {
@@ -165,7 +165,7 @@ describe('useBilateralPositionFromVault hook test', () => {
             useBilateralPositionFromVault(vault, user, '', vaultCcy)
         );
 
-        expect(result.error.message).to.contain('invalid address');
+        expect(result.error?.message).to.contain('invalid address');
     });
 
     it('Should return undefined if currency is empty', async () => {
@@ -187,7 +187,7 @@ describe('useBilateralPositionFromVault hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.collateralVaultPosition != undefined) {
+        if (result.current.data?.collateralVaultPosition !== undefined) {
             const collateralVaultPosition =
                 result.current.data.collateralVaultPosition;
             validateCollateralVaultPosition(collateralVaultPosition);

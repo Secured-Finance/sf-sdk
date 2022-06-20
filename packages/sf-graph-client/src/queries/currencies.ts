@@ -7,7 +7,7 @@ export const CURRENCIES = gql`
             identifier
             name
             shortName
-            chainID
+            chainId
             ltv
             minMargin
             isSupported
@@ -23,7 +23,7 @@ export const CURRENCY = gql`
             identifier
             name
             shortName
-            chainID
+            chainId
             ltv
             minMargin
             isSupported
@@ -44,7 +44,7 @@ export const SUPPORTED_CURRENCIES_BY_TERM = gql`
                 identifier
                 name
                 shortName
-                chainID
+                chainId
                 ltv
                 minMargin
                 isSupported

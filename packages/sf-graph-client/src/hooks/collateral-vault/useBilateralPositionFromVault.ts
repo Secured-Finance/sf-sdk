@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import {
     BilateralPositionFromVaultDocument,
     BilateralPositionFromVaultQuery,
-} from '../../../.graphclient';
+} from '../../.graphclient';
 import { client } from '../../client';
 import { generateCurrencyId, packAddresses, QueryResult } from '../../utils';
 

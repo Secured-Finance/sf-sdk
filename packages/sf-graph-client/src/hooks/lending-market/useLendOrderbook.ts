@@ -1,9 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { useMemo, useState } from 'react';
-import {
-    LendOrderbookDocument,
-    LendOrderbookQuery,
-} from '../../../.graphclient';
+import { LendOrderbookDocument, LendOrderbookQuery } from '../../.graphclient';
 import { client } from '../../client';
 import { OrderbookRow, QueryResult, toBN } from '../../utils';
 import { modifyOrderbook } from './common';
@@ -34,7 +31,7 @@ export const useLendOrderbook = (
         };
     }
 
-    if (data?.lendingMarket.lendOrderbook) {
+    if (data?.lendingMarket?.lendOrderbook) {
         return {
             data: data,
             error: null,

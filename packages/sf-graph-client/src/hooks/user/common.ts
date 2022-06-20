@@ -4,7 +4,7 @@ import {
     Maybe,
     Scalars,
     UserTradingHistoryQuery,
-} from '../../../.graphclient';
+} from '../../.graphclient';
 
 type FilledLendingMarketOrderLocal = Maybe<
     Pick<
@@ -23,7 +23,7 @@ type FilledLendingMarketOrderLocal = Maybe<
     > & {
         currency: Pick<
             Currency,
-            'identifier' | 'shortName' | 'name' | 'chainID'
+            'identifier' | 'shortName' | 'name' | 'chainId'
         >;
     }
 >;

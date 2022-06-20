@@ -17,7 +17,27 @@ describe('useCloseOutNetting hook test', () => {
         const { result } = renderHook(() =>
             useCloseOutNetting('', counterparty, ccy)
         );
-        expect(result.error.message).to.contain('invalid address');
+        expect(result.error?.message).to.contain('invalid address');
+    });
+
+    it('Should throw an error on empty counterparty address', async () => {
+        const { result } = renderHook(() => useCloseOutNetting(user, '', ccy));
+
+        expect(result.error?.message).to.contain('invalid address');
+    });
+
+    it('Should return undefined on empty currency identifier', async () => {
+        const { result } = renderHook(() =>
+            useCloseOutNetting(user, counterparty, '')
+        );
+
+        await new Promise<void>(res =>
+            setTimeout(() => {
+                res();
+            }, 1000)
+        );
+
+        expect(result.current.data?.closeOutNetting).to.be.undefined;
     });
 
     it('Should get data for existing CloseOutNetting from subgraph', async () => {
@@ -31,9 +51,9 @@ describe('useCloseOutNetting hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.closeOutNetting != undefined) {
+        if (result.current.data?.closeOutNetting !== undefined) {
             validateCloseOutNetting(result.current.data.closeOutNetting);
-            validateCurrency(result.current.data.closeOutNetting.currency);
+            validateCurrency(result.current.data?.closeOutNetting?.currency);
         }
     });
 });
@@ -50,7 +70,9 @@ describe('useCloseOutNettings hook test', () => {
             }, 1000)
         );
 
-        expect(result.current.data?.closeOutNettings).to.be.empty;
+        if (result.current.data?.closeOutNettings !== undefined) {
+            expect(result.current.data?.closeOutNettings).to.be.empty;
+        }
     });
 
     it('Should get data for existing CloseOutNettings between counterparties from subgraph', async () => {
@@ -64,7 +86,7 @@ describe('useCloseOutNettings hook test', () => {
             }, 1000)
         );
 
-        if (result.current.data?.closeOutNettings != undefined) {
+        if (result.current.data?.closeOutNettings !== undefined) {
             const closeOutNettings = result.current.data.closeOutNettings;
 
             for (let i = 0; i < closeOutNettings.length; i++) {

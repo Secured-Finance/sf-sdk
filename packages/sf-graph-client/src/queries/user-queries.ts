@@ -10,18 +10,19 @@ export const OPEN_ORDERS = gql`
             ) {
                 id
                 orderId
+                currencyName
                 currency {
                     identifier
                     shortName
                     name
-                    chainID
+                    chainId
                 }
                 side
                 marketAddr
+                orderState
                 term
                 rate
                 amount
-                deadline
                 maker
                 createdAtTimestamp
                 createdAtBlockNumber
@@ -44,7 +45,7 @@ export const TRADE_HISTORY = gql`
                     identifier
                     shortName
                     name
-                    chainID
+                    chainId
                 }
                 side
                 marketAddr
@@ -67,7 +68,7 @@ export const TRADE_HISTORY = gql`
                     identifier
                     shortName
                     name
-                    chainID
+                    chainId
                 }
                 side
                 marketAddr
@@ -94,7 +95,7 @@ export const OPEN_LOANS = gql`
                     identifier
                     shortName
                     name
-                    chainID
+                    chainId
                 }
                 term
                 notional

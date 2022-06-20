@@ -62,3 +62,4 @@ generated/
 src/.DS_Store
 
 test/.bin
+test/.latest.json

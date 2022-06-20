@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import {
     UserTradingHistoryDocument,
     UserTradingHistoryQuery,
-} from '../../../.graphclient';
+} from '../../.graphclient';
 import { client } from '../../client';
 import { QueryResult } from '../../utils';
 import {
@@ -37,7 +37,7 @@ export const useUsersTradingHistory = (
         };
     }
 
-    if (data?.user.madeOrders && data?.user.takenOrders) {
+    if (data?.user?.madeOrders && data?.user?.takenOrders) {
         return {
             data: data,
             error: null,
