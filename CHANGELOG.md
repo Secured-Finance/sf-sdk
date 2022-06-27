@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7-beta.2](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.7-beta.1...v0.1.7-beta.2) (2022-06-27)
+
+
+### Bug Fixes
+
+* remove subgraph test artifact for succesfull action run ([d473b79](https://github.com/Secured-Finance/sf-sdk/commit/d473b79e8ebc9f1dafa22a5315ecd37a9469417b))
+
+
+
+
+
 ## [0.1.7-beta.1](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.6-beta.17...v0.1.7-beta.1) (2022-06-27)
 
 
