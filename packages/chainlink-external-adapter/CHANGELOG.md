@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7-beta.1](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.6-beta.17...v0.1.7-beta.1) (2022-06-27)
+
+
+### Bug Fixes
+
+* monorepo packages version for publishing ([9a2f48e](https://github.com/Secured-Finance/sf-sdk/commit/9a2f48eed662d93128836dc6d85f7f6863a972f4))
+
+
+
+
+
 ## [0.2.3-beta.1](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.3-beta.0...v0.2.3-beta.1) (2022-06-10)
 
 **Note:** Version bump only for package chainlink-external-adapter

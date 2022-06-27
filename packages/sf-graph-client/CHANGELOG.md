@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7-beta.1](https://github.com/secured-finance/sf-sdk/compare/v0.1.6-beta.17...v0.1.7-beta.1) (2022-06-27)
+
+
+### Bug Fixes
+
+* eslint syntax errors, graph-client npm package build issues ([1c71fb5](https://github.com/secured-finance/sf-sdk/commit/1c71fb520945a1bc97a89e5b08f483fec803a34e))
+* graph-client close-out-netting test ([1acf733](https://github.com/secured-finance/sf-sdk/commit/1acf73341ffbff314fd647e403b3e0b48942bc16))
+* increase graph-client test timeout ([e848416](https://github.com/secured-finance/sf-sdk/commit/e848416478be4f302cd42773605379074b30b5aa))
+* monorepo packages version for publishing ([9a2f48e](https://github.com/secured-finance/sf-sdk/commit/9a2f48eed662d93128836dc6d85f7f6863a972f4))
+* remove graphql-codegen from graph-client ([6a771cf](https://github.com/secured-finance/sf-sdk/commit/6a771cfd637f436a7831b2cdd3c3106d1e2e5732))
+* subgraph queries for updated schema, eslint rules fix ([8fd62ce](https://github.com/secured-finance/sf-sdk/commit/8fd62ce285126eb6d7e569c332eae6206f1c760a))
+* subgraph test fix, github codegen action ([967bb4d](https://github.com/secured-finance/sf-sdk/commit/967bb4dc3f441b43bc3ba77dd0277ffe75264f3d))
+
+
+
+
+
 ## [0.2.3-beta.1](https://github.com/secured-finance/sf-sdk/compare/v0.2.3-beta.0...v0.2.3-beta.1) (2022-06-10)
 
 **Note:** Version bump only for package @secured-finance/sf-graph-client

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7-beta.1](https://github.com/secured-finance/sf-sdk/compare/v0.1.6-beta.17...v0.1.7-beta.1) (2022-06-27)
+
+
+### Bug Fixes
+
+* monorepo packages version for publishing ([9a2f48e](https://github.com/secured-finance/sf-sdk/commit/9a2f48eed662d93128836dc6d85f7f6863a972f4))
+* subgraph test fix, github codegen action ([967bb4d](https://github.com/secured-finance/sf-sdk/commit/967bb4dc3f441b43bc3ba77dd0277ffe75264f3d))
+
+
+
+
+
 ## [0.2.3-beta.1](https://github.com/secured-finance/sf-sdk/compare/v0.2.3-beta.0...v0.2.3-beta.1) (2022-06-10)
 
 **Note:** Version bump only for package @secured-finance/sf-client
