@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7-beta.5](https://github.com/secured-finance/sf-sdk/compare/v0.1.7-beta.4...v0.1.7-beta.5) (2022-06-28)
+
+
+### Bug Fixes
+
+* update npm directory on publishing graph-client ([e292c9f](https://github.com/secured-finance/sf-sdk/commit/e292c9fe00b26a06f78f3dfa7c72a66e11289900))
+
+
+
+
+
 ## [0.1.7-beta.4](https://github.com/secured-finance/sf-sdk/compare/v0.1.7-beta.3...v0.1.7-beta.4) (2022-06-28)
 
 
