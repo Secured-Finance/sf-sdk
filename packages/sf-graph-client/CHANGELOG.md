@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7-beta.9](https://github.com/secured-finance/sf-sdk/compare/v0.1.7-beta.8...v0.1.7-beta.9) (2022-06-28)
+
+
+### Bug Fixes
+
+* move graphql to devDependencies on graph-client package.json ([a9c1f70](https://github.com/secured-finance/sf-sdk/commit/a9c1f702385742ef12c2177560a89706fbb18b85))
+
+
+
+
+
 ## [0.1.7-beta.8](https://github.com/secured-finance/sf-sdk/compare/v0.1.7-beta.7...v0.1.7-beta.8) (2022-06-28)
 
 
