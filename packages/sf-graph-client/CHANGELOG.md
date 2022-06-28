@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7-beta.8](https://github.com/secured-finance/sf-sdk/compare/v0.1.7-beta.7...v0.1.7-beta.8) (2022-06-28)
+
+
+### Bug Fixes
+
+* replace bundledDependencies on graph-client ([7f8e2e3](https://github.com/secured-finance/sf-sdk/commit/7f8e2e33fd2a231245bff068dffcc46e2521f3cd))
+
+
+
+
+
 ## [0.1.7-beta.7](https://github.com/secured-finance/sf-sdk/compare/v0.1.7-beta.6...v0.1.7-beta.7) (2022-06-28)
 
 
