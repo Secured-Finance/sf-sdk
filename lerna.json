@@ -28,6 +28,6 @@
     "**/typechain",
     "**/@typechain/*"
   ],
-  "version": "0.1.7-beta.5",
+  "version": "0.1.7-beta.6",
   "npmClient": "npm"
 }
