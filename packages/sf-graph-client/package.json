@@ -10,8 +10,7 @@
     "codegen": "graphclient build --dir src",
     "lint": "eslint {src,test}/**/*.ts",
     "build": "npm run compile && tsc -b",
-    "test": "ts-mocha --timeout 6000 src/*.test.{js,jsx,ts,tsx} src/**/*.test.{js,jsx,ts,tsx} test/**/*.test.{js,jsx,ts,tsx}",
-    "prepublish": "npm run codegen"
+    "test": "ts-mocha --timeout 6000 src/*.test.{js,jsx,ts,tsx} src/**/*.test.{js,jsx,ts,tsx} test/**/*.test.{js,jsx,ts,tsx}"
   },
   "author": "Secured Finance",
   "bugs": {
