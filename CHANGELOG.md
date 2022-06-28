@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7-beta.3](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.7-beta.2...v0.1.7-beta.3) (2022-06-28)
+
+
+### Bug Fixes
+
+* remove prepublish script for graph-client ([76ce8c7](https://github.com/Secured-Finance/sf-sdk/commit/76ce8c76097d988ffb2501b55882387832136eb3))
+
+
+
+
+
 ## [0.1.7-beta.2](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.7-beta.1...v0.1.7-beta.2) (2022-06-27)
 
 
