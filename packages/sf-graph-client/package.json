@@ -59,5 +59,8 @@
     "wait-for-expect": "^3.0.2",
     "web3-utils": "^1.7.0"
   },
-  "types": "dist/index.d.ts"
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "directory": "dist"
+  }
 }
