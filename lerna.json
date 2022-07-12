@@ -3,7 +3,7 @@
     "publish": {
       "allowBranch": [
         "main",
-        "development"
+        "develop"
       ],
       "ignoreChanges": [
         "ignored-file",

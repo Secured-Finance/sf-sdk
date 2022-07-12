@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - development
+      - develop
     paths:
       - 'packages/secured-finance-subgraph/**'
 
