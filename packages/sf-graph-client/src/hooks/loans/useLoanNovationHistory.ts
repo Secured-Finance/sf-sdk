@@ -8,7 +8,7 @@ import { QueryResult } from '../../utils';
 
 export const useLoanNovationHistory = (
     id: string,
-    skip: number = 0
+    skip = 0
 ): QueryResult<LoanNovationHistoryQuery> => {
     const variables = {
         id: id,

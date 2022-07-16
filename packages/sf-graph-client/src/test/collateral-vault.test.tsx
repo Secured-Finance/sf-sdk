@@ -10,7 +10,7 @@ import {
 } from '../queries';
 
 it('Should successfully render collateral book component ', () => {
-    let variables = {
+    const variables = {
         vaultId: '0xETH',
         address: '0x01',
     };
@@ -29,7 +29,7 @@ it('Should successfully render collateral book component ', () => {
 });
 
 it('Should render collateral book component with network error query', async () => {
-    let variables = {
+    const variables = {
         vaultId: '0xWETH',
         address: '0x01',
     };
@@ -55,7 +55,7 @@ it('Should render collateral book component with network error query', async () 
 });
 
 it('Should render mock collateral book component and successfully get data from query', async () => {
-    let variables = {
+    const variables = {
         vaultId: '0xETH',
         address: '0x01',
     };
@@ -78,8 +78,10 @@ it('Should render mock collateral book component and successfully get data from 
     const testInstances =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
 
-    let instant0 = testInstances.children[0] as renderer.ReactTestRendererJSON;
-    let instant1 = testInstances.children[1] as renderer.ReactTestRendererJSON;
+    const instant0 = testInstances
+        .children[0] as renderer.ReactTestRendererJSON;
+    const instant1 = testInstances
+        .children[1] as renderer.ReactTestRendererJSON;
 
     expect(instant0.children.toString()).equal(
         'Independent collateral for 0x01 is 1000'
@@ -90,7 +92,7 @@ it('Should render mock collateral book component and successfully get data from 
 });
 
 it('Should render mock bilateral position component and successfully get data from query', async () => {
-    let variables = {
+    const variables = {
         vaultId: '0xETH',
         address: '0x01',
     };
@@ -113,8 +115,10 @@ it('Should render mock bilateral position component and successfully get data fr
     const testInstances =
         testComponent.toJSON() as renderer.ReactTestRendererJSON;
 
-    let instant0 = testInstances.children[0] as renderer.ReactTestRendererJSON;
-    let instant1 = testInstances.children[1] as renderer.ReactTestRendererJSON;
+    const instant0 = testInstances
+        .children[0] as renderer.ReactTestRendererJSON;
+    const instant1 = testInstances
+        .children[1] as renderer.ReactTestRendererJSON;
 
     expect(instant0.children.toString()).equal(
         'Locked collateral for 0x010012 is 10000'

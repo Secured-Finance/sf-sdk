@@ -10,7 +10,7 @@ import {
 import { BILATERAL_POSITIONS, UNSETTLED_POSITIONS } from '../queries';
 
 it('Should render unsettled collateral position component with network error query', async () => {
-    let variables = {
+    const variables = {
         id: '0x000111',
         address: '0x012',
     };
@@ -37,7 +37,7 @@ it('Should render unsettled collateral position component with network error que
 });
 
 it('Should render mock unsettled collateral position component and successfully get data from query', async () => {
-    let variables = {
+    const variables = {
         id: '0x000111',
         address: '0x01',
     };
@@ -64,7 +64,7 @@ it('Should render mock unsettled collateral position component and successfully 
 });
 
 it('Should render mock unsettled collateral position component and successfully get data from query', async () => {
-    let variables = {
+    const variables = {
         id: '0x000111',
         address: '0x01',
     };

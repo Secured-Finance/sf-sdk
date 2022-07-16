@@ -23,7 +23,7 @@ describe('ChainlinkInterceptor', () => {
   describe('intercept', () => {
     it('should return data', async () => {
       (
-        context.switchToHttp().getRequest as jest.Mock<any, any>
+        context.switchToHttp().getRequest as jest.Mock<unknown, never>
       ).mockReturnValueOnce({
         body: { jobRunID: 'testId' },
       });

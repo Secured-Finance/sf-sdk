@@ -1,12 +1,16 @@
 import {
+  buildMessage,
   registerDecorator,
   ValidationOptions,
-  buildMessage,
 } from 'class-validator';
 import { CID } from 'multiformats';
 
 export function IsCID(validationOptions?: ValidationOptions) {
-  return function (object: { [key: string]: any }, propertyName: string): void {
+  return function (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    object: { [key: string]: any },
+    propertyName: string,
+  ): void {
     registerDecorator({
       name: 'IsCID',
       target: object.constructor,
@@ -14,7 +18,7 @@ export function IsCID(validationOptions?: ValidationOptions) {
       constraints: [],
       options: validationOptions,
       validator: {
-        validate(value: any) {
+        validate(value: unknown) {
           try {
             CID.parse(value && value['/']);
             return true;

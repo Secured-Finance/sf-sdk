@@ -1,4 +1,4 @@
-import { generatePrefix, generateId } from './deal-id';
+import { generateId, generatePrefix } from './deal-id';
 import assert = require('assert');
 
 describe('Check deal id generation functions', function () {
@@ -14,7 +14,7 @@ describe('Check deal id generation functions', function () {
 
     it('Try to generate deal id string', async () => {
         let productName = '0xLoan';
-        let prefix = generatePrefix(productName);
+        const prefix = generatePrefix(productName);
         let result = generateId(1, prefix);
         let expectedResult =
             '0x21aaa47b00000000000000000000000000000000000000000000000000000001';

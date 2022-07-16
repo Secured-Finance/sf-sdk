@@ -5,7 +5,7 @@ import { QueryResult } from '../../utils';
 
 export const useBorrowingDeals = (
     account: string,
-    skip: number = 0
+    skip = 0
 ): QueryResult<BorrowDealsQuery> => {
     const variables = {
         account: account.toLowerCase(),

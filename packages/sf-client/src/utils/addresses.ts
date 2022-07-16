@@ -22,14 +22,14 @@ export const packAddresses = (
             ['address', 'address'],
             [_addr0, _addr1]
         );
-        let packed = utils.keccak256(encodedAddrs);
+        const packed = utils.keccak256(encodedAddrs);
         return [packed, true];
     } else {
         encodedAddrs = utils.defaultAbiCoder.encode(
             ['address', 'address'],
             [_addr0, _addr1]
         );
-        let packed = utils.keccak256(encodedAddrs);
+        const packed = utils.keccak256(encodedAddrs);
         return [packed, false];
     }
 };

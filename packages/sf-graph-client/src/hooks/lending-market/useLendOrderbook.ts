@@ -7,7 +7,7 @@ import { modifyOrderbook } from './common';
 
 export const useLendOrderbook = (
     lendingMarket: string,
-    skip: number = 0
+    skip = 0
 ): QueryResult<LendOrderbookQuery> => {
     const variables = {
         market: lendingMarket.toLowerCase(),
@@ -47,17 +47,10 @@ export const useLendOrderbook = (
 export const useLendOrderbookQuery = (
     lendingMarket: string,
     assetPrice: number,
-    skip: number = 0
+    skip = 0
 ): QueryResult<Array<OrderbookRow>> => {
     const [orderbook, setOrderbook] = useState<Array<OrderbookRow>>([]);
     const { data, error } = useLendOrderbook(lendingMarket, skip);
-
-    if (error) {
-        return {
-            data: undefined,
-            error: error,
-        };
-    }
 
     useMemo(async () => {
         if (data) {
@@ -73,6 +66,13 @@ export const useLendOrderbookQuery = (
             return undefined;
         }
     }, [data, assetPrice]);
+
+    if (error) {
+        return {
+            data: undefined,
+            error: error,
+        };
+    }
 
     return {
         data: orderbook,

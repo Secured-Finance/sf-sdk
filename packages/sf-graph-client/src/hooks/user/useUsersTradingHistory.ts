@@ -59,13 +59,6 @@ export const useUsersTradingHistoryQuery = (
     >([]);
     const { data, error } = useUsersTradingHistory(account, market);
 
-    if (error) {
-        return {
-            data: undefined,
-            error: error,
-        };
-    }
-
     useMemo(async () => {
         if (data) {
             const parsedHistory = await modifyUsersTradingHistory(
@@ -75,7 +68,14 @@ export const useUsersTradingHistoryQuery = (
 
             setTradingHistory(parsedHistory);
         }
-    }, [data]);
+    }, [account, data]);
+
+    if (error) {
+        return {
+            data: undefined,
+            error: error,
+        };
+    }
 
     return {
         data: tradingHistory,

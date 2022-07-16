@@ -5,7 +5,7 @@ import { QueryResult } from '../../utils';
 
 export const useTimeSlots = (
     user: string,
-    skip: number = 0
+    skip = 0
 ): QueryResult<TimeSlotsQuery> => {
     const variables = {
         address: user.toLowerCase(),

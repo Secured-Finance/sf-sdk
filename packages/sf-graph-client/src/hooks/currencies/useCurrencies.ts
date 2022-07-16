@@ -3,9 +3,7 @@ import { CurrenciesDocument, CurrenciesQuery } from '../../.graphclient';
 import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
-export const useCurrencies = (
-    skip: number = 0
-): QueryResult<CurrenciesQuery> => {
+export const useCurrencies = (skip = 0): QueryResult<CurrenciesQuery> => {
     const variables = {
         skip: skip,
     };

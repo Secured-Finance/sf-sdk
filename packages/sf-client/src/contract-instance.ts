@@ -50,6 +50,7 @@ export class ContractsInstance {
 
         Object.keys(contractForEnv).forEach(contract => {
             const Contract = contractForEnv[contract];
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             this[contract] = new Contract(signerOrProvider, networkId);
         });
@@ -70,7 +71,7 @@ export class ContractsInstance {
         });
 
         lendingMarkets[networkId].map((marketItem: LendingMarketItem) => {
-            let market = Object.assign(
+            const market = Object.assign(
                 {
                     contract: new LendingMarket(
                         marketItem.ccy,

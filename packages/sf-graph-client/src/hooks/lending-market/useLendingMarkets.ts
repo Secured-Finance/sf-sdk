@@ -8,9 +8,9 @@ import { generateCurrencyId, QueryResult } from '../../utils';
 
 export const useLendingMarkets = (
     ccyShortName: string,
-    skip: number = 0
+    skip = 0
 ): QueryResult<LendingMarketsQuery> => {
-    let currencyId = generateCurrencyId(ccyShortName);
+    const currencyId = generateCurrencyId(ccyShortName);
 
     const variables = {
         currency: currencyId,

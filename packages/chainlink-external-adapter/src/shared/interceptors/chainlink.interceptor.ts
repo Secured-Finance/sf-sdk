@@ -1,23 +1,23 @@
+import { AdapterError } from '@chainlink/external-adapter';
 import {
   CallHandler,
   ExecutionContext,
-  Injectable,
-  NestInterceptor,
-  Logger,
   HttpException,
   HttpStatus,
+  Injectable,
+  Logger,
+  NestInterceptor,
 } from '@nestjs/common';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
 import { Request } from 'express';
-import { AdapterError } from '@chainlink/external-adapter';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { MaxAttemptsError } from 'typescript-retry-decorator';
 
 @Injectable()
 export class ChainlinkInterceptor implements NestInterceptor {
   private readonly logger = new Logger(ChainlinkInterceptor.name);
 
-  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
     const request = context.switchToHttp().getRequest<Request>();
     const jobRunID = request.body.jobRunID || request.query.jobRunID || '1';
 

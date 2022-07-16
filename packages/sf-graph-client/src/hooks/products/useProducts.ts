@@ -3,7 +3,7 @@ import { ProductsDocument, ProductsQuery } from '../../.graphclient';
 import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
-export const useProducts = (skip: number = 0): QueryResult<ProductsQuery> => {
+export const useProducts = (skip = 0): QueryResult<ProductsQuery> => {
     const variables = {
         skip: skip,
     };

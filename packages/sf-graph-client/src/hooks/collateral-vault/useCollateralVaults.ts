@@ -7,7 +7,7 @@ import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
 export const useCollateralVaults = (
-    skip: number = 0
+    skip = 0
 ): QueryResult<CollateralVaultsQuery> => {
     const variables = {
         skip: skip,
