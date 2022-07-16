@@ -28,3 +28,11 @@ jobs:
         run: npm run build
       - name: Execute Test
         run: npm run test-all
+      - name: Execute Coverage
+        run: npm run coverage
+      - name: Upload app coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          files: ./packages/chainlink-external-adapter/coverage/coverage-final.json
+          flags: chainlink-external-adapter
+          token: ${{ secrets.CODECOV_TOKEN }}

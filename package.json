@@ -10,6 +10,7 @@
     "format": "prettier --check '**/*.{js,jsx,ts,tsx,json}' '*.{js,jsx,ts,tsx,json}' '!package-lock.json' '!lerna.json'",
     "format:fix": "prettier --write '**/*.{js,jsx,ts,tsx,json}' '*.{js,jsx,ts,tsx,json}' '!package-lock.json' '!lerna.json'",
     "test-all": "nx run-many --target=test --all",
+    "coverage": "nx run-many --target=test:cov --all",
     "build": "nx run-many --target=build --all",
     "prepublishOnly": "npm run build",
     "version": "npm run format:fix",
