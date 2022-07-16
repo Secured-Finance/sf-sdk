@@ -22,7 +22,7 @@ jobs:
       - name: Bootstrap Repo
         run: npm run bootstrap
       - name: Lint Code
-        run: npm run lint
+        run: npm run lint:check
       - name: Format Code
         run: npm run format
       - name: Generate artifacts

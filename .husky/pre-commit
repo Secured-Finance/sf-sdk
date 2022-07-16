@@ -3,6 +3,7 @@
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 npm run format
-npm run lint
+#npm run lint:check
+npm run build
 npm run test-all
 #sh $SCRIPTPATH/check-package-lock.sh
