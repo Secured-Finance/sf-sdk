@@ -1,0 +1,20 @@
+{
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "check-coverage": false,
+    "all": true,
+    "include": [
+        "src/**/!(*.test.*).[tj]s?(x)"
+    ],
+    "exclude": [
+        "src/mocks",
+        "src/.graphclient",
+        "src/test"
+    ],
+    "reporter": [
+        "json",
+        "html",
+        "text",
+        "text-summary"
+    ],
+    "report-dir": "coverage"
+}

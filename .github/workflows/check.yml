@@ -22,17 +22,29 @@ jobs:
         run: npm run lint:check
       - name: Format Code
         run: npm run format
-      - name: Generate artifacts
-        run: npm run codegen
       - name: Build Repo
         run: npm run build
+      - name: Generate artifacts
+        run: npm run codegen
       - name: Execute Test
         run: npm run test-all
       - name: Execute Coverage
         run: npm run coverage
-      - name: Upload app coverage to Codecov
+      - name: Upload ChainLink coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
           files: ./packages/chainlink-external-adapter/coverage/coverage-final.json
           flags: chainlink-external-adapter
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload Client coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          files: ./packages/sf-client/coverage/coverage-final.json
+          flags: sf-client
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload Graph Client coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          files: ./packages/sf-graph-client/coverage/coverage-final.json
+          flags: sf-graph-client
           token: ${{ secrets.CODECOV_TOKEN }}

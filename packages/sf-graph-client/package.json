@@ -9,7 +9,8 @@
     "compile": "tsc -p tsconfig.json",
     "codegen": "graphclient build --dir src",
     "build": "npm run compile && tsc -b",
-    "test": "ts-mocha --timeout 6000 src/*.test.{js,jsx,ts,tsx} src/**/*.test.{js,jsx,ts,tsx} test/**/*.test.{js,jsx,ts,tsx}"
+    "test": "ts-mocha --timeout 6000 src/*.test.{js,jsx,ts,tsx} src/**/*.test.{js,jsx,ts,tsx} test/**/*.test.{js,jsx,ts,tsx}",
+    "test:cov": "nyc npm run test"
   },
   "author": "Secured Finance",
   "bugs": {
@@ -31,6 +32,7 @@
     "tslib": "^2.4.0"
   },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@testing-library/react-hooks": "^8.0.0",
     "@types/mocha": "^9.1.0",
     "@types/react": "^17.0.43",
@@ -44,6 +46,7 @@
     "jsdom": "^19.0.0",
     "mocha": "^9.2.0",
     "moment": "^2.29.1",
+    "nyc": "^15.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-test-renderer": "^17.0.2",

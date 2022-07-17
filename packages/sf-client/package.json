@@ -10,6 +10,7 @@
     "watch": "tsc -p tsconfig.json -w",
     "build": "tsc --project tsconfig.json",
     "test": "ts-mocha src/*.test.ts src/**/*.test.ts",
+    "test:cov": "nyc npm run test",
     "prepublish": "npm run codegen"
   },
   "author": "Secured Finance",
@@ -29,6 +30,7 @@
     "typescript": "^4.5.4"
   },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@typechain/ethers-v5": "^10.0.0",
     "@types/chai": "^4.3.0",
     "@types/expect": "^24.3.0",
@@ -37,6 +39,7 @@
     "chai": "^4.3.4",
     "dotenv": "^10.0.0",
     "mocha": "^9.0.3",
+    "nyc": "^15.1.0",
     "ts-mocha": "^8.0.0",
     "ts-node": "^10.1.0",
     "tslib": "^2.3.0",
