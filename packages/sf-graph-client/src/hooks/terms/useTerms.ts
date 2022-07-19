@@ -3,7 +3,7 @@ import { TermsDocument, TermsQuery } from '../../.graphclient';
 import { client } from '../../client';
 import { QueryResult } from '../../utils';
 
-export const useTerms = (skip: number = 0): QueryResult<TermsQuery> => {
+export const useTerms = (skip = 0): QueryResult<TermsQuery> => {
     const variables = {
         skip: skip,
     };

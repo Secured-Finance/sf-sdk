@@ -9,7 +9,7 @@ import { QueryResult, sortAddresses } from '../../utils';
 export const useCloseOutNettings = (
     user: string,
     counterparty: string,
-    skip: number = 0
+    skip = 0
 ): QueryResult<CloseOutNettingsQuery> => {
     const sortedAddresses = sortAddresses(user, counterparty);
 

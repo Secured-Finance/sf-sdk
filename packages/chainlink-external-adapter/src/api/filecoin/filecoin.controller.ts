@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Res, UseInterceptors } from '@nestjs/common';
-import { Response } from 'express';
 import { ChainlinkInterceptor } from '@shared/interceptors';
+import { Response } from 'express';
 import { GetMessageArgsDto, GetMessageResponseDto } from './dtos';
 import { FilecoinService } from './filecoin.service';
 

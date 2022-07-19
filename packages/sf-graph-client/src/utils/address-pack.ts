@@ -4,9 +4,9 @@ export const packAddresses = (address0: string, address1: string) => {
     let encodedAddrs: string;
     let packed: string;
 
-    let addresses = sortAddresses(address0, address1);
-    let _address0 = addresses[0];
-    let _address1 = addresses[1];
+    const addresses = sortAddresses(address0, address1);
+    const _address0 = addresses[0];
+    const _address1 = addresses[1];
 
     if (_address0 !== address0) {
         encodedAddrs = utils.defaultAbiCoder.encode(

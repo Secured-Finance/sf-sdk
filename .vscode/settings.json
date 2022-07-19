@@ -2,7 +2,8 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "files.associations": {
     "*.jsx": "javascriptreact",
-    "*.tsx": "typescriptreact"
+    "*.tsx": "typescriptreact",
+    "*.eslintrc": "json"
   },
   "files.trimTrailingWhitespace": true,
   "files.trimFinalNewlines": true,

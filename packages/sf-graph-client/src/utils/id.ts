@@ -4,11 +4,11 @@ import { packAddresses } from './address-pack';
 import { getCurrencyIdentifier, getProductPrefix } from './string';
 
 export const generateDealId = (prefixOrName: string, dealNumber: number) => {
-    let prefix = generateProductId(prefixOrName);
-    let right = utils.toBN(utils.rightPad(prefix, 64));
-    let left = utils.toBN(utils.leftPad(dealNumber, 64));
+    const prefix = generateProductId(prefixOrName);
+    const right = utils.toBN(utils.rightPad(prefix, 64));
+    const left = utils.toBN(utils.leftPad(dealNumber, 64));
 
-    let id = utils.numberToHex(right.or(left));
+    const id = utils.numberToHex(right.or(left));
 
     return id;
 };

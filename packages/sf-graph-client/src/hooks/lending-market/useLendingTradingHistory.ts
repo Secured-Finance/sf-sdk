@@ -8,7 +8,7 @@ import { QueryResult } from '../../utils';
 
 export const useLendingTradingHistory = (
     lendingMarket: string,
-    skip: number = 0
+    skip = 0
 ): QueryResult<TradingHistoryQuery> => {
     const variables = {
         market: lendingMarket.toLowerCase(),

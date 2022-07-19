@@ -3,5 +3,8 @@
     "project": "tsconfig.json",
     "sourceType": "module"
   },
-  "ignorePatterns": ["node_modules", "src/types", "dist", "test"]
+  "env": {
+    "node": true,
+    "jest": true
+  }
 }

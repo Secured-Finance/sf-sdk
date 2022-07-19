@@ -14,13 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Read .nvmrc
-        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
-        id: nvm
-      - name: Install Node
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+          node-version-file: '.nvmrc'
+          cache: 'npm'
       - name: Install Dependencies
         run: npm ci
       - name: Bootstrap Repo

@@ -1,12 +1,12 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import { BigNumber } from 'bignumber.js';
 import {
   Cid,
   Message,
   MsgLookup,
   TipSet,
 } from 'filecoin.js/builds/dist/providers/Types';
-import { BigNumber } from 'bignumber.js';
 import { MaxAttemptsError } from 'typescript-retry-decorator';
 
 import { ConfigModule } from '@shared/modules';
@@ -62,10 +62,10 @@ describe('FilecoinService', () => {
 
       jest
         .spyOn(filecoinLotusRepository.state, 'searchMsg')
-        .mockImplementation(() => Promise.resolve(msgLookup) as any);
+        .mockImplementation(() => Promise.resolve(msgLookup) as never);
       jest
         .spyOn(filecoinLotusRepository.custom, 'getTipSet')
-        .mockImplementation(() => Promise.resolve(tipset) as any);
+        .mockImplementation(() => Promise.resolve(tipset) as never);
 
       expect(await service.fetchMessage(messageId)).toEqual({
         to: 'toAddress',

@@ -8,7 +8,7 @@ import { QueryResult } from '../../utils';
 
 export const useLoanTermination = (
     id: string,
-    skip: number = 0
+    skip = 0
 ): QueryResult<LoanTerminationQuery> => {
     const variables = {
         id: id,

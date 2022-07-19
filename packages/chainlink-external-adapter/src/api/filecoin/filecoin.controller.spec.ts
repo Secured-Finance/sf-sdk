@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { FilecoinLotusRepository } from '@shared/repositories';
 import { ConfigModule } from '@shared/modules';
+import { FilecoinLotusRepository } from '@shared/repositories';
 import { Response } from 'express';
 
-import { FilecoinController } from './filecoin.controller';
 import { GetMessageArgsDto } from './dtos/get-message-args.dto';
+import { FilecoinController } from './filecoin.controller';
 import { FilecoinService } from './filecoin.service';
 
 describe('FilecoinController', () => {
@@ -29,6 +29,7 @@ describe('FilecoinController', () => {
 
     jest
       .spyOn(filecoinService, 'fetchMessage')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .mockImplementation(() => Promise.resolve<any>('testMsg'));
   });
 

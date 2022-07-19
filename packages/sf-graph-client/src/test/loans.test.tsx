@@ -7,7 +7,7 @@ import { LoanMock } from '../mocks/components';
 import { LOAN_DEALS } from '../queries';
 
 it('Should successfully render loans component ', () => {
-    let variables = {
+    const variables = {
         account: '0x1',
         skip: 0,
     };
@@ -23,7 +23,7 @@ it('Should successfully render loans component ', () => {
 });
 
 it('Should render loans component with network error query', async () => {
-    let variables = {
+    const variables = {
         account: '0x0',
         skip: 0,
     };
@@ -47,7 +47,7 @@ it('Should render loans component with network error query', async () => {
 });
 
 it('Should render mock loans component and successfully get data from query', async () => {
-    let variables = {
+    const variables = {
         account: '0x1',
         skip: 0,
     };

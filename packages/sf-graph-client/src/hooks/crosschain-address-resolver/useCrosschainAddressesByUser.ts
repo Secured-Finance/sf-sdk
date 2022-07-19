@@ -8,7 +8,7 @@ import { QueryResult } from '../../utils';
 
 export const useCrosschainAddressesByUser = (
     user: string,
-    skip: number = 0
+    skip = 0
 ): QueryResult<CrosschainAddressesByUserQuery> => {
     const variables = {
         user: user.toLowerCase(),

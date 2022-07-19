@@ -7,7 +7,7 @@ import { CurrencyMock } from '../mocks/components';
 import { CURRENCY } from '../queries';
 
 it('Should successfully render currency component ', () => {
-    let variables = {
+    const variables = {
         currency: '0xETH',
     };
 
@@ -22,7 +22,7 @@ it('Should successfully render currency component ', () => {
 });
 
 it('Should render currency component with network error query', async () => {
-    let variables = {
+    const variables = {
         currency: '0xWETH',
     };
 
@@ -45,7 +45,7 @@ it('Should render currency component with network error query', async () => {
 });
 
 it('Should render currency mock component and successfully get data from query', async () => {
-    let variables = {
+    const variables = {
         currency: '0xETH',
     };
 

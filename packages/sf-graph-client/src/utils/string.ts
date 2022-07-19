@@ -9,9 +9,9 @@ export const fromBytes32 = (bytes32: string) => {
 };
 
 export const getProductPrefix = (name: string) => {
-    let encodedPosition = utils.defaultAbiCoder.encode(['string'], [name]);
+    const encodedPosition = utils.defaultAbiCoder.encode(['string'], [name]);
 
-    let hash = utils.keccak256(encodedPosition);
+    const hash = utils.keccak256(encodedPosition);
     return hash.slice(0, 10);
 };
 

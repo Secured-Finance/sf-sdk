@@ -122,7 +122,7 @@ export const sendEther = async (
         gasPriceWei = gasPrice;
     }
 
-    let tx: TransactionRequest = {
+    const tx: TransactionRequest = {
         to: to,
         value: weiAmount,
         gasPrice: gasPriceWei,

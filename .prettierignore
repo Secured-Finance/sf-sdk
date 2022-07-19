@@ -5,3 +5,5 @@ packages/sf-client/src/types/
 packages/sf-graph-client/src/generated.ts
 packages/sf-graph-client/src/.graphclient
 packages/secured-finance-subgraph
+**/coverage
+**/.nyc_output
