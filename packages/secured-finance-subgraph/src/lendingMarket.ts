@@ -1,8 +1,7 @@
-import { Address, BigInt, Bytes, log, store } from "@graphprotocol/graph-ts"
-import { MakeOrder, TakeOrder, CancelOrder } from "../generated/templates/LendingMarket/LendingMarket"
-import { LendingMarket, LendingMarketOrderRow, LendingMarketOrder, FilledLendingMarketOrder } from "../generated/schema"
-import { BIG_INT_ZERO, NULL_CALL_RESULT_STRING } from "./constants"
-import { getUser } from "./user"
+import { Address, BigInt, Bytes, store } from "@graphprotocol/graph-ts";
+import { FilledLendingMarketOrder, LendingMarket, LendingMarketOrder, LendingMarketOrderRow } from "../generated/schema";
+import { CancelOrder, MakeOrder, TakeOrder } from "../generated/templates/LendingMarket/LendingMarket";
+import { getUser } from "./user";
 
 export function getLendingMarket(address: Address): LendingMarket {
     let lendingMarket = LendingMarket.load(address.toHex())
@@ -26,7 +25,7 @@ export function createLendingMarketOrderRow(id: string, ccy: Bytes, side: i32, m
     }
     marketOrder.term = term
     marketOrder.rate = rate
-    marketOrder.totalAmount = BIG_INT_ZERO
+    marketOrder.totalAmount = BigInt.fromI32(0)
 
     marketOrder.createdAtTimestamp = time
     marketOrder.createdAtBlockNumber = blockNumber
@@ -73,9 +72,9 @@ export function createLendingMarketOrder(id: string, orderId: BigInt, market: By
     orderItem.createdAtTimestamp = time
     orderItem.orderState = 'ACTIVE'
     orderItem.createdAtBlockNumber = blockNumber
-    orderItem.updatedAtTimestamp = BIG_INT_ZERO
-    orderItem.updatedAtBlockNumber = BIG_INT_ZERO
-  
+    orderItem.updatedAtTimestamp = BigInt.fromI32(0)
+    orderItem.updatedAtBlockNumber = BigInt.fromI32(0)
+
     maker.save()
 
     return orderItem as LendingMarketOrder
@@ -88,7 +87,7 @@ export function handleMakeLendingOrder(event: MakeOrder): void {
     if (lendingMarket) {
         lendingMarket.totalLiquidity = lendingMarket.totalLiquidity.plus(event.params.amount)
         lendingMarket.totalAvailableLiquidity = lendingMarket.totalAvailableLiquidity.plus(event.params.amount)
-    
+
         lendingMarket.orderCount = lendingMarket.orderCount + 1
         lendingMarket.save()
 
@@ -105,14 +104,14 @@ export function handleMakeLendingOrder(event: MakeOrder): void {
             event.block.timestamp,
             event.block.number
         )
-    
+
         if (marketOrderRow) {
             marketOrderRow.totalAmount = marketOrderRow.totalAmount.plus(event.params.amount)
-            marketOrderRow.save()    
+            marketOrderRow.save()
         }
-    
+
         let orderId = lendingMarket.marketAddr.toHexString().concat('-').concat(event.params.orderId.toString())
-    
+
         let orderItem = getLendingMarketOrder(
             orderId,
             event.params.orderId,
@@ -127,7 +126,7 @@ export function handleMakeLendingOrder(event: MakeOrder): void {
             event.block.number
         )
         orderItem.row = rowId
-    
+
         orderItem.save()
     }
 }
@@ -138,7 +137,7 @@ export function handleTakeLendingOrder(event: TakeOrder): void {
     if (lendingMarket) {
         let orderId = lendingMarket.marketAddr.toHexString().concat('-').concat(event.params.orderId.toString())
         let orderItem = LendingMarketOrder.load(orderId)
-        
+
         if (orderItem) {
             orderItem.amount = orderItem.amount.minus(event.params.amount)
             lendingMarket.totalAvailableLiquidity = lendingMarket.totalAvailableLiquidity.minus(event.params.amount)
@@ -173,7 +172,7 @@ export function handleTakeLendingOrder(event: TakeOrder): void {
             orderItem.updatedAtBlockNumber = event.block.number
 
             let rowId = orderItem.currencyName.toString().concat('-').concat(BigInt.fromI32(event.params.side).toString()).concat('-').concat(orderItem.term.toString()).concat('-').concat(event.params.rate.toString())
-            
+
             let marketOrderRow = LendingMarketOrderRow.load(rowId)
 
             if (marketOrderRow) {
@@ -184,11 +183,11 @@ export function handleTakeLendingOrder(event: TakeOrder): void {
                 marketOrderRow.save()
                 orderItem.save()
 
-                if (orderItem.amount == BIG_INT_ZERO) {
+                if (orderItem.amount == BigInt.fromI32(0)) {
                     store.remove('LendingMarketOrder', orderItem.id)
                 }
 
-                if (marketOrderRow.totalAmount == BIG_INT_ZERO) {
+                if (marketOrderRow.totalAmount == BigInt.fromI32(0)) {
                     store.remove('LendingMarketOrderRow', marketOrderRow.id)
                 }
             }
@@ -198,7 +197,7 @@ export function handleTakeLendingOrder(event: TakeOrder): void {
 
 export function handleCancelLendingOrder(event: CancelOrder): void {
     let lendingMarket = LendingMarket.load(event.address.toHex())
-    
+
     if (lendingMarket) {
         let orderId = lendingMarket.marketAddr.toHexString().concat('-').concat(event.params.orderId.toString())
         let orderItem = LendingMarketOrder.load(orderId)
@@ -216,13 +215,13 @@ export function handleCancelLendingOrder(event: CancelOrder): void {
 
                 lendingMarket.save()
 
-                if (orderItem.amount == BIG_INT_ZERO) {
+                if (orderItem.amount == BigInt.fromI32(0)) {
                     store.remove('LendingMarketOrder', orderItem.id)
                 } else {
                     orderItem.save()
                 }
 
-                if (marketOrderRow.totalAmount == BIG_INT_ZERO) {
+                if (marketOrderRow.totalAmount == BigInt.fromI32(0)) {
                     store.remove('LendingMarketOrderRow', marketOrderRow.id)
                 } else {
                     marketOrderRow.save()

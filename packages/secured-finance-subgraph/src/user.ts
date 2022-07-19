@@ -1,19 +1,17 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts"
 import { User } from "../generated/schema"
-import { BIG_INT_ZERO } from "./constants"
 
 export function createUser(address: Address, time: BigInt): User {
     const user = new User(address.toHex())
 
     user.owner = address
     user.updatedAt = time
-    user.totalBorrowInETH = BIG_INT_ZERO
-    // user.totalCollateralInETH = BIG_INT_ZERO
-    user.totalLendInETH = BIG_INT_ZERO
-  
+    user.totalBorrowInETH = BigInt.fromI32(0)
+    user.totalLendInETH = BigInt.fromI32(0)
+
     return user as User
 }
-  
+
 export function getUser(address: Address, time: BigInt): User {
     let user = User.load(address.toHex())
 
@@ -23,4 +21,3 @@ export function getUser(address: Address, time: BigInt): User {
 
     return user as User
 }
-  

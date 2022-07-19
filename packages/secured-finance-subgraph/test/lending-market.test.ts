@@ -1,17 +1,16 @@
-import { assert, logStore, test } from "matchstick-as/assembly/index"
-import { Address, Bytes, BigInt, log, bigInt } from "@graphprotocol/graph-ts"
+import { Address, BigInt } from "@graphprotocol/graph-ts"
+import { assert, test } from "matchstick-as/assembly/index"
 
-import { createMakeOrderEvent, createTakeOrderEvent, createCancelOrderEvent } from "./mocks/lending-market"
-import { handleCancelLendingOrder, handleMakeLendingOrder, handleTakeLendingOrder } from "../src/lendingMarket"
-import { toBytes32 } from "./utils/string"
-import { createCurrencyEntity } from "./utils/entities"
-import { createLendingMarketCreatedEvent } from "./mocks/lending-controller"
 import { handleNewLendingMarket } from "../src/lendingController"
+import { handleCancelLendingOrder, handleMakeLendingOrder, handleTakeLendingOrder } from "../src/lendingMarket"
+import { createLendingMarketCreatedEvent } from "./mocks/lending-controller"
+import { createCancelOrderEvent, createMakeOrderEvent, createTakeOrderEvent } from "./mocks/lending-market"
+import { toBytes32 } from "./utils/string"
 export { handleCancelLendingOrder, handleMakeLendingOrder, handleTakeLendingOrder, handleNewLendingMarket }
 
-const user = Address.fromString('0x95401dc811bb5740090279Ba06cfA8fcF6113778');
-const lendingMarketAddress = Address.fromString('0x90E703941B56eDEAdD16EB6780C55184214Fd06C');
-const counterparty = Address.fromString('0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC');
+const user = Address.zero();
+const lendingMarketAddress = Address.zero();
+const counterparty = Address.zero();
 
 const currencyShortName = 'ETH';
 const currencyIdentifier = toBytes32(currencyShortName);
@@ -24,12 +23,6 @@ const lendingOrderId = lendingMarketAddress.toHex() + '-' + orderId.toString()
 const orderRowId = currencyShortName + '-' + '0' + '-' + termDays.toString() + '-' + rate.toString();
 
 test("Should create new lending market, and make first order", () => {
-    createCurrencyEntity(
-        currencyIdentifier,
-        'Ethereum',
-        currencyShortName,
-        60
-    )
 
     let event0 = createLendingMarketCreatedEvent(
         currencyIdentifier,
