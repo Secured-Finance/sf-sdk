@@ -39,5 +39,6 @@ generated/
 test/.bin
 test/.latest.json
 
-# Subgraph configs
+# Subgraph
 subgraph.*.yaml
+abis/
