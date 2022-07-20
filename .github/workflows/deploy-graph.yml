@@ -12,6 +12,7 @@ jobs:
   deploy:
     name: Deploy Graph
     runs-on: ubuntu-latest
+    if: github.actor != 'SF Machine User[bot]'
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3

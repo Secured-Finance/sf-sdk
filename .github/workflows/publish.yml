@@ -5,11 +5,14 @@ on:
     branches:
       - main
       - develop
+      # For testing
+      - SF-18-refactor-secured-finance-subgraph
 
 jobs:
   publish-npm:
     name: Publish to NPM
     runs-on: ubuntu-latest
+    if: github.actor != 'SF Machine User[bot]'
     steps:
       - name: Generate token
         id: generate_token
