@@ -6,6 +6,9 @@ export const EMPTY_BYTES32_PREFIX = ByteArray.fromHexString(
 
 export function toBytes32(text: string): Bytes {
     const bytes = Bytes.fromUTF8(text);
-    const emptyBytes = Bytes.fromByteArray(EMPTY_BYTES32_PREFIX).slice(0, 32 - bytes.byteLength);
+    const emptyBytes = Bytes.fromByteArray(EMPTY_BYTES32_PREFIX).slice(
+        0,
+        32 - bytes.byteLength
+    );
     return bytes.concat(Bytes.fromUint8Array(emptyBytes));
 }

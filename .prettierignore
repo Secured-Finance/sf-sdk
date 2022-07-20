@@ -4,6 +4,8 @@ packages/sf-client/src/types/
 **/dist/
 packages/sf-graph-client/src/generated.ts
 packages/sf-graph-client/src/.graphclient
-packages/secured-finance-subgraph
+packages/secured-finance-subgraph/generated
+packages/secured-finance-subgraph/build
+packages/secured-finance-subgraph/test/.latest.json
 **/coverage
 **/.nyc_output

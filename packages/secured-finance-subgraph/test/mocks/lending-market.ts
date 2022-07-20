@@ -1,6 +1,10 @@
-import { Address, ethereum, BigInt, Bytes } from "@graphprotocol/graph-ts"
-import { newMockEvent } from "matchstick-as/assembly/index"
-import { MakeOrder, TakeOrder, CancelOrder } from "../../generated/templates/LendingMarket/LendingMarket";
+import { Address, BigInt, Bytes, ethereum } from '@graphprotocol/graph-ts';
+import { newMockEvent } from 'matchstick-as/assembly/index';
+import {
+    CancelOrder,
+    MakeOrder,
+    TakeOrder,
+} from '../../generated/templates/LendingMarket/LendingMarket';
 
 export function createMakeOrderEvent(
     orderId: BigInt,
@@ -9,7 +13,7 @@ export function createMakeOrderEvent(
     ccy: Bytes,
     term: BigInt,
     amount: BigInt,
-    rate: BigInt,
+    rate: BigInt
 ): MakeOrder {
     let mockEvent = newMockEvent();
     let event = new MakeOrder(
@@ -19,19 +23,39 @@ export function createMakeOrderEvent(
         mockEvent.logType,
         mockEvent.block,
         mockEvent.transaction,
-        mockEvent.parameters,
+        mockEvent.parameters
     );
     event.parameters = new Array();
-    
-    event.parameters.push(new ethereum.EventParam("orderId", ethereum.Value.fromUnsignedBigInt(orderId)));
-    event.parameters.push(new ethereum.EventParam("maker", ethereum.Value.fromAddress(maker)));
-    event.parameters.push(new ethereum.EventParam("side", ethereum.Value.fromI32(side)));
-    event.parameters.push(new ethereum.EventParam("ccy", ethereum.Value.fromBytes(ccy)));
-    event.parameters.push(new ethereum.EventParam("term", ethereum.Value.fromUnsignedBigInt(term)));
-    event.parameters.push(new ethereum.EventParam("amount", ethereum.Value.fromUnsignedBigInt(amount)));
-    event.parameters.push(new ethereum.EventParam("rate", ethereum.Value.fromUnsignedBigInt(rate)));
 
-    return event
+    event.parameters.push(
+        new ethereum.EventParam(
+            'orderId',
+            ethereum.Value.fromUnsignedBigInt(orderId)
+        )
+    );
+    event.parameters.push(
+        new ethereum.EventParam('maker', ethereum.Value.fromAddress(maker))
+    );
+    event.parameters.push(
+        new ethereum.EventParam('side', ethereum.Value.fromI32(side))
+    );
+    event.parameters.push(
+        new ethereum.EventParam('ccy', ethereum.Value.fromBytes(ccy))
+    );
+    event.parameters.push(
+        new ethereum.EventParam('term', ethereum.Value.fromUnsignedBigInt(term))
+    );
+    event.parameters.push(
+        new ethereum.EventParam(
+            'amount',
+            ethereum.Value.fromUnsignedBigInt(amount)
+        )
+    );
+    event.parameters.push(
+        new ethereum.EventParam('rate', ethereum.Value.fromUnsignedBigInt(rate))
+    );
+
+    return event;
 }
 
 export function createTakeOrderEvent(
@@ -39,7 +63,7 @@ export function createTakeOrderEvent(
     taker: Address,
     side: i32,
     amount: BigInt,
-    rate: BigInt,
+    rate: BigInt
 ): TakeOrder {
     let mockEvent = newMockEvent();
     let event = new TakeOrder(
@@ -49,17 +73,33 @@ export function createTakeOrderEvent(
         mockEvent.logType,
         mockEvent.block,
         mockEvent.transaction,
-        mockEvent.parameters,
+        mockEvent.parameters
     );
     event.parameters = new Array();
-    
-    event.parameters.push(new ethereum.EventParam("orderId", ethereum.Value.fromUnsignedBigInt(orderId)));
-    event.parameters.push(new ethereum.EventParam("taker", ethereum.Value.fromAddress(taker)));
-    event.parameters.push(new ethereum.EventParam("side", ethereum.Value.fromI32(side)));
-    event.parameters.push(new ethereum.EventParam("amount", ethereum.Value.fromUnsignedBigInt(amount)));
-    event.parameters.push(new ethereum.EventParam("rate", ethereum.Value.fromUnsignedBigInt(rate)));
 
-    return event
+    event.parameters.push(
+        new ethereum.EventParam(
+            'orderId',
+            ethereum.Value.fromUnsignedBigInt(orderId)
+        )
+    );
+    event.parameters.push(
+        new ethereum.EventParam('taker', ethereum.Value.fromAddress(taker))
+    );
+    event.parameters.push(
+        new ethereum.EventParam('side', ethereum.Value.fromI32(side))
+    );
+    event.parameters.push(
+        new ethereum.EventParam(
+            'amount',
+            ethereum.Value.fromUnsignedBigInt(amount)
+        )
+    );
+    event.parameters.push(
+        new ethereum.EventParam('rate', ethereum.Value.fromUnsignedBigInt(rate))
+    );
+
+    return event;
 }
 
 export function createCancelOrderEvent(
@@ -67,7 +107,7 @@ export function createCancelOrderEvent(
     maker: Address,
     side: i32,
     amount: BigInt,
-    rate: BigInt,
+    rate: BigInt
 ): CancelOrder {
     let mockEvent = newMockEvent();
     let event = new CancelOrder(
@@ -77,15 +117,31 @@ export function createCancelOrderEvent(
         mockEvent.logType,
         mockEvent.block,
         mockEvent.transaction,
-        mockEvent.parameters,
+        mockEvent.parameters
     );
     event.parameters = new Array();
-    
-    event.parameters.push(new ethereum.EventParam("orderId", ethereum.Value.fromUnsignedBigInt(orderId)));
-    event.parameters.push(new ethereum.EventParam("maker", ethereum.Value.fromAddress(maker)));
-    event.parameters.push(new ethereum.EventParam("side", ethereum.Value.fromI32(side)));
-    event.parameters.push(new ethereum.EventParam("amount", ethereum.Value.fromUnsignedBigInt(amount)));
-    event.parameters.push(new ethereum.EventParam("rate", ethereum.Value.fromUnsignedBigInt(rate)));
 
-    return event
+    event.parameters.push(
+        new ethereum.EventParam(
+            'orderId',
+            ethereum.Value.fromUnsignedBigInt(orderId)
+        )
+    );
+    event.parameters.push(
+        new ethereum.EventParam('maker', ethereum.Value.fromAddress(maker))
+    );
+    event.parameters.push(
+        new ethereum.EventParam('side', ethereum.Value.fromI32(side))
+    );
+    event.parameters.push(
+        new ethereum.EventParam(
+            'amount',
+            ethereum.Value.fromUnsignedBigInt(amount)
+        )
+    );
+    event.parameters.push(
+        new ethereum.EventParam('rate', ethereum.Value.fromUnsignedBigInt(rate))
+    );
+
+    return event;
 }
