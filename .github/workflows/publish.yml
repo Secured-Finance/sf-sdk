@@ -12,11 +12,8 @@ jobs:
   publish-npm:
     name: Publish to NPM
     runs-on: ubuntu-latest
-    if: github.actor != 'Secured Finance Machine User'
+    if: github.actor != 'secured-finance-machine-user[bot]'
     steps:
-      - name: Test
-        run: |
-          echo "${{ github.actor }}"
       - name: Generate token
         id: generate_token
         uses: tibdex/github-app-token@v1

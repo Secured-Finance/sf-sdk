@@ -7,6 +7,7 @@ jobs:
   checks-pr:
     name: Validate Pull Request
     runs-on: ubuntu-latest
+    if: github.actor != 'secured-finance-machine-user[bot]'
 
     steps:
       - uses: actions/checkout@v3
