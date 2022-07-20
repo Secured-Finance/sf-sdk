@@ -12,7 +12,7 @@ jobs:
   deploy:
     name: Deploy Graph
     runs-on: ubuntu-latest
-    if: github.actor != 'SF Machine User[bot]'
+    if: github.actor != 'Secured Finance Machine User'
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
