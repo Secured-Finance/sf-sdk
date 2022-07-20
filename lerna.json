@@ -1,7 +1,11 @@
 {
   "command": {
     "publish": {
-      "allowBranch": ["main", "develop"],
+      "allowBranch": [
+        "main",
+        "develop",
+        "SF-18-refactor-secured-finance-subgraph"
+      ],
       "ignoreChanges": ["ignored-file", "*.md"],
       "message": "chore(release): update release notes and package versions",
       "conventionalCommits": true,
@@ -14,6 +18,6 @@
   },
   "packages": ["packages/*"],
   "nohoist": ["**/typechain", "**/@typechain/*"],
-  "version": "0.1.7-beta.11",
+  "version": "0.1.7-beta.12",
   "npmClient": "npm"
 }
