@@ -40,12 +40,13 @@ const getGraphClient = (network = 'none') => {
 
 interface GraphApolloClientOption {
     network: string;
+    cache?: InMemoryCache;
 }
 export class GraphApolloClient extends ApolloClient<NormalizedCacheObject> {
-    constructor({ network }: GraphApolloClientOption) {
+    constructor({ network, cache }: GraphApolloClientOption) {
         super({
             link: new GraphApolloLink(getGraphClient(network)),
-            cache: new InMemoryCache(),
+            cache: cache || new InMemoryCache(),
         });
     }
 }
