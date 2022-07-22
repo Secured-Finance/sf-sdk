@@ -1,11 +1,10 @@
-import { useQuery } from '@apollo/client';
 import { useMemo, useState } from 'react';
 import { GraphApolloClient } from '../../';
 import {
     UserTradingHistoryDocument,
     UserTradingHistoryQuery,
 } from '../../graphclients';
-import { QueryResult } from '../../utils';
+import { QueryResult, useQuery } from '../useQuery';
 import {
     LendingMarketExtendedOrder,
     modifyUsersTradingHistory,
@@ -35,26 +34,12 @@ export const useUsersTradingHistory = (
         { variables, client }
     );
 
-    if (error) {
-        console.error(error);
+    const isExists = data?.user?.madeOrders && data?.user?.takenOrders;
 
-        return {
-            data: undefined,
-            error: error,
-        };
-    }
-
-    if (data?.user?.madeOrders && data?.user?.takenOrders) {
-        return {
-            data: data,
-            error: null,
-        };
-    } else {
-        return {
-            data: undefined,
-            error: undefined,
-        };
-    }
+    return {
+        data: isExists ? data : undefined,
+        error,
+    };
 };
 
 export const useUsersTradingHistoryQuery = (

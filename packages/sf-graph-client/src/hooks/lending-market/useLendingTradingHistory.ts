@@ -1,10 +1,9 @@
-import { useQuery } from '@apollo/client';
 import { GraphApolloClient } from '../../';
 import {
     TradingHistoryDocument,
     TradingHistoryQuery,
 } from '../../graphclients';
-import { QueryResult } from '../../utils';
+import { QueryResult, useQuery } from '../useQuery';
 
 export interface LendingTradingHistoryVariables {
     lendingMarket: string;
@@ -22,27 +21,16 @@ export const useLendingTradingHistory = (
 
     const { error, data } = useQuery<TradingHistoryQuery>(
         TradingHistoryDocument,
-        { variables, client }
+        {
+            variables,
+            client,
+        }
     );
 
-    if (error) {
-        console.error(error);
+    const isExists = data?.lendingMarket?.tradeHistory;
 
-        return {
-            data: undefined,
-            error: error,
-        };
-    }
-
-    if (data?.lendingMarket?.tradeHistory) {
-        return {
-            data: data,
-            error: undefined,
-        };
-    } else {
-        return {
-            data: undefined,
-            error: undefined,
-        };
-    }
+    return {
+        data: isExists ? data : undefined,
+        error: error,
+    };
 };

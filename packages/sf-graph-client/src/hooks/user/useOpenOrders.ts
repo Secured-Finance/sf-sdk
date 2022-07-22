@@ -1,8 +1,6 @@
-import { useQuery } from '@apollo/client';
 import { GraphApolloClient } from '../../';
 import { OpenOrdersDocument, OpenOrdersQuery } from '../../graphclients';
-import { QueryResult } from '../../utils';
-
+import { QueryResult, useQuery } from '../useQuery';
 export interface OpenOrdersVariables {
     account: string;
     market: string;
@@ -22,24 +20,10 @@ export const useOpenOrders = (
         client,
     });
 
-    if (error) {
-        console.error(error);
+    const isExists = data?.user?.openOrders;
 
-        return {
-            data: undefined,
-            error: error,
-        };
-    }
-
-    if (data?.user?.openOrders) {
-        return {
-            data: data,
-            error: null,
-        };
-    } else {
-        return {
-            data: undefined,
-            error: undefined,
-        };
-    }
+    return {
+        data: isExists ? data : undefined,
+        error,
+    };
 };

@@ -1,10 +1,10 @@
-import { useQuery } from '@apollo/client';
 import { GraphApolloClient } from '../../';
 import {
     LendingMarketsDocument,
     LendingMarketsQuery,
 } from '../../graphclients';
-import { generateCurrencyId, QueryResult } from '../../utils';
+import { generateCurrencyId } from '../../utils';
+import { QueryResult, useQuery } from '../useQuery';
 
 export interface LendingMarketsVariables {
     ccy: string;
@@ -24,27 +24,14 @@ export const useLendingMarkets = (
 
     const { error, data } = useQuery<LendingMarketsQuery>(
         LendingMarketsDocument,
-        { variables, client }
+        {
+            variables,
+            client,
+        }
     );
 
-    if (error) {
-        console.error(error);
-
-        return {
-            data: undefined,
-            error: error,
-        };
-    }
-
-    if (data?.lendingMarkets) {
-        return {
-            data: data,
-            error: undefined,
-        };
-    } else {
-        return {
-            data: undefined,
-            error: undefined,
-        };
-    }
+    return {
+        data: data?.lendingMarkets ? data : undefined,
+        error: error,
+    };
 };

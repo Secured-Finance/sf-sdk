@@ -4,7 +4,6 @@ import {
     LendingMarketOrderRow,
     LendOrderbookQuery,
 } from '../../graphclients';
-import { OrderbookRow } from '../../utils';
 
 type ExtendedOrderbookQuery = BorrowOrderbookQuery & LendOrderbookQuery;
 
@@ -12,6 +11,12 @@ type ExtendedOrderbookItem = Pick<
     LendingMarketOrderRow,
     'rate' | 'totalAmount'
 >;
+
+export interface OrderbookRow {
+    rate: number;
+    totalAmount: number;
+    usdAmount: number | string;
+}
 
 export const modifyOrderbook = async (
     data: ExtendedOrderbookQuery,

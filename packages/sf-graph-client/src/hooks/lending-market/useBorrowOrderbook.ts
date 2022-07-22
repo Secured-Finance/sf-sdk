@@ -1,4 +1,3 @@
-import { useQuery } from '@apollo/client';
 import { BigNumber } from 'ethers';
 import { useMemo, useState } from 'react';
 import { GraphApolloClient } from '../../';
@@ -6,8 +5,8 @@ import {
     BorrowOrderbookDocument,
     BorrowOrderbookQuery,
 } from '../../graphclients';
-import { OrderbookRow, QueryResult } from '../../utils';
-import { modifyOrderbook } from './common';
+import { QueryResult, useQuery } from '../useQuery';
+import { modifyOrderbook, OrderbookRow } from './common';
 
 export interface BorrowOrderbookVariables {
     lendingMarket: string;
@@ -31,29 +30,18 @@ export const useBorrowOrderbook = (
 
     const { error, data } = useQuery<BorrowOrderbookQuery>(
         BorrowOrderbookDocument,
-        { variables, client }
+        {
+            variables,
+            client,
+        }
     );
 
-    if (error) {
-        console.error(error);
+    const isExists = data?.lendingMarket?.borrowOrderbook;
 
-        return {
-            data: undefined,
-            error: error,
-        };
-    }
-
-    if (data?.lendingMarket?.borrowOrderbook) {
-        return {
-            data: data,
-            error: undefined,
-        };
-    } else {
-        return {
-            data: undefined,
-            error: undefined,
-        };
-    }
+    return {
+        data: isExists ? data : undefined,
+        error,
+    };
 };
 
 export const useBorrowOrderbookQuery = (
