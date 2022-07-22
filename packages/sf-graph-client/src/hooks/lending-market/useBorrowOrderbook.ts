@@ -30,10 +30,7 @@ export const useBorrowOrderbook = (
 
     const { error, data } = useQuery<BorrowOrderbookQuery>(
         BorrowOrderbookDocument,
-        {
-            variables,
-            client,
-        }
+        { variables, client }
     );
 
     const isExists = data?.lendingMarket?.borrowOrderbook;
@@ -71,7 +68,7 @@ export const useBorrowOrderbookQuery = (
     if (error) {
         return {
             data: undefined,
-            error: error,
+            error,
         };
     }
 

@@ -16,14 +16,11 @@ export const useLendingMarketInfo = (
 
     const { error, data } = useQuery<LendingMarketQuery>(
         LendingMarketDocument,
-        {
-            variables,
-            client,
-        }
+        { variables, client }
     );
 
     return {
         data: data?.lendingMarket ? data : undefined,
-        error: error,
+        error,
     };
 };

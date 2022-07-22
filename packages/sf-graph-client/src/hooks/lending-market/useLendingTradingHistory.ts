@@ -21,16 +21,13 @@ export const useLendingTradingHistory = (
 
     const { error, data } = useQuery<TradingHistoryQuery>(
         TradingHistoryDocument,
-        {
-            variables,
-            client,
-        }
+        { variables, client }
     );
 
     const isExists = data?.lendingMarket?.tradeHistory;
 
     return {
         data: isExists ? data : undefined,
-        error: error,
+        error,
     };
 };

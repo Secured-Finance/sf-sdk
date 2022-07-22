@@ -27,17 +27,14 @@ export const useLendOrderbook = (
 
     const { error, data } = useQuery<LendOrderbookQuery>(
         LendOrderbookDocument,
-        {
-            variables,
-            client,
-        }
+        { variables, client }
     );
 
     const isExists = data?.lendingMarket?.lendOrderbook;
 
     return {
         data: isExists ? data : undefined,
-        error: error,
+        error,
     };
 };
 
@@ -68,7 +65,7 @@ export const useLendOrderbookQuery = (
     if (error) {
         return {
             data: undefined,
-            error: error,
+            error,
         };
     }
 
