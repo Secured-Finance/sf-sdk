@@ -7,6 +7,7 @@ jobs:
   checks-pr:
     name: Validate Pull Request
     runs-on: ubuntu-latest
+    if: github.actor != 'secured-finance-machine-user[bot]'
 
     steps:
       - uses: actions/checkout@v3
@@ -14,6 +15,9 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
+      - name: Set env
+        run: |
+          echo "NPM_AUTH_TOKEN=${{ secrets.NPM_TOKEN }}" >> $GITHUB_ENV
       - name: Install Dependencies
         run: npm ci
       - name: Bootstrap Repo

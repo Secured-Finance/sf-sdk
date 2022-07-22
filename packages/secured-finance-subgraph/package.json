@@ -1,23 +1,30 @@
 {
   "name": "secured-finance-subgraph",
-  "version": "0.1.7-beta.10",
+  "version": "0.1.7-beta.15",
   "private": "true",
   "scripts": {
-    "create": "graph create secured-finance/secured-finance-protocol --node https://api.thegraph.com/deploy/",
-    "create-local": "graph create secured-finance/secured-finance-protocol --node http://127.0.0.1:8020",
-    "codegen": "graph codegen",
-    "build": "graph codegen && graph build",
+    "generate:dev": "ts-node ./scripts/generate.ts development",
+    "generate:stg": "ts-node ./scripts/generate.ts staging",
+    "codegen": "graph codegen ./subgraph.yaml",
+    "precodegen": "ts-node ./scripts/copy-abis.ts",
+    "build": "graph build ./subgraph.yaml",
+    "prebuild": "npm run codegen",
     "test": "graph test",
     "coverage": "graph test -- -c",
-    "deploy": "graph deploy secured-finance/secured-finance-protocol --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "deploy-local": "graph deploy secured-finance/secured-finance-protocol --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "deploy:local": "graph deploy secured-finance/sf-protocol-local ./subgraph.localhost.yaml --product hosted-service --output-dir ./build/localhost --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "deploy:dev": "graph deploy secured-finance/sf-protocol-dev ./subgraph.development.yaml --product hosted-service --output-dir ./build/development",
+    "deploy:stg": "graph deploy secured-finance/sf-protocol-stg ./subgraph.staging.yaml --product hosted-service --output-dir ./build/staging",
     "prepublish": "npm run codegen"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.30.2",
     "@graphprotocol/graph-ts": "^0.26.0",
+    "@secured-finance/smart-contracts": "^0.0.2-beta.3",
+    "@types/js-yaml": "^4.0.5",
     "ethers": "^5.6.8",
-    "matchstick-as": "0.4.3"
+    "js-yaml": "^4.1.0",
+    "matchstick-as": "0.4.3",
+    "ts-node": "^10.9.1"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
