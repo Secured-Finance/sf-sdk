@@ -27,11 +27,8 @@ export const LENDING_MARKET_INFO = gql`
             marketRate
             spread
             term
-            currency {
-                identifier
-                shortName
-                name
-            }
+            currency
+            currencyName
             totalLiquidity
         }
     }

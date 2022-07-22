@@ -1,16 +1,27 @@
 import { useQuery } from '@apollo/client';
 import { useMemo, useState } from 'react';
+import { GraphApolloClient } from '../../';
 import {
     BorrowOrderbookDocument,
     BorrowOrderbookQuery,
-} from '../../.graphclient';
-import { client } from '../../client';
+} from '../../graphclients';
 import { OrderbookRow, QueryResult, toBN } from '../../utils';
 import { modifyOrderbook } from './common';
 
+export interface BorrowOrderbookVariables {
+    lendingMarket: string;
+    skip?: number;
+}
+
+export interface BorrowOrderbookQueryVariables {
+    lendingMarket: string;
+    assetPrice: number;
+    skip?: number;
+}
+
 export const useBorrowOrderbook = (
-    lendingMarket: string,
-    skip = 0
+    { lendingMarket, skip = 0 }: BorrowOrderbookVariables,
+    client?: GraphApolloClient
 ): QueryResult<BorrowOrderbookQuery> => {
     const variables = {
         market: lendingMarket.toLowerCase(),
@@ -19,10 +30,7 @@ export const useBorrowOrderbook = (
 
     const { error, data } = useQuery<BorrowOrderbookQuery>(
         BorrowOrderbookDocument,
-        {
-            variables: variables,
-            client: client,
-        }
+        { variables, client }
     );
 
     if (error) {
@@ -37,7 +45,7 @@ export const useBorrowOrderbook = (
     if (data?.lendingMarket?.borrowOrderbook) {
         return {
             data: data,
-            error: null,
+            error: undefined,
         };
     } else {
         return {
@@ -48,12 +56,11 @@ export const useBorrowOrderbook = (
 };
 
 export const useBorrowOrderbookQuery = (
-    lendingMarket: string,
-    assetPrice: number,
-    skip = 0
+    { lendingMarket, assetPrice, skip = 0 }: BorrowOrderbookQueryVariables,
+    client?: GraphApolloClient
 ): QueryResult<Array<OrderbookRow>> => {
     const [orderbook, setOrderbook] = useState<Array<OrderbookRow>>([]);
-    const { data, error } = useBorrowOrderbook(lendingMarket, skip);
+    const { data, error } = useBorrowOrderbook({ lendingMarket, skip }, client);
 
     useMemo(async () => {
         if (data) {

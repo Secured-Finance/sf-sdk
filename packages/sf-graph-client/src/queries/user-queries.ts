@@ -11,12 +11,7 @@ export const OPEN_ORDERS = gql`
                 id
                 orderId
                 currencyName
-                currency {
-                    identifier
-                    shortName
-                    name
-                    chainId
-                }
+                currency
                 side
                 marketAddr
                 orderState
@@ -41,12 +36,8 @@ export const TRADE_HISTORY = gql`
             ) {
                 id
                 orderId
-                currency {
-                    identifier
-                    shortName
-                    name
-                    chainId
-                }
+                currencyName
+                currency
                 side
                 marketAddr
                 term
@@ -64,12 +55,8 @@ export const TRADE_HISTORY = gql`
             ) {
                 id
                 orderId
-                currency {
-                    identifier
-                    shortName
-                    name
-                    chainId
-                }
+                currencyName
+                currency
                 side
                 marketAddr
                 term
@@ -79,32 +66,6 @@ export const TRADE_HISTORY = gql`
                 taker
                 createdAtTimestamp
                 createdAtBlockNumber
-            }
-        }
-    }
-`;
-
-export const OPEN_LOANS = gql`
-    query OpenLoans($account: Bytes!, $currency: Bytes!, $term: Int!) {
-        user(id: $account) {
-            loans(where: { currency: $currency, term: $term }) {
-                id
-                lender
-                borrower
-                currency {
-                    identifier
-                    shortName
-                    name
-                    chainId
-                }
-                term
-                notional
-                couponPayment
-                rate
-                startTimestamp
-                endTimestamp
-                presentValue
-                state
             }
         }
     }

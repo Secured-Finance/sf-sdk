@@ -1,19 +1,29 @@
 import { useQuery } from '@apollo/client';
 import { useMemo, useState } from 'react';
+import { GraphApolloClient } from '../../';
 import {
     UserTradingHistoryDocument,
     UserTradingHistoryQuery,
-} from '../../.graphclient';
-import { client } from '../../client';
+} from '../../graphclients';
 import { QueryResult } from '../../utils';
 import {
     LendingMarketExtendedOrder,
     modifyUsersTradingHistory,
 } from './common';
 
+export interface UsersTradingHistoryVariables {
+    account: string;
+    market: string;
+}
+
+export interface UsersTradingHistoryQueryVariables {
+    account: string;
+    market: string;
+}
+
 export const useUsersTradingHistory = (
-    account: string,
-    market: string
+    { account, market }: UsersTradingHistoryVariables,
+    client?: GraphApolloClient
 ): QueryResult<UserTradingHistoryQuery> => {
     const variables = {
         account: account.toLowerCase(),
@@ -22,10 +32,7 @@ export const useUsersTradingHistory = (
 
     const { error, data } = useQuery<UserTradingHistoryQuery>(
         UserTradingHistoryDocument,
-        {
-            variables: variables,
-            client: client,
-        }
+        { variables, client }
     );
 
     if (error) {
@@ -51,13 +58,13 @@ export const useUsersTradingHistory = (
 };
 
 export const useUsersTradingHistoryQuery = (
-    account: string,
-    market: string
+    { account, market }: UsersTradingHistoryQueryVariables,
+    client?: GraphApolloClient
 ): QueryResult<Array<LendingMarketExtendedOrder>> => {
     const [tradingHistory, setTradingHistory] = useState<
         Array<LendingMarketExtendedOrder>
     >([]);
-    const { data, error } = useUsersTradingHistory(account, market);
+    const { data, error } = useUsersTradingHistory({ account, market }, client);
 
     useMemo(async () => {
         if (data) {

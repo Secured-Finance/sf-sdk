@@ -1,10 +1,8 @@
 import { expect } from 'chai';
 
-// eslint-disable-next-line  @typescript-eslint/no-explicit-any
-export const expectType = (value: any, type: string) => {
+export const expectType = (value: unknown, type: string) => {
     if (value !== undefined) {
-        // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-        return expect(value).to.satisfy(function (s: any) {
+        return expect(value).to.satisfy(function (s: unknown) {
             return s === null || typeof s === type;
         });
     }

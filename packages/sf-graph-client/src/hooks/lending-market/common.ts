@@ -3,7 +3,7 @@ import {
     BorrowOrderbookQuery,
     LendingMarketOrderRow,
     LendOrderbookQuery,
-} from '../../.graphclient';
+} from '../../graphclients';
 import { OrderbookRow, toBN } from '../../utils';
 
 type ExtendedOrderbookQuery = BorrowOrderbookQuery & LendOrderbookQuery;

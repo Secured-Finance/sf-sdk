@@ -8,8 +8,8 @@ export function handleNewLendingMarket(event: LendingMarketCreated): void {
         event.params.marketAddr.toHexString()
     ) as LendingMarket;
     market.marketAddr = event.params.marketAddr;
-    market.currency = event.params.ccy.toHexString();
-    market.currencyIdentifier = event.params.ccy;
+    market.currencyName = event.params.ccy.toString();
+    market.currency = event.params.ccy;
     market.term = event.params.term;
     market.controllerAddr = event.address;
     market.spread = BigInt.fromI32(0);

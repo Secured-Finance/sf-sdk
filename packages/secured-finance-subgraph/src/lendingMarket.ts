@@ -31,8 +31,8 @@ export function createLendingMarketOrderRow(
 ): LendingMarketOrderRow {
     let marketOrder = new LendingMarketOrderRow(id);
 
-    marketOrder.currency = ccy.toHexString();
-    marketOrder.currencyIdentifier = ccy;
+    marketOrder.currencyName = ccy.toString();
+    marketOrder.currency = ccy;
     marketOrder.side = side;
     marketOrder.marketAddr = market;
     if (side == 0) {
@@ -132,7 +132,7 @@ export function createLendingMarketOrder(
     let orderItem = new LendingMarketOrder(id);
     const maker = getUser(makerAddr, time);
 
-    orderItem.currency = ccy.toHex();
+    orderItem.currency = ccy;
     orderItem.currencyName = ccy.toString();
     orderItem.orderId = orderId;
     orderItem.marketAddr = market;

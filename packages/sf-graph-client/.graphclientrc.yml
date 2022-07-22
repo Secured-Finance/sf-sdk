@@ -1,13 +1,13 @@
 sources:
-  - name: secured-finance-protocol
+  - name: sf-protocol
     handler:
       graphql:
-        endpoint: https://api.thegraph.com/subgraphs/name/secured-finance/secured-finance-protocol
+        endpoint: https://api.thegraph.com/subgraphs/name/secured-finance/{env.SUBGRAPH_NAME}
     transforms:
       - blockTracking:
           validateSchema: true
       - autoPagination:
           validateSchema: true
 documents:
-  - './queries/*.{ts,tsx,js,jsx}'
-  - './queries/*.graphql'
+  - '../../queries/*.{ts,tsx,js,jsx}'
+  - '../../queries/*.graphql'

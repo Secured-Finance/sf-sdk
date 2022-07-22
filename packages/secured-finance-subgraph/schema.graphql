@@ -14,8 +14,8 @@ type LendingMarket @entity {
   id: ID!
   marketAddr: Bytes!
   controllerAddr: Bytes!
-  currencyIdentifier: Bytes!
-  currency: Currency!
+  currencyName: String!
+  currency: Bytes!
   term: BigInt!
   spread: BigInt!
   marketRate: BigInt!
@@ -43,8 +43,8 @@ type LendingMarket @entity {
 
 type LendingMarketOrderRow @entity {
   id: ID!
-  currencyIdentifier: Bytes!
-  currency: Currency!
+  currencyName: String!
+  currency: Bytes!
   side: Int!
   marketAddr: Bytes!
   lendMarket: LendingMarket!
@@ -69,7 +69,7 @@ type LendingMarketOrder @entity {
   id: ID!
   orderId: BigInt!
   currencyName: String!
-  currency: Currency!
+  currency: Bytes!
   side: Int!
   row: LendingMarketOrderRow
   marketAddr: Bytes!
@@ -94,7 +94,7 @@ type FilledLendingMarketOrder @entity {
   id: ID!
   orderId: BigInt!
   currencyName: String!
-  currency: Currency!
+  currency: Bytes!
   side: Int!
   market: LendingMarket!
   marketAddr: Bytes!
@@ -109,16 +109,4 @@ type FilledLendingMarketOrder @entity {
   # creation timestamps
   createdAtTimestamp: BigInt!
   createdAtBlockNumber: BigInt!
-}
-
-type Currency @entity {
-  id: ID!
-  identifier: Bytes!
-  name: String!
-  shortName: String!
-  chainId: Int!
-  ltv: BigInt!
-  minMargin: BigInt!
-  isSupported: Boolean!
-  isCollateral: Boolean!
 }

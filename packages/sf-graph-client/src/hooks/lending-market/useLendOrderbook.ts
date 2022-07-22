@@ -1,13 +1,24 @@
 import { useQuery } from '@apollo/client';
 import { useMemo, useState } from 'react';
-import { LendOrderbookDocument, LendOrderbookQuery } from '../../.graphclient';
-import { client } from '../../client';
+import { GraphApolloClient } from '../../';
+import { LendOrderbookDocument, LendOrderbookQuery } from '../../graphclients';
 import { OrderbookRow, QueryResult, toBN } from '../../utils';
 import { modifyOrderbook } from './common';
 
+export interface LendOrderbookVariables {
+    lendingMarket: string;
+    skip?: number;
+}
+
+export interface LendOrderbookQueryVariables {
+    lendingMarket: string;
+    assetPrice: number;
+    skip?: number;
+}
+
 export const useLendOrderbook = (
-    lendingMarket: string,
-    skip = 0
+    { lendingMarket, skip = 0 }: LendOrderbookVariables,
+    client?: GraphApolloClient
 ): QueryResult<LendOrderbookQuery> => {
     const variables = {
         market: lendingMarket.toLowerCase(),
@@ -16,10 +27,7 @@ export const useLendOrderbook = (
 
     const { error, data } = useQuery<LendOrderbookQuery>(
         LendOrderbookDocument,
-        {
-            variables: variables,
-            client: client,
-        }
+        { variables, client }
     );
 
     if (error) {
@@ -34,7 +42,7 @@ export const useLendOrderbook = (
     if (data?.lendingMarket?.lendOrderbook) {
         return {
             data: data,
-            error: null,
+            error: undefined,
         };
     } else {
         return {
@@ -45,12 +53,11 @@ export const useLendOrderbook = (
 };
 
 export const useLendOrderbookQuery = (
-    lendingMarket: string,
-    assetPrice: number,
-    skip = 0
+    { lendingMarket, assetPrice, skip = 0 }: LendOrderbookQueryVariables,
+    client?: GraphApolloClient
 ): QueryResult<Array<OrderbookRow>> => {
     const [orderbook, setOrderbook] = useState<Array<OrderbookRow>>([]);
-    const { data, error } = useLendOrderbook(lendingMarket, skip);
+    const { data, error } = useLendOrderbook({ lendingMarket, skip }, client);
 
     useMemo(async () => {
         if (data) {
