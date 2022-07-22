@@ -1,8 +1,9 @@
 import { useQuery } from '@apollo/client';
+import { BigNumber } from 'ethers';
 import { useMemo, useState } from 'react';
 import { GraphApolloClient } from '../../';
 import { LendOrderbookDocument, LendOrderbookQuery } from '../../graphclients';
-import { OrderbookRow, QueryResult, toBN } from '../../utils';
+import { OrderbookRow, QueryResult } from '../../utils';
 import { modifyOrderbook } from './common';
 
 export interface LendOrderbookVariables {
@@ -61,7 +62,9 @@ export const useLendOrderbookQuery = (
 
     useMemo(async () => {
         if (data) {
-            const fixedAssetPrice = toBN((assetPrice * 100).toFixed(0));
+            const fixedAssetPrice = BigNumber.from(
+                (assetPrice * 100).toFixed(0)
+            );
             const parsedOrderbook = await modifyOrderbook(
                 data,
                 'lend',

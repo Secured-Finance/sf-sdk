@@ -4,7 +4,7 @@ import {
     LendingMarketOrderRow,
     LendOrderbookQuery,
 } from '../../graphclients';
-import { OrderbookRow, toBN } from '../../utils';
+import { OrderbookRow } from '../../utils';
 
 type ExtendedOrderbookQuery = BorrowOrderbookQuery & LendOrderbookQuery;
 
@@ -28,7 +28,9 @@ export const modifyOrderbook = async (
     }
 
     orderbook.forEach((item: ExtendedOrderbookItem) => {
-        const usdAmountBN = toBN(item.totalAmount).mul(fixedAssetPrice);
+        const usdAmountBN = BigNumber.from(item.totalAmount).mul(
+            fixedAssetPrice
+        );
         const usdAmount = Number(utils.formatUnits(usdAmountBN, 2));
         const orderbookItem = Object.assign({}, item, {
             usdAmount: usdAmount,
