@@ -5,10 +5,8 @@ on:
     branches:
       - main
       - develop
-      # Fot testing
-      - SF-18-support-multiple-environments-in-sf-graph-client
-    # paths:
-    #   - 'packages/secured-finance-subgraph/**'
+    paths:
+      - 'packages/secured-finance-subgraph/**'
 
 jobs:
   deploy:
