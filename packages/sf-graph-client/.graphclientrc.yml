@@ -3,6 +3,8 @@ sources:
     handler:
       graphql:
         endpoint: https://api.thegraph.com/subgraphs/name/secured-finance/{env.SUBGRAPH_NAME}
+        operationHeaders:
+          Authorization: Bearer {env.GRAPH_ACCESS_TOKEN}
     transforms:
       - blockTracking:
           validateSchema: true
