@@ -27,9 +27,9 @@ describe('Lending market test', () => {
     });
 
     describe('useLendingMarkets hook test', () => {
-        it('Should return undefined if lending market address is empty', async () => {
+        it('Should return undefined if currency is wrong', async () => {
             const { result, waitForNextUpdate } = renderHook(() =>
-                useLendingMarkets({ ccy: '' }, client)
+                useLendingMarkets({ ccy: 'TEST' }, client)
             );
             await waitForNextUpdate();
 
