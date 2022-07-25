@@ -1,18 +1,17 @@
 import { ApolloProvider, InMemoryCache } from '@apollo/client';
-import * as React from 'react';
-import { GraphApolloClient } from './GraphApolloClient';
+import React, { PropsWithChildren } from 'react';
+import { GraphApolloClient } from './graphApolloClient';
 
 export interface GraphClientProviderProps {
     network: string;
     cache: InMemoryCache;
-    children: React.ReactNode | React.ReactNode[] | null;
 }
 
-export const GraphClientProvider: React.FC<GraphClientProviderProps> = ({
+export const GraphClientProvider = ({
     network,
     cache,
     children,
-}) => {
+}: PropsWithChildren<GraphClientProviderProps>) => {
     return (
         <ApolloProvider client={new GraphApolloClient({ network, cache })}>
             {children}
