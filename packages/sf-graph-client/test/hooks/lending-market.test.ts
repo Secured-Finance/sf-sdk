@@ -49,10 +49,10 @@ describe('Lending market test', () => {
             const lendingMarkets = result.current.data?.lendingMarkets;
             expect(lendingMarkets?.length).to.be.equal(6);
 
-            market = lendingMarkets[0].id;
+            market = lendingMarkets?.[0].id as string;
 
-            for (let i = 0; i < lendingMarkets.length; i++) {
-                validateLendingMarket(lendingMarkets[i]);
+            for (let i = 0; i < (lendingMarkets?.length || 0); i++) {
+                validateLendingMarket(lendingMarkets?.[i]);
             }
         });
     });

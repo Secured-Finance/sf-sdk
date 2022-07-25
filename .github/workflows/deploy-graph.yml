@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - develop
+      # Fot testing
+      - SF-18-support-multiple-environments-in-sf-graph-client
     paths:
       - 'packages/secured-finance-subgraph/**'
 
@@ -38,5 +40,9 @@ jobs:
         id: deploy
         run: |
           cd ./packages/secured-finance-subgraph
-          graph deploy --access-token ${{secrets.GRAPH_ACCESS_TOKEN}} secured-finance/secured-finance-protocol subgraph.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/
+          if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
+            nx run secured-finance-subgraph:\"deploy:stg\"
+          else
+            nx run secured-finance-subgraph:\"deploy:dev\"
+          fi
         shell: bash
