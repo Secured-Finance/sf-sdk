@@ -30,6 +30,8 @@ jobs:
         run: npm run bootstrap
       - name: Build
         run: npm run build
+      - name: Authenticate
+        run: npm run auth ${{secrets.GRAPH_ACCESS_TOKEN}}
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
