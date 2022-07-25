@@ -1,6 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { expect } from 'chai';
-import { utils } from 'ethers';
 import {
     GraphApolloClient,
     useBorrowOrderbookQuery,
@@ -28,17 +27,6 @@ describe('Lending market test', () => {
     });
 
     describe('useLendingMarkets hook test', () => {
-        it('Should return undefined if currency is wrong', async () => {
-            const ccy = utils.hexlify(utils.randomBytes(20));
-            const { result, waitForNextUpdate } = renderHook(() =>
-                useLendingMarkets({ ccy }, client)
-            );
-            await waitForNextUpdate();
-
-            expect(result.current.error).to.be.undefined;
-            expect(result.current.data?.lendingMarkets.length).to.be.equal(0);
-        });
-
         it('Should get array of lending markets from subgraph', async () => {
             const { result, waitForNextUpdate } = renderHook(() =>
                 useLendingMarkets({ ccy }, client)
