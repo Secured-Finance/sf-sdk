@@ -30,8 +30,6 @@ jobs:
         run: npm run bootstrap
       - name: Build
         run: npm run build
-      - name: Authenticate
-        run: npm run auth ${{secrets.GRAPH_ACCESS_TOKEN}}
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
@@ -40,6 +38,7 @@ jobs:
         id: deploy
         run: |
           cd ./packages/secured-finance-subgraph
+          npm run auth ${{secrets.GRAPH_ACCESS_TOKEN}}
           if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
             npm run generate:stg
             npm run deploy:stg
