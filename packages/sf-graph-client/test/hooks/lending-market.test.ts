@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { expect } from 'chai';
+import { utils } from 'ethers';
 import {
     GraphApolloClient,
     useBorrowOrderbookQuery,
@@ -28,8 +29,9 @@ describe('Lending market test', () => {
 
     describe('useLendingMarkets hook test', () => {
         it('Should return undefined if currency is wrong', async () => {
+            const ccy = utils.hexlify(utils.randomBytes(20));
             const { result, waitForNextUpdate } = renderHook(() =>
-                useLendingMarkets({ ccy: 'TEST' }, client)
+                useLendingMarkets({ ccy }, client)
             );
             await waitForNextUpdate();
 
