@@ -1,12 +1,12 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts';
 import { assert, test } from 'matchstick-as/assembly/index';
 
-import { handleNewLendingMarket } from '../src/lendingController';
+import { handleNewLendingMarket } from '../src/lending-controller';
 import {
     handleCancelLendingOrder,
     handleMakeLendingOrder,
     handleTakeLendingOrder,
-} from '../src/lendingMarket';
+} from '../src/lending-market';
 import { createLendingMarketCreatedEvent } from './mocks/lending-controller';
 import {
     createCancelOrderEvent,

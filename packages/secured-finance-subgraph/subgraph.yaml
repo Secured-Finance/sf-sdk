@@ -5,6 +5,32 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
+    name: LoanV2
+    network: rinkeby
+    source:
+      abi: LoanV2
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Loan
+      abis:
+        - name: LoanV2
+          file: ./abis/LoanV2.sol/LoanV2.json
+      eventHandlers:
+        - event: Register(indexed address,indexed address,bytes32,uint256,uint256,uint256,indexed bytes32)
+          handler: handleLoanRegister
+        - event: EarlyTermination(bytes32,indexed address,uint256)
+          handler: handleLoanEarlyTermination
+        - event: MarkToMarket(bytes32,uint256,uint256)
+          handler: handleLoanMarkToMarket
+        - event: Novation(indexed bytes32,address)
+          handler: handleLoanNovation
+        - event: Liquidate(bytes32)
+          handler: handleLoanLiquidation
+      file: ./src/loan.ts
+  - kind: ethereum/contract
     name: LendingMarketController
     network: rinkeby
     source:
@@ -22,7 +48,7 @@ dataSources:
       eventHandlers:
         - event: LendingMarketCreated(bytes32,uint256,indexed address)
           handler: handleNewLendingMarket
-      file: ./src/lendingController.ts
+      file: ./src/lending-controller.ts
 templates:
   - kind: ethereum/contract
     name: LendingMarket
@@ -49,4 +75,4 @@ templates:
           handler: handleTakeLendingOrder
         - event: CancelOrder(uint256,indexed address,uint8,uint256,uint256)
           handler: handleCancelLendingOrder
-      file: ./src/lendingMarket.ts
+      file: ./src/lending-market.ts

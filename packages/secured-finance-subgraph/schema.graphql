@@ -1,3 +1,44 @@
+type Loan @entity {
+  id: ID!
+  lender: Bytes!
+  lenderUser: User!
+  borrower: Bytes!
+  borrowUser: User!
+  currencyName: String!
+  currency: Bytes!
+  term: BigInt!
+  notional: BigInt!
+  couponPayment: BigInt!
+  rate: BigInt!
+  startTimestamp: BigInt!
+  endTimestamp: BigInt!
+  presentValue: BigInt!
+  currentTimestamp: BigInt!
+  isAvailable: Boolean!
+  startTxHash: Bytes!
+  state: Int!
+
+  schedule: LoanSchedule! @derivedFrom(field: "loan")
+}
+
+type LoanSchedule @entity {
+  id: ID!
+
+  payments: [SchedulePayment!] @derivedFrom(field: "schedule")
+  loan: Loan!
+}
+
+type SchedulePayment @entity {
+  id: ID!
+  notice: BigInt!
+  payment: BigInt!
+  amount: BigInt!
+  isDone: Boolean!
+  txHash: Bytes!
+
+  schedule: LoanSchedule!
+}
+
 type User @entity {
   id: ID!
   owner: Bytes!
