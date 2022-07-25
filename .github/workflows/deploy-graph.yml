@@ -30,6 +30,10 @@ jobs:
         run: npm run bootstrap
       - name: Build
         run: npm run build
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Install Graph CLI
         id: install-graph-cli
         run: |
@@ -41,8 +45,7 @@ jobs:
         run: |
           cd ./packages/secured-finance-subgraph
           if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
-            nx run secured-finance-subgraph:\"deploy:stg\"
+            npm run deploy:stg
           else
-            nx run secured-finance-subgraph:\"deploy:dev\"
+            npm run deploy:dev
           fi
-        shell: bash
