@@ -32,8 +32,6 @@ jobs:
         run: npm run codegen
       - name: Execute Test
         run: npm run test-all
-        env:
-          GRAPH_ACCESS_TOKEN: ${{ secrets.GRAPH_ACCESS_TOKEN }}
       - name: Execute Coverage
         run: npm run coverage
       - name: Upload ChainLink coverage to Codecov
