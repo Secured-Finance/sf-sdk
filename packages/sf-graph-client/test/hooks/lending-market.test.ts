@@ -29,7 +29,7 @@ describe('Lending market test', () => {
     describe('useLendingMarkets hook test', () => {
         it('Should return undefined if currency is wrong', async () => {
             const { result, waitForNextUpdate } = renderHook(() =>
-                useLendingMarkets({ ccy: '' }, client)
+                useLendingMarkets({ ccy: '0x01' }, client)
             );
             await waitForNextUpdate();
 
