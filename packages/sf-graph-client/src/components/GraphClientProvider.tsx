@@ -4,7 +4,7 @@ import { GraphApolloClient } from './graphApolloClient';
 
 export interface GraphClientProviderProps {
     network: string;
-    cache: InMemoryCache;
+    cache?: InMemoryCache;
 }
 
 export const GraphClientProvider = ({
