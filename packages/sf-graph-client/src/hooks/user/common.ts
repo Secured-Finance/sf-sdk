@@ -1,10 +1,9 @@
 import {
-    Currency,
     FilledLendingMarketOrder,
     Maybe,
     Scalars,
     UserTradingHistoryQuery,
-} from '../../.graphclient';
+} from '../../graphclients';
 
 type FilledLendingMarketOrderLocal = Maybe<
     Pick<
@@ -20,12 +19,7 @@ type FilledLendingMarketOrderLocal = Maybe<
         | 'taker'
         | 'createdAtTimestamp'
         | 'createdAtBlockNumber'
-    > & {
-        currency: Pick<
-            Currency,
-            'identifier' | 'shortName' | 'name' | 'chainId'
-        >;
-    }
+    >
 >;
 
 export interface LendingMarketExtendedOrder

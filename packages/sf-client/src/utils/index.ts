@@ -3,7 +3,6 @@ export {
     getCollateralVaultByCcy,
     getLendingMarketAddressByCcyAndTerm,
     getLendingMarketByCcyAndTerm,
-    packAddresses,
 } from './addresses';
 export {
     DEFAULT_ADDRESS,

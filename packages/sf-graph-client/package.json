@@ -5,10 +5,15 @@
   "main": "dist/index.js",
   "source": "src/index.ts",
   "scripts": {
-    "precompile": "rm -rf dist && npm run codegen",
+    "precompile": "rm -rf dist",
     "compile": "tsc -p tsconfig.json",
-    "codegen": "graphclient build --dir src",
-    "build": "npm run compile && tsc -b",
+    "codegen": "npm run codegen:dev && npm run codegen:stg",
+    "codegen:dev": "SUBGRAPH_NAME=sf-protocol-dev graphclient build --dir src/graphclients/development",
+    "codegen:stg": "SUBGRAPH_NAME=sf-protocol-stg graphclient build --dir src/graphclients/staging",
+    "build": "npm run build:dev && npm run build:stg",
+    "build:dev": "npm run compile && tsc -b",
+    "build:stg": "npm run compile && tsc -b",
+    "prebuild": "npm run codegen",
     "test": "ts-mocha --timeout 6000 src/*.test.{js,jsx,ts,tsx} src/**/*.test.{js,jsx,ts,tsx} test/**/*.test.{js,jsx,ts,tsx}",
     "test:cov": "nyc npm run test"
   },

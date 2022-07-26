@@ -1,3 +1,44 @@
+type Loan @entity {
+  id: ID!
+  lender: Bytes!
+  lenderUser: User!
+  borrower: Bytes!
+  borrowUser: User!
+  currencyName: String!
+  currency: Bytes!
+  term: BigInt!
+  notional: BigInt!
+  couponPayment: BigInt!
+  rate: BigInt!
+  startTimestamp: BigInt!
+  endTimestamp: BigInt!
+  presentValue: BigInt!
+  currentTimestamp: BigInt!
+  isAvailable: Boolean!
+  startTxHash: Bytes!
+  state: Int!
+
+  schedule: LoanSchedule! @derivedFrom(field: "loan")
+}
+
+type LoanSchedule @entity {
+  id: ID!
+
+  payments: [SchedulePayment!] @derivedFrom(field: "schedule")
+  loan: Loan!
+}
+
+type SchedulePayment @entity {
+  id: ID!
+  notice: BigInt!
+  payment: BigInt!
+  amount: BigInt!
+  isDone: Boolean!
+  txHash: Bytes!
+
+  schedule: LoanSchedule!
+}
+
 type User @entity {
   id: ID!
   owner: Bytes!
@@ -14,8 +55,8 @@ type LendingMarket @entity {
   id: ID!
   marketAddr: Bytes!
   controllerAddr: Bytes!
-  currencyIdentifier: Bytes!
-  currency: Currency!
+  currencyName: String!
+  currency: Bytes!
   term: BigInt!
   spread: BigInt!
   marketRate: BigInt!
@@ -43,8 +84,8 @@ type LendingMarket @entity {
 
 type LendingMarketOrderRow @entity {
   id: ID!
-  currencyIdentifier: Bytes!
-  currency: Currency!
+  currencyName: String!
+  currency: Bytes!
   side: Int!
   marketAddr: Bytes!
   lendMarket: LendingMarket!
@@ -69,7 +110,7 @@ type LendingMarketOrder @entity {
   id: ID!
   orderId: BigInt!
   currencyName: String!
-  currency: Currency!
+  currency: Bytes!
   side: Int!
   row: LendingMarketOrderRow
   marketAddr: Bytes!
@@ -94,7 +135,7 @@ type FilledLendingMarketOrder @entity {
   id: ID!
   orderId: BigInt!
   currencyName: String!
-  currency: Currency!
+  currency: Bytes!
   side: Int!
   market: LendingMarket!
   marketAddr: Bytes!
@@ -109,16 +150,4 @@ type FilledLendingMarketOrder @entity {
   # creation timestamps
   createdAtTimestamp: BigInt!
   createdAtBlockNumber: BigInt!
-}
-
-type Currency @entity {
-  id: ID!
-  identifier: Bytes!
-  name: String!
-  shortName: String!
-  chainId: Int!
-  ltv: BigInt!
-  minMargin: BigInt!
-  isSupported: Boolean!
-  isCollateral: Boolean!
 }

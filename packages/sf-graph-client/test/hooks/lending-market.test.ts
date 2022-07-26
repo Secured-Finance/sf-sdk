@@ -1,163 +1,195 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { expect } from 'chai';
 import {
+    GraphApolloClient,
     useBorrowOrderbookQuery,
     useLendingMarketInfo,
     useLendingMarkets,
     useLendingTradingHistory,
     useLendOrderbookQuery,
-} from '../../src/hooks';
+} from '../../src';
 import {
-    assetPrice,
-    ccy,
-    market,
-    validateCurrency,
     validateLendingMarket,
     validateOrderbookRow,
     validateTradingHistoryRow,
 } from '../utils';
 
-describe('useLendingMarkets hook test', () => {
-    it('Should return undefined if lending market address is empty', async () => {
-        const { result } = renderHook(() => useLendingMarkets(''));
+describe('Lending market test', () => {
+    let client: GraphApolloClient;
+    let market: string;
+    const ccy = 'FIL';
+    const assetPrice = 100;
 
-        expect(result.current.data).to.be.undefined;
+    before(() => {
+        process.env.SUBGRAPH_NAME = 'sf-protocol-dev';
+        process.env.SF_ENV = 'development';
+        client = new GraphApolloClient({ network: 'rinkeby' });
     });
 
-    it('Should get array of lending markets from subgraph', async () => {
-        const { result } = renderHook(() => useLendingMarkets(ccy));
+    describe('useLendingMarkets hook test', () => {
+        it('Should return undefined if currency is wrong', async () => {
+            const { result, waitForNextUpdate } = renderHook(() =>
+                useLendingMarkets({ ccy: '0x01' }, client)
+            );
+            await waitForNextUpdate({ timeout: 5000 });
 
-        await new Promise<void>(res =>
-            setTimeout(() => {
-                res();
-            }, 1000)
-        );
+            expect(result.current.error).to.be.undefined;
+            expect(result.current.data?.lendingMarkets.length).to.be.equal(0);
+        });
 
-        if (result.current.data?.lendingMarkets !== undefined) {
-            const markets = result.current.data.lendingMarkets;
+        it('Should get array of lending markets from subgraph', async () => {
+            const { result, waitForNextUpdate } = renderHook(() =>
+                useLendingMarkets({ ccy }, client)
+            );
 
-            for (let i = 0; i < markets.length; i++) {
-                validateLendingMarket(markets[i]);
+            await waitForNextUpdate();
+
+            expect(result.current.error).to.be.undefined;
+
+            const lendingMarkets = result.current.data?.lendingMarkets;
+            expect(lendingMarkets?.length).to.be.equal(6);
+
+            market = lendingMarkets?.[0].id as string;
+
+            for (let i = 0; i < (lendingMarkets?.length || 0); i++) {
+                validateLendingMarket(lendingMarkets?.[i]);
             }
-        }
-    });
-});
-
-describe('useLendingMarketInfo hook test', () => {
-    it('Should return undefined if lending market address is empty', async () => {
-        const { result } = renderHook(() => useLendingMarketInfo(''));
-
-        expect(result.current.data).to.be.undefined;
+        });
     });
 
-    it('Should return lending market data from subgraph', async () => {
-        const { result } = renderHook(() => useLendingMarketInfo(market));
+    describe('useLendingMarketInfo hook test', () => {
+        it('Should return undefined if lending market address is empty', async () => {
+            const { result, waitForNextUpdate } = renderHook(() =>
+                useLendingMarketInfo({ lendingMarket: '0x02' }, client)
+            );
+            await waitForNextUpdate();
 
-        await new Promise<void>(res =>
-            setTimeout(() => {
-                res();
-            }, 1000)
-        );
+            expect(result.current.error).to.be.undefined;
+            expect(result.current.data).to.be.undefined;
+        });
 
-        if (result.current.data?.lendingMarket !== undefined) {
-            const market = result.current.data.lendingMarket;
+        it('Should return lending market data from subgraph', async () => {
+            const { result, waitForNextUpdate } = renderHook(() =>
+                useLendingMarketInfo({ lendingMarket: market }, client)
+            );
 
-            validateLendingMarket(market);
-            validateCurrency(market.currency);
-        }
+            await waitForNextUpdate();
+
+            expect(result.current.error).to.be.undefined;
+
+            if (result.current.data?.lendingMarket !== undefined) {
+                const market = result.current.data.lendingMarket;
+
+                validateLendingMarket(market);
+            }
+        });
     });
-});
 
-describe('useLendOrderbook hook test', () => {
-    it('Should return undefined if lending market address is empty', async () => {
-        const { result } = renderHook(() =>
-            useLendOrderbookQuery('', assetPrice)
-        );
+    describe('useLendOrderbook hook test', () => {
+        it('Should return undefined if lending market address is empty', async () => {
+            const { result, waitForNextUpdate } = renderHook(() =>
+                useLendOrderbookQuery(
+                    { lendingMarket: '0x03', assetPrice },
+                    client
+                )
+            );
 
-        if (result.current.data !== undefined) {
-            expect(result.current.data).to.be.empty;
-        }
+            await waitForNextUpdate();
+
+            expect(result.current.error).to.be.undefined;
+
+            if (result.current.data !== undefined) {
+                expect(result.current.data).to.be.empty;
+            }
+        });
+
+        it('Should get lending market lend orderbook data from subgraph', async () => {
+            const { result, waitForNextUpdate } = renderHook(() =>
+                useLendOrderbookQuery(
+                    { lendingMarket: market, assetPrice },
+                    client
+                )
+            );
+
+            await waitForNextUpdate();
+
+            expect(result.current.error).to.be.undefined;
+
+            if (result.current.data !== undefined) {
+                const orderbook = result.current.data;
+
+                for (let i = 0; i < orderbook.length; i++) {
+                    validateOrderbookRow(orderbook[i]);
+                }
+            }
+        });
     });
 
-    it('Should get lending market lend orderbook data from subgraph', async () => {
-        const { result } = renderHook(() =>
-            useLendOrderbookQuery(market, assetPrice)
-        );
+    describe('useBorrowOrderbookQuery hook test', () => {
+        it('Should return undefined if lending market address is empty', async () => {
+            const { result, waitForNextUpdate } = renderHook(() =>
+                useBorrowOrderbookQuery(
+                    { lendingMarket: '0x04', assetPrice },
+                    client
+                )
+            );
 
-        await new Promise<void>(res =>
-            setTimeout(() => {
-                res();
-            }, 1000)
-        );
+            await waitForNextUpdate();
 
-        if (result.current.data !== undefined) {
+            expect(result.current.error).to.be.undefined;
+
+            if (result.current.data !== undefined) {
+                expect(result.current.data).to.be.empty;
+            }
+        });
+
+        it('Should get lending market borrow orderbook data from subgraph', async () => {
+            const { result, waitForNextUpdate } = renderHook(() =>
+                useBorrowOrderbookQuery(
+                    { lendingMarket: market, assetPrice },
+                    client
+                )
+            );
+
+            await waitForNextUpdate();
+
+            expect(result.current.error).to.be.undefined;
+
             const orderbook = result.current.data;
 
-            for (let i = 0; i < orderbook.length; i++) {
-                validateOrderbookRow(orderbook[i]);
+            for (let i = 0; i < (orderbook?.length || 0); i++) {
+                validateOrderbookRow(orderbook?.[i]);
             }
-        }
-    });
-});
-
-describe('useBorrowOrderbookQuery hook test', () => {
-    it('Should return undefined if lending market address is empty', async () => {
-        const { result } = renderHook(() =>
-            useBorrowOrderbookQuery('', assetPrice)
-        );
-
-        if (result.current.data !== undefined) {
-            expect(result.current.data).to.be.empty;
-        }
+        });
     });
 
-    it('Should get lending market borrow orderbook data from subgraph', async () => {
-        const { result } = renderHook(() =>
-            useBorrowOrderbookQuery(market, assetPrice)
-        );
+    describe('useLendingTradingHistory hook test', () => {
+        it('Should return undefined if lending market address is empty', async () => {
+            const { result, waitForNextUpdate } = renderHook(() =>
+                useLendingTradingHistory({ lendingMarket: '0x01' }, client)
+            );
 
-        await new Promise<void>(res =>
-            setTimeout(() => {
-                res();
-            }, 1000)
-        );
+            await waitForNextUpdate();
 
-        if (result.current.data !== undefined) {
-            const orderbook = result.current.data;
+            expect(result.current.error).to.be.undefined;
+            expect(result.current.data).to.be.undefined;
+        });
 
-            for (let i = 0; i < orderbook.length; i++) {
-                validateOrderbookRow(orderbook[i]);
+        it('Should get lending market trading history data from subgraph', async () => {
+            const { result, waitForNextUpdate } = renderHook(() =>
+                useLendingTradingHistory({ lendingMarket: market }, client)
+            );
+
+            await waitForNextUpdate();
+
+            expect(result.current.error).to.be.undefined;
+
+            const history = result.current.data?.lendingMarket?.tradeHistory;
+            if (history !== undefined) {
+                for (let i = 0; i < (history?.length || 0); i++) {
+                    validateTradingHistoryRow(history?.[i]);
+                }
             }
-        }
-    });
-});
-
-describe('useLendingTradingHistory hook test', () => {
-    it('Should return undefined if lending market address is empty', async () => {
-        const { result } = renderHook(() =>
-            useLendingTradingHistory('', assetPrice)
-        );
-
-        expect(result.current.data).to.be.undefined;
-    });
-
-    it('Should get lending market trading history data from subgraph', async () => {
-        const { result } = renderHook(() =>
-            useLendingTradingHistory(market, assetPrice)
-        );
-
-        await new Promise<void>(res =>
-            setTimeout(() => {
-                res();
-            }, 1000)
-        );
-
-        if (result.current.data?.lendingMarket?.tradeHistory !== undefined) {
-            const history = result.current.data.lendingMarket.tradeHistory;
-
-            for (let i = 0; i < history.length; i++) {
-                validateTradingHistoryRow(history);
-            }
-        }
+        });
     });
 });

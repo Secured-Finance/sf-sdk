@@ -6,12 +6,8 @@ export const LOAN_DEALS = gql`
             id
             lender
             borrower
-            currency {
-                identifier
-                shortName
-                name
-                chainId
-            }
+            currency
+            currencyName
             term
             notional
             couponPayment
@@ -30,12 +26,8 @@ export const BORROW_DEALS = gql`
             id
             lender
             borrower
-            currency {
-                identifier
-                shortName
-                name
-                chainId
-            }
+            currency
+            currencyName
             term
             notional
             couponPayment
@@ -54,12 +46,8 @@ export const LOAN_INFO = gql`
             id
             lender
             borrower
-            currency {
-                identifier
-                shortName
-                name
-                chainId
-            }
+            currency
+            currencyName
             term
             notional
             couponPayment
@@ -77,33 +65,6 @@ export const LOAN_INFO = gql`
                     isDone
                     txHash
                 }
-            }
-        }
-    }
-`;
-
-export const LOAN_TERMINATION = gql`
-    query LoanTermination($id: String!, $skip: Int!) {
-        loanTerminations(where: { loan_contains: $id }, skip: $skip) {
-            id
-            terminationAsker
-            terminationSubmitter
-            terminationDate
-            repayment
-        }
-    }
-`;
-
-export const LOAN_NOVATION_HISTORY = gql`
-    query LoanNovationHistory($id: String!, $skip: Int!) {
-        loanNovations(where: { loan_contains: $id }, skip: $skip) {
-            id
-            previousLender
-            newLender
-            novationDate
-            loan {
-                id
-                term
             }
         }
     }

@@ -1,11 +1,15 @@
-import { useQuery } from '@apollo/client';
-import { BorrowDealsDocument, BorrowDealsQuery } from '../../.graphclient';
-import { client } from '../../client';
-import { QueryResult } from '../../utils';
+import { GraphApolloClient } from '../../';
+import { BorrowDealsDocument, BorrowDealsQuery } from '../../graphclients';
+import { QueryResult, useQuery } from '../useQuery';
+
+export interface BorrowingDealsVariables {
+    account: string;
+    skip?: number;
+}
 
 export const useBorrowingDeals = (
-    account: string,
-    skip = 0
+    { account, skip = 0 }: BorrowingDealsVariables,
+    client?: GraphApolloClient
 ): QueryResult<BorrowDealsQuery> => {
     const variables = {
         account: account.toLowerCase(),
@@ -17,24 +21,10 @@ export const useBorrowingDeals = (
         client: client,
     });
 
-    if (error) {
-        console.error(error);
+    const isExists = data?.loans;
 
-        return {
-            data: undefined,
-            error: error,
-        };
-    }
-
-    if (data?.loans) {
-        return {
-            data: data,
-            error: null,
-        };
-    } else {
-        return {
-            data: undefined,
-            error: undefined,
-        };
-    }
+    return {
+        data: isExists ? data : undefined,
+        error,
+    };
 };

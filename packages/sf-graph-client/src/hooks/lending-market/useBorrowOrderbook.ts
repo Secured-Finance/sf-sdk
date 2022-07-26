@@ -1,16 +1,27 @@
-import { useQuery } from '@apollo/client';
+import { BigNumber } from 'ethers';
 import { useMemo, useState } from 'react';
+import { GraphApolloClient } from '../../';
 import {
     BorrowOrderbookDocument,
     BorrowOrderbookQuery,
-} from '../../.graphclient';
-import { client } from '../../client';
-import { OrderbookRow, QueryResult, toBN } from '../../utils';
-import { modifyOrderbook } from './common';
+} from '../../graphclients';
+import { QueryResult, useQuery } from '../useQuery';
+import { modifyOrderbook, OrderbookRow } from './common';
+
+export interface BorrowOrderbookVariables {
+    lendingMarket: string;
+    skip?: number;
+}
+
+export interface BorrowOrderbookQueryVariables {
+    lendingMarket: string;
+    assetPrice: number;
+    skip?: number;
+}
 
 export const useBorrowOrderbook = (
-    lendingMarket: string,
-    skip = 0
+    { lendingMarket, skip = 0 }: BorrowOrderbookVariables,
+    client?: GraphApolloClient
 ): QueryResult<BorrowOrderbookQuery> => {
     const variables = {
         market: lendingMarket.toLowerCase(),
@@ -19,45 +30,29 @@ export const useBorrowOrderbook = (
 
     const { error, data } = useQuery<BorrowOrderbookQuery>(
         BorrowOrderbookDocument,
-        {
-            variables: variables,
-            client: client,
-        }
+        { variables, client }
     );
 
-    if (error) {
-        console.error(error);
+    const isExists = data?.lendingMarket?.borrowOrderbook;
 
-        return {
-            data: undefined,
-            error: error,
-        };
-    }
-
-    if (data?.lendingMarket?.borrowOrderbook) {
-        return {
-            data: data,
-            error: null,
-        };
-    } else {
-        return {
-            data: undefined,
-            error: undefined,
-        };
-    }
+    return {
+        data: isExists ? data : undefined,
+        error,
+    };
 };
 
 export const useBorrowOrderbookQuery = (
-    lendingMarket: string,
-    assetPrice: number,
-    skip = 0
+    { lendingMarket, assetPrice, skip = 0 }: BorrowOrderbookQueryVariables,
+    client?: GraphApolloClient
 ): QueryResult<Array<OrderbookRow>> => {
     const [orderbook, setOrderbook] = useState<Array<OrderbookRow>>([]);
-    const { data, error } = useBorrowOrderbook(lendingMarket, skip);
+    const { data, error } = useBorrowOrderbook({ lendingMarket, skip }, client);
 
     useMemo(async () => {
         if (data) {
-            const fixedAssetPrice = toBN((assetPrice * 100).toFixed(0));
+            const fixedAssetPrice = BigNumber.from(
+                (assetPrice * 100).toFixed(0)
+            );
             const parsedOrderbook = await modifyOrderbook(
                 data,
                 'borrow',
@@ -73,7 +68,7 @@ export const useBorrowOrderbookQuery = (
     if (error) {
         return {
             data: undefined,
-            error: error,
+            error,
         };
     }
 

@@ -1,40 +1,29 @@
-import { useQuery } from '@apollo/client';
-import { OpenOrdersDocument, OpenOrdersQuery } from '../../.graphclient';
-import { client } from '../../client';
-import { QueryResult } from '../../utils';
+import { GraphApolloClient } from '../../';
+import { OpenOrdersDocument, OpenOrdersQuery } from '../../graphclients';
+import { QueryResult, useQuery } from '../useQuery';
+export interface OpenOrdersVariables {
+    account: string;
+    market: string;
+}
 
 export const useOpenOrders = (
-    account: string,
-    market: string
+    { account, market }: OpenOrdersVariables,
+    client?: GraphApolloClient
 ): QueryResult<OpenOrdersQuery> => {
     const variables = {
         account: account.toLowerCase(),
-        market: market,
+        market,
     };
 
     const { error, data } = useQuery<OpenOrdersQuery>(OpenOrdersDocument, {
-        variables: variables,
-        client: client,
+        variables,
+        client,
     });
 
-    if (error) {
-        console.error(error);
+    const isExists = data?.user?.openOrders;
 
-        return {
-            data: undefined,
-            error: error,
-        };
-    }
-
-    if (data?.user?.openOrders) {
-        return {
-            data: data,
-            error: null,
-        };
-    } else {
-        return {
-            data: undefined,
-            error: undefined,
-        };
-    }
+    return {
+        data: isExists ? data : undefined,
+        error,
+    };
 };

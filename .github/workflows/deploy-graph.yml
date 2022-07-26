@@ -28,15 +28,19 @@ jobs:
         run: npm run bootstrap
       - name: Build
         run: npm run build
-      - name: Install Graph CLI
-        id: install-graph-cli
-        run: |
-          yarn global add @graphprotocol/graph-cli@0.28.0
-          echo "$(yarn global bin)" >> $GITHUB_PATH
+      - name: Extract branch name
         shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Deploy Subgraph
         id: deploy
         run: |
           cd ./packages/secured-finance-subgraph
-          graph deploy --access-token ${{secrets.GRAPH_ACCESS_TOKEN}} secured-finance/secured-finance-protocol subgraph.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/
-        shell: bash
+          npm run auth ${{secrets.GRAPH_ACCESS_TOKEN}}
+          if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
+            npm run generate:stg
+            npm run deploy:stg
+          else
+            npm run generate:dev
+            npm run deploy:dev
+          fi

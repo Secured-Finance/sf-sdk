@@ -5,7 +5,7 @@ export const LENDING_MARKETS_BY_CCY = gql`
         lendingMarkets(
             skip: $skip
             orderBy: term
-            where: { currency_contains: $currency }
+            where: { currency: $currency }
         ) {
             id
             marketRate
@@ -27,11 +27,8 @@ export const LENDING_MARKET_INFO = gql`
             marketRate
             spread
             term
-            currency {
-                identifier
-                shortName
-                name
-            }
+            currency
+            currencyName
             totalLiquidity
         }
     }

@@ -1,9 +1,15 @@
-import { useQuery } from '@apollo/client';
-import { LoanDocument, LoanQuery } from '../../.graphclient';
-import { client } from '../../client';
-import { QueryResult } from '../../utils';
+import { GraphApolloClient } from '../../';
+import { LoanDocument, LoanQuery } from '../../graphclients';
+import { QueryResult, useQuery } from '../useQuery';
 
-export const useLoanInfo = (id: string): QueryResult<LoanQuery> => {
+export interface LoanInfoVariables {
+    id: string;
+}
+
+export const useLoanInfo = (
+    { id }: LoanInfoVariables,
+    client?: GraphApolloClient
+): QueryResult<LoanQuery> => {
     const variables = {
         id: id,
     };
@@ -13,24 +19,10 @@ export const useLoanInfo = (id: string): QueryResult<LoanQuery> => {
         client: client,
     });
 
-    if (error) {
-        console.error(error);
+    const isExists = data?.loan;
 
-        return {
-            data: undefined,
-            error: error,
-        };
-    }
-
-    if (data?.loan) {
-        return {
-            data: data,
-            error: null,
-        };
-    } else {
-        return {
-            data: undefined,
-            error: undefined,
-        };
-    }
+    return {
+        data: isExists ? data : undefined,
+        error,
+    };
 };

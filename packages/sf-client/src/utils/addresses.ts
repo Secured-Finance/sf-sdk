@@ -1,38 +1,9 @@
-import { utils } from 'ethers/lib/ethers';
 import { DEFAULT_ADDRESS } from '.';
 import {
     CollateralVaultItem,
     collateralVaults,
 } from '../lib/collateral-vaults';
 import { LendingMarketItem, lendingMarkets } from '../lib/lending-markets';
-
-export const packAddresses = (
-    addr0: string,
-    addr1: string
-): [string, boolean] => {
-    let encodedAddrs;
-    let _addr0, _addr1;
-
-    addr0 < addr1
-        ? ((_addr0 = addr0), (_addr1 = addr1))
-        : ((_addr0 = addr1), (_addr1 = addr0));
-
-    if (_addr0 !== addr0) {
-        encodedAddrs = utils.defaultAbiCoder.encode(
-            ['address', 'address'],
-            [_addr0, _addr1]
-        );
-        const packed = utils.keccak256(encodedAddrs);
-        return [packed, true];
-    } else {
-        encodedAddrs = utils.defaultAbiCoder.encode(
-            ['address', 'address'],
-            [_addr0, _addr1]
-        );
-        const packed = utils.keccak256(encodedAddrs);
-        return [packed, false];
-    }
-};
 
 export const getCollateralVaultByCcy = (
     ccy: string,

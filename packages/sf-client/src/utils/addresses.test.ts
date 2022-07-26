@@ -1,32 +1,13 @@
 import {
     getCollateralVaultAddressByCcy,
     getLendingMarketAddressByCcyAndTerm,
-    packAddresses,
 } from './addresses';
 import { DEFAULT_ADDRESS } from './constants';
 import assert = require('assert');
 
 describe('Check addresses utils functions', function () {
-    const userAddress = '0x8f4db50f2eb35016bd0e35efd18db15bc46419cb';
-    let counterparty: string;
     const ropstenNetworkID = 3;
     const localhostNetworkID = 1337;
-
-    it('Try to pack addresses, check result hash', async () => {
-        counterparty = '0x16dbe39c7685be8f4b6bfb6905b78b3da8378d16';
-        const result = packAddresses(userAddress, counterparty);
-        const expectedResult =
-            '0xb656c9d359dd75ec87bbb7408823138e9a91aa5cb666a27a80210256a2372825';
-        assert.equal(result[0], expectedResult);
-    });
-
-    it('Try to pack addresses with incorrect address, expect failed result', async () => {
-        counterparty = '';
-
-        assert.throws(() => {
-            packAddresses(userAddress, counterparty);
-        });
-    });
 
     it('Try get collateral vault address by currency, check addresses', async () => {
         let result = getCollateralVaultAddressByCcy('ETH', localhostNetworkID);
