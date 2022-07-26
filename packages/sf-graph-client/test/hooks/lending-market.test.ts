@@ -31,7 +31,7 @@ describe('Lending market test', () => {
             const { result, waitForNextUpdate } = renderHook(() =>
                 useLendingMarkets({ ccy: '0x01' }, client)
             );
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
             expect(result.current.data?.lendingMarkets.length).to.be.equal(0);
