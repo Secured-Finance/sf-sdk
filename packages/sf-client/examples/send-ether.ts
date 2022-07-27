@@ -1,7 +1,6 @@
-const { SecuredFinanceClient } = require('../dist/index');
-const { Wallet, providers } = require('ethers');
-const { toBytes32 } = require('../dist/utils');
-require('dotenv/config');
+import 'dotenv/config';
+import { providers, Wallet } from 'ethers';
+import { SecuredFinanceClient } from '../src';
 
 (async function () {
     const provider = new providers.JsonRpcProvider(
@@ -13,7 +12,8 @@ require('dotenv/config');
     wallet = wallet.connect(provider);
     let network = await provider.getNetwork();
 
-    const sfClient = new SecuredFinanceClient(wallet, network);
+    const sfClient = new SecuredFinanceClient();
+    await sfClient.init(wallet, network);
 
     const transaction = await sfClient.sendEther(1, wallet.address);
     console.log(transaction);

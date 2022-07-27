@@ -1,19 +1,20 @@
 import { Provider } from '@ethersproject/providers';
 import { Signer } from 'ethers';
-import { addresses } from '../lib/addresses';
 import {
     CloseOutNetting as Contract,
-    CloseOutNetting__factory,
+    CloseOutNetting__factory as Factory,
 } from '../types';
+import { BaseContract } from './BaseContract';
 
-export class CloseOutNetting {
-    contract: Contract;
+export class CloseOutNetting extends BaseContract<Contract> {
+    static async getInstance(
+        signerOrProvider: Signer | Provider,
+        network: string
+    ) {
+        const address = await this.getAddress('CloseOutNetting', network);
+        const contract = Factory.connect(address, signerOrProvider);
 
-    constructor(signerOrProvider: Signer | Provider, network: number) {
-        this.contract = CloseOutNetting__factory.connect(
-            addresses[network].closeOutNetting,
-            signerOrProvider
-        );
+        return new CloseOutNetting(contract);
     }
 
     getCloseOutPayment = async (

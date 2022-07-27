@@ -1,25 +1,21 @@
 import { Provider } from '@ethersproject/providers';
 import { Signer } from 'ethers';
-import { addresses } from '../lib/addresses';
-import { MarkToMarket as Contract, MarkToMarket__factory } from '../types';
+import {
+    MarkToMarket as Contract,
+    MarkToMarket__factory as Factory,
+} from '../types';
+import { BaseContract } from './BaseContract';
 
-export class MarkToMarket {
-    contract: Contract;
+export class MarkToMarket extends BaseContract<Contract> {
+    static async getInstance(
+        signerOrProvider: Signer | Provider,
+        network: string
+    ) {
+        const address = await this.getAddress('MarkToMarket', network);
+        const contract = Factory.connect(address, signerOrProvider);
 
-    constructor(signerOrProvider: Signer | Provider, network: number) {
-        this.contract = MarkToMarket__factory.connect(
-            addresses[network].markToMarket,
-            signerOrProvider
-        );
+        return new MarkToMarket(contract);
     }
-
-    updatePV = async (dealId: string) => {
-        return this.contract.updatePV(dealId);
-    };
-
-    updatePVs = async (dealIds: string[]) => {
-        return this.contract.updatePVs(dealIds);
-    };
 }
 
 export default MarkToMarket;

@@ -15,7 +15,7 @@
     "allowJs": true,
     "checkJs": true
   },
-  "exclude": ["node_modules", "packages/sf-client/types"],
+  "exclude": ["node_modules"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"

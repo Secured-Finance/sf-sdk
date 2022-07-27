@@ -5,10 +5,11 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "rootDir": "src",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noImplicitAny": false
   },
   "include": ["src"],
-  "exclude": ["dist", "examples", "types"],
+  "exclude": ["dist", "examples", "src/types"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"

@@ -29,15 +29,16 @@ export {
 };
 
 export const contracts: { [key: string]: unknown } = {
+    closeOutNetting: CloseOutNetting,
     collateralAggregator: CollateralAggregator,
+    collateralVault: CollateralVault,
+    crosschainAddressResolver: CrosschainAddressResolver,
+    currencyController: CurrencyController,
     loan: Loan,
     lendingMarketController: LendingMarketController,
-    currencyController: CurrencyController,
-    closeOutNetting: CloseOutNetting,
+    markToMarket: MarkToMarket,
     paymentAggregator: PaymentAggregator,
     productAddressResolver: ProductAddressResolver,
-    markToMarket: MarkToMarket,
-    termStructure: TermStructure,
-    crosschainAddressResolver: CrosschainAddressResolver,
     settlementEngine: SettlementEngine,
+    termStructure: TermStructure,
 };

@@ -1,6 +1,6 @@
-const { SecuredFinanceClient, utils } = require('../dist/index');
-const { Wallet, providers } = require('ethers');
-require('dotenv/config');
+import 'dotenv/config';
+import { providers, Wallet } from 'ethers';
+import { SecuredFinanceClient, utils } from '../src';
 
 (async function () {
     const provider = new providers.JsonRpcProvider(
@@ -12,9 +12,10 @@ require('dotenv/config');
 
     let network = await provider.getNetwork();
 
-    const sfClient = new SecuredFinanceClient(wallet, network);
+    const sfClient = new SecuredFinanceClient();
+    await sfClient.init(wallet, network);
 
-    const contract = sfClient.contracts.lendingMarketController.contract;
+    const contract = sfClient.lendingMarketController.contract;
 
     const terms = await contract.getSupportedTerms(utils.toBytes32('FIL'));
     console.log(terms.toString());

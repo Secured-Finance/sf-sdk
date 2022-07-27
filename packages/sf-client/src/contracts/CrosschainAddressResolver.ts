@@ -1,19 +1,23 @@
 import { Provider } from '@ethersproject/providers';
 import { Signer } from 'ethers';
-import { addresses } from '../lib/addresses';
 import {
     CrosschainAddressResolver as Contract,
-    CrosschainAddressResolver__factory,
+    CrosschainAddressResolver__factory as Factory,
 } from '../types';
+import { BaseContract } from './BaseContract';
 
-export class CrosschainAddressResolver {
-    contract: Contract;
-
-    constructor(signerOrProvider: Signer | Provider, network: number) {
-        this.contract = CrosschainAddressResolver__factory.connect(
-            addresses[network].crosschainAddressResolver,
-            signerOrProvider
+export class CrosschainAddressResolver extends BaseContract<Contract> {
+    static async getInstance(
+        signerOrProvider: Signer | Provider,
+        network: string
+    ) {
+        const address = await this.getAddress(
+            'CrosschainAddressResolver',
+            network
         );
+        const contract = Factory.connect(address, signerOrProvider);
+
+        return new CrosschainAddressResolver(contract);
     }
 
     updateAddress = async (chainId: number | string, address: string) => {

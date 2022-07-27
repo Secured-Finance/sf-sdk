@@ -1,80 +1,42 @@
 import { Provider } from '@ethersproject/providers';
-import { BigNumber, Signer } from 'ethers';
-import { LendingMarket as Contract, LendingMarket__factory } from '../types';
-import { getLendingMarketByCcyAndTerm } from '../utils/addresses';
+import { constants, Signer } from 'ethers';
+import {
+    LendingMarket as Contract,
+    LendingMarket__factory as LendingMarketFactory,
+} from '../types';
+import { BaseContract } from './BaseContract';
+import { LendingMarketController } from './LendingMarketController';
 
-export class LendingMarket {
-    contract: Contract;
-
-    constructor(
+export class LendingMarket extends BaseContract<Contract> {
+    static async getInstance(
         ccy: string,
         term: string,
         signerOrProvider: Signer | Provider,
-        network: number
+        network: string
     ) {
-        const marketAddress = getLendingMarketByCcyAndTerm(ccy, term, network);
+        const lendingMarketControllerContract =
+            await LendingMarketController.getInstance(
+                signerOrProvider,
+                network
+            );
 
-        this.contract = LendingMarket__factory.connect(
-            marketAddress.address,
+        const lendingMarketAddresses =
+            await lendingMarketControllerContract.contract.getLendingMarket(
+                ccy,
+                term
+            );
+
+        if (lendingMarketAddresses === constants.AddressZero) {
+            throw new Error('Wrong ccy or term');
+        }
+
+        const lendingMarketContract = LendingMarketFactory.connect(
+            lendingMarketAddresses,
             signerOrProvider
         );
+
+        return new LendingMarket(lendingMarketContract);
     }
-
-    getOrder = async (orderID: number | BigNumber) => {
-        return this.contract.getOrder(orderID);
-    };
-
-    getOrderFromTree = async (orderID: number | BigNumber) => {
-        return this.contract.getOrderFromTree(orderID);
-    };
-
-    getLastOrderID = async () => {
-        return this.contract.last_order_id();
-    };
-
-    getLendingMarketCurrency = async () => {
-        return this.contract.MarketCcy();
-    };
-
-    getLendingMarketTerm = async () => {
-        return this.contract.MarketTerm();
-    };
-
-    getMaker = async (orderID: number | BigNumber) => {
-        return this.contract.getMaker(orderID);
-    };
-
-    getBorrowRate = async () => {
-        return this.contract.getBorrowRate();
-    };
-
-    getLendRate = async () => {
-        return this.contract.getLendRate();
-    };
-
-    getMidRate = async () => {
-        return this.contract.getMidRate();
-    };
-
-    cancelOrder = async (orderID: number | BigNumber) => {
-        return this.contract.cancelOrder(orderID);
-    };
-
-    matchOrders = async (
-        side: number,
-        amount: number | BigNumber,
-        rate: number | BigNumber
-    ) => {
-        return this.contract.matchOrders(side, amount, rate);
-    };
-
-    order = async (
-        side: number,
-        amount: number | BigNumber,
-        rate: number | BigNumber
-    ) => {
-        return this.contract.order(side, amount, rate);
-    };
 }
 
 export default LendingMarket;

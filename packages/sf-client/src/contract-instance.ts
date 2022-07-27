@@ -7,7 +7,6 @@ import {
     contracts,
     CrosschainAddressResolver,
     CurrencyController,
-    LendingMarket,
     LendingMarketController,
     Loan,
     MarkToMarket,
@@ -16,23 +15,12 @@ import {
     SettlementEngine,
     TermStructure,
 } from './contracts';
-import { addresses, ContractAddresses } from './lib/addresses';
-import {
-    CollateralVaultItem,
-    CollateralVaults,
-    collateralVaults,
-} from './lib/collateral-vaults';
-import {
-    LendingMarketItem,
-    LendingMarkets,
-    lendingMarkets,
-} from './lib/lending-markets';
+import { LendingMarkets, LENDING_MARKETS } from './lib/lending-markets';
 
 export class ContractsInstance {
-    addresses: ContractAddresses;
-    lendingMarkets: LendingMarkets = {};
-    collateralVaults: CollateralVaults = {};
+    lendingMarkets: LendingMarkets;
     collateralAggregator: CollateralAggregator;
+    collateralVault: CollateralVault;
     loan: Loan;
     lendingMarketController: LendingMarketController;
     currencyController: CurrencyController;
@@ -44,46 +32,25 @@ export class ContractsInstance {
     crosschainAddressResolver: CrosschainAddressResolver;
     settlementEngine: SettlementEngine;
 
-    constructor(signerOrProvider: Signer | Provider, networkId?: number) {
-        this.addresses = addresses[networkId];
+    async getInstances(signerOrProvider: Signer | Provider, network: string) {
         const contractForEnv = contracts;
 
-        Object.keys(contractForEnv).forEach(contract => {
-            const Contract = contractForEnv[contract];
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            this[contract] = new Contract(signerOrProvider, networkId);
-        });
-
-        collateralVaults[networkId].forEach((vault: CollateralVaultItem) => {
-            const address = vault.address;
-
-            this.collateralVaults[address] = {
-                ccy: vault.ccy,
-                address: address,
-                tokenAddress: vault.tokenAddress,
-                contract: new CollateralVault(
-                    vault.ccy,
+        for (const key in contractForEnv) {
+            if (Object.prototype.hasOwnProperty.call(contractForEnv, key)) {
+                const Contract = contractForEnv[key];
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                this[key] = await Contract.getInstance(
                     signerOrProvider,
-                    networkId
-                ),
-            };
-        });
+                    network
+                );
+            }
+        }
 
-        lendingMarkets[networkId].map((marketItem: LendingMarketItem) => {
-            const market = Object.assign(
-                {
-                    contract: new LendingMarket(
-                        marketItem.ccy,
-                        marketItem.term,
-                        signerOrProvider,
-                        networkId
-                    ),
-                },
-                marketItem
-            ) as LendingMarketItem;
-
-            this.lendingMarkets[marketItem.address] = market;
-        });
+        this.lendingMarkets = new LendingMarkets(
+            LENDING_MARKETS,
+            signerOrProvider,
+            network
+        );
     }
 }

@@ -1,70 +1,21 @@
 import { Provider } from '@ethersproject/providers';
-import { BigNumber, Signer } from 'ethers';
-import { addresses } from '../lib/addresses';
+import { Signer } from 'ethers';
 import {
     CurrencyController as Contract,
-    CurrencyController__factory,
+    CurrencyController__factory as Factory,
 } from '../types';
+import { BaseContract } from './BaseContract';
 
-export class CurrencyController {
-    contract: Contract;
+export class CurrencyController extends BaseContract<Contract> {
+    static async getInstance(
+        signerOrProvider: Signer | Provider,
+        network: string
+    ) {
+        const address = await this.getAddress('CurrencyController', network);
+        const contract = Factory.connect(address, signerOrProvider);
 
-    constructor(signerOrProvider: Signer | Provider, network: number) {
-        this.contract = CurrencyController__factory.connect(
-            addresses[network].currencyController,
-            signerOrProvider
-        );
+        return new CurrencyController(contract);
     }
-
-    getCurrency = async (ccy: string) => {
-        return this.contract.currencies(ccy);
-    };
-
-    getLTV = async (ccy: string) => {
-        return this.contract.getLTV(ccy);
-    };
-
-    getMinMargin = async (ccy: string) => {
-        return this.contract.getMinMargin(ccy);
-    };
-
-    isSupportedCcy = async (ccy: string) => {
-        return this.contract.isSupportedCcy(ccy);
-    };
-
-    getLastUSDPrice = async (ccy: string) => {
-        return this.contract.getLastUSDPrice(ccy);
-    };
-
-    getHistoricalUSDPrice = async (
-        ccy: string,
-        roundID: number | BigNumber
-    ) => {
-        return this.contract.getHistoricalUSDPrice(ccy, roundID);
-    };
-
-    getLastETHPrice = async (ccy: string) => {
-        return this.contract.getLastETHPrice(ccy);
-    };
-
-    getHistoricalETHPrice = async (
-        ccy: string,
-        roundID: number | BigNumber
-    ) => {
-        return this.contract.getHistoricalETHPrice(ccy, roundID);
-    };
-
-    convertToETH = async (ccy: string, amount: number | BigNumber) => {
-        return this.contract.convertToETH(ccy, amount);
-    };
-
-    convertFromETH = async (ccy: string, amount: number | BigNumber) => {
-        return this.contract.convertFromETH(ccy, amount);
-    };
-
-    convertBulkToETH = async (ccy: string, amounts: number[] | BigNumber[]) => {
-        return this.contract.convertBulkToETH(ccy, amounts);
-    };
 }
 
 export default CurrencyController;

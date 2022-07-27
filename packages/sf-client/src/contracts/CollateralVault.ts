@@ -2,87 +2,69 @@ import { Provider } from '@ethersproject/providers';
 import { BigNumber, Signer } from 'ethers';
 import {
     CollateralVault as Contract,
-    CollateralVault__factory,
+    CollateralVault__factory as Factory,
 } from '../types';
-import { getCollateralVaultByCcy } from '../utils/addresses';
+import { BaseContract } from './BaseContract';
 
-export class CollateralVault {
-    contract: Contract;
-
-    constructor(
-        ccy: string,
+export class CollateralVault extends BaseContract<Contract> {
+    static async getInstance(
         signerOrProvider: Signer | Provider,
-        network: number
+        network: string
     ) {
-        const vault = getCollateralVaultByCcy(ccy, network);
+        const address = await this.getAddress('CollateralVault', network);
+        const contract = Factory.connect(address, signerOrProvider);
 
-        this.contract = CollateralVault__factory.connect(
-            vault.address,
-            signerOrProvider
-        );
+        return new CollateralVault(contract);
     }
 
-    deposit = async (amount: number | BigNumber) => {
-        return this.contract.functions['deposit(uint256)'](amount);
-    };
+    async deposit(ccy: string, amount: number | BigNumber) {
+        return this.contract['deposit(bytes32,uint256)'](ccy, amount);
+    }
 
-    depositIntoPosition = async (
+    async depositIntoPosition(
+        ccy: string,
         counterparty: string,
         amount: number | BigNumber
-    ) => {
-        return this.contract.functions['deposit(address,uint256)'](
+    ) {
+        return this.contract['deposit(address,bytes32,uint256)'](
+            ccy,
             counterparty,
             amount
         );
-    };
+    }
 
-    withdraw = async (amount: number | BigNumber) => {
-        return this.contract.withdraw(amount);
-    };
-
-    withdrawFromPosition = async (
-        counterparty: string,
-        amount: number | BigNumber
-    ) => {
-        return this.contract.withdrawFrom(counterparty, amount);
-    };
-
-    getIndependentCollateral = async (user: string) => {
-        return this.contract.getIndependentCollateral(user);
-    };
-
-    getIndependentCollateralInETH = async (user: string) => {
-        return this.contract.getIndependentCollateralInETH(user);
-    };
-
-    getLockedCollateral = async (user: string) => {
-        return this.contract.functions['getLockedCollateral(address)'](user);
-    };
+    async getLockedCollateral(user: string, ccy: string) {
+        return this.contract['getLockedCollateral(address,bytes32)'](user, ccy);
+    }
 
     getLockedCollateralFromPosition = async (
         user: string,
-        counterparty: string
+        counterparty: string,
+        ccy: string
     ) => {
-        return this.contract.functions['getLockedCollateral(address,address)'](
+        return this.contract['getLockedCollateral(address,address,bytes32)'](
             user,
-            counterparty
+            counterparty,
+            ccy
         );
     };
 
-    getLockedCollateralInETH = async (user: string) => {
-        return this.contract.functions['getLockedCollateralInETH(address)'](
-            user
+    async getLockedCollateralInETH(user: string, ccy: string) {
+        return this.contract['getLockedCollateralInETH(address,bytes32)'](
+            user,
+            ccy
         );
-    };
+    }
 
-    getLockedCollateralFromPositionInETH = async (
+    async getLockedCollateralFromPositionInETH(
         user: string,
-        counterparty: string
-    ) => {
-        return this.contract.functions[
-            'getLockedCollateralInETH(address,address)'
-        ](user, counterparty);
-    };
+        counterparty: string,
+        ccy: string
+    ) {
+        return this.contract[
+            'getLockedCollateralInETH(address,address,bytes32)'
+        ](user, counterparty, ccy);
+    }
 }
 
 export default CollateralVault;
