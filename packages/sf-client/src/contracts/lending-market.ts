@@ -4,8 +4,8 @@ import {
     LendingMarket as Contract,
     LendingMarket__factory as LendingMarketFactory,
 } from '../types';
-import { BaseContract } from './BaseContract';
-import { LendingMarketController } from './LendingMarketController';
+import { BaseContract } from './base-contract';
+import { LendingMarketController } from './lending-market-controller';
 
 export class LendingMarket extends BaseContract<Contract> {
     static async getInstance(

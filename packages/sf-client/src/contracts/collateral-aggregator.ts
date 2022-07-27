@@ -4,7 +4,7 @@ import {
     CollateralAggregatorV2 as Contract,
     CollateralAggregatorV2__factory as Factory,
 } from '../types';
-import { BaseContract } from './BaseContract';
+import { BaseContract } from './base-contract';
 
 export class CollateralAggregator extends BaseContract<Contract> {
     contract: Contract;

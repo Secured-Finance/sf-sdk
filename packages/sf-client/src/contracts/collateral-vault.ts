@@ -4,7 +4,7 @@ import {
     CollateralVault as Contract,
     CollateralVault__factory as Factory,
 } from '../types';
-import { BaseContract } from './BaseContract';
+import { BaseContract } from './base-contract';
 
 export class CollateralVault extends BaseContract<Contract> {
     static async getInstance(

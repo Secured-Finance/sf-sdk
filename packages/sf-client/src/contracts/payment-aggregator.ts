@@ -4,7 +4,7 @@ import {
     PaymentAggregator as Contract,
     PaymentAggregator__factory as Factory,
 } from '../types';
-import { BaseContract } from './BaseContract';
+import { BaseContract } from './base-contract';
 
 export class PaymentAggregator extends BaseContract<Contract> {
     static async getInstance(

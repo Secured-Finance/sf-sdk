@@ -4,7 +4,7 @@ import {
     MarkToMarket as Contract,
     MarkToMarket__factory as Factory,
 } from '../types';
-import { BaseContract } from './BaseContract';
+import { BaseContract } from './base-contract';
 
 export class MarkToMarket extends BaseContract<Contract> {
     static async getInstance(

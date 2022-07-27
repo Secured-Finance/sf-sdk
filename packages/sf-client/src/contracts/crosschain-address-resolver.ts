@@ -4,7 +4,7 @@ import {
     CrosschainAddressResolver as Contract,
     CrosschainAddressResolver__factory as Factory,
 } from '../types';
-import { BaseContract } from './BaseContract';
+import { BaseContract } from './base-contract';
 
 export class CrosschainAddressResolver extends BaseContract<Contract> {
     static async getInstance(

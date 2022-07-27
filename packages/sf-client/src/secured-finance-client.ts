@@ -1,7 +1,7 @@
 import { Network } from '@ethersproject/networks';
 import { Provider, TransactionResponse } from '@ethersproject/providers';
 import { BigNumber, getDefaultProvider, Signer } from 'ethers';
-import { ContractsInstance } from './contract-instance';
+import { ContractsInstance } from './contracts-instance';
 import { sendEther, toBytes32 } from './utils';
 import { NETWORKS } from './utils/networks';
 

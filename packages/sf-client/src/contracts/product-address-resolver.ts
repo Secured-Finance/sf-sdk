@@ -1,24 +1,24 @@
 import { Provider } from '@ethersproject/providers';
 import { Signer } from 'ethers';
 import {
-    LendingMarketController as Contract,
-    LendingMarketController__factory as Factory,
+    ProductAddressResolver as Contract,
+    ProductAddressResolver__factory as Factory,
 } from '../types';
-import { BaseContract } from './BaseContract';
+import { BaseContract } from './base-contract';
 
-export class LendingMarketController extends BaseContract<Contract> {
+export class ProductAddressResolver extends BaseContract<Contract> {
     static async getInstance(
         signerOrProvider: Signer | Provider,
         network: string
     ) {
         const address = await this.getAddress(
-            'LendingMarketController',
+            'ProductAddressResolver',
             network
         );
         const contract = Factory.connect(address, signerOrProvider);
 
-        return new LendingMarketController(contract);
+        return new ProductAddressResolver(contract);
     }
 }
 
-export default LendingMarketController;
+export default ProductAddressResolver;

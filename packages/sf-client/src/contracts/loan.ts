@@ -1,7 +1,7 @@
 import { Provider } from '@ethersproject/providers';
 import { Signer } from 'ethers';
 import { LoanV2 as Contract, LoanV2__factory as Factory } from '../types';
-import { BaseContract } from './BaseContract';
+import { BaseContract } from './base-contract';
 
 export class Loan extends BaseContract<Contract> {
     static async getInstance(

@@ -4,7 +4,7 @@ import {
     SettlementEngine as Contract,
     SettlementEngine__factory as Factory,
 } from '../types';
-import { BaseContract } from './BaseContract';
+import { BaseContract } from './base-contract';
 
 export class SettlementEngine extends BaseContract<Contract> {
     static async getInstance(
