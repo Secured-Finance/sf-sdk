@@ -2,8 +2,7 @@ import { Network } from '@ethersproject/networks';
 import { Provider, TransactionResponse } from '@ethersproject/providers';
 import { BigNumber, getDefaultProvider, Signer } from 'ethers';
 import { ContractsInstance } from './contracts-instance';
-import { sendEther, toBytes32 } from './utils';
-import { NETWORKS } from './utils/networks';
+import { NetworkName, networkNames, sendEther, toBytes32 } from './utils';
 
 export class SecuredFinanceClient extends ContractsInstance {
     config: {
@@ -19,14 +18,20 @@ export class SecuredFinanceClient extends ContractsInstance {
         network?: Network,
         options?: { defaultGas?: number; defaultGasPrice?: number }
     ) {
+        const networkName = network.name as NetworkName;
+
+        if (!networkNames.includes(networkName)) {
+            throw new Error(`${networkName} is not supported.`);
+        }
+
         this.config = {
             defaultGas: options?.defaultGas || 6000000,
             defaultGasPrice: options?.defaultGasPrice || 1000000000000,
             networkId: network.chainId,
-            network: NETWORKS[network.chainId],
+            network: networkName,
             signerOrProvider: signerOrProvider || getDefaultProvider(),
         };
-        await super.getInstances(signerOrProvider, network.name);
+        await super.getInstances(signerOrProvider, networkName);
     }
 
     async checkRegisteredUser(account: string) {

@@ -4,6 +4,7 @@ import {
     LendingMarket as Contract,
     LendingMarket__factory as LendingMarketFactory,
 } from '../types';
+import { NetworkName } from '../utils';
 import { BaseContract } from './base-contract';
 import { LendingMarketController } from './lending-market-controller';
 
@@ -12,12 +13,12 @@ export class LendingMarket extends BaseContract<Contract> {
         ccy: string,
         term: string,
         signerOrProvider: Signer | Provider,
-        network: string
+        networkName: NetworkName
     ) {
         const lendingMarketControllerContract =
             await LendingMarketController.getInstance(
                 signerOrProvider,
-                network
+                networkName
             );
 
         const lendingMarketAddresses =

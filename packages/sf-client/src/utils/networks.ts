@@ -4,3 +4,6 @@ export const NETWORKS: { [key: number]: string } = {
     4: 'rinkeby',
     1337: 'localhost',
 };
+
+export const networkNames = ['rinkeby', 'mainnet'] as const;
+export type NetworkName = typeof networkNames[number];

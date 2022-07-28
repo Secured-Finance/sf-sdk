@@ -4,16 +4,17 @@ import {
     LendingMarketController as Contract,
     LendingMarketController__factory as Factory,
 } from '../types';
+import { NetworkName } from '../utils';
 import { BaseContract } from './base-contract';
 
 export class LendingMarketController extends BaseContract<Contract> {
     static async getInstance(
         signerOrProvider: Signer | Provider,
-        network: string
+        networkName: NetworkName
     ) {
         const address = await this.getAddress(
             'LendingMarketController',
-            network
+            networkName
         );
         const contract = Factory.connect(address, signerOrProvider);
 

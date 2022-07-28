@@ -1,5 +1,33 @@
 /* eslint-disable no-console */
+
+import { Provider } from '@ethersproject/providers';
 import type { BaseContract as EthersBaseContract } from 'ethers';
+import { Signer } from 'ethers';
+import { NetworkName } from '../utils';
+
+const environments = ['development', 'staging', 'production'] as const;
+type Environment = typeof environments[number];
+type NetworkMap = Record<NetworkName, string>;
+
+const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
+    development: {
+        rinkeby: 'development',
+    },
+    staging: {
+        rinkeby: 'development',
+    },
+    production: {
+        rinkeby: 'rinkeby',
+        mainnet: 'production',
+    },
+};
+
+export interface BaseContractStatic {
+    getInstance(
+        signerOrProvider: Signer | Provider,
+        networkName: NetworkName
+    ): Promise<BaseContract<EthersBaseContract>>;
+}
 
 export abstract class BaseContract<T extends EthersBaseContract> {
     contract: T;
@@ -8,37 +36,12 @@ export abstract class BaseContract<T extends EthersBaseContract> {
         this.contract = contract;
     }
 
-    static async getAddress(contractName: string, network: string) {
-        let deploymentPath: string;
+    static async getAddress(contractName: string, networkName: NetworkName) {
+        const environment = (environments.find(
+            env => env === process.env.SF_ENV
+        ) || 'production') as Environment;
 
-        switch (process.env.SF_ENV) {
-            case 'development':
-                deploymentPath = 'development';
-                if (network !== 'rinkeby') {
-                    console.warn(`${network} is not a supported network.`);
-                }
-                break;
-
-            case 'staging':
-                deploymentPath = 'staging';
-                if (network !== 'rinkeby') {
-                    console.warn(`${network} is not a supported network.`);
-                }
-                break;
-
-            case 'production':
-            default:
-                // TODO: Set the deploymentPath depending on a target network for production environment.
-                // It will be the following.
-                //
-                // if (network === 'mainnet') {
-                //     deploymentPath = 'mainnet';
-                // } else if(network === 'rinkeby') {
-                //     deploymentPath = 'rinkeby';
-                // }
-                //     :
-                break;
-        }
+        const deploymentPath = DEPLOYMENT_PATH_MAP[environment][networkName];
 
         const deployment = await import(
             `@secured-finance/smart-contracts/deployments/${deploymentPath}/${contractName}.json`

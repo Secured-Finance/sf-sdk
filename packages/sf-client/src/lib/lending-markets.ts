@@ -1,20 +1,21 @@
 import { Provider } from '@ethersproject/providers';
 import { Signer, utils } from 'ethers';
 import { LendingMarket } from '../contracts';
+import { NetworkName } from '../utils';
 
 export class LendingMarkets {
     private items: LendingMarketItem[];
     private signerOrProvider: Signer | Provider;
-    private network: string;
+    private networkName: NetworkName;
 
     constructor(
         items: LendingMarketItem[],
         signerOrProvider: Signer | Provider,
-        network: string
+        networkName: NetworkName
     ) {
         this.items = items;
         this.signerOrProvider = signerOrProvider;
-        this.network = network;
+        this.networkName = networkName;
     }
 
     get(ccy: string, term: string): Promise<LendingMarket> {
@@ -25,7 +26,7 @@ export class LendingMarkets {
             item.ccy,
             item.term,
             this.signerOrProvider,
-            this.network
+            this.networkName
         );
     }
 }

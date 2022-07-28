@@ -4,14 +4,15 @@ import {
     CloseOutNetting as Contract,
     CloseOutNetting__factory as Factory,
 } from '../types';
+import { NetworkName } from '../utils';
 import { BaseContract } from './base-contract';
 
 export class CloseOutNetting extends BaseContract<Contract> {
     static async getInstance(
         signerOrProvider: Signer | Provider,
-        network: string
+        networkName: NetworkName
     ) {
-        const address = await this.getAddress('CloseOutNetting', network);
+        const address = await this.getAddress('CloseOutNetting', networkName);
         const contract = Factory.connect(address, signerOrProvider);
 
         return new CloseOutNetting(contract);

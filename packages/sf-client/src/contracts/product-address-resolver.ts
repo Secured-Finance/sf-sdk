@@ -4,16 +4,17 @@ import {
     ProductAddressResolver as Contract,
     ProductAddressResolver__factory as Factory,
 } from '../types';
+import { NetworkName } from '../utils';
 import { BaseContract } from './base-contract';
 
 export class ProductAddressResolver extends BaseContract<Contract> {
     static async getInstance(
         signerOrProvider: Signer | Provider,
-        network: string
+        networkName: NetworkName
     ) {
         const address = await this.getAddress(
             'ProductAddressResolver',
-            network
+            networkName
         );
         const contract = Factory.connect(address, signerOrProvider);
 

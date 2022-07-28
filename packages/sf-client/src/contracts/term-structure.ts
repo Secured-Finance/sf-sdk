@@ -6,12 +6,13 @@ import {
 } from '../types';
 import { BaseContract } from './base-contract';
 
+import { NetworkName } from '../utils';
 export class TermStructure extends BaseContract<Contract> {
     static async getInstance(
         signerOrProvider: Signer | Provider,
-        network: string
+        networkName: NetworkName
     ) {
-        const address = await this.getAddress('TermStructure', network);
+        const address = await this.getAddress('TermStructure', networkName);
         const contract = Factory.connect(address, signerOrProvider);
 
         return new TermStructure(contract);
