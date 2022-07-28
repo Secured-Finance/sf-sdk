@@ -18,6 +18,12 @@ class Main {
             allFiles,
             outDir: 'src/types',
             target: 'ethers-v5',
+            flags: {
+                alwaysGenerateOverloads: false,
+                discriminateTypes: false,
+                tsNocheck: true,
+                environment: 'hardhat',
+            },
         });
     }
 }
