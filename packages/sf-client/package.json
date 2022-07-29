@@ -24,6 +24,7 @@
     "url": "https://github.com/secured-finance/sf-sdk"
   },
   "dependencies": {
+    "@secured-finance/smart-contracts": "^0.0.2-beta.3",
     "bignumber.js": "^9.0.2",
     "ethers": "^5.5.3",
     "gas-price-oracle": "^0.4.4",
@@ -31,7 +32,6 @@
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@secured-finance/smart-contracts": "^0.0.2-beta.3",
     "@typechain/ethers-v5": "^10.0.0",
     "@types/chai": "^4.3.0",
     "@types/expect": "^24.3.0",
