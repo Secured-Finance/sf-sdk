@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "source": "src/index.ts",
   "scripts": {
-    "codegen": "typechain --target=ethers-v5 --ts-nocheck 'src/lib/abis/**.json' --out-dir src/types",
+    "codegen": "ts-node ./scripts/generate.ts",
     "prebuild": "rm -rf dist",
     "watch": "tsc -p tsconfig.json -w",
     "build": "tsc --project tsconfig.json",
@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@secured-finance/smart-contracts": "^0.0.2-beta.3",
     "@typechain/ethers-v5": "^10.0.0",
     "@types/chai": "^4.3.0",
     "@types/expect": "^24.3.0",

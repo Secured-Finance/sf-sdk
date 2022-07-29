@@ -5,5 +5,5 @@ export const NETWORKS: { [key: number]: string } = {
     1337: 'localhost',
 };
 
-export const DEFAULT_CHAIN_ID = 4;
-export const DEFAULT_NETWORK = 'rinkeby';
+export const networkNames = ['rinkeby', 'mainnet'] as const;
+export type NetworkName = typeof networkNames[number];

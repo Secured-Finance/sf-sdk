@@ -8,7 +8,7 @@
     "resolveJsonModule": true
   },
   "include": ["src"],
-  "exclude": ["dist", "examples", "types"],
+  "exclude": ["dist", "examples", "src/types"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"
