@@ -6,7 +6,12 @@
     "esModuleInterop": true,
     "outDir": "dist",
     "rootDir": "src",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "target": "esnext",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "sourceMap": true,
+    "lib": ["esnext"]
   },
   "include": ["src"],
   "exclude": ["node_modules/**/*", "src/**/*test.tsx"],
