@@ -1,7 +1,6 @@
-import { providers } from 'ethers';
 import { BaseProvider, JsonRpcProvider } from '@ethersproject/providers';
+import { providers } from 'ethers';
 import { DEFAULT_NETWORK } from './constants';
-require('dotenv/config');
 
 export const getLocalhostProvider = (): JsonRpcProvider => {
     return new providers.JsonRpcProvider();
