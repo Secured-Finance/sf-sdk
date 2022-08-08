@@ -1,0 +1,44 @@
+{
+  "name": "@secured-finance/sf-core",
+  "version": "0.1.7-beta.21",
+  "description": "core components",
+  "author": "Secured Finance",
+  "homepage": "https://github.com/secured-finance/sf-sdk/tree/main/packages/sf-core#readme",
+  "license": "ISC",
+  "main": "src/index.ts",
+  "directories": {
+    "src": "src",
+    "test": "__tests__"
+  },
+  "files": ["lib"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Secured-Finance/sf-sdk.git"
+  },
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "watch": "tsc -p tsconfig.json -w",
+    "build": "tsc --project tsconfig.json"
+  },
+  "bugs": {
+    "url": "https://github.com/Secured-Finance/sf-sdk/issues"
+  },
+  "dependencies": {
+    "typescript": "^4.5.4"
+  },
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@types/expect": "^24.3.0",
+    "@types/node": "^16.11.21",
+    "nyc": "^15.1.0",
+    "ts-node": "^10.1.0",
+    "tslib": "^2.3.0"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "types": "dist/index.d.ts",
+  "ts-node": {
+    "files": true
+  }
+}
