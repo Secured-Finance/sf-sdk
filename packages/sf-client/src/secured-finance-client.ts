@@ -51,19 +51,16 @@ export class SecuredFinanceClient extends ContractsInstance {
         ](addresses, chainIds);
     }
 
+    /**
+     * Deposit collateral into the vault.
+     *
+     * @param ccy the collateral currency to deposit as a currency symbol (e.g. 'ETH')
+     * @param amount the amount of collateral to deposit
+     * @returns a `ContractTransaction`
+     */
     async depositCollateral(ccy: string, amount: number | BigNumber) {
-        if (ccy === 'ETH') {
-            return this.collateralVault.contract['deposit(bytes32,uint256)'](
-                ccy,
-                amount,
-                { value: amount }
-            );
-        } else {
-            return this.collateralVault.contract['deposit(bytes32,uint256)'](
-                ccy,
-                amount
-            );
-        }
+        const ccyIdentifier = toBytes32(ccy);
+        return this.collateralVault.deposit(ccyIdentifier, amount);
     }
 
     async depositCollateralIntoPosition(
