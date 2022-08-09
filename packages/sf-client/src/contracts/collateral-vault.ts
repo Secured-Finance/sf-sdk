@@ -1,5 +1,5 @@
 import { Provider } from '@ethersproject/providers';
-import { BigNumber, Signer } from 'ethers';
+import { BigNumber, PayableOverrides, Signer } from 'ethers';
 import {
     CollateralVault as Contract,
     CollateralVault__factory as Factory,
@@ -18,8 +18,18 @@ export class CollateralVault extends BaseContract<Contract> {
         return new CollateralVault(contract);
     }
 
-    async deposit(ccy: string, amount: number | BigNumber) {
-        return this.contract['deposit(bytes32,uint256)'](ccy, amount);
+    async deposit(
+        ccy: string,
+        amount: number | BigNumber,
+        overrides?: PayableOverrides & {
+            from?: string | Promise<string>;
+        }
+    ) {
+        return this.contract['deposit(bytes32,uint256)'](
+            ccy,
+            amount,
+            overrides
+        );
     }
 
     async depositIntoPosition(

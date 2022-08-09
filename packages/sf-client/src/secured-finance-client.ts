@@ -1,10 +1,19 @@
 import { Network } from '@ethersproject/networks';
 import { Provider, TransactionResponse } from '@ethersproject/providers';
+import { Currency, Ether } from '@secured-finance/sf-core';
 import { BigNumber, getDefaultProvider, Signer } from 'ethers';
 import { ContractsInstance } from './contracts-instance';
 import { NetworkName, networkNames, sendEther, toBytes32 } from './utils';
 
 export class SecuredFinanceClient extends ContractsInstance {
+    private convertCurrencyToBytes32(ccy: Currency) {
+        if (ccy.isNative) {
+            return toBytes32(ccy.symbol);
+        } else {
+            return toBytes32(ccy.wrapped.symbol);
+        }
+    }
+
     config: {
         defaultGas: number;
         defaultGasPrice: number;
@@ -13,9 +22,11 @@ export class SecuredFinanceClient extends ContractsInstance {
         signerOrProvider: Signer | Provider;
     };
 
+    ether: Ether;
+
     async init(
         signerOrProvider: Signer | Provider,
-        network?: Network,
+        network: Network,
         options?: { defaultGas?: number; defaultGasPrice?: number }
     ) {
         const networkName = network.name as NetworkName;
@@ -32,6 +43,8 @@ export class SecuredFinanceClient extends ContractsInstance {
             signerOrProvider: signerOrProvider || getDefaultProvider(),
         };
         await super.getInstances(signerOrProvider, networkName);
+
+        this.ether = new Ether(network.chainId);
     }
 
     async checkRegisteredUser(account: string) {
@@ -51,43 +64,27 @@ export class SecuredFinanceClient extends ContractsInstance {
         ](addresses, chainIds);
     }
 
-    async depositCollateral(ccy: string, amount: number | BigNumber) {
-        if (ccy === 'ETH') {
-            return this.collateralVault.contract['deposit(bytes32,uint256)'](
-                ccy,
-                amount,
-                { value: amount }
-            );
-        } else {
-            return this.collateralVault.contract['deposit(bytes32,uint256)'](
-                ccy,
-                amount
-            );
-        }
+    /**
+     * Deposit collateral into the vault.
+     *
+     * @param ccy the collateral currency to deposit
+     * @param amount the amount of collateral to deposit
+     * @returns a `ContractTransaction`
+     */
+    async depositCollateral(ccy: Currency, amount: number | BigNumber) {
+        const payableOverride = ccy.equals(this.ether)
+            ? { value: amount }
+            : undefined;
+        return this.collateralVault.deposit(
+            this.convertCurrencyToBytes32(ccy),
+            amount,
+            payableOverride
+        );
     }
 
-    async depositCollateralIntoPosition(
-        counterparty: string,
-        ccy: string,
-        amount: number | BigNumber
-    ) {
-        return this.collateralVault.contract[
-            'deposit(address,bytes32,uint256)'
-        ](counterparty, ccy, amount);
-    }
-
-    async withdrawCollateral(ccy: string, amount: number | BigNumber) {
-        return this.collateralVault.contract.withdraw(ccy, amount);
-    }
-
-    async withdrawCollateralFromPosition(
-        counterparty: string,
-        ccy: string,
-        amount: number | BigNumber
-    ) {
-        return this.collateralVault.contract.withdrawFrom(
-            counterparty,
-            ccy,
+    async withdrawCollateral(ccy: Currency, amount: number | BigNumber) {
+        return this.collateralVault.contract.withdraw(
+            this.convertCurrencyToBytes32(ccy),
             amount
         );
     }
@@ -105,68 +102,68 @@ export class SecuredFinanceClient extends ContractsInstance {
         );
     }
 
-    async getBorrowYieldCurve(ccy: string) {
-        const ccyIdentifier = toBytes32(ccy);
+    async getBorrowYieldCurve(ccy: Currency) {
         return this.lendingMarketController.contract.getBorrowRatesForCcy(
-            ccyIdentifier
+            this.convertCurrencyToBytes32(ccy)
         );
     }
 
-    async getLendYieldCurve(ccy: string) {
-        const ccyIdentifier = toBytes32(ccy);
+    async getLendYieldCurve(ccy: Currency) {
         return this.lendingMarketController.contract.getLendRatesForCcy(
-            ccyIdentifier
+            this.convertCurrencyToBytes32(ccy)
         );
     }
 
-    async getMidRateYieldCurve(ccy: string) {
-        const ccyIdentifier = toBytes32(ccy);
+    async getMidRateYieldCurve(ccy: Currency) {
         return this.lendingMarketController.contract.getMidRatesForCcy(
-            ccyIdentifier
+            this.convertCurrencyToBytes32(ccy)
         );
     }
 
-    async getDiscountYieldCurve(ccy: string) {
-        const ccyIdentifier = toBytes32(ccy);
+    async getDiscountYieldCurve(ccy: Currency) {
         return this.lendingMarketController.contract.getDiscountFactorsForCcy(
-            ccyIdentifier
+            this.convertCurrencyToBytes32(ccy)
         );
     }
 
     async placeLendingOrder(
-        ccy: string,
+        ccy: Currency,
         term: string,
         side: number,
         amount: number | BigNumber,
         rate: number | BigNumber
     ) {
-        const lendingMarket = await this.lendingMarkets.get(ccy, term);
+        const lendingMarket = await this.lendingMarkets.get(
+            this.convertCurrencyToBytes32(ccy),
+            term
+        );
 
         return lendingMarket.contract.order(side, amount, rate);
     }
 
     async cancelLendingOrder(
-        ccy: string,
+        ccy: Currency,
         term: string,
         orderID: number | BigNumber
     ) {
-        const lendingMarket = await this.lendingMarkets.get(ccy, term);
+        const lendingMarket = await this.lendingMarkets.get(
+            this.convertCurrencyToBytes32(ccy),
+            term
+        );
 
         return lendingMarket.contract.cancelOrder(orderID);
     }
 
     async verifyPayment(
         counterparty: string,
-        ccy: string,
+        ccy: Currency,
         amount: number | BigNumber,
         timestamp: number | BigNumber,
         txHash: string
     ) {
-        const ccyIdentifier = toBytes32(ccy);
-
         return this.settlementEngine.contract.verifyPayment(
             counterparty,
-            ccyIdentifier,
+            this.convertCurrencyToBytes32(ccy),
             amount,
             timestamp,
             txHash
@@ -190,20 +187,28 @@ export class SecuredFinanceClient extends ContractsInstance {
         return sendEther(signer, amount, to, gasPrice);
     }
 
-    async getCollateralBook(account: string, ccy: string) {
+    async getCollateralBook(account: string, ccy: Currency) {
+        const ccyIdentifier = this.convertCurrencyToBytes32(ccy);
         const [independentCollateral, lockedCollateral] = await Promise.all([
             this.collateralVault.contract.getIndependentCollateralInETH(
                 account,
-                ccy
+                ccyIdentifier
             ),
             this.collateralVault.contract[
                 'getLockedCollateral(address,bytes32)'
-            ](account, ccy),
+            ](account, ccyIdentifier),
         ]);
 
         return {
             independentCollateral,
             lockedCollateral,
         };
+    }
+
+    async getLendingMarket(ccy: Currency, term: string) {
+        return await this.lendingMarkets.get(
+            this.convertCurrencyToBytes32(ccy),
+            term
+        );
     }
 }

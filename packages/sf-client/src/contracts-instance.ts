@@ -20,19 +20,19 @@ import { LendingMarkets, LENDING_MARKETS } from './lib/lending-markets';
 import { NetworkName } from './utils';
 
 export class ContractsInstance {
-    lendingMarkets: LendingMarkets;
-    collateralAggregator: CollateralAggregator;
-    collateralVault: CollateralVault;
-    loan: Loan;
-    lendingMarketController: LendingMarketController;
-    currencyController: CurrencyController;
-    closeOutNetting: CloseOutNetting;
-    paymentAggregator: PaymentAggregator;
-    productAddressResolver: ProductAddressResolver;
-    markToMarket: MarkToMarket;
-    termStructure: TermStructure;
-    crosschainAddressResolver: CrosschainAddressResolver;
-    settlementEngine: SettlementEngine;
+    protected lendingMarkets: LendingMarkets;
+    protected collateralAggregator: CollateralAggregator;
+    protected collateralVault: CollateralVault;
+    protected loan: Loan;
+    protected lendingMarketController: LendingMarketController;
+    protected currencyController: CurrencyController;
+    protected closeOutNetting: CloseOutNetting;
+    protected paymentAggregator: PaymentAggregator;
+    protected productAddressResolver: ProductAddressResolver;
+    protected markToMarket: MarkToMarket;
+    protected termStructure: TermStructure;
+    protected crosschainAddressResolver: CrosschainAddressResolver;
+    protected settlementEngine: SettlementEngine;
 
     async getInstances(
         signerOrProvider: Signer | Provider,
