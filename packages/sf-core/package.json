@@ -7,10 +7,9 @@
   "license": "ISC",
   "main": "src/index.ts",
   "directories": {
-    "src": "src",
-    "test": "__tests__"
+    "src": "src"
   },
-  "files": ["lib"],
+  "files": ["dist"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Secured-Finance/sf-sdk.git"
