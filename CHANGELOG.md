@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.0](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.7-beta.21...v0.2.0-beta.0) (2022-08-09)
+
+
+### Bug Fixes
+
+* fix version of sf-core ([7ef1736](https://github.com/Secured-Finance/sf-sdk/commit/7ef173653abc1241124b48fcf30c37dc01d04ef9))
+* use bytes32 for currency in depositCollateral ([231f1cf](https://github.com/Secured-Finance/sf-sdk/commit/231f1cf10733b6c7a05f028d3ac5cd5a2eb7ae59))
+* use payable function only for ether ([c32cea5](https://github.com/Secured-Finance/sf-sdk/commit/c32cea54c2966ea7f6e3e8277f646271b8380723))
+
+
+### Features
+
+* create core sdk for currency interface ([f3c303e](https://github.com/Secured-Finance/sf-sdk/commit/f3c303ed406d0c178704fdc2b30139938f01d4e2))
+
+
+
+
+
 ## [0.1.7-beta.21](https://github.com/Secured-Finance/sf-sdk/compare/v0.1.7-beta.20...v0.1.7-beta.21) (2022-08-01)
 
 
