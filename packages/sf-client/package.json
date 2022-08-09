@@ -29,7 +29,7 @@
     "ethers": "^5.5.3",
     "gas-price-oracle": "^0.4.4",
     "typescript": "^4.5.4",
-    "@secured-finance/sf-core": "0.1.7-beta.21"
+    "@secured-finance/sf-core": "^*"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
