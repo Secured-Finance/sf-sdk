@@ -18,21 +18,23 @@
   "scripts": {
     "prebuild": "rm -rf dist",
     "watch": "tsc -p tsconfig.json -w",
-    "build": "tsc --project tsconfig.json"
+    "build": "tsc --project tsconfig.json",
+    "test": "jest --config jest.config.ts",
+    "test:cov": "jest --config jest.config.ts --coverage"
   },
   "bugs": {
     "url": "https://github.com/Secured-Finance/sf-sdk/issues"
   },
-  "dependencies": {
-    "typescript": "^4.5.4"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/expect": "^24.3.0",
     "@types/node": "^16.11.21",
-    "nyc": "^15.1.0",
+    "@types/jest": "27.4.1",
     "ts-node": "^10.1.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "jest": "^27.2.5",
+    "ts-jest": "^27.0.3",
+    "typescript": "^4.5.4"
   },
   "engines": {
     "node": ">=10.0.0"

@@ -1,6 +1,6 @@
 import { Network } from '@ethersproject/networks';
 import { Provider, TransactionResponse } from '@ethersproject/providers';
-import { Currency } from '@secured-finance/sf-core';
+import { Currency, Ether } from '@secured-finance/sf-core';
 import { BigNumber, getDefaultProvider, Signer } from 'ethers';
 import { ContractsInstance } from './contracts-instance';
 import { NetworkName, networkNames, sendEther, toBytes32 } from './utils';
@@ -22,9 +22,11 @@ export class SecuredFinanceClient extends ContractsInstance {
         signerOrProvider: Signer | Provider;
     };
 
+    ether: Ether;
+
     async init(
         signerOrProvider: Signer | Provider,
-        network?: Network,
+        network: Network,
         options?: { defaultGas?: number; defaultGasPrice?: number }
     ) {
         const networkName = network.name as NetworkName;
@@ -41,6 +43,8 @@ export class SecuredFinanceClient extends ContractsInstance {
             signerOrProvider: signerOrProvider || getDefaultProvider(),
         };
         await super.getInstances(signerOrProvider, networkName);
+
+        this.ether = new Ether(network.chainId);
     }
 
     async checkRegisteredUser(account: string) {
@@ -63,15 +67,18 @@ export class SecuredFinanceClient extends ContractsInstance {
     /**
      * Deposit collateral into the vault.
      *
-     * @param ccy the collateral currency to deposit as a currency symbol (e.g. 'ETH')
+     * @param ccy the collateral currency to deposit
      * @param amount the amount of collateral to deposit
      * @returns a `ContractTransaction`
      */
     async depositCollateral(ccy: Currency, amount: number | BigNumber) {
+        const payableOverride = ccy.equals(this.ether)
+            ? { value: amount }
+            : undefined;
         return this.collateralVault.deposit(
             this.convertCurrencyToBytes32(ccy),
             amount,
-            { value: amount }
+            payableOverride
         );
     }
 

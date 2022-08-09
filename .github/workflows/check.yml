@@ -52,3 +52,9 @@ jobs:
           files: ./packages/sf-graph-client/coverage/coverage-final.json
           flags: sf-graph-client
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload SF-Core coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          files: ./packages/sf-core/coverage/coverage-final.json
+          flags: sf-core
+          token: ${{ secrets.CODECOV_TOKEN }}

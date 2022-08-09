@@ -1,12 +1,11 @@
-import assert = require('assert');
-
+import * as assert from 'assert';
 export abstract class BaseCurrency {
     public abstract readonly isNative: boolean;
     public abstract readonly isToken: boolean;
     public readonly chainId: number;
     public readonly decimals: number;
-    public readonly symbol?: string;
-    public readonly name?: string;
+    public readonly symbol: string;
+    public readonly name: string;
 
     /**
      * Constructs an instance of the base class `BaseCurrency`.
@@ -19,7 +18,7 @@ export abstract class BaseCurrency {
         chainId: number,
         decimals: number,
         symbol: string,
-        name?: string
+        name: string
     ) {
         assert(Number.isSafeInteger(chainId), 'CHAIN_ID');
         assert(

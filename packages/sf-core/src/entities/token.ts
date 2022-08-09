@@ -12,7 +12,7 @@ export class Token extends BaseCurrency {
         address: string,
         decimals: number,
         symbol: string,
-        name?: string
+        name: string
     ) {
         super(chainId, decimals, symbol, name);
         this.address = address;
