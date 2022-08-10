@@ -2,7 +2,7 @@ import { Ether } from './ether';
 import { Token } from './token';
 
 describe('ether', () => {
-    const eth = new Ether(1);
+    const eth = Ether.onChain(1);
     it('should create an instance', () => {
         expect(eth).toBeTruthy();
     });
@@ -20,7 +20,7 @@ describe('ether', () => {
     });
 
     it('should be different from other network ether', () => {
-        const eth2 = new Ether(2);
+        const eth2 = Ether.onChain(2);
         expect(eth.equals(eth2)).toBeFalsy();
     });
 

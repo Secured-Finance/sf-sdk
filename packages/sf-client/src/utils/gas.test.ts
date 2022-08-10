@@ -1,4 +1,3 @@
-import { should } from 'chai';
 import { utils } from 'ethers/lib/ethers';
 import { GasPriceOracle } from 'gas-price-oracle';
 import {
@@ -7,8 +6,6 @@ import {
     GasPrices,
     getDefaultOracle,
 } from './gas';
-import assert = require('assert');
-should();
 
 const parseGwei = (price: string): string => {
     return utils.parseUnits(price, 'gwei').toString();
@@ -26,10 +23,10 @@ describe('Test gas prices oracle', function () {
         gasOracle = getDefaultOracle(mainnetNetworkID);
 
         const gas = await gasOracle.fetchGasPricesOffChain();
-        gas.instant.should.be.a('number');
-        gas.fast.should.be.a('number');
-        gas.standard.should.be.a('number');
-        gas.low.should.be.a('number');
+        expect(typeof gas.instant).toBe('number');
+        expect(typeof gas.fast).toBe('number');
+        expect(typeof gas.standard).toBe('number');
+        expect(typeof gas.low).toBe('number');
     });
 
     it('Try to check ropsten gas prices', async () => {
@@ -41,14 +38,12 @@ describe('Test gas prices oracle', function () {
             gasOracle,
             fallbackGasPrices
         );
-        await assert.equal(
-            gasPrice.toString(),
+        expect(gasPrice.toString()).toEqual(
             parseGwei(fallbackGasPrices.fast.toString())
         );
 
         gasPrice = await estimateGasPrice('low', gasOracle, fallbackGasPrices);
-        await assert.equal(
-            gasPrice.toString(),
+        expect(gasPrice.toString()).toEqual(
             parseGwei(fallbackGasPrices.low.toString())
         );
 
@@ -57,8 +52,7 @@ describe('Test gas prices oracle', function () {
             gasOracle,
             fallbackGasPrices
         );
-        await assert.equal(
-            gasPrice.toString(),
+        expect(gasPrice.toString()).toEqual(
             parseGwei(fallbackGasPrices.standard.toString())
         );
 
@@ -67,8 +61,7 @@ describe('Test gas prices oracle', function () {
             gasOracle,
             fallbackGasPrices
         );
-        await assert.equal(
-            gasPrice.toString(),
+        expect(gasPrice.toString()).toEqual(
             parseGwei(fallbackGasPrices.instant.toString())
         );
     });

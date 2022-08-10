@@ -1,6 +1,5 @@
 import { Wallet } from 'ethers';
-import { privateKeySigner, mnemonicSigner } from './signer';
-import assert = require('assert');
+import { mnemonicSigner, privateKeySigner } from './signer';
 
 describe('Check ethers signers', function () {
     let wallet: Wallet;
@@ -19,28 +18,21 @@ describe('Check ethers signers', function () {
 
     it('Try to generate wallet from private key, should throw an error on invalid private key or mnemonic', async () => {
         wallet = privateKeySigner(samplePrivateKey);
-        assert.equal(wallet.address, privateKeyAddr);
+        expect(wallet.address).toEqual(privateKeyAddr);
 
-        assert.throws(() => {
-            privateKeySigner(invalidPrivateKey);
-        }, Error);
-        assert.throws(() => {
-            privateKeySigner(sampleMnemonic);
-        }, Error);
-        assert.throws(() => {
-            privateKeySigner(invalidMnemonic);
-        }, Error);
+        expect(() => privateKeySigner(invalidPrivateKey)).toThrow();
+        expect(() => privateKeySigner(invalidMnemonic)).toThrow();
+        expect(() => privateKeySigner(sampleMnemonic)).toThrow();
     });
 
     it('Try to generate wallet from mnemonic phrase, should throw an error on invalid mnemonic or private key', async () => {
         wallet = mnemonicSigner(sampleMnemonic);
-        assert.equal(wallet.address, mnemonicAddr);
-
-        assert.throws(() => {
-            mnemonicSigner(invalidMnemonic);
-        }, new Error('invalid mnemonic'));
-        assert.throws(() => {
-            mnemonicSigner(samplePrivateKey);
-        }, new Error('invalid mnemonic'));
+        expect(wallet.address).toEqual(mnemonicAddr);
+        expect(() => mnemonicSigner(invalidPrivateKey)).toThrow(
+            new Error('invalid mnemonic')
+        );
+        expect(() => mnemonicSigner(invalidMnemonic)).toThrow(
+            new Error('invalid mnemonic')
+        );
     });
 });
