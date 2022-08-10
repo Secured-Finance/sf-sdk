@@ -1,9 +1,21 @@
 import { Network } from '@ethersproject/networks';
-import { Provider, TransactionResponse } from '@ethersproject/providers';
+import { Provider } from '@ethersproject/providers';
 import { Currency, Ether } from '@secured-finance/sf-core';
 import { BigNumber, getDefaultProvider, Signer } from 'ethers';
 import { ContractsInstance } from './contracts-instance';
 import { NetworkName, networkNames, sendEther, toBytes32 } from './utils';
+
+type NonNullable<T> = T extends null | undefined ? never : T;
+const CLIENT_NOT_INITIALIZED = 'Client is not initialized';
+
+function assertNonNullish<TValue>(
+    value: TValue | null,
+    message: string
+): asserts value is NonNullable<TValue> {
+    if (!value) {
+        throw new Error(message);
+    }
+}
 
 export class SecuredFinanceClient extends ContractsInstance {
     private convertCurrencyToBytes32(ccy: Currency) {
@@ -20,9 +32,9 @@ export class SecuredFinanceClient extends ContractsInstance {
         network: string;
         networkId: number;
         signerOrProvider: Signer | Provider;
-    };
+    } | null = null;
 
-    ether: Ether;
+    ether: Ether | null = null;
 
     async init(
         signerOrProvider: Signer | Provider,
@@ -43,15 +55,15 @@ export class SecuredFinanceClient extends ContractsInstance {
             signerOrProvider: signerOrProvider || getDefaultProvider(),
         };
         await super.getInstances(signerOrProvider, networkName);
-
-        this.ether = new Ether(network.chainId);
     }
 
     async checkRegisteredUser(account: string) {
+        assertNonNullish(this.collateralAggregator, CLIENT_NOT_INITIALIZED);
         return this.collateralAggregator.contract.checkRegisteredUser(account);
     }
 
     async registerUser() {
+        assertNonNullish(this.collateralAggregator, CLIENT_NOT_INITIALIZED);
         return this.collateralAggregator.register();
     }
 
@@ -59,6 +71,7 @@ export class SecuredFinanceClient extends ContractsInstance {
         addresses: string[],
         chainIds: number[] | BigNumber[]
     ) {
+        assertNonNullish(this.collateralAggregator, CLIENT_NOT_INITIALIZED);
         return this.collateralAggregator.contract[
             'register(string[],uint256[])'
         ](addresses, chainIds);
@@ -70,9 +83,12 @@ export class SecuredFinanceClient extends ContractsInstance {
      * @param ccy the collateral currency to deposit
      * @param amount the amount of collateral to deposit
      * @returns a `ContractTransaction`
+     * @throws if the client is not initialized
      */
     async depositCollateral(ccy: Currency, amount: number | BigNumber) {
-        const payableOverride = ccy.equals(this.ether)
+        assertNonNullish(this.config, CLIENT_NOT_INITIALIZED);
+        assertNonNullish(this.collateralVault, CLIENT_NOT_INITIALIZED);
+        const payableOverride = ccy.equals(Ether.onChain(this.config.networkId))
             ? { value: amount }
             : undefined;
         return this.collateralVault.deposit(
@@ -83,19 +99,28 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     async withdrawCollateral(ccy: Currency, amount: number | BigNumber) {
-        return this.collateralVault.contract.withdraw(
+        assertNonNullish(this.collateralVault, CLIENT_NOT_INITIALIZED);
+        return this.collateralVault.withdraw(
             this.convertCurrencyToBytes32(ccy),
             amount
         );
     }
 
     async updateCrosschainAddress(chainId: string | number, address: string) {
+        assertNonNullish(
+            this.crosschainAddressResolver,
+            CLIENT_NOT_INITIALIZED
+        );
         return this.crosschainAddressResolver.contract[
             'updateAddress(uint256,string)'
         ](chainId, address);
     }
 
     async getCrosschainAddress(chainId: string | number, address: string) {
+        assertNonNullish(
+            this.crosschainAddressResolver,
+            CLIENT_NOT_INITIALIZED
+        );
         return this.crosschainAddressResolver.contract.getUserAddress(
             address,
             chainId
@@ -103,24 +128,28 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     async getBorrowYieldCurve(ccy: Currency) {
+        assertNonNullish(this.lendingMarketController, CLIENT_NOT_INITIALIZED);
         return this.lendingMarketController.contract.getBorrowRatesForCcy(
             this.convertCurrencyToBytes32(ccy)
         );
     }
 
     async getLendYieldCurve(ccy: Currency) {
+        assertNonNullish(this.lendingMarketController, CLIENT_NOT_INITIALIZED);
         return this.lendingMarketController.contract.getLendRatesForCcy(
             this.convertCurrencyToBytes32(ccy)
         );
     }
 
     async getMidRateYieldCurve(ccy: Currency) {
+        assertNonNullish(this.lendingMarketController, CLIENT_NOT_INITIALIZED);
         return this.lendingMarketController.contract.getMidRatesForCcy(
             this.convertCurrencyToBytes32(ccy)
         );
     }
 
     async getDiscountYieldCurve(ccy: Currency) {
+        assertNonNullish(this.lendingMarketController, CLIENT_NOT_INITIALIZED);
         return this.lendingMarketController.contract.getDiscountFactorsForCcy(
             this.convertCurrencyToBytes32(ccy)
         );
@@ -133,6 +162,7 @@ export class SecuredFinanceClient extends ContractsInstance {
         amount: number | BigNumber,
         rate: number | BigNumber
     ) {
+        assertNonNullish(this.lendingMarkets, CLIENT_NOT_INITIALIZED);
         const lendingMarket = await this.lendingMarkets.get(
             this.convertCurrencyToBytes32(ccy),
             term
@@ -146,6 +176,7 @@ export class SecuredFinanceClient extends ContractsInstance {
         term: string,
         orderID: number | BigNumber
     ) {
+        assertNonNullish(this.lendingMarkets, CLIENT_NOT_INITIALIZED);
         const lendingMarket = await this.lendingMarkets.get(
             this.convertCurrencyToBytes32(ccy),
             term
@@ -161,6 +192,7 @@ export class SecuredFinanceClient extends ContractsInstance {
         timestamp: number | BigNumber,
         txHash: string
     ) {
+        assertNonNullish(this.settlementEngine, CLIENT_NOT_INITIALIZED);
         return this.settlementEngine.contract.verifyPayment(
             counterparty,
             this.convertCurrencyToBytes32(ccy),
@@ -174,8 +206,9 @@ export class SecuredFinanceClient extends ContractsInstance {
         amount: number | BigNumber,
         to: string,
         gasPrice?: number | BigNumber
-    ): Promise<TransactionResponse> | undefined {
+    ) {
         let signer: Signer;
+        assertNonNullish(this.config, 'Client is not initialized');
 
         if (Signer.isSigner(this.config.signerOrProvider)) {
             signer = this.config.signerOrProvider;
@@ -188,6 +221,7 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     async getCollateralBook(account: string, ccy: Currency) {
+        assertNonNullish(this.collateralVault, CLIENT_NOT_INITIALIZED);
         const ccyIdentifier = this.convertCurrencyToBytes32(ccy);
         const [independentCollateral, lockedCollateral] = await Promise.all([
             this.collateralVault.contract.getIndependentCollateralInETH(
@@ -206,6 +240,7 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     async getLendingMarket(ccy: Currency, term: string) {
+        assertNonNullish(this.lendingMarkets, CLIENT_NOT_INITIALIZED);
         return await this.lendingMarkets.get(
             this.convertCurrencyToBytes32(ccy),
             term

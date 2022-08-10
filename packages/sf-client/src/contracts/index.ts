@@ -29,7 +29,7 @@ import ProductAddressResolver from './product-address-resolver';
 import SettlementEngine from './settlement-engine';
 import TermStructure from './term-structure';
 
-export const contracts: { [key: string]: unknown } = {
+export const contracts = {
     closeOutNetting: CloseOutNetting,
     collateralAggregator: CollateralAggregator,
     collateralVault: CollateralVault,
