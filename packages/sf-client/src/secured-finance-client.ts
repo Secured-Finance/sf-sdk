@@ -55,8 +55,6 @@ export class SecuredFinanceClient extends ContractsInstance {
             signerOrProvider: signerOrProvider || getDefaultProvider(),
         };
         await super.getInstances(signerOrProvider, networkName);
-
-        this.ether = Ether.onChain(this.config.networkId);
     }
 
     async checkRegisteredUser(account: string) {
@@ -88,9 +86,9 @@ export class SecuredFinanceClient extends ContractsInstance {
      * @throws if the client is not initialized
      */
     async depositCollateral(ccy: Currency, amount: number | BigNumber) {
-        assertNonNullish(this.ether, CLIENT_NOT_INITIALIZED);
+        assertNonNullish(this.config, CLIENT_NOT_INITIALIZED);
         assertNonNullish(this.collateralVault, CLIENT_NOT_INITIALIZED);
-        const payableOverride = ccy.equals(this.ether)
+        const payableOverride = ccy.equals(Ether.onChain(this.config.networkId))
             ? { value: amount }
             : undefined;
         return this.collateralVault.deposit(
@@ -102,7 +100,7 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     async withdrawCollateral(ccy: Currency, amount: number | BigNumber) {
         assertNonNullish(this.collateralVault, CLIENT_NOT_INITIALIZED);
-        return this.collateralVault.contract.withdraw(
+        return this.collateralVault.withdraw(
             this.convertCurrencyToBytes32(ccy),
             amount
         );

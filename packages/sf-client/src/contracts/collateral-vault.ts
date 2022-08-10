@@ -32,49 +32,19 @@ export class CollateralVault extends BaseContract<Contract> {
         );
     }
 
-    async depositIntoPosition(
-        ccy: string,
-        counterparty: string,
-        amount: number | BigNumber
-    ) {
-        return this.contract['deposit(address,bytes32,uint256)'](
-            ccy,
-            counterparty,
-            amount
-        );
+    async withdraw(ccy: string, amount: number | BigNumber) {
+        return this.contract.withdraw(ccy, amount);
     }
 
     async getLockedCollateral(user: string, ccy: string) {
         return this.contract['getLockedCollateral(address,bytes32)'](user, ccy);
     }
 
-    getLockedCollateralFromPosition = async (
-        user: string,
-        counterparty: string,
-        ccy: string
-    ) => {
-        return this.contract['getLockedCollateral(address,address,bytes32)'](
-            user,
-            counterparty,
-            ccy
-        );
-    };
-
     async getLockedCollateralInETH(user: string, ccy: string) {
         return this.contract['getLockedCollateralInETH(address,bytes32)'](
             user,
             ccy
         );
-    }
-
-    async getLockedCollateralFromPositionInETH(
-        user: string,
-        counterparty: string,
-        ccy: string
-    ) {
-        return this.contract[
-            'getLockedCollateralInETH(address,address,bytes32)'
-        ](user, counterparty, ccy);
     }
 }
 

@@ -39,15 +39,15 @@ export class ContractsInstance {
         signerOrProvider: Signer | Provider,
         network: NetworkName
     ) {
-        for (const key in contracts) {
+        let key: keyof typeof contracts;
+        for (key in contracts) {
             if (Object.prototype.hasOwnProperty.call(contracts, key)) {
                 const Contract = contracts[key] as BaseContractStatic;
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                this[key] = await Contract.getInstance(
+                this[key] = (await Contract.getInstance(
                     signerOrProvider,
                     network
-                );
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                )) as any;
             }
         }
 
