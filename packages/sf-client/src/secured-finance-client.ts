@@ -26,7 +26,7 @@ export class SecuredFinanceClient extends ContractsInstance {
         }
     }
 
-    config: {
+    private _config: {
         defaultGas: number;
         defaultGasPrice: number;
         network: string;
@@ -47,7 +47,7 @@ export class SecuredFinanceClient extends ContractsInstance {
             throw new Error(`${networkName} is not supported.`);
         }
 
-        this.config = {
+        this._config = {
             defaultGas: options?.defaultGas || 6000000,
             defaultGasPrice: options?.defaultGasPrice || 1000000000000,
             networkId: network.chainId,
@@ -245,5 +245,10 @@ export class SecuredFinanceClient extends ContractsInstance {
             this.convertCurrencyToBytes32(ccy),
             term
         );
+    }
+
+    get config() {
+        assertNonNullish(this._config, CLIENT_NOT_INITIALIZED);
+        return this._config;
     }
 }
