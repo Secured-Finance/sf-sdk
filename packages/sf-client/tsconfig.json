@@ -5,7 +5,8 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "rootDir": "src",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "strictNullChecks": true
   },
   "include": ["src"],
   "exclude": ["dist", "examples", "src/types"],

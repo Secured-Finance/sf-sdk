@@ -7,8 +7,6 @@ import {
 import { NetworkName } from '../utils';
 import { BaseContract } from './base-contract';
 export class CollateralAggregator extends BaseContract<Contract> {
-    contract: Contract;
-
     static async getInstance(
         signerOrProvider: Signer | Provider,
         networkName: NetworkName

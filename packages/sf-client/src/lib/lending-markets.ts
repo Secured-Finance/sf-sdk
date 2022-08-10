@@ -22,6 +22,9 @@ export class LendingMarkets {
         const item = Object.values(this.items).find(
             market => market.term === term && market.ccy === ccy
         );
+        if (!item) {
+            throw new Error(`No market found for ${ccy}/${term}`);
+        }
         return LendingMarket.getInstance(
             item.ccy,
             item.term,

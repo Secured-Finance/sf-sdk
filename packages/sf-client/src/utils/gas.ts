@@ -67,8 +67,8 @@ export const getDefaultOracle = (chainId = 1): GasPriceOracle => {
 export const currentGasPrices = async (
     oracle?: GasPriceOracle,
     fallbackGasPrices?: GasPrices
-): Promise<GasPrices> => {
-    if (oracle === null) {
+) => {
+    if (!oracle) {
         oracle = new GasPriceOracle(options);
     }
 
@@ -94,7 +94,7 @@ export const estimateGasPrice = async (
 ): Promise<number | BigNumber> => {
     const prices = await currentGasPrices(oracle, fallbackGasPrices);
 
-    if (prices === null) {
+    if (!prices) {
         return DEFAULT_GAS_PRICES[DEFAULT_CHAIN_ID][priceKey];
     }
     const gweiPrice = prices[priceKey].toString();
@@ -119,7 +119,7 @@ export const estimateGasLimit = async (
     const tx: TxBase = {
         to: toAddress,
         value: value ? value : 0,
-        data: data ? data : null,
+        data: data ? data : undefined,
     };
 
     const gasLimit = await signer.estimateGas(tx);
