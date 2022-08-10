@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.4](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.3...v0.2.0-beta.4) (2022-08-10)
+
+
+### Bug Fixes
+
+* ensure the config of the client is never null ([dd0664d](https://github.com/secured-finance/sf-sdk/commit/dd0664d2dc714693fd74d3445b05c71873a09cec))
+
+
+
+# 0.2.0-beta.1 (2022-08-09)
+
+
+
+
+
 # [0.2.0-beta.3](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.2...v0.2.0-beta.3) (2022-08-10)
 
 
