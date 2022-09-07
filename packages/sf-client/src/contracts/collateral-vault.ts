@@ -2,7 +2,7 @@ import { Provider } from '@ethersproject/providers';
 import { Signer } from 'ethers';
 import {
     CollateralVault as Contract,
-    CollateralVault__factory as Factory
+    CollateralVault__factory as Factory,
 } from '../types';
 import { NetworkName } from '../utils';
 import { BaseContract } from './base-contract';

@@ -2,7 +2,7 @@ import { Provider } from '@ethersproject/providers';
 import { constants, Signer } from 'ethers';
 import {
     LendingMarket as Contract,
-    LendingMarket__factory as LendingMarketFactory
+    LendingMarket__factory as LendingMarketFactory,
 } from '../types';
 import { NetworkName } from '../utils';
 import { BaseContract } from './base-contract';
@@ -22,7 +22,7 @@ export class LendingMarket extends BaseContract<Contract> {
 
         const lendingMarketAddresses =
             await lendingMarketControllerContract.contract.getLendingMarkets(
-                ccy,
+                ccy
             );
 
         lendingMarketAddresses.forEach(element => {

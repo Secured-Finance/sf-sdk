@@ -4,8 +4,9 @@ import { LendingMarketCreated } from '../../generated/LendingMarketController/Le
 
 export function createLendingMarketCreatedEvent(
     currencyIdentifier: Bytes,
-    term: BigInt,
-    lendingMarketAddress: Address
+    lendingMarketAddress: Address,
+    index: BigInt,
+    maturity: BigInt
 ): LendingMarketCreated {
     let mockEvent = newMockEvent();
     let event = new LendingMarketCreated(
@@ -26,12 +27,21 @@ export function createLendingMarketCreatedEvent(
         )
     );
     event.parameters.push(
-        new ethereum.EventParam('term', ethereum.Value.fromUnsignedBigInt(term))
-    );
-    event.parameters.push(
         new ethereum.EventParam(
             'marketAddr',
             ethereum.Value.fromAddress(lendingMarketAddress)
+        )
+    );
+    event.parameters.push(
+        new ethereum.EventParam(
+            'index',
+            ethereum.Value.fromUnsignedBigInt(index)
+        )
+    );
+    event.parameters.push(
+        new ethereum.EventParam(
+            'maturity',
+            ethereum.Value.fromUnsignedBigInt(maturity)
         )
     );
 

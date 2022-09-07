@@ -6,7 +6,7 @@ import {
     CollateralVault,
     contracts,
     CurrencyController,
-    LendingMarketController
+    LendingMarketController,
 } from './contracts';
 import { LendingMarkets, LENDING_MARKETS } from './lib/lending-markets';
 import { NetworkName } from './utils';
