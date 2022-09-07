@@ -27,7 +27,6 @@ export class LendingMarkets {
         }
         return LendingMarket.getInstance(
             item.ccy,
-            item.term,
             this.signerOrProvider,
             this.networkName
         );
