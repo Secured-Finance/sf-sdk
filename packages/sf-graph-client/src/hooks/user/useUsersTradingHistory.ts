@@ -2,12 +2,12 @@ import { useMemo, useState } from 'react';
 import { GraphApolloClient } from '../../';
 import {
     UserTradingHistoryDocument,
-    UserTradingHistoryQuery,
+    UserTradingHistoryQuery
 } from '../../graphclients';
 import { QueryResult, useQuery } from '../useQuery';
 import {
     LendingMarketExtendedOrder,
-    modifyUsersTradingHistory,
+    modifyUsersTradingHistory
 } from './common';
 
 export interface UsersTradingHistoryVariables {
@@ -25,7 +25,7 @@ export const useUsersTradingHistory = (
     client?: GraphApolloClient
 ): QueryResult<UserTradingHistoryQuery> => {
     const variables = {
-        account: account.toLowerCase(),
+        id: account.toLowerCase(),
         market: market,
     };
 

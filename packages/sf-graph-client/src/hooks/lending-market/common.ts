@@ -2,7 +2,7 @@ import { BigNumber, utils } from 'ethers';
 import {
     BorrowOrderbookQuery,
     LendingMarketOrderRow,
-    LendOrderbookQuery,
+    LendOrderbookQuery
 } from '../../graphclients';
 
 type ExtendedOrderbookQuery = BorrowOrderbookQuery & LendOrderbookQuery;
@@ -13,8 +13,8 @@ type ExtendedOrderbookItem = Pick<
 >;
 
 export interface OrderbookRow {
-    rate: number;
-    totalAmount: number;
+    rate: bigint;
+    totalAmount: bigint;
     usdAmount: number | string;
 }
 

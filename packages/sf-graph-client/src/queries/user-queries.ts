@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const OPEN_ORDERS = gql`
-    query OpenOrders($account: Bytes!, $market: Bytes!) {
-        user(id: $account) {
+    query OpenOrders($id: ID!, $market: Bytes!) {
+        user(id: $id) {
             openOrders(
                 where: { marketAddr: $market }
                 orderBy: createdAtTimestamp
@@ -27,8 +27,8 @@ export const OPEN_ORDERS = gql`
 `;
 
 export const TRADE_HISTORY = gql`
-    query UserTradingHistory($account: Bytes!, $market: Bytes!) {
-        user(id: $account) {
+    query UserTradingHistory($id: ID!, $market: Bytes!) {
+        user(id: $id) {
             takenOrders(
                 where: { marketAddr: $market }
                 orderBy: createdAtTimestamp

@@ -1,7 +1,7 @@
 import { GraphApolloClient } from '../../';
 import {
     TradingHistoryDocument,
-    TradingHistoryQuery,
+    TradingHistoryQuery
 } from '../../graphclients';
 import { QueryResult, useQuery } from '../useQuery';
 
@@ -15,7 +15,7 @@ export const useLendingTradingHistory = (
     client?: GraphApolloClient
 ): QueryResult<TradingHistoryQuery> => {
     const variables = {
-        market: lendingMarket.toLowerCase(),
+        id: lendingMarket.toLowerCase(),
         skip: skip,
     };
 

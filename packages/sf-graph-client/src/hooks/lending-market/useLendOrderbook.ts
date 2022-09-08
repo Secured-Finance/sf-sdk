@@ -21,7 +21,7 @@ export const useLendOrderbook = (
     client?: GraphApolloClient
 ): QueryResult<LendOrderbookQuery> => {
     const variables = {
-        market: lendingMarket.toLowerCase(),
+        id: lendingMarket.toLowerCase(),
         skip: skip,
     };
 

@@ -41,7 +41,7 @@ export const BORROW_DEALS = gql`
 `;
 
 export const LOAN_INFO = gql`
-    query Loan($id: String!) {
+    query Loan($id: ID!) {
         loan(id: $id) {
             id
             lender

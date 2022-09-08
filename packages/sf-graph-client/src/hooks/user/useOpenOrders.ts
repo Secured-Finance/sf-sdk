@@ -11,7 +11,7 @@ export const useOpenOrders = (
     client?: GraphApolloClient
 ): QueryResult<OpenOrdersQuery> => {
     const variables = {
-        account: account.toLowerCase(),
+        id: account.toLowerCase(),
         market,
     };
 
