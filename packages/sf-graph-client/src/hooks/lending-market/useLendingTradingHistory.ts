@@ -1,7 +1,7 @@
 import { GraphApolloClient } from '../../';
 import {
     TradingHistoryDocument,
-    TradingHistoryQuery
+    TradingHistoryQuery,
 } from '../../graphclients';
 import { QueryResult, useQuery } from '../useQuery';
 

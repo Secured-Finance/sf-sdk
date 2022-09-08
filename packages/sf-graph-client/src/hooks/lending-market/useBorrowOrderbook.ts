@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { GraphApolloClient } from '../../';
 import {
     BorrowOrderbookDocument,
-    BorrowOrderbookQuery
+    BorrowOrderbookQuery,
 } from '../../graphclients';
 import { QueryResult, useQuery } from '../useQuery';
 import { modifyOrderbook, OrderbookRow } from './common';

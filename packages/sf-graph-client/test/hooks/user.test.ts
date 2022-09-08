@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import {
     GraphApolloClient,
     useOpenOrders,
-    useUsersTradingHistoryQuery
+    useUsersTradingHistoryQuery,
 } from '../../src';
 
 describe('User test', () => {

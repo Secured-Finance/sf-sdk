@@ -2,7 +2,7 @@ import { BigNumber, utils } from 'ethers';
 import {
     BorrowOrderbookQuery,
     LendingMarketOrderRow,
-    LendOrderbookQuery
+    LendOrderbookQuery,
 } from '../../graphclients';
 
 type ExtendedOrderbookQuery = BorrowOrderbookQuery & LendOrderbookQuery;

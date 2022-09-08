@@ -2,7 +2,7 @@ import {
     FilledLendingMarketOrder,
     Maybe,
     Scalars,
-    UserTradingHistoryQuery
+    UserTradingHistoryQuery,
 } from '../../graphclients';
 
 type FilledLendingMarketOrderLocal = Maybe<
@@ -53,9 +53,9 @@ export const modifyUsersTradingHistory = async (
     );
 
     parsedHistory.sort((x, y) => {
-        if(y.createdAtTimestamp > x.createdAtTimestamp) {
+        if (y.createdAtTimestamp > x.createdAtTimestamp) {
             return 1;
-        } else if(y.createdAtTimestamp < x.createdAtTimestamp) {
+        } else if (y.createdAtTimestamp < x.createdAtTimestamp) {
             return -1;
         } else {
             return 0;
