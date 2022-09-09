@@ -118,34 +118,33 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     async placeLendingOrder(
-        account: string,
         ccy: Currency,
-        term: string,
-        side: number,
+        maturity: number | BigNumber,
+        side: string,
         amount: number | BigNumber,
         rate: number | BigNumber
     ) {
-        assertNonNullish(this.lendingMarkets, CLIENT_NOT_INITIALIZED);
-        const lendingMarket = await this.lendingMarkets.get(
+        assertNonNullish(this.lendingMarketController, CLIENT_NOT_INITIALIZED);
+        return this.lendingMarketController.contract.createOrder(
             this.convertCurrencyToBytes32(ccy),
-            term
+            maturity,
+            side,
+            amount,
+            rate
         );
-
-        return lendingMarket.contract.createOrder(side, account, amount, rate);
     }
 
     async cancelLendingOrder(
-        account: string,
         ccy: Currency,
-        term: string,
+        maturity: number | BigNumber,
         orderID: number | BigNumber
     ) {
-        assertNonNullish(this.lendingMarkets, CLIENT_NOT_INITIALIZED);
-        const lendingMarket = await this.lendingMarkets.get(
+        assertNonNullish(this.lendingMarketController, CLIENT_NOT_INITIALIZED);
+        return this.lendingMarketController.contract.cancelOrder(
             this.convertCurrencyToBytes32(ccy),
-            term
+            maturity,
+            orderID
         );
-        return lendingMarket.contract.cancelOrder(account, orderID);
     }
 
     async sendEther(
@@ -168,24 +167,34 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     async getCollateralBook(account: string, ccy: Currency) {
         assertNonNullish(this.collateralVault, CLIENT_NOT_INITIALIZED);
+        assertNonNullish(this.collateralAggregator, CLIENT_NOT_INITIALIZED);
         const ccyIdentifier = this.convertCurrencyToBytes32(ccy);
-        const [independentCollateral] = await Promise.all([
+        const [collateralAmount, collateralCoverage] = await Promise.all([
             this.collateralVault.contract.getIndependentCollateralInETH(
                 account,
                 ccyIdentifier
             ),
+            this.collateralAggregator.contract.getCoverage(account),
         ]);
 
         return {
-            independentCollateral,
+            collateralAmount,
+            collateralCoverage,
         };
     }
 
-    async getLendingMarket(ccy: Currency, term: string) {
+    async getLendingMarket(ccy: Currency, maturity: number | BigNumber) {
         assertNonNullish(this.lendingMarkets, CLIENT_NOT_INITIALIZED);
         return await this.lendingMarkets.get(
             this.convertCurrencyToBytes32(ccy),
-            term
+            maturity
+        );
+    }
+
+    async getMaturities(ccy: Currency) {
+        assertNonNullish(this.lendingMarketController, CLIENT_NOT_INITIALIZED);
+        return this.lendingMarketController.contract.getMaturities(
+            this.convertCurrencyToBytes32(ccy)
         );
     }
 

@@ -8,7 +8,7 @@ import {
     CurrencyController,
     LendingMarketController,
 } from './contracts';
-import { LendingMarkets, LENDING_MARKETS } from './lib/lending-markets';
+import { LendingMarkets } from './lib/lending-markets';
 import { NetworkName } from './utils';
 
 export class ContractsInstance {
@@ -34,10 +34,6 @@ export class ContractsInstance {
             }
         }
 
-        this.lendingMarkets = new LendingMarkets(
-            LENDING_MARKETS,
-            signerOrProvider,
-            network
-        );
+        this.lendingMarkets = new LendingMarkets(signerOrProvider, network);
     }
 }
