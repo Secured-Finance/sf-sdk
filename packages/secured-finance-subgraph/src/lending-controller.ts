@@ -11,6 +11,7 @@ export function handleNewLendingMarket(event: LendingMarketCreated): void {
     market.currencyName = event.params.ccy.toString();
     market.currency = event.params.ccy;
     market.maturity = event.params.maturity;
+    market.index = event.params.index;
     market.controllerAddr = event.address;
     market.spread = BigInt.fromI32(0);
     market.marketRate = BigInt.fromI32(0);

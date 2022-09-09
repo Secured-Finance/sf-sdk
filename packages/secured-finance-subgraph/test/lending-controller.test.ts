@@ -48,4 +48,11 @@ test('Should create new lending market and validate market data', () => {
         'maturity',
         termDays.toString()
     );
+
+    assert.fieldEquals(
+        'LendingMarket',
+        lendingMarketAddress.toHexString(),
+        'index',
+        index.toString()
+    );
 });
