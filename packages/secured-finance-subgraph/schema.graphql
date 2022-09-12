@@ -152,3 +152,24 @@ type FilledLendingMarketOrder @entity {
   createdAtTimestamp: BigInt!
   createdAtBlockNumber: BigInt!
 }
+
+enum Side {
+  BORROW
+  LEND
+}
+
+type OrderFilled @entity {
+  id: ID!
+  orderId: BigInt!
+  buyerAddr: Bytes!
+  sellerAddr: Bytes!
+  currency: Bytes!
+  side: Side!
+  maturity: BigInt!
+  rate: BigInt!
+  amount: BigInt!
+
+  # creation timestamps
+  createdAtTimestamp: BigInt!
+  createdAtBlockNumber: BigInt!
+}

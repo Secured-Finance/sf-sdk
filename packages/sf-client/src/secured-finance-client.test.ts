@@ -1,10 +1,12 @@
 import { Ether } from '@secured-finance/sf-core';
+import { CollateralVault } from './contracts';
 import { SecuredFinanceClient } from './secured-finance-client';
 import { getProvider } from './utils';
 
-// const CcyBytes32 = {
-//     ETH: '0x4554480000000000000000000000000000000000000000000000000000000000',
-// };
+const CcyBytes32 = {
+    ETH: '0x4554480000000000000000000000000000000000000000000000000000000000',
+};
+
 beforeAll(() => {
     process.env.SF_ENV = 'development';
 });
@@ -39,7 +41,7 @@ describe('config', () => {
     });
 });
 
-describe('depositCollateral method', () => {
+describe.skip('depositCollateral method', () => {
     it('should thrown an error if the client is not initialized when calling depositCollateral', async () => {
         const client = new SecuredFinanceClient();
         expect(
@@ -47,39 +49,39 @@ describe('depositCollateral method', () => {
         ).rejects.toThrowError('Client is not initialized');
     });
 
-    it.skip('should call the depositCollateral contract in a payable way for ETH', async () => {
+    it('should call the depositCollateral contract in a payable way for ETH', async () => {
         const client = new SecuredFinanceClient();
         const provider = getProvider('rinkeby');
         const network = await provider.getNetwork();
         await client.init(provider, network);
 
-        // const spy = jest
-        //     .spyOn(CollateralVault.prototype.contract, 'deposit')
-        //     .mockImplementation(jest.fn().mockResolvedValue(true));
-        // const result = await client.depositCollateral(
-        //     Ether.onChain(network.chainId),
-        //     1
-        // );
-        // expect(result).toBeTruthy();
-        // expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1, { value: 1 });
+        const spy = jest
+            .spyOn(CollateralVault.prototype.contract, 'deposit')
+            .mockImplementation(jest.fn().mockResolvedValue(true));
+        const result = await client.depositCollateral(
+            Ether.onChain(network.chainId),
+            1
+        );
+        expect(result).toBeTruthy();
+        expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1, { value: 1 });
     });
 
-    it.skip('should call the depositCollateral contract in a non payable way for ERC20 token', async () => {
+    it('should call the depositCollateral contract in a non payable way for ERC20 token', async () => {
         const client = new SecuredFinanceClient();
         const provider = getProvider('rinkeby');
         const network = await provider.getNetwork();
         await client.init(provider, network);
 
-        // const spy = jest
-        //     .spyOn(CollateralVault.prototype, 'deposit')
-        //     .mockImplementation(jest.fn().mockResolvedValue(true));
-        // const result = await client.depositCollateral(Ether.onChain(1221), 1);
-        // expect(result).toBeTruthy();
-        // expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1, undefined);
+        const spy = jest
+            .spyOn(CollateralVault.prototype.contract, 'deposit')
+            .mockImplementation(jest.fn().mockResolvedValue(true));
+        const result = await client.depositCollateral(Ether.onChain(1221), 1);
+        expect(result).toBeTruthy();
+        expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1, undefined);
     });
 });
 
-describe('withdrawCollateral method', () => {
+describe.skip('withdrawCollateral method', () => {
     it('should thrown an error if the client is not initialized when calling a withdrawCollateral', async () => {
         const client = new SecuredFinanceClient();
         expect(
@@ -87,20 +89,20 @@ describe('withdrawCollateral method', () => {
         ).rejects.toThrowError('Client is not initialized');
     });
 
-    it.skip('should call the withdrawCollateral contract', async () => {
+    it('should call the withdrawCollateral contract', async () => {
         const client = new SecuredFinanceClient();
         const provider = getProvider('rinkeby');
         const network = await provider.getNetwork();
         await client.init(provider, network);
 
-        // const spy = jest
-        //     .spyOn(CollateralVault.prototype, 'withdraw')
-        //     .mockImplementation(jest.fn().mockResolvedValue(true));
-        // const result = await client.withdrawCollateral(
-        //     Ether.onChain(network.chainId),
-        //     1
-        // );
-        // expect(result).toBeTruthy();
-        // expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1);
+        const spy = jest
+            .spyOn(CollateralVault.prototype.contract, 'withdraw')
+            .mockImplementation(jest.fn().mockResolvedValue(true));
+        const result = await client.withdrawCollateral(
+            Ether.onChain(network.chainId),
+            1
+        );
+        expect(result).toBeTruthy();
+        expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1);
     });
 });
