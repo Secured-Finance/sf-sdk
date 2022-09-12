@@ -34,12 +34,6 @@ jobs:
         run: npm run test-all
       - name: Execute Coverage
         run: npm run coverage
-      - name: Upload ChainLink coverage to Codecov
-        uses: codecov/codecov-action@v2
-        with:
-          files: ./packages/chainlink-external-adapter/coverage/coverage-final.json
-          flags: chainlink-external-adapter
-          token: ${{ secrets.CODECOV_TOKEN }}
       - name: Upload Client coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
