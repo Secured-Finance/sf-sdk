@@ -1,7 +1,7 @@
 import { BigInt } from '@graphprotocol/graph-ts';
 import {
     LendingMarketCreated,
-    OrderFilled
+    OrderFilled,
 } from '../generated/LendingMarketController/LendingMarketController';
 import { LendingMarket, TransactionTable } from '../generated/schema';
 import { LendingMarket as LendingMarketTemplate } from '../generated/templates';
