@@ -1,6 +1,9 @@
 import { BigInt } from '@graphprotocol/graph-ts';
-import { LendingMarketCreated } from '../generated/LendingMarketController/LendingMarketController';
-import { LendingMarket } from '../generated/schema';
+import {
+    LendingMarketCreated,
+    OrderFilled
+} from '../generated/LendingMarketController/LendingMarketController';
+import { LendingMarket, TransactionTable } from '../generated/schema';
 import { LendingMarket as LendingMarketTemplate } from '../generated/templates';
 
 export function handleNewLendingMarket(event: LendingMarketCreated): void {
@@ -28,4 +31,24 @@ export function handleNewLendingMarket(event: LendingMarketCreated): void {
 
     LendingMarketTemplate.create(event.params.marketAddr);
     market.save();
+}
+
+export function handleOrderFilled(event: OrderFilled): void {
+    let order = new TransactionTable(
+        event.params.orderId.toString()
+    ) as TransactionTable;
+    order.orderId = event.params.orderId;
+    order.buyerAddr = event.params.taker;
+    order.sellerAddr = event.params.maker;
+    order.currency = event.params.ccy;
+    order.side = event.params.side;
+    order.maturity = event.params.maturity;
+
+    order.rate = event.params.rate;
+    order.amount = event.params.amount;
+
+    order.createdAtTimestamp = event.block.timestamp;
+    order.createdAtBlockNumber = event.block.number;
+
+    order.save();
 }

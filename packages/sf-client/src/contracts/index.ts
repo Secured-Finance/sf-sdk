@@ -1,21 +1,18 @@
-import CollateralAggregator from './collateral-aggregator';
-import CollateralVault from './collateral-vault';
 import CurrencyController from './currency-controller';
 import LendingMarket from './lending-market';
 import LendingMarketController from './lending-market-controller';
+import TokenVault from './token-vault';
 
 export * from './base-contract';
 export {
-    CollateralVault,
+    TokenVault,
     LendingMarket,
-    CollateralAggregator,
     LendingMarketController,
     CurrencyController,
 };
 
 export const contracts = {
-    collateralAggregator: CollateralAggregator,
-    collateralVault: CollateralVault,
     currencyController: CurrencyController,
     lendingMarketController: LendingMarketController,
+    tokenVault: TokenVault,
 };

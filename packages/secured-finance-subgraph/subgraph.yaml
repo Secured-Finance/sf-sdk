@@ -22,6 +22,8 @@ dataSources:
       eventHandlers:
         - event: LendingMarketCreated(bytes32,indexed address,uint256,uint256)
           handler: handleNewLendingMarket
+        - event: OrderFilled(uint256,indexed address,indexed address,indexed bytes32,uint8,uint256,uint256,uint256)
+          handler: handleOrderFilled
       file: ./src/lending-controller.ts
 templates:
   - kind: ethereum/contract

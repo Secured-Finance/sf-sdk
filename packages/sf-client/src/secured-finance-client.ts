@@ -57,14 +57,9 @@ export class SecuredFinanceClient extends ContractsInstance {
         await super.getInstances(signerOrProvider, networkName);
     }
 
-    async checkRegisteredUser(account: string) {
-        assertNonNullish(this.collateralAggregator, CLIENT_NOT_INITIALIZED);
-        return this.collateralAggregator.contract.isRegisteredUser(account);
-    }
-
     async registerUser() {
-        assertNonNullish(this.collateralAggregator, CLIENT_NOT_INITIALIZED);
-        return this.collateralAggregator.contract.register();
+        assertNonNullish(this.tokenVault, CLIENT_NOT_INITIALIZED);
+        return this.tokenVault.contract;
     }
 
     /**
@@ -77,11 +72,11 @@ export class SecuredFinanceClient extends ContractsInstance {
      */
     async depositCollateral(ccy: Currency, amount: number | BigNumber) {
         assertNonNullish(this.config, CLIENT_NOT_INITIALIZED);
-        assertNonNullish(this.collateralVault, CLIENT_NOT_INITIALIZED);
+        assertNonNullish(this.tokenVault, CLIENT_NOT_INITIALIZED);
         const payableOverride = ccy.equals(Ether.onChain(this.config.networkId))
             ? { value: amount }
             : undefined;
-        return this.collateralVault.contract.deposit(
+        return this.tokenVault.contract.deposit(
             this.convertCurrencyToBytes32(ccy),
             amount,
             payableOverride
@@ -89,8 +84,8 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     async withdrawCollateral(ccy: Currency, amount: number | BigNumber) {
-        assertNonNullish(this.collateralVault, CLIENT_NOT_INITIALIZED);
-        return this.collateralVault.contract.withdraw(
+        assertNonNullish(this.tokenVault, CLIENT_NOT_INITIALIZED);
+        return this.tokenVault.contract.withdraw(
             this.convertCurrencyToBytes32(ccy),
             amount
         );
@@ -166,15 +161,14 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     async getCollateralBook(account: string, ccy: Currency) {
-        assertNonNullish(this.collateralVault, CLIENT_NOT_INITIALIZED);
-        assertNonNullish(this.collateralAggregator, CLIENT_NOT_INITIALIZED);
+        assertNonNullish(this.tokenVault, CLIENT_NOT_INITIALIZED);
         const ccyIdentifier = this.convertCurrencyToBytes32(ccy);
         const [collateralAmount, collateralCoverage] = await Promise.all([
-            this.collateralVault.contract.getIndependentCollateralInETH(
+            this.tokenVault.contract.getCollateralAmountInETH(
                 account,
                 ccyIdentifier
             ),
-            this.collateralAggregator.contract.getCoverage(account),
+            this.tokenVault.contract.getCoverage(account),
         ]);
 
         return {
@@ -201,10 +195,5 @@ export class SecuredFinanceClient extends ContractsInstance {
     get config() {
         assertNonNullish(this._config, CLIENT_NOT_INITIALIZED);
         return this._config;
-    }
-
-    get instances() {
-        assertNonNullish(this.collateralVault, CLIENT_NOT_INITIALIZED);
-        return this.collateralVault;
     }
 }

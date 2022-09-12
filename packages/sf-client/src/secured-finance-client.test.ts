@@ -1,5 +1,5 @@
 import { Ether } from '@secured-finance/sf-core';
-import { CollateralVault } from './contracts';
+import { TokenVault } from './contracts';
 import { SecuredFinanceClient } from './secured-finance-client';
 import { getProvider } from './utils';
 
@@ -56,7 +56,7 @@ describe.skip('depositCollateral method', () => {
         await client.init(provider, network);
 
         const spy = jest
-            .spyOn(CollateralVault.prototype.contract, 'deposit')
+            .spyOn(TokenVault.prototype.contract, 'deposit')
             .mockImplementation(jest.fn().mockResolvedValue(true));
         const result = await client.depositCollateral(
             Ether.onChain(network.chainId),
@@ -73,7 +73,7 @@ describe.skip('depositCollateral method', () => {
         await client.init(provider, network);
 
         const spy = jest
-            .spyOn(CollateralVault.prototype.contract, 'deposit')
+            .spyOn(TokenVault.prototype.contract, 'deposit')
             .mockImplementation(jest.fn().mockResolvedValue(true));
         const result = await client.depositCollateral(Ether.onChain(1221), 1);
         expect(result).toBeTruthy();
@@ -96,7 +96,7 @@ describe.skip('withdrawCollateral method', () => {
         await client.init(provider, network);
 
         const spy = jest
-            .spyOn(CollateralVault.prototype.contract, 'withdraw')
+            .spyOn(TokenVault.prototype.contract, 'withdraw')
             .mockImplementation(jest.fn().mockResolvedValue(true));
         const result = await client.withdrawCollateral(
             Ether.onChain(network.chainId),
