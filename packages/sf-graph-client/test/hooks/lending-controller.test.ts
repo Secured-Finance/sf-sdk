@@ -24,7 +24,7 @@ describe('Lending Controller test', () => {
                 useBuyerTransactionHistory({ account }, client)
             );
 
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
 
@@ -42,7 +42,7 @@ describe('Lending Controller test', () => {
                 useSellerTransactionHistory({ account }, client)
             );
 
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
 
