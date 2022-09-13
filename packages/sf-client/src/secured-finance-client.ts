@@ -213,7 +213,7 @@ export class SecuredFinanceClient extends ContractsInstance {
         assertNonNullish(this.tokenVault);
         const ccyIdentifier = this.convertCurrencyToBytes32(ccy);
         const [collateralAmount, collateralCoverage] = await Promise.all([
-            this.tokenVault.contract.getCollateralAmount(
+            this.tokenVault.contract.getCollateralAmountInETH(
                 account,
                 ccyIdentifier
             ),
