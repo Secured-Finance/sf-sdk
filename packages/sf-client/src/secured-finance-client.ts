@@ -2,16 +2,17 @@ import { Network } from '@ethersproject/networks';
 import { Provider } from '@ethersproject/providers';
 import { Currency, Ether } from '@secured-finance/sf-core';
 import * as dayjs from 'dayjs';
-import { BigNumber, getDefaultProvider, Signer } from 'ethers';
+import { BigNumber, getDefaultProvider, Signer, utils } from 'ethers';
 
 import { ContractsInstance } from './contracts-instance';
-import { NetworkName, networkNames, sendEther, toBytes32 } from './utils';
+import { NetworkName, networkNames, sendEther } from './utils';
 
 type NonNullable<T> = T extends null | undefined ? never : T;
+const CLIENT_NOT_INITIALIZED = 'Client is not initialized';
 
 function assertNonNullish<TValue>(
     value: TValue | null,
-    message = 'Client is not initialized'
+    message = CLIENT_NOT_INITIALIZED
 ): asserts value is NonNullable<TValue> {
     if (!value) {
         throw new Error(message);
@@ -37,9 +38,9 @@ export interface LendingMarketInfo {
 export class SecuredFinanceClient extends ContractsInstance {
     private convertCurrencyToBytes32(ccy: Currency) {
         if (ccy.isNative) {
-            return toBytes32(ccy.symbol);
+            return utils.formatBytes32String(ccy.symbol);
         } else {
-            return toBytes32(ccy.wrapped.symbol);
+            return utils.formatBytes32String(ccy.wrapped.symbol);
         }
     }
 
@@ -233,10 +234,5 @@ export class SecuredFinanceClient extends ContractsInstance {
     get config() {
         assertNonNullish(this._config);
         return this._config;
-    }
-
-    get instances() {
-        assertNonNullish(this.tokenVault);
-        return this.tokenVault;
     }
 }
