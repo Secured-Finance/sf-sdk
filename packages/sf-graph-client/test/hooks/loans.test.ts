@@ -26,7 +26,6 @@ describe('Loans test', () => {
             );
 
             await waitForNextUpdate();
-
             expect(result.current.error).to.be.undefined;
 
             if (result.current.data?.loans !== undefined) {

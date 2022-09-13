@@ -4,13 +4,13 @@ export const LENDING_MARKETS_BY_CCY = gql`
     query LendingMarkets($currency: Bytes!, $skip: Int!) {
         lendingMarkets(
             skip: $skip
-            orderBy: term
+            orderBy: maturity
             where: { currency: $currency }
         ) {
             id
             marketRate
             spread
-            term
+            maturity
             spread
             totalLiquidity
             totalLiquidityInUSD
@@ -26,7 +26,7 @@ export const LENDING_MARKET_INFO = gql`
             id
             marketRate
             spread
-            term
+            maturity
             currency
             currencyName
             totalLiquidity
