@@ -1,6 +1,26 @@
+import { Token } from '@secured-finance/sf-core';
 import 'dotenv/config';
 import { providers, Wallet } from 'ethers';
-import { SecuredFinanceClient, utils } from '../src';
+import { SecuredFinanceClient } from '../src';
+
+export class Filecoin extends Token {
+    private constructor() {
+        super(
+            1,
+            '0x0000000000000000000000000000000000000000',
+            18,
+            'FIL',
+            'Filecoin'
+        );
+    }
+
+    private static instance: Filecoin;
+
+    public static onChain(): Filecoin {
+        this.instance = this.instance || new Filecoin();
+        return this.instance;
+    }
+}
 
 (async function () {
     const provider = new providers.JsonRpcProvider(
@@ -14,9 +34,8 @@ import { SecuredFinanceClient, utils } from '../src';
 
     const sfClient = new SecuredFinanceClient();
     await sfClient.init(wallet, network);
+    const FIL = Filecoin.onChain();
 
-    const contract = sfClient.lendingMarketController.contract;
-
-    const terms = await contract.getSupportedTerms(utils.toBytes32('FIL'));
-    console.log(terms.toString());
+    const lendingMarkets = await sfClient.getLendingMarkets(FIL);
+    console.table(lendingMarkets);
 })();

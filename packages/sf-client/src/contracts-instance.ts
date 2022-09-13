@@ -11,10 +11,10 @@ import { LendingMarkets } from './lib/lending-markets';
 import { NetworkName } from './utils';
 
 export class ContractsInstance {
-    protected lendingMarkets: LendingMarkets | null = null;
-    protected tokenVault: TokenVault | null = null;
-    protected lendingMarketController: LendingMarketController | null = null;
     protected currencyController: CurrencyController | null = null;
+    protected lendingMarkets: LendingMarkets | null = null;
+    protected lendingMarketController: LendingMarketController | null = null;
+    protected tokenVault: TokenVault | null = null;
 
     async getInstances(
         signerOrProvider: Signer | Provider,
@@ -32,6 +32,6 @@ export class ContractsInstance {
             }
         }
 
-        this.lendingMarkets = new LendingMarkets(signerOrProvider, network);
+        this.lendingMarkets = new LendingMarkets(signerOrProvider);
     }
 }

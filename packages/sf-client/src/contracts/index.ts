@@ -5,10 +5,10 @@ import TokenVault from './token-vault';
 
 export * from './base-contract';
 export {
-    TokenVault,
+    CurrencyController,
     LendingMarket,
     LendingMarketController,
-    CurrencyController,
+    TokenVault,
 };
 
 export const contracts = {

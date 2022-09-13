@@ -1,5 +1,6 @@
+import { Ether } from '@secured-finance/sf-core';
 import 'dotenv/config';
-import { providers, utils } from 'ethers';
+import { providers } from 'ethers';
 import { SecuredFinanceClient } from '../src';
 
 (async function () {
@@ -13,11 +14,11 @@ import { SecuredFinanceClient } from '../src';
     const sfClient = new SecuredFinanceClient();
     await sfClient.init(provider, network);
 
-    const ccy = utils.formatBytes32String('FIL');
-    const term = '90';
+    const user = '0x8f4db50f2eb35016bd0e35efd18db15bc46419cb';
+    const ETH = Ether.onChain(4);
 
-    const lendingMarket = await sfClient.lendingMarkets.get(ccy, term);
-
-    const rate = await lendingMarket.contract.getLendRate();
-    console.log(rate.toString());
+    const { collateralAmount, collateralCoverage } =
+        await sfClient.getCollateralBook(user, ETH);
+    console.log(collateralAmount.toString());
+    console.log(collateralCoverage.toString());
 })();
