@@ -14,7 +14,7 @@ export const useSellerTransactionHistory = (
     client?: GraphApolloClient
 ): QueryResult<SellerTransactionTableQuery> => {
     const variables = {
-        account: account.toLowerCase(),
+        address: account.toLowerCase(),
     };
 
     const { error, data } = useQuery<SellerTransactionTableQuery>(
