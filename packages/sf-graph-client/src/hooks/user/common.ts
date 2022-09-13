@@ -12,7 +12,7 @@ type FilledLendingMarketOrderLocal = Maybe<
         | 'orderId'
         | 'side'
         | 'marketAddr'
-        | 'term'
+        | 'maturity'
         | 'rate'
         | 'amount'
         | 'maker'
