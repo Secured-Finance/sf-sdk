@@ -23,7 +23,7 @@ export function createLendingMarketOrderRow(
     ccy: Bytes,
     side: i32,
     market: Bytes,
-    term: BigInt,
+    maturity: BigInt,
     rate: BigInt,
     amount: BigInt,
     time: BigInt,
@@ -42,7 +42,7 @@ export function createLendingMarketOrderRow(
         marketOrder.borrowMarket = market.toHex();
         marketOrder.lendMarket = '';
     }
-    marketOrder.term = term;
+    marketOrder.maturity = maturity;
     marketOrder.rate = rate;
     marketOrder.totalAmount = BigInt.fromI32(0);
 
@@ -57,7 +57,7 @@ export function getLendingMarketOrderRow(
     ccy: Bytes,
     side: i32,
     market: Bytes,
-    term: BigInt,
+    maturity: BigInt,
     rate: BigInt,
     amount: BigInt,
     time: BigInt,
@@ -71,7 +71,7 @@ export function getLendingMarketOrderRow(
             ccy,
             side,
             market,
-            term,
+            maturity,
             rate,
             amount,
             time,
@@ -88,7 +88,7 @@ export function getLendingMarketOrder(
     market: Bytes,
     ccy: Bytes,
     side: i32,
-    term: BigInt,
+    maturity: BigInt,
     rate: BigInt,
     amount: BigInt,
     makerAddr: Address,
@@ -104,7 +104,7 @@ export function getLendingMarketOrder(
             market,
             ccy,
             side,
-            term,
+            maturity,
             rate,
             amount,
             makerAddr,
@@ -122,7 +122,7 @@ export function createLendingMarketOrder(
     market: Bytes,
     ccy: Bytes,
     side: i32,
-    term: BigInt,
+    maturity: BigInt,
     rate: BigInt,
     amount: BigInt,
     makerAddr: Address,
@@ -139,7 +139,7 @@ export function createLendingMarketOrder(
     orderItem.lendingMarket = market.toHex();
     orderItem.side = side;
     orderItem.row = '';
-    orderItem.term = term;
+    orderItem.maturity = maturity;
     orderItem.rate = rate;
     orderItem.amount = amount;
     orderItem.maker = makerAddr;
@@ -174,7 +174,7 @@ export function handleMakeLendingOrder(event: MakeOrder): void {
             .concat('-')
             .concat(BigInt.fromI32(event.params.side).toString())
             .concat('-')
-            .concat(event.params.term.toString())
+            .concat(event.params.maturity.toString())
             .concat('-')
             .concat(event.params.rate.toString());
 
@@ -183,7 +183,7 @@ export function handleMakeLendingOrder(event: MakeOrder): void {
             event.params.ccy,
             event.params.side,
             lendingMarket.marketAddr,
-            event.params.term,
+            event.params.maturity,
             event.params.rate,
             event.params.amount,
             event.block.timestamp,
@@ -208,7 +208,7 @@ export function handleMakeLendingOrder(event: MakeOrder): void {
             lendingMarket.marketAddr,
             event.params.ccy,
             event.params.side,
-            event.params.term,
+            event.params.maturity,
             event.params.rate,
             event.params.amount,
             event.params.maker,
@@ -255,7 +255,7 @@ export function handleTakeLendingOrder(event: TakeOrder): void {
             filledOrder.currency = orderItem.currency;
             filledOrder.currencyName = orderItem.currencyName;
             filledOrder.side = event.params.side;
-            filledOrder.term = orderItem.term;
+            filledOrder.maturity = orderItem.maturity;
             filledOrder.rate = event.params.rate;
 
             const taker = getUser(event.params.taker, event.block.timestamp);
@@ -280,7 +280,7 @@ export function handleTakeLendingOrder(event: TakeOrder): void {
                 .concat('-')
                 .concat(BigInt.fromI32(event.params.side).toString())
                 .concat('-')
-                .concat(orderItem.term.toString())
+                .concat(orderItem.maturity.toString())
                 .concat('-')
                 .concat(event.params.rate.toString());
 
@@ -324,7 +324,7 @@ export function handleCancelLendingOrder(event: CancelOrder): void {
                 .concat('-')
                 .concat(BigInt.fromI32(event.params.side).toString())
                 .concat('-')
-                .concat(orderItem.term.toString())
+                .concat(orderItem.maturity.toString())
                 .concat('-')
                 .concat(event.params.rate.toString());
 

@@ -10,12 +10,14 @@ const currencyShortName = 'ETH';
 const lendingMarketAddress = Address.zero();
 const currencyIdentifier = toBytes32(currencyShortName);
 const termDays = BigInt.fromI32(365);
+const index = BigInt.fromI32(0);
 
 test('Should create new lending market and validate market data', () => {
     let event = createLendingMarketCreatedEvent(
         currencyIdentifier,
-        termDays,
-        lendingMarketAddress
+        lendingMarketAddress,
+        index,
+        termDays
     );
     handleNewLendingMarket(event);
 
@@ -43,7 +45,14 @@ test('Should create new lending market and validate market data', () => {
     assert.fieldEquals(
         'LendingMarket',
         lendingMarketAddress.toHexString(),
-        'term',
+        'maturity',
         termDays.toString()
+    );
+
+    assert.fieldEquals(
+        'LendingMarket',
+        lendingMarketAddress.toHexString(),
+        'index',
+        index.toString()
     );
 });

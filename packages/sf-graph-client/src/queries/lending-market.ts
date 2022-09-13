@@ -21,8 +21,8 @@ export const LENDING_MARKETS_BY_CCY = gql`
 `;
 
 export const LENDING_MARKET_INFO = gql`
-    query LendingMarket($market: Bytes!) {
-        lendingMarket(id: $market) {
+    query LendingMarket($id: ID!) {
+        lendingMarket(id: $id) {
             id
             marketRate
             spread
@@ -35,8 +35,8 @@ export const LENDING_MARKET_INFO = gql`
 `;
 
 export const LENDING_BORROW_ORDERBOOK = gql`
-    query BorrowOrderbook($market: Bytes!, $skip: Int!) {
-        lendingMarket(id: $market) {
+    query BorrowOrderbook($id: ID!, $skip: Int!) {
+        lendingMarket(id: $id) {
             borrowOrderbook(
                 orderBy: rate
                 orderDirection: desc
@@ -51,8 +51,8 @@ export const LENDING_BORROW_ORDERBOOK = gql`
 `;
 
 export const LENDING_LEND_ORDERBOOK = gql`
-    query LendOrderbook($market: Bytes!, $skip: Int!) {
-        lendingMarket(id: $market) {
+    query LendOrderbook($id: ID!, $skip: Int!) {
+        lendingMarket(id: $id) {
             lendOrderbook(
                 orderBy: rate
                 orderDirection: asc
@@ -67,8 +67,8 @@ export const LENDING_LEND_ORDERBOOK = gql`
 `;
 
 export const LENDING_TRADING_HISTORY = gql`
-    query TradingHistory($market: Bytes!, $skip: Int!) {
-        lendingMarket(id: $market) {
+    query TradingHistory($id: ID!, $skip: Int!) {
+        lendingMarket(id: $id) {
             tradeHistory(
                 orderBy: createdAtTimestamp
                 orderDirection: desc

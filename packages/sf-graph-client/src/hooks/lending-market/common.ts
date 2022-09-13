@@ -13,8 +13,8 @@ type ExtendedOrderbookItem = Pick<
 >;
 
 export interface OrderbookRow {
-    rate: number;
-    totalAmount: number;
+    rate: bigint;
+    totalAmount: bigint;
     usdAmount: number | string;
 }
 

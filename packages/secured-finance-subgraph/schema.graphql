@@ -6,7 +6,7 @@ type Loan @entity {
   borrowUser: User!
   currencyName: String!
   currency: Bytes!
-  term: BigInt!
+  maturity: BigInt!
   notional: BigInt!
   couponPayment: BigInt!
   rate: BigInt!
@@ -57,10 +57,11 @@ type LendingMarket @entity {
   controllerAddr: Bytes!
   currencyName: String!
   currency: Bytes!
-  term: BigInt!
+  maturity: BigInt!
   spread: BigInt!
   marketRate: BigInt!
   orderCount: Int!
+  index: BigInt!
 
   # liquidity
   totalAvailableLiquidity: BigInt!
@@ -90,7 +91,7 @@ type LendingMarketOrderRow @entity {
   marketAddr: Bytes!
   lendMarket: LendingMarket!
   borrowMarket: LendingMarket!
-  term: BigInt!
+  maturity: BigInt!
   rate: BigInt!
   orders: [LendingMarketOrder!] @derivedFrom(field: "row")
   totalAmount: BigInt!
@@ -116,7 +117,7 @@ type LendingMarketOrder @entity {
   marketAddr: Bytes!
   lendingMarket: LendingMarket
   orderState: OrderState!
-  term: BigInt!
+  maturity: BigInt!
   rate: BigInt!
   amount: BigInt!
   maker: Bytes!
@@ -139,13 +140,29 @@ type FilledLendingMarketOrder @entity {
   side: Int!
   market: LendingMarket!
   marketAddr: Bytes!
-  term: BigInt!
+  maturity: BigInt!
   rate: BigInt!
   amount: BigInt!
   maker: Bytes!
   makerUser: User!
   taker: Bytes!
   takerUser: User!
+
+  # creation timestamps
+  createdAtTimestamp: BigInt!
+  createdAtBlockNumber: BigInt!
+}
+
+type TransactionTable @entity {
+  id: ID!
+  orderId: BigInt!
+  buyerAddr: Bytes!
+  sellerAddr: Bytes!
+  currency: Bytes!
+  side: Int!
+  maturity: BigInt!
+  rate: BigInt!
+  amount: BigInt!
 
   # creation timestamps
   createdAtTimestamp: BigInt!

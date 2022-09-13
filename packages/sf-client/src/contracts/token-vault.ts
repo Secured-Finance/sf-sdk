@@ -1,22 +1,22 @@
 import { Provider } from '@ethersproject/providers';
 import { Signer } from 'ethers';
 import {
-    TermStructure as Contract,
-    TermStructure__factory as Factory,
+    TokenVault as Contract,
+    TokenVault__factory as Factory,
 } from '../types';
+import { NetworkName } from '../utils';
 import { BaseContract } from './base-contract';
 
-import { NetworkName } from '../utils';
-export class TermStructure extends BaseContract<Contract> {
+export class TokenVault extends BaseContract<Contract> {
     static async getInstance(
         signerOrProvider: Signer | Provider,
         networkName: NetworkName
     ) {
-        const address = await this.getAddress('TermStructure', networkName);
+        const address = await this.getAddress('TokenVault', networkName);
         const contract = Factory.connect(address, signerOrProvider);
 
-        return new TermStructure(contract);
+        return new TokenVault(contract);
     }
 }
 
-export default TermStructure;
+export default TokenVault;

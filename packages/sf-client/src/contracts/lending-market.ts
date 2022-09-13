@@ -1,5 +1,5 @@
 import { Provider } from '@ethersproject/providers';
-import { constants, Signer } from 'ethers';
+import { BigNumber, constants, Signer } from 'ethers';
 import {
     LendingMarket as Contract,
     LendingMarket__factory as LendingMarketFactory,
@@ -11,7 +11,7 @@ import { LendingMarketController } from './lending-market-controller';
 export class LendingMarket extends BaseContract<Contract> {
     static async getInstance(
         ccy: string,
-        term: string,
+        maturity: number | BigNumber,
         signerOrProvider: Signer | Provider,
         networkName: NetworkName
     ) {
@@ -21,18 +21,18 @@ export class LendingMarket extends BaseContract<Contract> {
                 networkName
             );
 
-        const lendingMarketAddresses =
+        const lendingMarketAddress =
             await lendingMarketControllerContract.contract.getLendingMarket(
                 ccy,
-                term
+                maturity
             );
 
-        if (lendingMarketAddresses === constants.AddressZero) {
-            throw new Error('Wrong ccy or term');
+        if (lendingMarketAddress === constants.AddressZero) {
+            throw new Error('Wrong ccy or maturity');
         }
 
         const lendingMarketContract = LendingMarketFactory.connect(
-            lendingMarketAddresses,
+            lendingMarketAddress,
             signerOrProvider
         );
 

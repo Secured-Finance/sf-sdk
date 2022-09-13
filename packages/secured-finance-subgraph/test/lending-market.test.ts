@@ -28,6 +28,7 @@ const counterparty = Address.zero();
 const currencyShortName = 'ETH';
 const currencyIdentifier = toBytes32(currencyShortName);
 const termDays = BigInt.fromI32(730);
+const index = BigInt.fromI32(0);
 const notional = BigInt.fromI32(100000);
 const rate = BigInt.fromI32(700);
 const orderId = BigInt.fromI32(1);
@@ -45,8 +46,9 @@ const orderRowId =
 test('Should create new lending market, and make first order', () => {
     let event0 = createLendingMarketCreatedEvent(
         currencyIdentifier,
-        termDays,
-        lendingMarketAddress
+        lendingMarketAddress,
+        index,
+        termDays
     );
     handleNewLendingMarket(event0);
 

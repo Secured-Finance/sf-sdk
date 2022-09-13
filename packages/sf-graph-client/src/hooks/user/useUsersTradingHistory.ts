@@ -25,7 +25,7 @@ export const useUsersTradingHistory = (
     client?: GraphApolloClient
 ): QueryResult<UserTradingHistoryQuery> => {
     const variables = {
-        account: account.toLowerCase(),
+        id: account.toLowerCase(),
         market: market,
     };
 
