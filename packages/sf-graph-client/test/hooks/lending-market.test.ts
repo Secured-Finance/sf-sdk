@@ -47,7 +47,7 @@ describe('Lending market test', () => {
             expect(result.current.error).to.be.undefined;
 
             const lendingMarkets = result.current.data?.lendingMarkets;
-            expect(lendingMarkets?.length).to.be.equal(6);
+            expect(lendingMarkets?.length).to.be.equal(4);
 
             market = lendingMarkets?.[0].id as string;
 

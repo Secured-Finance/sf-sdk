@@ -15,7 +15,7 @@ export const OPEN_ORDERS = gql`
                 side
                 marketAddr
                 orderState
-                term
+                maturity
                 rate
                 amount
                 maker
@@ -40,7 +40,7 @@ export const TRADE_HISTORY = gql`
                 currency
                 side
                 marketAddr
-                term
+                maturity
                 rate
                 amount
                 maker
@@ -59,7 +59,7 @@ export const TRADE_HISTORY = gql`
                 currency
                 side
                 marketAddr
-                term
+                maturity
                 rate
                 amount
                 maker

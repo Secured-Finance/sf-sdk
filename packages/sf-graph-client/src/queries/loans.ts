@@ -8,7 +8,7 @@ export const LOAN_DEALS = gql`
             borrower
             currency
             currencyName
-            term
+            maturity
             notional
             couponPayment
             rate
@@ -28,7 +28,7 @@ export const BORROW_DEALS = gql`
             borrower
             currency
             currencyName
-            term
+            maturity
             notional
             couponPayment
             rate
@@ -48,7 +48,7 @@ export const LOAN_INFO = gql`
             borrower
             currency
             currencyName
-            term
+            maturity
             notional
             couponPayment
             rate
