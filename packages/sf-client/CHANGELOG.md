@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.9](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.8...v0.2.0-beta.9) (2022-09-20)
+
+
+### Bug Fixes
+
+* move smart-contracts module to dependencies [SF-210] ([49302f0](https://github.com/secured-finance/sf-sdk/commit/49302f01da8fd11172369f42835b1483654111e4))
+
+
+
+
+
 # [0.2.0-beta.8](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.7...v0.2.0-beta.8) (2022-09-20)
 
 
