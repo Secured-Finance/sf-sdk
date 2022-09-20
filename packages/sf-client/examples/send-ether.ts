@@ -4,11 +4,10 @@ import { SecuredFinanceClient } from '../src';
 
 (async function () {
     const provider = new providers.JsonRpcProvider(
-        `https://rinkeby.infura.io/v3/${process.env.INFURA_KEY}`,
-        'rinkeby'
+        process.env.DEV_RPC_ENDPOINT
     );
 
-    let wallet = new Wallet(`0x${process.env.PRIVATE_KEY}`);
+    let wallet = new Wallet(`0x${process.env.DEV_PRIVATE_KEY}`);
     wallet = wallet.connect(provider);
     let network = await provider.getNetwork();
 

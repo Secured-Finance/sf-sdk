@@ -1,8 +1,17 @@
 import { Network } from '@ethersproject/networks';
 import { Provider } from '@ethersproject/providers';
-import { Currency, Ether } from '@secured-finance/sf-core';
+import { Currency, Ether, Token } from '@secured-finance/sf-core';
+import ERC20 from '@secured-finance/smart-contracts/build/contracts/mocks/tokens/MockERC20.sol/MockERC20.json';
 import * as dayjs from 'dayjs';
-import { BigNumber, getDefaultProvider, Signer, utils } from 'ethers';
+import {
+    BigNumber,
+    constants,
+    Contract,
+    getDefaultProvider,
+    Signer,
+    utils,
+} from 'ethers';
+import { MockERC20 } from './types';
 
 import { ContractsInstance } from './contracts-instance';
 import { NetworkName, networkNames, sendEther } from './utils';
@@ -80,9 +89,11 @@ export class SecuredFinanceClient extends ContractsInstance {
     async depositCollateral(ccy: Currency, amount: number | BigNumber) {
         assertNonNullish(this.config);
         assertNonNullish(this.tokenVault);
+
+        await this.approveTokenTransfer(ccy, amount);
         const payableOverride = ccy.equals(Ether.onChain(this.config.networkId))
             ? { value: amount }
-            : undefined;
+            : {};
         return this.tokenVault.contract.deposit(
             this.convertCurrencyToBytes32(ccy),
             amount,
@@ -122,6 +133,13 @@ export class SecuredFinanceClient extends ContractsInstance {
     async getMaturities(ccy: Currency) {
         assertNonNullish(this.lendingMarketController);
         return this.lendingMarketController.contract.getMaturities(
+            this.convertCurrencyToBytes32(ccy)
+        );
+    }
+
+    async getTotalBorrowingAmount(ccy: Currency) {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.getTotalBorrowingSupply(
             this.convertCurrencyToBytes32(ccy)
         );
     }
@@ -168,6 +186,7 @@ export class SecuredFinanceClient extends ContractsInstance {
                 { value: amount }
             );
         } else {
+            await this.approveTokenTransfer(ccy, amount);
             return this.lendingMarketController.contract.createOrder(
                 this.convertCurrencyToBytes32(ccy),
                 maturity,
@@ -209,6 +228,13 @@ export class SecuredFinanceClient extends ContractsInstance {
         return sendEther(signer, amount, to, gasPrice);
     }
 
+    async convertToETH(ccy: Currency, amount: number | BigNumber) {
+        assertNonNullish(this.lendingMarketController);
+        return this.currencyController?.contract[
+            'convertToETH(bytes32,int256)'
+        ](this.convertCurrencyToBytes32(ccy), amount);
+    }
+
     async getCollateralBook(account: string, ccy: Currency) {
         assertNonNullish(this.tokenVault);
         const ccyIdentifier = this.convertCurrencyToBytes32(ccy);
@@ -231,8 +257,48 @@ export class SecuredFinanceClient extends ContractsInstance {
         return this.tokenVault.contract.getUsedCurrencies(account);
     }
 
+    async getTokenAllowance(token: Token, owner: string) {
+        assertNonNullish(this.tokenVault);
+
+        const tokenContract = await this.getTokenContract(token);
+        const spender = this.tokenVault.contract.address;
+        return tokenContract.allowance(owner, spender);
+    }
+
     get config() {
         assertNonNullish(this._config);
         return this._config;
+    }
+
+    private async approveTokenTransfer(
+        ccy: Currency,
+        amount: number | BigNumber
+    ) {
+        assertNonNullish(this.tokenVault);
+        if (!(this.config.signerOrProvider instanceof Signer)) {
+            throw new Error('Signer is not set');
+        }
+
+        if (ccy instanceof Token) {
+            const tokenContract = await this.getTokenContract(ccy);
+            const owner = await this.config.signerOrProvider.getAddress();
+            const spender = this.tokenVault.contract.address;
+            const allowance = await tokenContract.allowance(owner, spender);
+
+            if (allowance.lte(amount)) {
+                await tokenContract.approve(
+                    spender,
+                    constants.MaxUint256.sub(amount)
+                );
+            }
+        }
+    }
+
+    private async getTokenContract(token: Token) {
+        return new Contract(
+            token.address,
+            ERC20.abi,
+            this.config.signerOrProvider
+        ) as MockERC20;
     }
 }
