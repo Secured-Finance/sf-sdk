@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.8](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.7...v0.2.0-beta.8) (2022-09-20)
+
+
+### Bug Fixes
+
+* fix timeout settings in sf-graph-client [SF-210] ([c37ad83](https://github.com/secured-finance/sf-sdk/commit/c37ad831f2efe6a18dade87afff913b0c9931d60))
+* remove unused package [SF-210] ([fb001cf](https://github.com/secured-finance/sf-sdk/commit/fb001cf1eccef44b8d1e32983dacdffff0434c8e))
+* update smart-contracts version of all packages [SF-210] ([0ef588b](https://github.com/secured-finance/sf-sdk/commit/0ef588b78dd146291b4de1578483852d71e8afa6))
+* update timeout settings in sf-graph-client [SF-210] ([faa25c1](https://github.com/secured-finance/sf-sdk/commit/faa25c15024a881347d6c9279688f1ccc7e584e6))
+
+
+
+
+
 # [0.2.0-beta.7](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.6...v0.2.0-beta.7) (2022-09-15)
 
 

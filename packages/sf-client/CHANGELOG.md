@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.8](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.7...v0.2.0-beta.8) (2022-09-20)
+
+
+### Bug Fixes
+
+* fix build bug in sf-client [SF-210] ([fb8a117](https://github.com/secured-finance/sf-sdk/commit/fb8a1175656c0d1809f4269bc9213b8734a1c2c3))
+* update smart-contracts version and add approval steps [SF-210] ([4bb1d90](https://github.com/secured-finance/sf-sdk/commit/4bb1d90381aa609a34dfddda4797647ca5c6175d))
+
+
+### Features
+
+* add method to get the total borrowing amount [SF-210] ([34ccfe8](https://github.com/secured-finance/sf-sdk/commit/34ccfe817b81d61df4c897e74627c2486231732e))
+
+
+
+
+
 # [0.2.0-beta.6](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.5...v0.2.0-beta.6) (2022-09-13)
 
 

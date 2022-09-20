@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.8](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.7...v0.2.0-beta.8) (2022-09-20)
+
+
+### Bug Fixes
+
+* fix build bug in sf-client [SF-210] ([fb8a117](https://github.com/Secured-Finance/sf-sdk/commit/fb8a1175656c0d1809f4269bc9213b8734a1c2c3))
+* fix timeout settings in sf-graph-client [SF-210] ([c37ad83](https://github.com/Secured-Finance/sf-sdk/commit/c37ad831f2efe6a18dade87afff913b0c9931d60))
+* remove unused package [SF-210] ([fb001cf](https://github.com/Secured-Finance/sf-sdk/commit/fb001cf1eccef44b8d1e32983dacdffff0434c8e))
+* update smart-contracts version and add approval steps [SF-210] ([4bb1d90](https://github.com/Secured-Finance/sf-sdk/commit/4bb1d90381aa609a34dfddda4797647ca5c6175d))
+* update smart-contracts version of all packages [SF-210] ([0ef588b](https://github.com/Secured-Finance/sf-sdk/commit/0ef588b78dd146291b4de1578483852d71e8afa6))
+* update timeout settings in sf-graph-client [SF-210] ([faa25c1](https://github.com/Secured-Finance/sf-sdk/commit/faa25c15024a881347d6c9279688f1ccc7e584e6))
+
+
+### Features
+
+* add method to get the total borrowing amount [SF-210] ([34ccfe8](https://github.com/Secured-Finance/sf-sdk/commit/34ccfe817b81d61df4c897e74627c2486231732e))
+
+
+
+
+
 # [0.2.0-beta.7](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.6...v0.2.0-beta.7) (2022-09-15)
 
 

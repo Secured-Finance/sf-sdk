@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.8](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.7...v0.2.0-beta.8) (2022-09-20)
+
+
+### Bug Fixes
+
+* update smart-contracts version of all packages [SF-210] ([0ef588b](https://github.com/Secured-Finance/sf-sdk/commit/0ef588b78dd146291b4de1578483852d71e8afa6))
+
+
+
+
+
 # [0.2.0-beta.5](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.4...v0.2.0-beta.5) (2022-09-13)
 
 **Note:** Version bump only for package secured-finance-subgraph
