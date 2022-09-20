@@ -42,7 +42,7 @@ describe('Loans test', () => {
                 useLendingDeals({ account }, client)
             );
 
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
 

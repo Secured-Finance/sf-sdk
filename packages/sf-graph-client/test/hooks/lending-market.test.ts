@@ -151,7 +151,8 @@ describe('Lending market test', () => {
                 )
             );
 
-            await waitForNextUpdate();
+            // await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
 
