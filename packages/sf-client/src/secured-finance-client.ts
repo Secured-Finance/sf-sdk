@@ -137,6 +137,13 @@ export class SecuredFinanceClient extends ContractsInstance {
         );
     }
 
+    async getTotalBorrowingAmount(ccy: Currency) {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.getTotalBorrowingSupply(
+            this.convertCurrencyToBytes32(ccy)
+        );
+    }
+
     async getLendingMarkets(ccy: Currency): Promise<LendingMarketInfo[]> {
         assertNonNullish(this.lendingMarketController);
         const ccyIdentifier = this.convertCurrencyToBytes32(ccy);
@@ -219,6 +226,13 @@ export class SecuredFinanceClient extends ContractsInstance {
         }
 
         return sendEther(signer, amount, to, gasPrice);
+    }
+
+    async convertToETH(ccy: Currency, amount: number | BigNumber) {
+        assertNonNullish(this.lendingMarketController);
+        return this.currencyController?.contract[
+            'convertToETH(bytes32,int256)'
+        ](this.convertCurrencyToBytes32(ccy), amount);
     }
 
     async getCollateralBook(account: string, ccy: Currency) {

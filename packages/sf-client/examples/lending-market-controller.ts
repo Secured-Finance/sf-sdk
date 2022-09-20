@@ -26,4 +26,16 @@ import { Filecoin } from './tokens/filecoin';
         1000,
         100000
     );
+
+    const totalBorrowingAmount = await sfClient.getTotalBorrowingAmount(FIL);
+    console.log('Total Borrowing Amount:', totalBorrowingAmount.toString());
+
+    const totalBorrowingAmountInETH = await sfClient.convertToETH(
+        FIL,
+        totalBorrowingAmount
+    );
+    console.log(
+        'Total Borrowing Amount in ETH:',
+        totalBorrowingAmountInETH?.toString()
+    );
 })();
