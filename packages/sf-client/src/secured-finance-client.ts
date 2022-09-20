@@ -86,11 +86,17 @@ export class SecuredFinanceClient extends ContractsInstance {
      * @returns a `ContractTransaction`
      * @throws if the client is not initialized
      */
-    async depositCollateral(ccy: Currency, amount: number | BigNumber) {
+    async depositCollateral(
+        ccy: Currency,
+        amount: number | BigNumber,
+        onApproved?: (isApproved: boolean) => Promise<void> | void
+    ) {
         assertNonNullish(this.config);
         assertNonNullish(this.tokenVault);
 
-        await this.approveTokenTransfer(ccy, amount);
+        const isApproved = await this.approveTokenTransfer(ccy, amount);
+        await onApproved?.(isApproved);
+
         const payableOverride = ccy.equals(Ether.onChain(this.config.networkId))
             ? { value: amount }
             : {};
@@ -175,7 +181,8 @@ export class SecuredFinanceClient extends ContractsInstance {
         maturity: number | BigNumber,
         side: string,
         amount: number | BigNumber,
-        rate: number | BigNumber
+        rate: number | BigNumber,
+        onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
         assertNonNullish(this.lendingMarketController);
         if (ccy.equals(Ether.onChain(this.config.networkId)) && side === '0') {
@@ -186,7 +193,13 @@ export class SecuredFinanceClient extends ContractsInstance {
                 { value: amount }
             );
         } else {
-            await this.approveTokenTransfer(ccy, amount);
+            const isApproved =
+                side === '0'
+                    ? await this.approveTokenTransfer(ccy, amount)
+                    : false;
+
+            await onApproved?.(isApproved);
+
             return this.lendingMarketController.contract.createOrder(
                 this.convertCurrencyToBytes32(ccy),
                 maturity,
@@ -286,12 +299,13 @@ export class SecuredFinanceClient extends ContractsInstance {
             const allowance = await tokenContract.allowance(owner, spender);
 
             if (allowance.lte(amount)) {
-                await tokenContract.approve(
-                    spender,
-                    constants.MaxUint256.sub(amount)
-                );
+                await tokenContract
+                    .approve(spender, constants.MaxUint256.sub(amount))
+                    .then(tx => tx.wait());
+                return true;
             }
         }
+        return false;
     }
 
     private async getTokenContract(token: Token) {
