@@ -25,7 +25,7 @@ describe('Loans test', () => {
                 useBorrowingDeals({ account }, client)
             );
 
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
             expect(result.current.error).to.be.undefined;
 
             if (result.current.data?.loans !== undefined) {
@@ -59,7 +59,7 @@ describe('Loans test', () => {
                 useLoanInfo({ id }, client)
             );
 
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
             expect(result.current.data?.loan).to.be.undefined;
