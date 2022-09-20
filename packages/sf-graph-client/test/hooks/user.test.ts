@@ -24,7 +24,7 @@ describe('User test', () => {
                 useOpenOrders({ account, market }, client)
             );
 
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
 
@@ -43,7 +43,7 @@ describe('User test', () => {
                 useUsersTradingHistoryQuery({ account, market }, client)
             );
 
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
 

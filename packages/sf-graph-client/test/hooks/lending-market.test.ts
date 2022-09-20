@@ -42,12 +42,12 @@ describe('Lending market test', () => {
                 useLendingMarkets({ ccy }, client)
             );
 
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
 
             const lendingMarkets = result.current.data?.lendingMarkets;
-            expect(lendingMarkets?.length).to.be.equal(4);
+            expect(lendingMarkets?.length).to.be.equal(8);
 
             market = lendingMarkets?.[0].id as string;
 
@@ -62,7 +62,7 @@ describe('Lending market test', () => {
             const { result, waitForNextUpdate } = renderHook(() =>
                 useLendingMarketInfo({ lendingMarket: '0x02' }, client)
             );
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
             expect(result.current.data).to.be.undefined;
@@ -73,7 +73,7 @@ describe('Lending market test', () => {
                 useLendingMarketInfo({ lendingMarket: market }, client)
             );
 
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
 
@@ -94,7 +94,7 @@ describe('Lending market test', () => {
                 )
             );
 
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
 
@@ -111,7 +111,7 @@ describe('Lending market test', () => {
                 )
             );
 
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
 
@@ -134,7 +134,7 @@ describe('Lending market test', () => {
                 )
             );
 
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
 
@@ -151,7 +151,7 @@ describe('Lending market test', () => {
                 )
             );
 
-            // await waitForNextUpdate();
+            // await waitForNextUpdate({ timeout: 5000 });
             await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
@@ -170,7 +170,7 @@ describe('Lending market test', () => {
                 useLendingTradingHistory({ lendingMarket: '0x01' }, client)
             );
 
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
             expect(result.current.data).to.be.undefined;
@@ -181,7 +181,7 @@ describe('Lending market test', () => {
                 useLendingTradingHistory({ lendingMarket: market }, client)
             );
 
-            await waitForNextUpdate();
+            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).to.be.undefined;
 
