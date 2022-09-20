@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.10](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.9...v0.2.0-beta.10) (2022-09-20)
+
+
+### Bug Fixes
+
+* fix logics of approval step [SF-210] ([1ae1fa6](https://github.com/Secured-Finance/sf-sdk/commit/1ae1fa6c2b628f84a97ee3e20a95dd2e11ef3277))
+
+
+
+
+
 # [0.2.0-beta.9](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.8...v0.2.0-beta.9) (2022-09-20)
 
 
