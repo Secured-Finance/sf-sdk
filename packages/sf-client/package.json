@@ -25,7 +25,6 @@
   },
   "dependencies": {
     "@secured-finance/sf-core": "^0.2.0-beta.3",
-    "@secured-finance/smart-contracts": "^0.0.2-beta.8",
     "bignumber.js": "^9.0.2",
     "dayjs": "^1.11.5",
     "ethers": "^5.5.3",
@@ -33,6 +32,7 @@
     "typescript": "^4.5.4"
   },
   "devDependencies": {
+    "@secured-finance/smart-contracts": "^0.0.2-beta.9",
     "@typechain/ethers-v5": "^10.0.0",
     "@types/jest": "27.4.1",
     "@types/node": "^16.11.21",
