@@ -11,7 +11,7 @@ import {
     Signer,
     utils,
 } from 'ethers';
-import { ERC20Mock } from './types/mocks';
+import { MockERC20 } from './types';
 
 import { ContractsInstance } from './contracts-instance';
 import { NetworkName, networkNames, sendEther } from './utils';
@@ -299,6 +299,6 @@ export class SecuredFinanceClient extends ContractsInstance {
             token.address,
             ERC20.abi,
             this.config.signerOrProvider
-        ) as ERC20Mock;
+        ) as MockERC20;
     }
 }
