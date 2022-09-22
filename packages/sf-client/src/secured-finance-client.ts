@@ -115,14 +115,14 @@ export class SecuredFinanceClient extends ContractsInstance {
         );
     }
 
-    async getBorrowYieldCurve(ccy: Currency) {
+    async getLendYieldCurve(ccy: Currency) {
         assertNonNullish(this.lendingMarketController);
         return this.lendingMarketController.contract.getBorrowRates(
             this.convertCurrencyToBytes32(ccy)
         );
     }
 
-    async getLendYieldCurve(ccy: Currency) {
+    async getBorrowYieldCurve(ccy: Currency) {
         assertNonNullish(this.lendingMarketController);
         return this.lendingMarketController.contract.getLendRates(
             this.convertCurrencyToBytes32(ccy)
