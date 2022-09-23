@@ -24,10 +24,7 @@ class Main {
             );
 
             const proxyAddress = deployment.address;
-            const blockNumber = deployment.receipt.blockNumber;
-
             dataSource.source.address = proxyAddress;
-            dataSource.source.startBlock = blockNumber;
         }
 
         const newYamlText = dump(data);
