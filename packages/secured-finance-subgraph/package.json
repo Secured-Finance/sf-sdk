@@ -12,9 +12,9 @@
     "test": "graph test",
     "coverage": "graph test -- -c",
     "auth": "graph auth --product hosted-service",
-    "deploy:local": "graph deploy secured-finance/sf-protocol-local ./subgraph.localhost.yaml --product hosted-service --output-dir ./build/localhost --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
-    "deploy:dev": "graph deploy secured-finance/sf-protocol-dev ./subgraph.development.yaml --product hosted-service --output-dir ./build/development",
-    "deploy:stg": "graph deploy secured-finance/sf-protocol-stg ./subgraph.staging.yaml --product hosted-service --output-dir ./build/staging",
+    "deploy:local": "cat ./subgraph.localhost.yaml && graph deploy secured-finance/sf-protocol-local ./subgraph.localhost.yaml --product hosted-service --output-dir ./build/localhost --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "deploy:dev": "cat ./subgraph.development.yaml && graph deploy secured-finance/sf-protocol-dev ./subgraph.development.yaml --product hosted-service --output-dir ./build/development",
+    "deploy:stg": "cat ./subgraph.staging.yaml && graph deploy secured-finance/sf-protocol-stg ./subgraph.staging.yaml --product hosted-service --output-dir ./build/staging",
     "prepublish": "npm run codegen"
   },
   "devDependencies": {
