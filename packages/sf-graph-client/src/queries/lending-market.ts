@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const LENDING_MARKETS_BY_CCY = gql`
+export const LENDING_MARKETS = gql`
     query LendingMarkets($currency: Bytes!, $skip: Int!) {
         lendingMarkets(
             skip: $skip
@@ -8,60 +8,9 @@ export const LENDING_MARKETS_BY_CCY = gql`
             where: { currency: $currency }
         ) {
             id
-            marketRate
-            spread
-            maturity
-            spread
-            totalLiquidity
-            totalLiquidityInUSD
-            totalAvailableLiquidity
-            totalAvailableLiquidityInUSD
-        }
-    }
-`;
-
-export const LENDING_MARKET_INFO = gql`
-    query LendingMarket($id: ID!) {
-        lendingMarket(id: $id) {
-            id
-            marketRate
-            spread
-            maturity
-            currency
+            contractAddress
             currencyName
-            totalLiquidity
-        }
-    }
-`;
-
-export const LENDING_BORROW_ORDERBOOK = gql`
-    query BorrowOrderbook($id: ID!, $skip: Int!) {
-        lendingMarket(id: $id) {
-            borrowOrderbook(
-                orderBy: rate
-                orderDirection: desc
-                first: 10
-                skip: $skip
-            ) {
-                rate
-                totalAmount
-            }
-        }
-    }
-`;
-
-export const LENDING_LEND_ORDERBOOK = gql`
-    query LendOrderbook($id: ID!, $skip: Int!) {
-        lendingMarket(id: $id) {
-            lendOrderbook(
-                orderBy: rate
-                orderDirection: asc
-                first: 10
-                skip: $skip
-            ) {
-                rate
-                totalAmount
-            }
+            maturity
         }
     }
 `;
@@ -69,16 +18,16 @@ export const LENDING_LEND_ORDERBOOK = gql`
 export const LENDING_TRADING_HISTORY = gql`
     query TradingHistory($id: ID!, $skip: Int!) {
         lendingMarket(id: $id) {
-            tradeHistory(
-                orderBy: createdAtTimestamp
+            transactions(
+                orderBy: createdAt
                 orderDirection: desc
                 first: 25
                 skip: $skip
             ) {
                 rate
                 side
-                createdAtTimestamp
                 amount
+                createdAt
             }
         }
     }

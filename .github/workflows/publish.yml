@@ -35,6 +35,12 @@ jobs:
         run: npm ci
       - name: Bootstrap Repository
         run: npm run bootstrap
+      - name: Get NPM version
+        run: |
+          version=$(cat ./packages/secured-finance-subgraph/package.json | jq -r .version | tr -d '"')
+          echo "::set-output name=npm-version::${version}"
+      - name: Update subgraph version
+        run: npx nx run @secured-finance/sf-graph-client:update-subgraph-version --label ${{ steps.package-version.outputs.npm-version}}
       - name: Generate artifacts
         run: npm run codegen
       - name: Extract branch name

@@ -1,159 +1,18 @@
-type Loan @entity {
-  id: ID!
-  lender: Bytes!
-  lenderUser: User!
-  borrower: Bytes!
-  borrowUser: User!
-  currencyName: String!
-  currency: Bytes!
-  maturity: BigInt!
-  notional: BigInt!
-  couponPayment: BigInt!
-  rate: BigInt!
-  startTimestamp: BigInt!
-  endTimestamp: BigInt!
-  presentValue: BigInt!
-  currentTimestamp: BigInt!
-  isAvailable: Boolean!
-  startTxHash: Bytes!
-  state: Int!
-
-  schedule: LoanSchedule! @derivedFrom(field: "loan")
-}
-
-type LoanSchedule @entity {
-  id: ID!
-
-  payments: [SchedulePayment!] @derivedFrom(field: "schedule")
-  loan: Loan!
-}
-
-type SchedulePayment @entity {
-  id: ID!
-  notice: BigInt!
-  payment: BigInt!
-  amount: BigInt!
-  isDone: Boolean!
-  txHash: Bytes!
-
-  schedule: LoanSchedule!
-}
-
-type User @entity {
-  id: ID!
-  owner: Bytes!
-  totalLendInETH: BigInt!
-  totalBorrowInETH: BigInt!
-  updatedAt: BigInt!
-
-  openOrders: [LendingMarketOrder!] @derivedFrom(field: "makerUser")
-  madeOrders: [FilledLendingMarketOrder!] @derivedFrom(field: "makerUser")
-  takenOrders: [FilledLendingMarketOrder!] @derivedFrom(field: "takerUser")
-}
-
 type LendingMarket @entity {
   id: ID!
-  marketAddr: Bytes!
-  controllerAddr: Bytes!
+  contractAddress: Bytes!
   currencyName: String!
   currency: Bytes!
   maturity: BigInt!
-  spread: BigInt!
-  marketRate: BigInt!
-  orderCount: Int!
-  index: BigInt!
 
-  # liquidity
-  totalAvailableLiquidity: BigInt!
-  totalLiquidity: BigInt!
+  createdAt: BigInt!
+  blockNumber: BigInt!
+  txHash: Bytes!
 
-  # liquidity in USD
-  totalAvailableLiquidityInUSD: BigInt!
-  totalLiquidityInUSD: BigInt!
-
-  # creation timestamps
-  createdAtTimestamp: BigInt!
-  createdAtBlockNumber: BigInt!
-
-  # two-sided orderbook
-  lendOrderbook: [LendingMarketOrderRow!] @derivedFrom(field: "lendMarket")
-  borrowOrderbook: [LendingMarketOrderRow!] @derivedFrom(field: "borrowMarket")
-
-  orders: [LendingMarketOrder!] @derivedFrom(field: "lendingMarket")
-  tradeHistory: [FilledLendingMarketOrder!] @derivedFrom(field: "market")
+  transactions: [Transaction!] @derivedFrom(field: "lendingMarket")
 }
 
-type LendingMarketOrderRow @entity {
-  id: ID!
-  currencyName: String!
-  currency: Bytes!
-  side: Int!
-  marketAddr: Bytes!
-  lendMarket: LendingMarket!
-  borrowMarket: LendingMarket!
-  maturity: BigInt!
-  rate: BigInt!
-  orders: [LendingMarketOrder!] @derivedFrom(field: "row")
-  totalAmount: BigInt!
-  # totalUSDAmount: BigInt!
-
-  # creation timestamps
-  createdAtTimestamp: BigInt!
-  createdAtBlockNumber: BigInt!
-}
-
-enum OrderState {
-  ACTIVE
-  CANCELED
-}
-
-type LendingMarketOrder @entity {
-  id: ID!
-  orderId: BigInt!
-  currencyName: String!
-  currency: Bytes!
-  side: Int!
-  row: LendingMarketOrderRow
-  marketAddr: Bytes!
-  lendingMarket: LendingMarket
-  orderState: OrderState!
-  maturity: BigInt!
-  rate: BigInt!
-  amount: BigInt!
-  maker: Bytes!
-  makerUser: User!
-
-  # creation timestamps
-  createdAtTimestamp: BigInt!
-  createdAtBlockNumber: BigInt!
-
-  # # updated timestamps
-  updatedAtTimestamp: BigInt!
-  updatedAtBlockNumber: BigInt!
-}
-
-type FilledLendingMarketOrder @entity {
-  id: ID!
-  orderId: BigInt!
-  currencyName: String!
-  currency: Bytes!
-  side: Int!
-  market: LendingMarket!
-  marketAddr: Bytes!
-  maturity: BigInt!
-  rate: BigInt!
-  amount: BigInt!
-  maker: Bytes!
-  makerUser: User!
-  taker: Bytes!
-  takerUser: User!
-
-  # creation timestamps
-  createdAtTimestamp: BigInt!
-  createdAtBlockNumber: BigInt!
-}
-
-type TransactionTable @entity {
+type Transaction @entity {
   id: ID!
   orderId: BigInt!
   buyerAddr: Bytes!
@@ -164,7 +23,9 @@ type TransactionTable @entity {
   rate: BigInt!
   amount: BigInt!
 
-  # creation timestamps
-  createdAtTimestamp: BigInt!
-  createdAtBlockNumber: BigInt!
+  createdAt: BigInt!
+  blockNumber: BigInt!
+  txHash: Bytes!
+
+  lendingMarket: LendingMarket
 }

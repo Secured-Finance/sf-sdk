@@ -1,9 +1,9 @@
 import { gql } from '@apollo/client';
 
 export const BUYER_TRANSACTION_HISTORY = gql`
-    query BuyerTransactionTable($address: Bytes!) {
-        transactionTables(
-            orderBy: createdAtTimestamp
+    query BuyerTransactions($address: Bytes!) {
+        transactions(
+            orderBy: createdAt
             orderDirection: desc
             where: { buyerAddr: $address }
         ) {
@@ -17,9 +17,9 @@ export const BUYER_TRANSACTION_HISTORY = gql`
 `;
 
 export const SELLER_TRANSACTION_HISTORY = gql`
-    query SellerTransactionTable($address: Bytes!) {
-        transactionTables(
-            orderBy: createdAtTimestamp
+    query SellerTransactions($address: Bytes!) {
+        transactions(
+            orderBy: createdAt
             orderDirection: desc
             where: { sellerAddr: $address }
         ) {
