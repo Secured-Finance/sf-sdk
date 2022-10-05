@@ -23,15 +23,15 @@ test('Should create new lending market and validate market data', () => {
     assert.fieldEquals(
         'LendingMarket',
         lendingMarketAddress.toHexString(),
-        'marketAddr',
+        'contractAddress',
         lendingMarketAddress.toHexString()
     );
 
     assert.fieldEquals(
         'LendingMarket',
         lendingMarketAddress.toHexString(),
-        'controllerAddr',
-        event.address.toHexString()
+        'currencyName',
+        currencyShortName
     );
 
     assert.fieldEquals(
@@ -46,12 +46,5 @@ test('Should create new lending market and validate market data', () => {
         lendingMarketAddress.toHexString(),
         'maturity',
         termDays.toString()
-    );
-
-    assert.fieldEquals(
-        'LendingMarket',
-        lendingMarketAddress.toHexString(),
-        'index',
-        index.toString()
     );
 });
