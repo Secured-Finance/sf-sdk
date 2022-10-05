@@ -17,6 +17,7 @@ class Main {
     run() {
         const rootDir = process.cwd();
         const yamlText = readFileSync(`${rootDir}/.graphclientrc.yml`, 'utf8');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const data = load(yamlText) as any;
 
         for (const source of data.sources) {
@@ -31,11 +32,8 @@ class Main {
     }
 }
 
-// const [, , label] = process.argv;
 program.option('--label <label>', 'subgraph version label');
 program.parse(process.argv);
 const { label } = program.opts();
-
-console.log('label:', label);
 
 new Main(label).run();
