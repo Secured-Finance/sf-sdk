@@ -22,22 +22,23 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
+      - name: Get NPM version
+        run: |
+          version=$(cat ./packages/secured-finance-subgraph/package.json | jq -r .version | tr -d '"')
+          echo "::set-output name=npm-version::${version}"
+      - name: Set env
+        run: |
+          echo "NPM_AUTH_TOKEN=${{ secrets.NPM_TOKEN }}" >> $GITHUB_ENV
       - name: Install Dependencies
         run: npm ci
       - name: Bootstrap Repo
         run: npm run bootstrap
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Build
         run: npm run build
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
-      - name: Get NPM version
-        run: |
-          version=$(cat ./packages/secured-finance-subgraph/package.json | jq -r .version | tr -d '"')
-          echo "::set-output name=npm-version::${version}"
       - name: Deploy Subgraph
         id: deploy
         run: |
