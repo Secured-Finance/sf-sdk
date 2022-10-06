@@ -45,30 +45,19 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
-      - name: Change directory
-        run: cd ./packages/secured-finance-subgraph
-      - name: Update .subgraphrc for development environment
-        # For testing
-        # if: ${{ steps.extract_branch.outputs.branch == 'develop' }}
-        if: ${{ steps.extract_branch.outputs.branch == 'SF-180-update-subgraph' }}
-        run: |
-          version=$(npm run update-subgraphrc development)
-          echo "::set-output name=npm-version::${version}"
-      - name: Update .subgraphrc for staging environment
-        if: ${{ steps.extract_branch.outputs.branch == 'main' }}
-        run: |
-          version=$(npm run update-subgraphrc staging)
-          echo "::set-output name=npm-version::${version}"
       - name: Deploy Subgraph
         id: deploy
         run: |
+          cd ./packages/secured-finance-subgraph
           npm run auth ${{secrets.GRAPH_ACCESS_TOKEN}}
           if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
+            version=$(npm run update-subgraphrc staging)
             npm run generate:stg
-            npm run deploy:stg v${{ steps.package-version.outputs.npm-version}}
+            npm run deploy:stg v${version}
           else
+            version=$(npm run update-subgraphrc development)
             npm run generate:dev
-            npm run deploy:dev v${{ steps.package-version.outputs.npm-version}}
+            npm run deploy:dev v${version}
           fi
       - name: Commit and push
         shell: bash
