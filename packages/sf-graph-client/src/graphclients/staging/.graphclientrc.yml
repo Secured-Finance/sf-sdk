@@ -2,7 +2,7 @@ sources:
   - name: sf-protocol
     handler:
       graphql:
-        endpoint: https://api.studio.thegraph.com/query/30564/${SUBGRAPH_NAME}/v0.0.2
+        endpoint: https://api.studio.thegraph.com/query/30564/sf-protocol-stg/v0.0.2
     transforms:
       - blockTracking:
           validateSchema: true

@@ -35,18 +35,26 @@ jobs:
         run: npm ci
       - name: Bootstrap Repository
         run: npm run bootstrap
-      - name: Get NPM version
-        run: |
-          version=$(cat ./packages/secured-finance-subgraph/package.json | jq -r .version | tr -d '"')
-          echo "::set-output name=npm-version::${version}"
-      - name: Update subgraph version
-        run: npx nx run @secured-finance/sf-graph-client:update-subgraph-version --label ${{ steps.package-version.outputs.npm-version}}
-      - name: Generate artifacts
-        run: npm run codegen
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
+      - name: Set env for development environment
+        if: ${{ steps.extract_branch.outputs.branch == 'develop' }}
+        run: |
+          echo "NETWORK=development" >> $GITHUB_ENV
+      - name: Set env for staging environment
+        if: ${{ steps.extract_branch.outputs.branch == 'main' }}
+        run: |
+          echo "NETWORK=staging" >> $GITHUB_ENV
+      - name: Get NPM version
+        run: |
+          version=$(cat ./packages/secured-finance-subgraph/deployment.json | jq -r .$NETWORK.version | tr -d '"')
+          echo "::set-output name=npm-version::${version}"
+      - name: Update subgraph version
+        run: npx nx run @secured-finance/sf-graph-client:update-subgraph-version --environment $NETWORK --label ${{ steps.package-version.outputs.npm-version}}
+      - name: Generate artifacts
+        run: npm run codegen
       - name: Update env
         run: |
           echo "NPM_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV

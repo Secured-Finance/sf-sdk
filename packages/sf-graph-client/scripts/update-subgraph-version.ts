@@ -2,21 +2,33 @@ import { program } from 'commander';
 import { readFileSync, writeFileSync } from 'fs';
 import { dump, load } from 'js-yaml';
 
+const arrowedEnvironments = ['development', 'staging', 'production'] as const;
+type Environment = typeof arrowedEnvironments[number];
+
 class Main {
+    private environment: Environment;
     private label: string;
 
-    constructor(label: string) {
-        if (label == 'false') {
-            console.error('Error: label is empty.');
+    constructor(environment: string, label: string) {
+        if (!label) {
+            console.error('error: label is empty.');
             process.exit(1);
         }
 
+        if (!arrowedEnvironments.includes(environment as Environment)) {
+            console.error('error: invalid environment:', environment);
+            process.exit(1);
+        }
+
+        this.environment = environment as Environment;
         this.label = label;
     }
 
     run() {
-        const rootDir = process.cwd();
-        const yamlText = readFileSync(`${rootDir}/.graphclientrc.yml`, 'utf8');
+        const path = `${process.cwd()}/src/graphclients/${
+            this.environment
+        }/.graphclientrc.yml`;
+        const yamlText = readFileSync(path, 'utf8');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const data = load(yamlText) as any;
 
@@ -28,12 +40,14 @@ class Main {
 
         const newYamlText = dump(data);
 
-        writeFileSync(`${rootDir}/.graphclientrc.yml`, newYamlText, 'utf8');
+        writeFileSync(path, newYamlText, 'utf8');
     }
 }
 
-program.option('--label <label>', 'subgraph version label');
-program.parse(process.argv);
-const { label } = program.opts();
+program.option('--environment <name>', 'environment name');
+program.option('--label <name>', 'subgraph version label');
 
-new Main(label).run();
+program.parse(process.argv);
+const { environment, label } = program.opts();
+
+new Main(environment, label).run();

@@ -15,7 +15,17 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor != 'secured-finance-machine-user[bot]'
     steps:
-      - uses: actions/checkout@v2
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.MACHINE_USER_APP_ID }}
+          private_key: ${{ secrets.MACHINE_USER_PRIVATE_KEY }}
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ steps.generate_token.outputs.token }}
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
@@ -33,9 +43,15 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
-      - name: Get NPM version
+      - name: Update .subgraphrc for development environment
+        if: ${{ steps.extract_branch.outputs.branch == 'develop' }}
         run: |
-          version=$(cat ./packages/secured-finance-subgraph/package.json | jq -r .version | tr -d '"')
+          version=$(npm run update-subgraphrc development)
+          echo "::set-output name=npm-version::${version}"
+      - name: Update .subgraphrc for staging environment
+        if: ${{ steps.extract_branch.outputs.branch == 'main' }}
+        run: |
+          version=$(npm run update-subgraphrc staging)
           echo "::set-output name=npm-version::${version}"
       - name: Deploy Subgraph
         id: deploy
@@ -44,8 +60,15 @@ jobs:
           npm run auth ${{secrets.GRAPH_ACCESS_TOKEN}}
           if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
             npm run generate:stg
-            npm run deploy:stg ${{ steps.package-version.outputs.npm-version}}
+            npm run deploy:stg v${{ steps.package-version.outputs.npm-version}}
           else
             npm run generate:dev
-            npm run deploy:dev ${{ steps.package-version.outputs.npm-version}}
+            npm run deploy:dev v${{ steps.package-version.outputs.npm-version}}
           fi
+      - name: Commit and push
+        shell: bash
+        run: |
+          git config user.name "SF Machine User[bot]"
+          git config user.email "${{ secrets.MACHINE_USER_APP_ID }}+sf-machine-user[bot]@users.noreply.github.com"
+          git commit -m "chore: update .subgraphrc"
+          git push

@@ -14,7 +14,8 @@
     "auth": "graph auth --product hosted-service",
     "deploy:dev": "cat ./subgraph.development.yaml && graph deploy ./subgraph.development.yaml --studio sf-protocol-dev --output-dir ./build/development --versionLabel",
     "deploy:stg": "cat ./subgraph.staging.yaml && graph deploy ./subgraph.staging.yaml --studio sf-protocol-stg --output-dir ./build/staging --versionLabel",
-    "prepublish": "npm run codegen"
+    "prepublish": "npm run codegen",
+    "update-subgraphrc": "ts-node ./scripts/update-subgraphrc.ts"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.34.0",

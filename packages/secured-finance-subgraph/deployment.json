@@ -1,0 +1,12 @@
+{
+  "development": {
+    "isMajorUpdate": false,
+    "isMinorUpdate": false,
+    "version": "0.0.2"
+  },
+  "staging": {
+    "isMajorUpdate": false,
+    "isMinorUpdate": false,
+    "version": "0.0.2"
+  }
+}
