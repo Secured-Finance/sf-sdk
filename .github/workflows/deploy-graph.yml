@@ -51,13 +51,13 @@ jobs:
         if: ${{ steps.extract_branch.outputs.branch == 'SF-180-update-subgraph' }}
         run: |
           cd ./packages/secured-finance-subgraph
-          version=$(npm run update-subgraphrc development | jq -r .development.version | tr -d '"')
+          version=$(npm run update-subgraphrc development)
           echo "::set-output name=subgraph-version::${version}"
       - name: Update deployment.json for staging environment
         if: ${{ steps.extract_branch.outputs.branch == 'main' }}
         run: |
           cd ./packages/secured-finance-subgraph
-          version=$(npm run update-subgraphrc staging | jq -r .staging.version | tr -d '"')
+          version=$(npm run update-subgraphrc staging)
           echo "::set-output name=subgraph-version::${version}"
       - name: Deploy Subgraph
         id: deploy
