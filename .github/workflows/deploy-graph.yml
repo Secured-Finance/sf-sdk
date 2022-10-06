@@ -67,5 +67,6 @@ jobs:
           npm run format:fix
           git config user.name "SF Machine User[bot]"
           git config user.email "${{ secrets.MACHINE_USER_APP_ID }}+sf-machine-user[bot]@users.noreply.github.com"
+          git add .
           git commit -m "chore: update .subgraphrc"
           git push
