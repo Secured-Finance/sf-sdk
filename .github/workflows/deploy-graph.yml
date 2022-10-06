@@ -46,7 +46,6 @@ jobs:
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
       - name: Change directory
-        id: deploy
         run: cd ./packages/secured-finance-subgraph
       - name: Update .subgraphrc for development environment
         # For testing
