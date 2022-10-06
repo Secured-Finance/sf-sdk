@@ -51,11 +51,13 @@ jobs:
           cd ./packages/secured-finance-subgraph
           npm run auth ${{secrets.GRAPH_ACCESS_TOKEN}}
           if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
-            version=$(npm run update-subgraphrc staging)
+            npm run update-subgraphrc staging
+            version=$(cat deployment.json | jq -r .staging.version | tr -d '"')
             npm run generate:stg
             npm run deploy:stg ${version}
           else
-            version=$(npm run update-subgraphrc development)
+            npm run update-subgraphrc development
+            version=$(cat deployment.json | jq -r .development.version | tr -d '"')
             npm run generate:dev
             npm run deploy:dev ${version}
           fi

@@ -42,8 +42,6 @@ class Main {
         const newYamlText = JSON.stringify(data, null, 2);
 
         writeFileSync(path, newYamlText, 'utf8');
-
-        console.log(versions.join('.'));
     }
 }
 
