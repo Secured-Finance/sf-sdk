@@ -45,6 +45,9 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
+      - name: Change directory
+        id: deploy
+        run: cd ./packages/secured-finance-subgraph
       - name: Update .subgraphrc for development environment
         # For testing
         # if: ${{ steps.extract_branch.outputs.branch == 'develop' }}
@@ -60,7 +63,6 @@ jobs:
       - name: Deploy Subgraph
         id: deploy
         run: |
-          cd ./packages/secured-finance-subgraph
           npm run auth ${{secrets.GRAPH_ACCESS_TOKEN}}
           if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
             npm run generate:stg
