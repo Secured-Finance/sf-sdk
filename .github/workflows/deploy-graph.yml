@@ -16,6 +16,8 @@ jobs:
     if: ${{ github.actor != 'secured-finance-machine-user[bot]' }}
     outputs:
       subgraph: ${{ steps.changes.outputs.subgraph }}
+      client: ${{ steps.changes.outputs.client }}
+      packages: ${{ steps.changes.outputs.packages }}
     steps:
       - uses: actions/checkout@v3
       - uses: dorny/paths-filter@v2
@@ -24,6 +26,10 @@ jobs:
           filters: |
             subgraph:
               - 'packages/secured-finance-subgraph/**'
+            client:
+              - 'packages/sf-graph-client/src/**'
+            packages:
+              - 'packages/**'
   deploy:
     name: Deploy Graph
     runs-on: ubuntu-latest
@@ -31,6 +37,8 @@ jobs:
     if: ${{ needs.paths.outputs.subgraph == 'true' }}
     steps:
       - run: echo "${{ needs.paths.outputs.subgraph }}"
+      - run: echo "${{ needs.paths.outputs.client }}"
+      - run: echo "${{ needs.paths.outputs.packages }}"
       - name: Generate token
         id: generate_token
         uses: tibdex/github-app-token@v1
