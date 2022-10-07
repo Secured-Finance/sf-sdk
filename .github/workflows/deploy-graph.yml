@@ -6,8 +6,6 @@ on:
     branches:
       - main
       - develop
-      # For testing
-      - SF-180-update-subgraph
 
 jobs:
   paths:
@@ -16,8 +14,6 @@ jobs:
     if: ${{ github.actor != 'secured-finance-machine-user[bot]' }}
     outputs:
       subgraph: ${{ steps.changes.outputs.subgraph }}
-      client: ${{ steps.changes.outputs.client }}
-      packages: ${{ steps.changes.outputs.packages }}
     steps:
       - uses: actions/checkout@v3
       - name: Extract branch name
@@ -32,10 +28,6 @@ jobs:
           filters: |
             subgraph:
               - 'packages/secured-finance-subgraph/**'
-            client:
-              - 'packages/sf-graph-client/src/**'
-            packages:
-              - 'packages/**'
   deploy:
     name: Deploy Graph
     runs-on: ubuntu-latest
