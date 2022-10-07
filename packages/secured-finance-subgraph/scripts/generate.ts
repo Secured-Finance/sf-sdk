@@ -10,19 +10,19 @@ class Main {
     private environment: Environment;
     private network: Network;
 
-    constructor(environment: any, network: any) {
-        if (!arrowedEnvironments.includes(environment)) {
-            console.error('Invalid environment:', environment);
+    constructor(environment: string, network: string) {
+        if (!arrowedEnvironments.includes(environment as Environment)) {
+            console.error('Invalid environment:', environment as Environment);
             process.exit(1);
         }
 
-        if (!arrowedNetworks.includes(network)) {
+        if (!arrowedNetworks.includes(network as Network)) {
             console.error('Invalid network:', network);
             process.exit(1);
         }
 
-        this.environment = environment;
-        this.network = network;
+        this.environment = environment as Environment;
+        this.network = network as Network;
     }
 
     async run() {
