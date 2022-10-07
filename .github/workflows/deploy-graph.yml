@@ -13,7 +13,7 @@ jobs:
   filter:
     name: Path Filter
     runs-on: ubuntu-latest
-    if: github.actor != 'secured-finance-machine-user[bot]'
+    if: ${{ github.actor != 'secured-finance-machine-user[bot]' }}
     outputs:
       subgraph: ${{ steps.filter.outputs.subgraph }}
     steps:
@@ -28,7 +28,7 @@ jobs:
     name: Deploy Graph
     runs-on: ubuntu-latest
     needs: [filter]
-    if: needs.filter.outputs.subgraph == 'true'
+    if: ${{ needs.filter.outputs.subgraph == 'true' }}
     steps:
       - name: Generate token
         id: generate_token
