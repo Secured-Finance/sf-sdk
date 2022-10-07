@@ -12,7 +12,7 @@ class Main {
 
     constructor(environment: string, network: string) {
         if (!arrowedEnvironments.includes(environment as Environment)) {
-            console.error('Invalid environment:', environment as Environment);
+            console.error('Invalid environment:', environment);
             process.exit(1);
         }
 
