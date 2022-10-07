@@ -27,7 +27,7 @@ jobs:
   deploy:
     name: Deploy Graph
     runs-on: ubuntu-latest
-    needs: [filter]
+    needs: filter
     if: ${{ needs.filter.outputs.subgraph == 'true' }}
     steps:
       - name: Generate token
