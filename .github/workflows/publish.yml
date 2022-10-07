@@ -50,12 +50,13 @@ jobs:
         if: ${{ steps.extract_branch.outputs.branch == 'main' }}
         run: |
           echo "NETWORK=staging" >> $GITHUB_ENV
-      - name: Get NPM version
+      - name: Get subgraph version
         run: |
           version=$(cat ./packages/secured-finance-subgraph/deployment.json | jq -r .$NETWORK.version | tr -d '"')
-          echo "::set-output name=npm-version::${version}"
+          echo "::set-output name=version::${version}"
+        id: subgraph_version
       - name: Update subgraph version
-        run: npx nx run @secured-finance/sf-graph-client:update-subgraph-version --environment $NETWORK --label ${{ steps.package-version.outputs.npm-version}}
+        run: npx nx run @secured-finance/sf-graph-client:update-subgraph-version --environment $NETWORK --label ${{ steps.subgraph_version.outputs.version}}
       - name: Generate artifacts
         run: npm run codegen
       - name: Update env
