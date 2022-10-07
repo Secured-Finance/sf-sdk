@@ -6,10 +6,8 @@ on:
     branches:
       - main
       - develop
-      # For testing
-      - SF-180-update-subgraph
-    # paths:
-    #   - 'packages/secured-finance-subgraph/**'
+    paths:
+      - 'packages/secured-finance-subgraph/**'
 
 jobs:
   deploy:
