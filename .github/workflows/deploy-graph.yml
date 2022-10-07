@@ -27,7 +27,7 @@ jobs:
   deploy:
     name: Deploy Graph
     runs-on: ubuntu-latest
-    needs: [filter]
+    needs: [paths]
     if: ${{ needs.paths.outputs.subgraph == 'true' }}
     steps:
       - run: echo "${{ needs.paths.outputs.subgraph }}"
