@@ -20,9 +20,15 @@ jobs:
       packages: ${{ steps.changes.outputs.packages }}
     steps:
       - uses: actions/checkout@v3
-      - uses: dorny/paths-filter@v2
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Check Paths
+        uses: dorny/paths-filter@v2
         id: changes
         with:
+          base: ${{ steps.extract_branch.outputs.branch }}
           filters: |
             subgraph:
               - 'packages/secured-finance-subgraph/**'
