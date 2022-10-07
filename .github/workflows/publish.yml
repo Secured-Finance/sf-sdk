@@ -1,7 +1,9 @@
 name: Publish to NPM
 
 on:
-  push:
+  workflow_run:
+    workflows: ['Deploy Graph']
+    types: [completed]
     branches:
       - main
       - develop
@@ -10,7 +12,7 @@ jobs:
   publish-npm:
     name: Publish to NPM
     runs-on: ubuntu-latest
-    if: github.actor != 'secured-finance-machine-user[bot]'
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Generate token
         id: generate_token
@@ -35,12 +37,27 @@ jobs:
         run: npm ci
       - name: Bootstrap Repository
         run: npm run bootstrap
-      - name: Generate artifacts
-        run: npm run codegen
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
+      - name: Set env for development environment
+        if: ${{ steps.extract_branch.outputs.branch == 'develop' }}
+        run: |
+          echo "NETWORK=development" >> $GITHUB_ENV
+      - name: Set env for staging environment
+        if: ${{ steps.extract_branch.outputs.branch == 'main' }}
+        run: |
+          echo "NETWORK=staging" >> $GITHUB_ENV
+      - name: Get subgraph version
+        run: |
+          version=$(cat ./packages/secured-finance-subgraph/deployment.json | jq -r .$NETWORK.version | tr -d '"')
+          echo "::set-output name=version::${version}"
+        id: subgraph_version
+      - name: Update subgraph version
+        run: npx nx run @secured-finance/sf-graph-client:update-subgraph-version --environment $NETWORK --label ${{ steps.subgraph_version.outputs.version}}
+      - name: Generate artifacts
+        run: npm run codegen
       - name: Update env
         run: |
           echo "NPM_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV

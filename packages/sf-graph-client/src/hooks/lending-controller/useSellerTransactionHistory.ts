@@ -1,7 +1,7 @@
 import { GraphApolloClient } from '../..';
 import {
-    SellerTransactionTableDocument,
-    SellerTransactionTableQuery,
+    SellerTransactionsDocument,
+    SellerTransactionsQuery,
 } from '../../graphclients';
 import { QueryResult, useQuery } from '../useQuery';
 
@@ -12,20 +12,20 @@ export interface TransactionHistoryVariables {
 export const useSellerTransactionHistory = (
     { account }: TransactionHistoryVariables,
     client?: GraphApolloClient
-): QueryResult<SellerTransactionTableQuery> => {
+): QueryResult<SellerTransactionsQuery> => {
     const variables = {
         address: account.toLowerCase(),
     };
 
-    const { error, data } = useQuery<SellerTransactionTableQuery>(
-        SellerTransactionTableDocument,
+    const { error, data } = useQuery<SellerTransactionsQuery>(
+        SellerTransactionsDocument,
         {
             variables: variables,
             client: client,
         }
     );
 
-    const isExists = data?.transactionTables;
+    const isExists = data?.transactions;
 
     return {
         data: isExists ? data : undefined,

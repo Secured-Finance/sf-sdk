@@ -24,7 +24,7 @@ export const useLendingTradingHistory = (
         { variables, client }
     );
 
-    const isExists = data?.lendingMarket?.tradeHistory;
+    const isExists = data?.lendingMarket?.transactions;
 
     return {
         data: isExists ? data : undefined,

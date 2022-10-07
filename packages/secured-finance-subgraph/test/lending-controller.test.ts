@@ -1,10 +1,9 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts';
 import { assert, test } from 'matchstick-as/assembly/index';
 
-import { handleNewLendingMarket } from '../src/lending-controller';
+import { handleLendingMarketCreated } from '../src/lending-controller';
 import { createLendingMarketCreatedEvent } from './mocks/lending-controller';
 import { toBytes32 } from './utils/string';
-export { handleNewLendingMarket };
 
 const currencyShortName = 'ETH';
 const lendingMarketAddress = Address.zero();
@@ -19,20 +18,20 @@ test('Should create new lending market and validate market data', () => {
         index,
         termDays
     );
-    handleNewLendingMarket(event);
+    handleLendingMarketCreated(event);
 
     assert.fieldEquals(
         'LendingMarket',
         lendingMarketAddress.toHexString(),
-        'marketAddr',
+        'contractAddress',
         lendingMarketAddress.toHexString()
     );
 
     assert.fieldEquals(
         'LendingMarket',
         lendingMarketAddress.toHexString(),
-        'controllerAddr',
-        event.address.toHexString()
+        'currencyName',
+        currencyShortName
     );
 
     assert.fieldEquals(
@@ -47,12 +46,5 @@ test('Should create new lending market and validate market data', () => {
         lendingMarketAddress.toHexString(),
         'maturity',
         termDays.toString()
-    );
-
-    assert.fieldEquals(
-        'LendingMarket',
-        lendingMarketAddress.toHexString(),
-        'index',
-        index.toString()
     );
 });

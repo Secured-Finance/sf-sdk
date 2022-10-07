@@ -1,16 +1,28 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { dump, load } from 'js-yaml';
 
-class Main {
-    private environment: string;
-    private arrowedEnvironments = ['development', 'staging', 'production'];
+const arrowedEnvironments = ['development', 'staging', 'production'] as const;
+const arrowedNetworks = ['goerli', 'mainnet'] as const;
+type Environment = typeof arrowedEnvironments[number];
+type Network = typeof arrowedNetworks[number];
 
-    constructor(environment: string) {
-        if (!this.arrowedEnvironments.includes(environment)) {
+class Main {
+    private environment: Environment;
+    private network: Network;
+
+    constructor(environment: string, network: string) {
+        if (!arrowedEnvironments.includes(environment as Environment)) {
             console.error('Invalid environment:', environment);
             process.exit(1);
         }
-        this.environment = environment;
+
+        if (!arrowedNetworks.includes(network as Network)) {
+            console.error('Invalid network:', network);
+            process.exit(1);
+        }
+
+        this.environment = environment as Environment;
+        this.network = network as Network;
     }
 
     async run() {
@@ -25,6 +37,7 @@ class Main {
 
             const proxyAddress = deployment.address;
             dataSource.source.address = proxyAddress;
+            dataSource.network = this.network;
         }
 
         const newYamlText = dump(data);
@@ -37,5 +50,5 @@ class Main {
     }
 }
 
-const [, , environment] = process.argv;
-new Main(environment).run();
+const [, , environment, network] = process.argv;
+new Main(environment, network).run();

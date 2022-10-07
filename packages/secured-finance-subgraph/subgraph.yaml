@@ -1,12 +1,11 @@
-specVersion: 0.0.4
+specVersion: 0.0.5
 description: Secured Finance is decentralized P2P banking business for digital assets
-repository: https://github.com/secured-finance/secured-finance-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
-  - kind: ethereum/contract
+  - kind: ethereum
     name: LendingMarketController
-    network: rinkeby
+    network: ~
     source:
       abi: LendingMarketController
     mapping:
@@ -21,34 +20,7 @@ dataSources:
             ./abis/LendingMarketController.sol/LendingMarketController.json
       eventHandlers:
         - event: LendingMarketCreated(bytes32,indexed address,uint256,uint256)
-          handler: handleNewLendingMarket
-        - event: OrderFilled(uint256,indexed address,indexed address,indexed bytes32,uint8,uint256,uint256,uint256)
+          handler: handleLendingMarketCreated
+        - event: OrderFilled(indexed address,indexed bytes32,uint48[],address[],uint256[],uint8,indexed uint256,uint256)
           handler: handleOrderFilled
       file: ./src/lending-controller.ts
-templates:
-  - kind: ethereum/contract
-    name: LendingMarket
-    network: rinkeby
-    source:
-      abi: LendingMarket
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - LendingMarket
-        - LendingMarketOrderRow
-        - LendingMarketOrderItem
-        - FilledLendingMarketOrder
-      abis:
-        - name: LendingMarket
-          file: >-
-            ./abis/LendingMarket.sol/LendingMarket.json
-      eventHandlers:
-        - event: MakeOrder(uint256,indexed address,uint8,bytes32,uint256,uint256,uint256)
-          handler: handleMakeLendingOrder
-        - event: TakeOrder(uint256,indexed address,uint8,uint256,uint256)
-          handler: handleTakeLendingOrder
-        - event: CancelOrder(uint256,indexed address,uint8,uint256,uint256)
-          handler: handleCancelLendingOrder
-      file: ./src/lending-market.ts

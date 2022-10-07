@@ -1,0 +1,13 @@
+sources:
+  - name: sf-protocol
+    handler:
+      graphql:
+        endpoint: https://api.studio.thegraph.com/query/30564/sf-protocol-dev/v0.0.2
+    transforms:
+      - blockTracking:
+          validateSchema: true
+      - autoPagination:
+          validateSchema: true
+documents:
+  - ../../queries/*.{ts,tsx,js,jsx}
+  - ../../queries/*.graphql

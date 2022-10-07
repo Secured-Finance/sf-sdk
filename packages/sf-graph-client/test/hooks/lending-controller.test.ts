@@ -28,8 +28,8 @@ describe('Lending Controller test', () => {
 
             expect(result.current.error).to.be.undefined;
 
-            if (result.current.data?.transactionTables !== undefined) {
-                expect(result.current.data?.transactionTables).to.be.empty;
+            if (result.current.data?.transactions !== undefined) {
+                expect(result.current.data?.transactions).to.be.empty;
             }
         });
     });
@@ -46,8 +46,8 @@ describe('Lending Controller test', () => {
 
             expect(result.current.error).to.be.undefined;
 
-            if (result.current.data?.transactionTables !== undefined) {
-                expect(result.current.data?.transactionTables).to.be.empty;
+            if (result.current.data?.transactions !== undefined) {
+                expect(result.current.data?.transactions).to.be.empty;
             }
         });
     });
