@@ -46,7 +46,7 @@
     "babel-preset-react": "^6.24.1",
     "chai": "^4.3.6",
     "commander": "^9.4.1",
-    "ethers": "^5.5.4",
+    "ethers": "^5.7.1",
     "global-jsdom": "^8.4.0",
     "graphql": "^16.6.0",
     "js-yaml": "^4.1.0",
@@ -58,8 +58,7 @@
     "react-test-renderer": "^17.0.2",
     "ts-mocha": "^9.0.2",
     "ts-node": "^10.4.0",
-    "wait-for-expect": "^3.0.2",
-    "web3-utils": "^1.7.0"
+    "wait-for-expect": "^3.0.2"
   },
   "types": "dist/index.d.ts",
   "files": ["dist/"]
