@@ -6,8 +6,6 @@ on:
     branches:
       - main
       - develop
-      # For testing
-      - SF-180-sdk-publishment-bug
 
 jobs:
   paths:
@@ -126,9 +124,7 @@ jobs:
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
       - name: Set env for development environment
-        # For testing
-        # if: ${{ steps.extract_branch.outputs.branch == 'develop' }}
-        if: ${{ steps.extract_branch.outputs.branch == 'SF-180-sdk-publishment-bug' }}
+        if: ${{ steps.extract_branch.outputs.branch == 'develop' }}
         run: |
           echo "NETWORK=development" >> $GITHUB_ENV
       - name: Set env for staging environment
@@ -142,7 +138,7 @@ jobs:
         id: subgraph_version
       - name: Update subgraph version
         run: npx nx run @secured-finance/sf-graph-client:update-subgraph-version --environment $NETWORK --label ${{ steps.subgraph_version.outputs.version}}
-      - name: Commit and push
+      - name: Commit
         shell: bash
         run: |
           npm run format:fix
@@ -150,7 +146,6 @@ jobs:
           git config user.email "${{ secrets.MACHINE_USER_APP_ID }}+sf-machine-user[bot]@users.noreply.github.com"
           git add .
           git commit -m "chore: update .graphclientrc.yml"
-          git push
       - name: Generate artifacts
         run: npm run codegen
       - name: Update env
