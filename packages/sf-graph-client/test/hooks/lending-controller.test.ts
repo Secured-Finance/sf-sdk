@@ -1,5 +1,4 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { expect } from 'chai';
 import { utils } from 'ethers';
 import {
     GraphApolloClient,
@@ -10,7 +9,7 @@ import {
 describe('Lending Controller test', () => {
     let client: GraphApolloClient;
 
-    before(() => {
+    beforeEach(() => {
         process.env.SUBGRAPH_NAME = 'sf-protocol-dev';
         process.env.SF_ENV = 'development';
         client = new GraphApolloClient({ network: 'goerli' });
@@ -26,10 +25,10 @@ describe('Lending Controller test', () => {
 
             await waitForNextUpdate({ timeout: 5000 });
 
-            expect(result.current.error).to.be.undefined;
+            expect(result.current.error).toBeUndefined();
 
             if (result.current.data?.transactions !== undefined) {
-                expect(result.current.data?.transactions).to.be.empty;
+                expect(result.current.data?.transactions).toEqual([]);
             }
         });
     });
@@ -44,10 +43,10 @@ describe('Lending Controller test', () => {
 
             await waitForNextUpdate({ timeout: 5000 });
 
-            expect(result.current.error).to.be.undefined;
+            expect(result.current.error).toBeUndefined();
 
             if (result.current.data?.transactions !== undefined) {
-                expect(result.current.data?.transactions).to.be.empty;
+                expect(result.current.data?.transactions).toEqual([]);
             }
         });
     });

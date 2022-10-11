@@ -1,5 +1,4 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { expect } from 'chai';
 import {
     GraphApolloClient,
     useLendingMarkets,
@@ -12,7 +11,7 @@ describe('Lending market test', () => {
     let market: string;
     const ccy = 'FIL';
 
-    before(() => {
+    beforeEach(() => {
         process.env.SUBGRAPH_NAME = 'sf-protocol-dev';
         process.env.SF_ENV = 'development';
         client = new GraphApolloClient({ network: 'goerli' });
@@ -25,8 +24,8 @@ describe('Lending market test', () => {
             );
             await waitForNextUpdate({ timeout: 5000 });
 
-            expect(result.current.error).to.be.undefined;
-            expect(result.current.data?.lendingMarkets.length).to.be.equal(0);
+            expect(result.current.error).toBeUndefined();
+            expect(result.current.data?.lendingMarkets.length).toEqual(0);
         });
 
         it('Should get array of lending markets from subgraph', async () => {
@@ -36,10 +35,10 @@ describe('Lending market test', () => {
 
             await waitForNextUpdate({ timeout: 5000 });
 
-            expect(result.current.error).to.be.undefined;
+            expect(result.current.error).toBeUndefined();
 
             const lendingMarkets = result.current.data?.lendingMarkets;
-            expect(lendingMarkets?.length).to.be.equal(8);
+            expect(lendingMarkets?.length).toEqual(8);
 
             market = lendingMarkets?.[0].id as string;
 
@@ -57,8 +56,8 @@ describe('Lending market test', () => {
 
             await waitForNextUpdate({ timeout: 5000 });
 
-            expect(result.current.error).to.be.undefined;
-            expect(result.current.data).to.be.undefined;
+            expect(result.current.error).toBeUndefined();
+            expect(result.current.data).toBeUndefined();
         });
 
         it('Should get lending market trading history data from subgraph', async () => {
@@ -68,7 +67,7 @@ describe('Lending market test', () => {
 
             await waitForNextUpdate({ timeout: 5000 });
 
-            expect(result.current.error).to.be.undefined;
+            expect(result.current.error).toBeUndefined();
 
             const history = result.current.data?.lendingMarket?.transactions;
             if (history !== undefined) {
