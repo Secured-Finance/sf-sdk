@@ -20,8 +20,8 @@ const getGraphClient = (network = 'none') => {
     switch (process.env.SF_ENV) {
         case 'development':
             sfEnv = 'development';
-            sfNetwork = 'rinkeby';
-            if (network !== 'rinkeby') {
+            sfNetwork = 'goerli';
+            if (network !== 'goerli') {
                 console.warn(`${network} is not a supported network.`);
             }
             GraphClient = GraphClientDev;
@@ -29,8 +29,8 @@ const getGraphClient = (network = 'none') => {
 
         case 'staging':
             sfEnv = 'staging';
-            sfNetwork = 'rinkeby';
-            if (network !== 'rinkeby') {
+            sfNetwork = 'goerli';
+            if (network !== 'goerli') {
                 console.warn(`${network} is not a supported network.`);
             }
             GraphClient = GraphClientStg;
@@ -45,8 +45,8 @@ const getGraphClient = (network = 'none') => {
             //
             // if (network === 'mainnet') {
             //     GraphClient = GraphClientMainnet;
-            // } else if(network === 'rinkeby') {
-            //     GraphClient = GraphClientRinkeby;
+            // } else if(network === 'goerli') {
+            //     GraphClient = GraphClientGoerli;
             // }
             //     :
             break;
