@@ -15,7 +15,7 @@ describe('Lending market test', () => {
     before(() => {
         process.env.SUBGRAPH_NAME = 'sf-protocol-dev';
         process.env.SF_ENV = 'development';
-        client = new GraphApolloClient({ network: 'rinkeby' });
+        client = new GraphApolloClient({ network: 'goerli' });
     });
 
     describe('useLendingMarkets hook test', () => {

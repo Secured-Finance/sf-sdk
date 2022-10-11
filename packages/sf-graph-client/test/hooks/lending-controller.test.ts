@@ -13,7 +13,7 @@ describe('Lending Controller test', () => {
     before(() => {
         process.env.SUBGRAPH_NAME = 'sf-protocol-dev';
         process.env.SF_ENV = 'development';
-        client = new GraphApolloClient({ network: 'rinkeby' });
+        client = new GraphApolloClient({ network: 'goerli' });
     });
 
     describe('useBuyerTransactionHistory hook test', () => {
