@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.15](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.14...v0.2.0-beta.15) (2022-10-11)
+
+
+### Bug Fixes
+
+* add a commit step in the publishing workflow [SF-180] ([511ad80](https://github.com/Secured-Finance/sf-sdk/commit/511ad80034d1a4fe6b74caf563a0579a7b65adee))
+* add codes for testing of the workflows [SF-180 ] ([a347e1f](https://github.com/Secured-Finance/sf-sdk/commit/a347e1f463c071dbc54135b574bd60e8f95ec33c))
+* add codes for testing of the workflows [SF-180 ] ([e031d9b](https://github.com/Secured-Finance/sf-sdk/commit/e031d9b2c8f231cb354ec6b9a5df9f24d3328141))
+* add codes for workflow testing [SF-180] ([5dd7e57](https://github.com/Secured-Finance/sf-sdk/commit/5dd7e57df980b80cb1fb8d420db8bc68cb20c045))
+* fix a workflow bug [SF-180] ([73d12aa](https://github.com/Secured-Finance/sf-sdk/commit/73d12aaf184046548b28f3ba6b019f1eca1f2e64))
+* fix a workflow bug [SF-180] ([1106ae7](https://github.com/Secured-Finance/sf-sdk/commit/1106ae713b3a28414e4f5ac02762c0a50d293ac6))
+* fix a workflow bug [SF-180] ([e004d0a](https://github.com/Secured-Finance/sf-sdk/commit/e004d0affa75a71826007a6735cbc3ff4d6490e6))
+* fix a workflow bug [SF-180] ([19e92a0](https://github.com/Secured-Finance/sf-sdk/commit/19e92a00957070e17d19952a43c0f5f68894b3ca))
+* fix a workflow bug [SF-180] ([63af98c](https://github.com/Secured-Finance/sf-sdk/commit/63af98c2de3103946e0df4396306d5536a0c7a9f))
+* fix a workflow bug [SF-180] ([a18ae39](https://github.com/Secured-Finance/sf-sdk/commit/a18ae3915b6f701f01a3069bdc499f6208b275df))
+* fix a workflow bug [SF-180] ([3e239d0](https://github.com/Secured-Finance/sf-sdk/commit/3e239d0fbae69a9baa680fa4ced10abb736d5391))
+* fix a workflow for testing [SF-180] ([4356baf](https://github.com/Secured-Finance/sf-sdk/commit/4356bafd4216ebec396e78b2afd10ce1a2d83b5f))
+* fix codes for the workflow testing [SF-180 ] ([d858f04](https://github.com/Secured-Finance/sf-sdk/commit/d858f047da2e2f8d350e4eaaf02ee5a705447c03))
+* fix codes for the workflow testing [SF-180 ] ([cbf33f8](https://github.com/Secured-Finance/sf-sdk/commit/cbf33f8cd7813f2a50b0ed5039d0dfd556bac134))
+* fix the deployment workflow bug [SF-180 ] ([50bae95](https://github.com/Secured-Finance/sf-sdk/commit/50bae95dfb3dea20f6ba2c24aaf6bf27f35d5318))
+* fix the deployment workflow bug [SF-180 ] ([2ac7223](https://github.com/Secured-Finance/sf-sdk/commit/2ac7223a34f7064a987e51e4b4e0fcac3814a177))
+* fix the deployment workflow bug [SF-180 ] ([d65ceef](https://github.com/Secured-Finance/sf-sdk/commit/d65ceefd1a23648e41f50a5dc89de0bbd6a7109b))
+* fix the deployment workflow bug [SF-180 ] ([11cc0b9](https://github.com/Secured-Finance/sf-sdk/commit/11cc0b93d5533addcb4dc796e8d3dd9046c58b1e))
+* fix the deployment workflow bug [SF-180 ] ([51918b8](https://github.com/Secured-Finance/sf-sdk/commit/51918b88cff85def1d1dddf89b5680de28e3b281))
+* fix the deployment workflow bug [SF-180 ] ([def5c6b](https://github.com/Secured-Finance/sf-sdk/commit/def5c6bf57c058e898615071dfa7938c12773273))
+* fix the deployment workflow bug [SF-180 ] ([82d8fec](https://github.com/Secured-Finance/sf-sdk/commit/82d8fecb7bc0e63bba2bd77422973f696e3037ed))
+* fix the deployment workflow bug [SF-180 ] ([a40b5b9](https://github.com/Secured-Finance/sf-sdk/commit/a40b5b9e6cae234b1221f857e0629ec04bdabce6))
+* fix the deployment workflow bug [SF-180 ] ([1cc1a6a](https://github.com/Secured-Finance/sf-sdk/commit/1cc1a6a0697f6049088c3660032f780b1d522cb3))
+* fix the deployment workflow bug [SF-180 ] ([efd1f2a](https://github.com/Secured-Finance/sf-sdk/commit/efd1f2af132997edb296b2292ee4badc88a041a1))
+* fix the deployment workflow bug [SF-180 ] ([5f5991c](https://github.com/Secured-Finance/sf-sdk/commit/5f5991c0bf5a8e9ad33137e16352dc1024938d98))
+* fix the deployment workflow bug [SF-180 ] ([e25eb67](https://github.com/Secured-Finance/sf-sdk/commit/e25eb67c393724dded902f3b2f59b25e06d82784))
+* fix the deployment workflow bug [SF-180 ] ([b6e9c2c](https://github.com/Secured-Finance/sf-sdk/commit/b6e9c2ce3733f482461a3a065d46231d76467eff))
+* fix the deployment workflow bug [SF-180 ] ([05b9d7e](https://github.com/Secured-Finance/sf-sdk/commit/05b9d7ec323168e3ba8f8f4054fd69818b03febc))
+* fix the deployment workflow bug [SF-180 ] ([ec2e18b](https://github.com/Secured-Finance/sf-sdk/commit/ec2e18b00dbd2f0f8f1aa5e27378b7b191a3933d))
+* fix the deployment workflow bug [SF-180 ] ([2622566](https://github.com/Secured-Finance/sf-sdk/commit/2622566be6bd3cdb9e0bfd56c62f7ffdf249ff65))
+* fix the deployment workflow bug [SF-180 ] ([4817ea7](https://github.com/Secured-Finance/sf-sdk/commit/4817ea72430b77ffd825a6abf3b15673563035c7))
+* fix the publishment workflow bug [SF-180 ] ([ba74f19](https://github.com/Secured-Finance/sf-sdk/commit/ba74f192a759441dfb065209f15615b91d8a32fa))
+* fix the publishment workflow bug [SF-180 ] ([fbccb61](https://github.com/Secured-Finance/sf-sdk/commit/fbccb6180f8e2f923cc6d7fd323280e437c50e52))
+* merge the deployment and publishment workflows [SF-180] ([ab3d91e](https://github.com/Secured-Finance/sf-sdk/commit/ab3d91e7b1275555528f98e8ff581dcda96a2767))
+* refactor script [SF-180] ([40d176e](https://github.com/Secured-Finance/sf-sdk/commit/40d176e3b221fcb996acc1bcb338fed90d8d0e28))
+* remove codes for testing [SF-180] ([a14a525](https://github.com/Secured-Finance/sf-sdk/commit/a14a5256d1a6bb9f61de6a00cc01c2321670c86c))
+* remove codes for workflow testing [SF-180] ([0700fbd](https://github.com/Secured-Finance/sf-sdk/commit/0700fbd53e29426603f3ff0cb8eda536de0cdf44))
+* removed codes for testing [SF-180] ([18a9473](https://github.com/Secured-Finance/sf-sdk/commit/18a9473db4f5708bf3f2eba47fffa56acd316cec))
+* revert the subgraph version [SF-180] ([242cf28](https://github.com/Secured-Finance/sf-sdk/commit/242cf28e9276aeca0041b3c9130cef632bec0e62))
+* test the deployment workflow [SF-180 ] ([33098ef](https://github.com/Secured-Finance/sf-sdk/commit/33098efe7c2027a115bf1a7ffd8633c9db7ed727))
+
+
+### Features
+
+* add deployment.json to manage the subgraph version [SF-180 ] ([87a4a67](https://github.com/Secured-Finance/sf-sdk/commit/87a4a67d8de572a66da7e84386310d97436fccd3))
+* change from hosted service to subgraph studio [SF-180] ([1b9421d](https://github.com/Secured-Finance/sf-sdk/commit/1b9421daf4934c1a32dc4d80c208af2c1eba3bce))
+
+
+
+
+
 # [0.2.0-beta.14](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.13...v0.2.0-beta.14) (2022-09-23)
 
 **Note:** Version bump only for package sf-sdk

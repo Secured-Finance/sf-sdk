@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.15](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.14...v0.2.0-beta.15) (2022-10-11)
+
+
+### Bug Fixes
+
+* refactor script [SF-180] ([40d176e](https://github.com/secured-finance/sf-sdk/commit/40d176e3b221fcb996acc1bcb338fed90d8d0e28))
+
+
+### Features
+
+* add deployment.json to manage the subgraph version [SF-180 ] ([87a4a67](https://github.com/secured-finance/sf-sdk/commit/87a4a67d8de572a66da7e84386310d97436fccd3))
+* change from hosted service to subgraph studio [SF-180] ([1b9421d](https://github.com/secured-finance/sf-sdk/commit/1b9421daf4934c1a32dc4d80c208af2c1eba3bce))
+
+
+
+
+
 # [0.2.0-beta.11](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.10...v0.2.0-beta.11) (2022-09-22)
 
 **Note:** Version bump only for package @secured-finance/sf-graph-client

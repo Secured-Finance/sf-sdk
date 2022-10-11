@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.15](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.14...v0.2.0-beta.15) (2022-10-11)
+
+
+### Bug Fixes
+
+* fix a workflow bug [SF-180] ([73d12aa](https://github.com/Secured-Finance/sf-sdk/commit/73d12aaf184046548b28f3ba6b019f1eca1f2e64))
+* fix a workflow bug [SF-180] ([3e239d0](https://github.com/Secured-Finance/sf-sdk/commit/3e239d0fbae69a9baa680fa4ced10abb736d5391))
+* fix a workflow for testing [SF-180] ([4356baf](https://github.com/Secured-Finance/sf-sdk/commit/4356bafd4216ebec396e78b2afd10ce1a2d83b5f))
+* fix the deployment workflow bug [SF-180 ] ([2ac7223](https://github.com/Secured-Finance/sf-sdk/commit/2ac7223a34f7064a987e51e4b4e0fcac3814a177))
+* fix the deployment workflow bug [SF-180 ] ([82d8fec](https://github.com/Secured-Finance/sf-sdk/commit/82d8fecb7bc0e63bba2bd77422973f696e3037ed))
+* fix the deployment workflow bug [SF-180 ] ([a40b5b9](https://github.com/Secured-Finance/sf-sdk/commit/a40b5b9e6cae234b1221f857e0629ec04bdabce6))
+* fix the deployment workflow bug [SF-180 ] ([b6e9c2c](https://github.com/Secured-Finance/sf-sdk/commit/b6e9c2ce3733f482461a3a065d46231d76467eff))
+* fix the deployment workflow bug [SF-180 ] ([05b9d7e](https://github.com/Secured-Finance/sf-sdk/commit/05b9d7ec323168e3ba8f8f4054fd69818b03febc))
+* remove codes for testing [SF-180] ([a14a525](https://github.com/Secured-Finance/sf-sdk/commit/a14a5256d1a6bb9f61de6a00cc01c2321670c86c))
+* test the deployment workflow [SF-180 ] ([33098ef](https://github.com/Secured-Finance/sf-sdk/commit/33098efe7c2027a115bf1a7ffd8633c9db7ed727))
+
+
+### Features
+
+* add deployment.json to manage the subgraph version [SF-180 ] ([87a4a67](https://github.com/Secured-Finance/sf-sdk/commit/87a4a67d8de572a66da7e84386310d97436fccd3))
+* change from hosted service to subgraph studio [SF-180] ([1b9421d](https://github.com/Secured-Finance/sf-sdk/commit/1b9421daf4934c1a32dc4d80c208af2c1eba3bce))
+
+
+
+
+
 # [0.2.0-beta.14](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.13...v0.2.0-beta.14) (2022-09-23)
 
 **Note:** Version bump only for package secured-finance-subgraph
