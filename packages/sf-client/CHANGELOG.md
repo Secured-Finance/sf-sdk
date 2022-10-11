@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.16](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.15...v0.2.0-beta.16) (2022-10-11)
+
+
+### Bug Fixes
+
+* replace all settings from rinkeby to goerli [SF-180] ([42d2fa1](https://github.com/secured-finance/sf-sdk/commit/42d2fa1c001b4fc708101d14df395e6abd0785a9))
+
+
+
+
+
 # [0.2.0-beta.15](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.14...v0.2.0-beta.15) (2022-10-11)
 
 
