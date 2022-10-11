@@ -15,20 +15,23 @@ export const useSellerTransactionHistory = (
 ): QueryResult<SellerTransactionsQuery> => {
     const variables = {
         address: account.toLowerCase(),
+        awaitRefetchQueries: true,
     };
 
-    const { error, data } = useQuery<SellerTransactionsQuery>(
-        SellerTransactionsDocument,
-        {
+    const { error, data, refetch, networkStatus } =
+        useQuery<SellerTransactionsQuery>(SellerTransactionsDocument, {
             variables: variables,
             client: client,
-        }
-    );
+            fetchPolicy: 'network-only',
+            notifyOnNetworkStatusChange: true,
+        });
 
     const isExists = data?.transactions;
 
     return {
         data: isExists ? data : undefined,
         error,
+        refetch,
+        networkStatus,
     };
 };
