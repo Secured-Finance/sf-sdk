@@ -6,8 +6,6 @@ on:
     branches:
       - main
       - develop
-      # For testing
-      - SF-180-lerna-versionoing-bug
 
 jobs:
   paths:
@@ -126,8 +124,7 @@ jobs:
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
       - name: Set env for development environment
-        # if: ${{ steps.extract_branch.outputs.branch == 'develop' }}
-        if: ${{ steps.extract_branch.outputs.branch == 'SF-180-lerna-versionoing-bug' }}
+        if: ${{ steps.extract_branch.outputs.branch == 'develop' }}
         run: |
           echo "NETWORK=development" >> $GITHUB_ENV
       - name: Set env for staging environment
