@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.16](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.15...v0.2.0-beta.16) (2022-10-11)
+
+
+### Bug Fixes
+
+* add a step to check diff in publishing workflow [SF-180] ([b1d3fa4](https://github.com/Secured-Finance/sf-sdk/commit/b1d3fa42ad9ab2f6befc2e383da2f5c6d59c935b))
+* add a step to check diff in publishing workflow [SF-180] ([df0b475](https://github.com/Secured-Finance/sf-sdk/commit/df0b475340a648703b066477a472f1e68e43d93b))
+* add codes for the workflow testing [SF-180] ([9f4f5d3](https://github.com/Secured-Finance/sf-sdk/commit/9f4f5d3e262274edbfa5ff565b85ba984a66f872))
+* fix a lerna versioning step [SF-180] ([bded391](https://github.com/Secured-Finance/sf-sdk/commit/bded39178cc97e186a4390b963ba27068daf2a67))
+* fix a step to check diff in publishing workflow [SF-180] ([a1d5414](https://github.com/Secured-Finance/sf-sdk/commit/a1d5414dc336aadb1070c38e62582fd98df1e841))
+* replace all settings from rinkeby to goerli [SF-180] ([42d2fa1](https://github.com/Secured-Finance/sf-sdk/commit/42d2fa1c001b4fc708101d14df395e6abd0785a9))
+
+
+
+
+
 # [0.2.0-beta.15](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.14...v0.2.0-beta.15) (2022-10-11)
 
 
