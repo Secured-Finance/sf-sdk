@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.17](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.16...v0.2.0-beta.17) (2022-10-12)
+
+
+### Features
+
+* update smart-contracts version [SF-180] ([c182cb5](https://github.com/secured-finance/sf-sdk/commit/c182cb5b5a3166530139a8e65b7d29ebde26916e))
+
+
+
+
+
+# [0.2.0-beta.16](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.15...v0.2.0-beta.16) (2022-10-11)
+
+
+### Bug Fixes
+
+* replace all settings from rinkeby to goerli [SF-180] ([42d2fa1](https://github.com/secured-finance/sf-sdk/commit/42d2fa1c001b4fc708101d14df395e6abd0785a9))
+
+
+
+
+
 # [0.2.0-beta.15](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.14...v0.2.0-beta.15) (2022-10-11)
 
 

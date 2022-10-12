@@ -27,7 +27,9 @@ jobs:
           base: ${{ steps.extract_branch.outputs.branch }}
           filters: |
             subgraph:
-              - 'packages/secured-finance-subgraph/**'
+              - 'packages/secured-finance-subgraph/src/**'
+              - 'packages/secured-finance-subgraph/schema.graphql'
+              - 'packages/secured-finance-subgraph/subgraph.yaml'
   deploy:
     name: Deploy Graph
     runs-on: ubuntu-latest
@@ -154,13 +156,12 @@ jobs:
           git commit -m "chore: update .graphclientrc.yml"
       - name: Generate artifacts
         run: npm run codegen
-      - name: Update env
-        run: |
-          echo "NPM_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
       - name: Version and Publish
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git config user.name "SF Machine User[bot]"
+          git config user.email "${{ secrets.MACHINE_USER_APP_ID }}+sf-machine-user[bot]@users.noreply.github.com"
           if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
             npx lerna version --conventional-commits --conventional-graduate --yes
           else

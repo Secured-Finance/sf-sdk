@@ -1,6 +1,6 @@
 {
   "name": "secured-finance-subgraph",
-  "version": "0.2.0-beta.15",
+  "version": "0.2.0-beta.17",
   "private": "true",
   "scripts": {
     "generate:dev": "ts-node ./scripts/generate.ts development goerli",
@@ -20,7 +20,7 @@
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.34.0",
     "@graphprotocol/graph-ts": "^0.26.0",
-    "@secured-finance/smart-contracts": "^0.0.2",
+    "@secured-finance/smart-contracts": "^0.0.4-beta.1",
     "@types/js-yaml": "^4.0.5",
     "ethers": "^5.7.1",
     "js-yaml": "^4.1.0",
