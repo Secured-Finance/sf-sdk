@@ -27,7 +27,9 @@ jobs:
           base: ${{ steps.extract_branch.outputs.branch }}
           filters: |
             subgraph:
-              - 'packages/secured-finance-subgraph/**'
+              - 'packages/secured-finance-subgraph/src/**'
+              - 'packages/secured-finance-subgraph/schema.graphql'
+              - 'packages/secured-finance-subgraph/subgraph.yaml'
   deploy:
     name: Deploy Graph
     runs-on: ubuntu-latest
