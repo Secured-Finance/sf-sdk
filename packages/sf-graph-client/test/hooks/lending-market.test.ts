@@ -1,4 +1,6 @@
+import { useQuery } from '@apollo/client';
 import { renderHook } from '@testing-library/react-hooks';
+import Module from 'module';
 import {
     GraphApolloClient,
     useLendingMarkets,
@@ -6,9 +8,37 @@ import {
 } from '../../src';
 import { validateLendingMarket, validateTradingHistoryRow } from '../utils';
 
-describe('Lending market test', () => {
+const mockUseQuery = useQuery as jest.Mock;
+
+jest.mock('@apollo/client', () => ({
+    ...(jest.requireActual('@apollo/client') as Module),
+    useQuery: jest.fn(),
+}));
+
+const lendingMarketsArray = [
+    {
+        id: '0x61f825092f04d5c3fd690ad12c7a8b4b5020092b',
+        contractAddress: '0x61f825092f04d5c3fd690ad12c7a8b4b5020092b',
+        currencyName: 'FIL',
+        maturity: '1717200000',
+    },
+    {
+        id: '0xf745de14e2c00ff80a4e3d44d5b34cb6be48e2d3',
+        contractAddress: '0xf745de14e2c00ff80a4e3d44d5b34cb6be48e2d3',
+        currencyName: 'FIL',
+        maturity: '1725148800',
+    },
+];
+
+const transactionsObj = {
+    rate: '200000',
+    side: '0',
+    amount: '1000000000000000000000',
+    createdAt: '1725148800',
+};
+
+describe.skip('Lending market test', () => {
     let client: GraphApolloClient;
-    let market: string;
     const ccy = 'FIL';
 
     beforeEach(() => {
@@ -18,29 +48,19 @@ describe('Lending market test', () => {
     });
 
     describe('useLendingMarkets hook test', () => {
-        it('Should return undefined if currency is wrong', async () => {
-            const { result, waitForNextUpdate } = renderHook(() =>
-                useLendingMarkets({ ccy: '0x01' }, client)
-            );
-            await waitForNextUpdate({ timeout: 5000 });
-
-            expect(result.current.error).toBeUndefined();
-            expect(result.current.data?.lendingMarkets.length).toEqual(0);
-        });
-
         it('Should get array of lending markets from subgraph', async () => {
-            const { result, waitForNextUpdate } = renderHook(() =>
+            mockUseQuery.mockReturnValue({
+                data: { lendingMarkets: lendingMarketsArray },
+            });
+
+            const { result } = renderHook(() =>
                 useLendingMarkets({ ccy }, client)
             );
 
-            await waitForNextUpdate({ timeout: 5000 });
-
             expect(result.current.error).toBeUndefined();
-
             const lendingMarkets = result.current.data?.lendingMarkets;
-            expect(lendingMarkets?.length).toEqual(8);
 
-            market = lendingMarkets?.[0].id as string;
+            expect(lendingMarkets).toEqual(lendingMarketsArray);
 
             for (let i = 0; i < (lendingMarkets?.length || 0); i++) {
                 validateLendingMarket(lendingMarkets?.[i]);
@@ -49,27 +69,20 @@ describe('Lending market test', () => {
     });
 
     describe('useLendingTradingHistory hook test', () => {
-        it('Should return undefined if lending market address is empty', async () => {
-            const { result, waitForNextUpdate } = renderHook(() =>
+        it('Should get lending market trading history data from subgraph', async () => {
+            mockUseQuery.mockReturnValue({
+                data: { lendingMarket: { transactions: transactionsObj } },
+            });
+
+            const { result } = renderHook(() =>
                 useLendingTradingHistory({ lendingMarket: '0x01' }, client)
             );
-
-            await waitForNextUpdate({ timeout: 5000 });
-
-            expect(result.current.error).toBeUndefined();
-            expect(result.current.data).toBeUndefined();
-        });
-
-        it('Should get lending market trading history data from subgraph', async () => {
-            const { result, waitForNextUpdate } = renderHook(() =>
-                useLendingTradingHistory({ lendingMarket: market }, client)
-            );
-
-            await waitForNextUpdate({ timeout: 5000 });
 
             expect(result.current.error).toBeUndefined();
 
             const history = result.current.data?.lendingMarket?.transactions;
+            expect(history).toEqual(transactionsObj);
+
             if (history !== undefined) {
                 for (let i = 0; i < (history?.length || 0); i++) {
                     validateTradingHistoryRow(history?.[i]);
