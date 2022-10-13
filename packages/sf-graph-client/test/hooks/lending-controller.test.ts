@@ -7,7 +7,6 @@ import {
     useBuyerTransactionHistory,
     useSellerTransactionHistory,
 } from '../../src';
-import { validateTransactions } from '../utils';
 
 const mockUseQuery = useQuery as jest.Mock;
 
@@ -47,16 +46,10 @@ describe('Lending Controller test', () => {
                 useBuyerTransactionHistory({ account }, client)
             );
 
-            const transactions = result.current.data?.transactions;
-
             expect(result.current.error).toBeUndefined();
             expect(result.current.data?.transactions).toEqual(
                 transactionsArray
             );
-
-            for (let i = 0; i < (transactions?.length || 0); i++) {
-                validateTransactions(transactions?.[i]);
-            }
         });
     });
 
@@ -72,14 +65,10 @@ describe('Lending Controller test', () => {
                 useSellerTransactionHistory({ account }, client)
             );
 
-            const transactions = result.current.data?.transactions;
-
             expect(result.current.error).toBeUndefined();
-            expect(transactions).toEqual(transactionsArray);
-
-            for (let i = 0; i < (transactions?.length || 0); i++) {
-                validateTransactions(transactions?.[i]);
-            }
+            expect(result.current.data?.transactions).toEqual(
+                transactionsArray
+            );
         });
     });
 });

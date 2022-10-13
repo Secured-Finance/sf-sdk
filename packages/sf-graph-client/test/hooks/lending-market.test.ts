@@ -6,7 +6,6 @@ import {
     useLendingMarkets,
     useLendingTradingHistory,
 } from '../../src';
-import { validateLendingMarket, validateTradingHistoryRow } from '../utils';
 
 const mockUseQuery = useQuery as jest.Mock;
 
@@ -58,13 +57,9 @@ describe.skip('Lending market test', () => {
             );
 
             expect(result.current.error).toBeUndefined();
-            const lendingMarkets = result.current.data?.lendingMarkets;
-
-            expect(lendingMarkets).toEqual(lendingMarketsArray);
-
-            for (let i = 0; i < (lendingMarkets?.length || 0); i++) {
-                validateLendingMarket(lendingMarkets?.[i]);
-            }
+            expect(result.current.data?.lendingMarkets).toEqual(
+                lendingMarketsArray
+            );
         });
     });
 
@@ -79,15 +74,9 @@ describe.skip('Lending market test', () => {
             );
 
             expect(result.current.error).toBeUndefined();
-
-            const history = result.current.data?.lendingMarket?.transactions;
-            expect(history).toEqual(transactionsObj);
-
-            if (history !== undefined) {
-                for (let i = 0; i < (history?.length || 0); i++) {
-                    validateTradingHistoryRow(history?.[i]);
-                }
-            }
+            expect(result.current.data?.lendingMarket?.transactions).toEqual(
+                transactionsObj
+            );
         });
     });
 });
