@@ -1,54 +1,70 @@
+import { useQuery } from '@apollo/client';
 import { renderHook } from '@testing-library/react-hooks';
-import { expect } from 'chai';
 import { utils } from 'ethers';
+import Module from 'module';
 import {
-    GraphApolloClient,
     useBuyerTransactionHistory,
     useSellerTransactionHistory,
 } from '../../src';
 
-describe('Lending Controller test', () => {
-    let client: GraphApolloClient;
+const mockUseQuery = useQuery as jest.Mock;
 
-    before(() => {
+jest.mock('@apollo/client', () => ({
+    ...(jest.requireActual('@apollo/client') as Module),
+    useQuery: jest.fn(),
+}));
+
+const transactionsArray = [
+    {
+        currency: 'FIL',
+        side: '0',
+        maturity: '1733011200',
+        rate: '200000',
+        amount: '1000000000000000000000',
+    },
+];
+
+describe('Lending Controller test', () => {
+    beforeEach(() => {
         process.env.SUBGRAPH_NAME = 'sf-protocol-dev';
         process.env.SF_ENV = 'development';
-        client = new GraphApolloClient({ network: 'goerli' });
     });
 
     describe('useBuyerTransactionHistory hook test', () => {
         const account = utils.hexlify(utils.randomBytes(20));
 
-        it('Should return empty buyer transactions', async () => {
-            const { result, waitForNextUpdate } = renderHook(() =>
-                useBuyerTransactionHistory({ account }, client)
+        it('Should return array of buyers transactions', async () => {
+            mockUseQuery.mockReturnValue({
+                data: { transactions: transactionsArray },
+            });
+
+            const { result } = renderHook(() =>
+                useBuyerTransactionHistory({ account })
             );
 
-            await waitForNextUpdate({ timeout: 5000 });
-
-            expect(result.current.error).to.be.undefined;
-
-            if (result.current.data?.transactions !== undefined) {
-                expect(result.current.data?.transactions).to.be.empty;
-            }
+            expect(result.current.error).toBeUndefined();
+            expect(result.current.data?.transactions).toEqual(
+                transactionsArray
+            );
         });
     });
 
     describe('useSellerTransactionHistory hook test', () => {
         const account = utils.hexlify(utils.randomBytes(20));
 
-        it('Should return empty seller transactions', async () => {
-            const { result, waitForNextUpdate } = renderHook(() =>
-                useSellerTransactionHistory({ account }, client)
+        it('Should return array of sellers transactions', async () => {
+            mockUseQuery.mockReturnValue({
+                data: { transactions: transactionsArray },
+            });
+
+            const { result } = renderHook(() =>
+                useSellerTransactionHistory({ account })
             );
 
-            await waitForNextUpdate({ timeout: 5000 });
-
-            expect(result.current.error).to.be.undefined;
-
-            if (result.current.data?.transactions !== undefined) {
-                expect(result.current.data?.transactions).to.be.empty;
-            }
+            expect(result.current.error).toBeUndefined();
+            expect(result.current.data?.transactions).toEqual(
+                transactionsArray
+            );
         });
     });
 });
