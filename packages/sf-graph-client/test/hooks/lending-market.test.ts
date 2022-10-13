@@ -1,11 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { renderHook } from '@testing-library/react-hooks';
 import Module from 'module';
-import {
-    GraphApolloClient,
-    useLendingMarkets,
-    useLendingTradingHistory,
-} from '../../src';
+import { useLendingMarkets, useLendingTradingHistory } from '../../src';
 
 const mockUseQuery = useQuery as jest.Mock;
 
@@ -36,14 +32,12 @@ const transactionsObj = {
     createdAt: '1725148800',
 };
 
-describe.skip('Lending market test', () => {
-    let client: GraphApolloClient;
+describe('Lending market test', () => {
     const ccy = 'FIL';
 
     beforeEach(() => {
         process.env.SUBGRAPH_NAME = 'sf-protocol-dev';
         process.env.SF_ENV = 'development';
-        client = new GraphApolloClient({ network: 'goerli' });
     });
 
     describe('useLendingMarkets hook test', () => {
@@ -52,9 +46,7 @@ describe.skip('Lending market test', () => {
                 data: { lendingMarkets: lendingMarketsArray },
             });
 
-            const { result } = renderHook(() =>
-                useLendingMarkets({ ccy }, client)
-            );
+            const { result } = renderHook(() => useLendingMarkets({ ccy }));
 
             expect(result.current.error).toBeUndefined();
             expect(result.current.data?.lendingMarkets).toEqual(
@@ -70,7 +62,7 @@ describe.skip('Lending market test', () => {
             });
 
             const { result } = renderHook(() =>
-                useLendingTradingHistory({ lendingMarket: '0x01' }, client)
+                useLendingTradingHistory({ lendingMarket: '0x01' })
             );
 
             expect(result.current.error).toBeUndefined();

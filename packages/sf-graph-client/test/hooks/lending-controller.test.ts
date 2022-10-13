@@ -3,7 +3,6 @@ import { renderHook } from '@testing-library/react-hooks';
 import { utils } from 'ethers';
 import Module from 'module';
 import {
-    GraphApolloClient,
     useBuyerTransactionHistory,
     useSellerTransactionHistory,
 } from '../../src';
@@ -26,12 +25,9 @@ const transactionsArray = [
 ];
 
 describe('Lending Controller test', () => {
-    let client: GraphApolloClient;
-
     beforeEach(() => {
         process.env.SUBGRAPH_NAME = 'sf-protocol-dev';
         process.env.SF_ENV = 'development';
-        client = new GraphApolloClient({ network: 'goerli' });
     });
 
     describe('useBuyerTransactionHistory hook test', () => {
@@ -43,7 +39,7 @@ describe('Lending Controller test', () => {
             });
 
             const { result } = renderHook(() =>
-                useBuyerTransactionHistory({ account }, client)
+                useBuyerTransactionHistory({ account })
             );
 
             expect(result.current.error).toBeUndefined();
@@ -62,7 +58,7 @@ describe('Lending Controller test', () => {
             });
 
             const { result } = renderHook(() =>
-                useSellerTransactionHistory({ account }, client)
+                useSellerTransactionHistory({ account })
             );
 
             expect(result.current.error).toBeUndefined();
