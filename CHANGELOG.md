@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.19](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.18...v0.2.0-beta.19) (2022-10-17)
+
+
+### Bug Fixes
+
+* update smart contract version [SF-34] ([45cf397](https://github.com/Secured-Finance/sf-sdk/commit/45cf39743129bea3b5eb4ea1b6ed8ad22ce9fa36))
+
+
+
+
+
 # [0.2.0-beta.18](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.17...v0.2.0-beta.18) (2022-10-13)
 
 
