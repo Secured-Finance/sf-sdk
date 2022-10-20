@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.20](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.19...v0.2.0-beta.20) (2022-10-20)
+
+
+### Bug Fixes
+
+* fix an error in sf-client test [SF-180] ([2975ebe](https://github.com/secured-finance/sf-sdk/commit/2975ebe806e04d3917218dbb2acd900071a89f6e))
+
+
+
+
+
 # [0.2.0-beta.19](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.18...v0.2.0-beta.19) (2022-10-17)
 
 
