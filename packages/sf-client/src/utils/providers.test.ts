@@ -4,7 +4,7 @@ import { getLocalhostProvider, getProvider } from './providers';
 describe('Check ethers provider', function () {
     let provider: BaseProvider;
     const mainnetNetworkID = 1;
-    const ropstenNetworkID = 3;
+    const goerliNetworkID = 5;
 
     it('Try connect to mainnet ethers provider, check network ID', async () => {
         provider = getProvider('mainnet');
@@ -12,10 +12,10 @@ describe('Check ethers provider', function () {
         expect(networkId).toEqual(mainnetNetworkID);
     });
 
-    it('Try connect to ropsten ethers provider, check network ID', async () => {
-        provider = getProvider('ropsten');
+    it('Try connect to goerli ethers provider, check network ID', async () => {
+        provider = getProvider('goerli');
         const networkId = await (await provider.getNetwork()).chainId;
-        expect(networkId).toEqual(ropstenNetworkID);
+        expect(networkId).toEqual(goerliNetworkID);
     });
 
     it('Try connect to localhost provider, check connection URL', async () => {
