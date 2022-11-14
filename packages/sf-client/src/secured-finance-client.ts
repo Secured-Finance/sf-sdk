@@ -278,6 +278,32 @@ export class SecuredFinanceClient extends ContractsInstance {
         return tokenContract.allowance(owner, spender);
     }
 
+    async getBorrowOrderBook(
+        currency: Currency,
+        maturity: number | BigNumber,
+        limit: number | BigNumber
+    ) {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.getBorrowOrderBook(
+            this.convertCurrencyToBytes32(currency),
+            maturity,
+            limit
+        );
+    }
+
+    async getLendOrderBook(
+        currency: Currency,
+        maturity: number | BigNumber,
+        limit: number | BigNumber
+    ) {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.getLendOrderBook(
+            this.convertCurrencyToBytes32(currency),
+            maturity,
+            limit
+        );
+    }
+
     get config() {
         assertNonNullish(this._config);
         return this._config;
