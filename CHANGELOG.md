@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.21](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.20...v0.2.0-beta.21) (2022-11-14)
+
+
+### Features
+
+* add order book functions [SF-240] ([411deb2](https://github.com/Secured-Finance/sf-sdk/commit/411deb23303c2e0f1183e2453fe55aa358351d75))
+
+
+
+
+
 # [0.2.0-beta.20](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.19...v0.2.0-beta.20) (2022-10-20)
 
 
