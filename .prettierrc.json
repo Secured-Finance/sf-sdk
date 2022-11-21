@@ -6,7 +6,7 @@
   "parser": "typescript",
   "overrides": [
     {
-      "files": ["*.json", ".eslintrc"],
+      "files": ["*.json", ".eslintrc", "project.code-workspace"],
       "options": {
         "parser": "json",
         "singleQuote": false,
