@@ -14,6 +14,7 @@ import {
 import { MockERC20 } from './types';
 
 import { ContractsInstance } from './contracts-instance';
+import { LendingMarketInfo, SecuredFinanceClientConfig } from './entities';
 import { NetworkName, networkNames, sendEther } from './utils';
 
 type NonNullable<T> = T extends null | undefined ? never : T;
@@ -26,22 +27,6 @@ function assertNonNullish<TValue>(
     if (!value) {
         throw new Error(message);
     }
-}
-
-export interface SecuredFinanceClientConfig {
-    defaultGas: number;
-    defaultGasPrice: number;
-    network: string;
-    networkId: number;
-    signerOrProvider: Signer | Provider;
-}
-
-export interface LendingMarketInfo {
-    maturity: number;
-    name: string;
-    lendRate: BigNumber;
-    borrowRate: BigNumber;
-    midRate: BigNumber;
 }
 
 export class SecuredFinanceClient extends ContractsInstance {
@@ -115,23 +100,23 @@ export class SecuredFinanceClient extends ContractsInstance {
         );
     }
 
-    async getLendYieldCurve(ccy: Currency) {
+    async getLendUnitPrices(ccy: Currency) {
         assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getBorrowRates(
+        return this.lendingMarketController.contract.getBorrowUnitPrices(
             this.convertCurrencyToBytes32(ccy)
         );
     }
 
-    async getBorrowYieldCurve(ccy: Currency) {
+    async getBorrowUnitPrices(ccy: Currency) {
         assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getLendRates(
+        return this.lendingMarketController.contract.getLendUnitPrices(
             this.convertCurrencyToBytes32(ccy)
         );
     }
 
-    async getMidRateYieldCurve(ccy: Currency) {
+    async getMidUnitPrices(ccy: Currency) {
         assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getMidRates(
+        return this.lendingMarketController.contract.getMidUnitPrices(
             this.convertCurrencyToBytes32(ccy)
         );
     }
@@ -144,8 +129,8 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     async getTotalBorrowingAmount(ccy: Currency) {
-        assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getTotalBorrowingSupply(
+        assertNonNullish(this.genesisValueVault);
+        return this.genesisValueVault.contract.getTotalBorrowingSupply(
             this.convertCurrencyToBytes32(ccy)
         );
     }
@@ -163,9 +148,9 @@ export class SecuredFinanceClient extends ContractsInstance {
                 const lendingMarket = await this.lendingMarkets.get(address);
                 const marketInfo = await lendingMarket.contract.getMarket();
                 return {
-                    midRate: marketInfo.midRate,
-                    lendRate: marketInfo.lendRate,
-                    borrowRate: marketInfo.borrowRate,
+                    midUnitPrice: marketInfo.midUnitPrice,
+                    lendUnitPrice: marketInfo.lendUnitPrice,
+                    borrowUnitPrice: marketInfo.borrowUnitPrice,
                     maturity: marketInfo.maturity.toNumber(),
                     name: dayjs
                         .unix(marketInfo.maturity.toNumber())
@@ -252,10 +237,7 @@ export class SecuredFinanceClient extends ContractsInstance {
         assertNonNullish(this.tokenVault);
         const ccyIdentifier = this.convertCurrencyToBytes32(ccy);
         const [collateralAmount, collateralCoverage] = await Promise.all([
-            this.tokenVault.contract.getCollateralAmountInETH(
-                account,
-                ccyIdentifier
-            ),
+            this.tokenVault.contract.getDepositAmount(account, ccyIdentifier),
             this.tokenVault.contract.getCoverage(account),
         ]);
 

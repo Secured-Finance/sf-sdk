@@ -41,7 +41,7 @@ describe('config', () => {
     });
 });
 
-describe.skip('depositCollateral method', () => {
+describe('depositCollateral method', () => {
     it('should thrown an error if the client is not initialized when calling depositCollateral', async () => {
         const client = new SecuredFinanceClient();
         expect(
@@ -49,7 +49,7 @@ describe.skip('depositCollateral method', () => {
         ).rejects.toThrowError('Client is not initialized');
     });
 
-    it('should call the depositCollateral contract in a payable way for ETH', async () => {
+    it.skip('should call the depositCollateral contract in a payable way for ETH', async () => {
         const client = new SecuredFinanceClient();
         const provider = getProvider('goerli');
         const network = await provider.getNetwork();
@@ -66,7 +66,7 @@ describe.skip('depositCollateral method', () => {
         expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1, { value: 1 });
     });
 
-    it('should call the depositCollateral contract in a non payable way for ERC20 token', async () => {
+    it.skip('should call the depositCollateral contract in a non payable way for ERC20 token', async () => {
         const client = new SecuredFinanceClient();
         const provider = getProvider('goerli');
         const network = await provider.getNetwork();
@@ -81,7 +81,7 @@ describe.skip('depositCollateral method', () => {
     });
 });
 
-describe.skip('withdrawCollateral method', () => {
+describe('withdrawCollateral method', () => {
     it('should thrown an error if the client is not initialized when calling a withdrawCollateral', async () => {
         const client = new SecuredFinanceClient();
         expect(
@@ -89,7 +89,7 @@ describe.skip('withdrawCollateral method', () => {
         ).rejects.toThrowError('Client is not initialized');
     });
 
-    it('should call the withdrawCollateral contract', async () => {
+    it.skip('should call the withdrawCollateral contract', async () => {
         const client = new SecuredFinanceClient();
         const provider = getProvider('goerli');
         const network = await provider.getNetwork();

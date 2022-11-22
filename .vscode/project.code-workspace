@@ -23,7 +23,7 @@
   ],
   "settings": {
     "jest.disabledWorkspaceFolders": ["ROOT", "secured-finance-subgraph"],
-    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.tsdk": "ROOT/node_modules/typescript/lib",
     "files.associations": {
       "*.jsx": "javascriptreact",
       "*.tsx": "typescriptreact",
