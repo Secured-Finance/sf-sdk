@@ -22,7 +22,8 @@
     }
   ],
   "settings": {
-    "jest.disabledWorkspaceFolders": ["ROOT", "secured-finance-subgraph"],
+    "jest.disabledWorkspaceFolders": ["ROOT"],
+    "jest.jestCommandLine": "npm run test -- --watch",
     "typescript.tsdk": "ROOT/node_modules/typescript/lib",
     "files.associations": {
       "*.jsx": "javascriptreact",

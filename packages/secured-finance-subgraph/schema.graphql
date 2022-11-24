@@ -1,31 +1,54 @@
-type LendingMarket @entity {
-  id: ID!
-  contractAddress: Bytes!
-  currencyName: String!
-  currency: Bytes!
-  maturity: BigInt!
-
-  createdAt: BigInt!
-  blockNumber: BigInt!
-  txHash: Bytes!
-
-  transactions: [Transaction!] @derivedFrom(field: "lendingMarket")
-}
-
 type Transaction @entity {
   id: ID!
-  orderId: BigInt!
-  buyerAddr: Bytes!
-  sellerAddr: Bytes!
   currency: Bytes!
-  side: Int!
   maturity: BigInt!
-  rate: BigInt!
   amount: BigInt!
+  side: Int!
+  unitPrice: BigInt!
+  forwardValue: BigInt!
+  taker: Bytes!
 
   createdAt: BigInt!
   blockNumber: BigInt!
   txHash: Bytes!
 
   lendingMarket: LendingMarket
+}
+
+
+type Order @entity {
+  id: ID!
+  orderId: BigInt!
+  maker: Bytes!
+  currency: Bytes!
+  side: Int!
+  maturity: BigInt!
+  unitPrice: BigInt!
+  amount: BigInt!
+  status: OrderStatus!
+
+  createdAt: BigInt!
+  blockNumber: BigInt!
+  txHash: Bytes!
+
+  lendingMarket: LendingMarket
+}
+
+type LendingMarket @entity {
+  id: ID!
+  contractAddress: Bytes!
+  currency: Bytes!
+  maturity: BigInt!
+
+  createdAt: BigInt!
+  blockNumber: BigInt!
+  txHash: Bytes!
+
+  orders: [Order!] @derivedFrom(field: "lendingMarket")
+}
+
+enum OrderStatus {
+  Open
+  Cancelled
+  Filled
 }
