@@ -22,7 +22,7 @@ export function handleMakeOrder(event: MakeOrder): void {
     order.blockNumber = event.block.number;
     order.txHash = event.transaction.hash;
 
-    let lendingMarket = LendingMarket.load(event.address.toHexString());
+    const lendingMarket = LendingMarket.load(event.address.toHexString());
     if (lendingMarket !== null) {
         order.lendingMarket = lendingMarket.id;
     }
@@ -41,7 +41,7 @@ export function handleTakeOrders(event: TakeOrders): void {
     transaction.createdAt = event.block.timestamp;
     transaction.blockNumber = event.block.number;
     transaction.txHash = event.transaction.hash;
-    let lendingMarket = LendingMarket.load(event.address.toHexString());
+    const lendingMarket = LendingMarket.load(event.address.toHexString());
     if (lendingMarket !== null) {
         transaction.lendingMarket = lendingMarket.id;
     }
