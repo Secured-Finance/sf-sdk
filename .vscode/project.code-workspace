@@ -1,0 +1,44 @@
+{
+  "folders": [
+    {
+      "name": "ROOT",
+      "path": "../"
+    },
+    {
+      "name": "sf-client",
+      "path": "../packages/sf-client"
+    },
+    {
+      "name": "sf-core",
+      "path": "../packages/sf-core"
+    },
+    {
+      "name": "sf-graph-client",
+      "path": "../packages/sf-graph-client"
+    },
+    {
+      "name": "secured-finance-subgraph",
+      "path": "../packages/secured-finance-subgraph"
+    }
+  ],
+  "settings": {
+    "jest.disabledWorkspaceFolders": ["ROOT"],
+    "jest.jestCommandLine": "npm run test -- --watch",
+    "typescript.tsdk": "ROOT/node_modules/typescript/lib",
+    "files.associations": {
+      "*.jsx": "javascriptreact",
+      "*.tsx": "typescriptreact",
+      "*.eslintrc, *.code-workspace": "json",
+      "*.graphql": "graphql"
+    },
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "[javascriptreact][javascript][typescriptreact][typescript][json][graphql]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true,
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+      }
+    }
+  }
+}

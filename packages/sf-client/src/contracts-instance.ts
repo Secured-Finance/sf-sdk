@@ -4,6 +4,7 @@ import {
     BaseContractStatic,
     contracts,
     CurrencyController,
+    GenesisValueVault,
     LendingMarketController,
     TokenVault,
 } from './contracts';
@@ -15,6 +16,7 @@ export class ContractsInstance {
     protected lendingMarkets: LendingMarkets | null = null;
     protected lendingMarketController: LendingMarketController | null = null;
     protected tokenVault: TokenVault | null = null;
+    protected genesisValueVault: GenesisValueVault | null = null;
 
     async getInstances(
         signerOrProvider: Signer | Provider,

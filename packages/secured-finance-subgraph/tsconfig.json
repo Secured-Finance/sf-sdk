@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "rootDir": "./",
+    "resolveJsonModule": true,
+    "strictNullChecks": true
+  },
+  "include": ["src", "generated", "scripts", "test"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
+}
