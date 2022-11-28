@@ -54,6 +54,43 @@ test('Should create a Order when the MakeOrder Event is raised', () => {
     assert.fieldEquals('Order', id, 'status', 'Open');
 });
 
+test('Should update the original order amount when the MakeOrder Event is raised', () => {
+    const orderId = BigInt.fromI32(10);
+    const id = orderId.toHexString();
+    const originalOrderId = BigInt.fromI32(11);
+    const originalId = originalOrderId.toHexString();
+
+    const originalEvent = createMakeOrderEvent(
+        originalOrderId,
+        BigInt.fromI32(0),
+        maker,
+        side,
+        ccy,
+        maturity,
+        BigInt.fromI32(150),
+        unitPrice
+    );
+
+    handleMakeOrder(originalEvent);
+    assert.fieldEquals('Order', originalId, 'amount', '150');
+
+    const event = createMakeOrderEvent(
+        orderId,
+        originalOrderId,
+        maker,
+        side,
+        ccy,
+        maturity,
+        amount,
+        unitPrice
+    );
+
+    handleMakeOrder(event);
+
+    assert.fieldEquals('Order', id, 'orderId', orderId.toString());
+    assert.fieldEquals('Order', originalId, 'amount', '50');
+});
+
 test('Should update the Order when the CancelOrder Event is raised', () => {
     const orderId = BigInt.fromI32(2);
     const id = orderId.toHexString();

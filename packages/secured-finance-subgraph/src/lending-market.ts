@@ -14,12 +14,19 @@ export function handleMakeOrder(event: MakeOrder): void {
     order.status = 'Open';
     order.orderId = event.params.orderId;
     order.originalOrderId = event.params.originalOrderId;
+    order.amount = event.params.amount;
+    if (order.originalOrderId) {
+        const originalOrder = Order.load(order.originalOrderId.toHexString());
+        if (originalOrder) {
+            originalOrder.amount = originalOrder.amount.minus(order.amount);
+            originalOrder.save();
+        }
+    }
     order.maker = event.params.maker;
     order.currency = event.params.ccy;
     order.side = event.params.side;
     order.maturity = event.params.maturity;
     order.unitPrice = event.params.unitPrice;
-    order.amount = event.params.amount;
 
     order.createdAt = event.block.timestamp;
     order.blockNumber = event.block.number;
