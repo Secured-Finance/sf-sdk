@@ -12,6 +12,13 @@
         "singleQuote": false,
         "tabWidth": 2
       }
+    },
+    {
+      "files": ["*.graphql"],
+      "options": {
+        "parser": "graphql",
+        "tabWidth": 2
+      }
     }
   ]
 }

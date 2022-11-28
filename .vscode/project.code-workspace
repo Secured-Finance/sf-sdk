@@ -28,11 +28,12 @@
     "files.associations": {
       "*.jsx": "javascriptreact",
       "*.tsx": "typescriptreact",
-      "*.eslintrc, *.code-workspace": "json"
+      "*.eslintrc, *.code-workspace": "json",
+      "*.graphql": "graphql"
     },
     "files.trimTrailingWhitespace": true,
     "files.trimFinalNewlines": true,
-    "[javascriptreact][javascript][typescriptreact][typescript][json]": {
+    "[javascriptreact][javascript][typescriptreact][typescript][json][graphql]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode",
       "editor.formatOnSave": true,
       "editor.codeActionsOnSave": {
