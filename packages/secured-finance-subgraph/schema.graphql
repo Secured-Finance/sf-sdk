@@ -2,11 +2,13 @@ type Transaction @entity {
   id: ID!
   currency: Bytes!
   maturity: BigInt!
-  amount: BigInt!
   side: Int!
-  unitPrice: BigInt!
-  forwardValue: BigInt!
+  orderPrice: BigInt!
   taker: Bytes!
+
+  forwardValue: BigInt!
+  amount: BigInt!
+  averagePrice: BigDecimal!
 
   createdAt: BigInt!
   blockNumber: BigInt!

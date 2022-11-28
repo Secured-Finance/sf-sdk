@@ -1,3 +1,4 @@
+import { BigDecimal } from '@graphprotocol/graph-ts';
 import { LendingMarket, Order, Transaction } from '../generated/schema';
 import {
     CancelOrder,
@@ -34,13 +35,19 @@ export function handleMakeOrder(event: MakeOrder): void {
 
 export function handleTakeOrders(event: TakeOrders): void {
     const transaction = new Transaction(event.transaction.hash.toHexString());
-    transaction.amount = event.params.filledAmount;
-    transaction.unitPrice = event.params.unitPrice;
+
+    transaction.orderPrice = event.params.unitPrice;
     transaction.taker = event.params.taker;
     transaction.currency = event.params.ccy;
     transaction.maturity = event.params.maturity;
     transaction.side = event.params.side;
-    transaction.forwardValue = event.params.filledAmount;
+
+    transaction.forwardValue = event.params.filledFutureValue;
+    transaction.amount = event.params.filledAmount;
+
+    transaction.averagePrice = event.params.filledAmount.divDecimal(
+        new BigDecimal(event.params.filledFutureValue)
+    );
 
     transaction.createdAt = event.block.timestamp;
     transaction.blockNumber = event.block.number;

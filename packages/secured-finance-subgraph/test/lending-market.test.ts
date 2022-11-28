@@ -1,4 +1,4 @@
-import { Address, BigInt } from '@graphprotocol/graph-ts';
+import { Address, BigDecimal, BigInt } from '@graphprotocol/graph-ts';
 import { assert, test } from 'matchstick-as/assembly/index';
 import {
     handleCancelOrder,
@@ -135,18 +135,40 @@ test('Should updates the orders when the CleanOrders Event is raised', () => {
 });
 
 test('Should create a Transaction when the TakeOrders Event is raised', () => {
-    const orderId = BigInt.fromI32(5);
+    const filledFutureValue = BigInt.fromString('1230000000000000000000');
+    const filledAmount = BigInt.fromString('1200000000000000000000');
+
+    const averagePrice = filledAmount.divDecimal(
+        new BigDecimal(filledFutureValue)
+    );
 
     const takeOrdersEvent = createTakeOrdersEvent(
         maker,
         side,
         ccy,
         maturity,
-        amount,
+        filledAmount,
         unitPrice,
-        orderId
+        filledFutureValue
     );
     handleTakeOrders(takeOrdersEvent);
     const id = takeOrdersEvent.transaction.hash.toHexString();
-    assert.fieldEquals('Transaction', id, 'amount', amount.toString());
+    assert.fieldEquals('Transaction', id, 'amount', filledAmount.toString());
+    assert.fieldEquals(
+        'Transaction',
+        id,
+        'forwardValue',
+        filledFutureValue.toString()
+    );
+    assert.fieldEquals('Transaction', id, 'orderPrice', unitPrice.toString());
+    assert.fieldEquals('Transaction', id, 'currency', ccy.toHexString());
+    assert.fieldEquals('Transaction', id, 'maturity', maturity.toString());
+    assert.fieldEquals('Transaction', id, 'side', side.toString());
+    assert.fieldEquals('Transaction', id, 'taker', maker.toHexString());
+    assert.fieldEquals(
+        'Transaction',
+        id,
+        'averagePrice',
+        averagePrice.toString()
+    );
 });
