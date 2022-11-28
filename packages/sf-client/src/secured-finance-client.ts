@@ -102,14 +102,14 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     async getLendUnitPrices(ccy: Currency) {
         assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getBorrowUnitPrices(
+        return this.lendingMarketController.contract.getLendUnitPrices(
             this.convertCurrencyToBytes32(ccy)
         );
     }
 
     async getBorrowUnitPrices(ccy: Currency) {
         assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getLendUnitPrices(
+        return this.lendingMarketController.contract.getBorrowUnitPrices(
             this.convertCurrencyToBytes32(ccy)
         );
     }
@@ -124,13 +124,6 @@ export class SecuredFinanceClient extends ContractsInstance {
     async getMaturities(ccy: Currency) {
         assertNonNullish(this.lendingMarketController);
         return this.lendingMarketController.contract.getMaturities(
-            this.convertCurrencyToBytes32(ccy)
-        );
-    }
-
-    async getTotalBorrowingAmount(ccy: Currency) {
-        assertNonNullish(this.genesisValueVault);
-        return this.genesisValueVault.contract.getTotalBorrowingSupply(
             this.convertCurrencyToBytes32(ccy)
         );
     }
