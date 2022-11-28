@@ -15,10 +15,10 @@ type Transaction @entity {
   lendingMarket: LendingMarket
 }
 
-
 type Order @entity {
   id: ID!
   orderId: BigInt!
+  originalOrderId: BigInt!
   maker: Bytes!
   currency: Bytes!
   side: Int!

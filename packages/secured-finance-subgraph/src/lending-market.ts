@@ -11,6 +11,8 @@ export function handleMakeOrder(event: MakeOrder): void {
     const order = new Order(orderId);
 
     order.status = 'Open';
+    order.orderId = event.params.orderId;
+    order.originalOrderId = event.params.originalOrderId;
     order.maker = event.params.maker;
     order.currency = event.params.ccy;
     order.side = event.params.side;
@@ -38,9 +40,12 @@ export function handleTakeOrders(event: TakeOrders): void {
     transaction.currency = event.params.ccy;
     transaction.maturity = event.params.maturity;
     transaction.side = event.params.side;
+    transaction.forwardValue = event.params.filledAmount;
+
     transaction.createdAt = event.block.timestamp;
     transaction.blockNumber = event.block.number;
     transaction.txHash = event.transaction.hash;
+
     const lendingMarket = LendingMarket.load(event.address.toHexString());
     if (lendingMarket !== null) {
         transaction.lendingMarket = lendingMarket.id;

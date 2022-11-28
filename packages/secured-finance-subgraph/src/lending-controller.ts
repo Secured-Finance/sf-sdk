@@ -9,6 +9,10 @@ export function handleCreateLendingMarket(event: CreateLendingMarket): void {
     market.maturity = event.params.maturity;
     market.contractAddress = event.params.marketAddr;
 
+    market.createdAt = event.block.timestamp;
+    market.blockNumber = event.block.number;
+    market.txHash = event.transaction.hash;
+
     LendingMarketTemplate.create(event.params.marketAddr);
     market.save();
 }
