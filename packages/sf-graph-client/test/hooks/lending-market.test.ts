@@ -1,7 +1,8 @@
 import { useQuery } from '@apollo/client';
 import { renderHook } from '@testing-library/react-hooks';
+import { hexlify, randomBytes } from 'ethers/lib/utils';
 import Module from 'module';
-import { useLendingMarkets, useLendingTradingHistory } from '../../src';
+import { useLendingMarkets, useTransactionHistory } from '../../src';
 
 const mockUseQuery = useQuery as jest.Mock;
 
@@ -9,6 +10,16 @@ jest.mock('@apollo/client', () => ({
     ...(jest.requireActual('@apollo/client') as Module),
     useQuery: jest.fn(),
 }));
+
+const transactionsArray = [
+    {
+        currency: 'FIL',
+        side: '0',
+        maturity: '1733011200',
+        rate: '200000',
+        amount: '1000000000000000000000',
+    },
+];
 
 const lendingMarketsArray = [
     {
@@ -24,13 +35,6 @@ const lendingMarketsArray = [
         maturity: '1725148800',
     },
 ];
-
-const transactionsObj = {
-    rate: '200000',
-    side: '0',
-    amount: '1000000000000000000000',
-    createdAt: '1725148800',
-};
 
 describe('Lending market test', () => {
     const ccy = 'FIL';
@@ -55,19 +59,21 @@ describe('Lending market test', () => {
         });
     });
 
-    describe('useLendingTradingHistory hook test', () => {
-        it('Should get lending market trading history data from subgraph', async () => {
+    describe('useTransactionHistory hook test', () => {
+        const account = hexlify(randomBytes(20));
+
+        it('Should return array of buyers transactions', async () => {
             mockUseQuery.mockReturnValue({
-                data: { lendingMarket: { transactions: transactionsObj } },
+                data: { transactions: transactionsArray },
             });
 
             const { result } = renderHook(() =>
-                useLendingTradingHistory({ lendingMarket: '0x01' })
+                useTransactionHistory({ account })
             );
 
             expect(result.current.error).toBeUndefined();
-            expect(result.current.data?.lendingMarket?.transactions).toEqual(
-                transactionsObj
+            expect(result.current.data?.transactions).toEqual(
+                transactionsArray
             );
         });
     });
