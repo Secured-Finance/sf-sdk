@@ -40,6 +40,10 @@ class Main {
             dataSource.network = this.network;
         }
 
+        for (const template of data.templates) {
+            template.network = this.network;
+        }
+
         const newYamlText = dump(data);
 
         writeFileSync(
