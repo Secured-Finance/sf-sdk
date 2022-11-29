@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.22](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.21...v0.2.0-beta.22) (2022-11-29)
+
+
+### Features
+
+* handle all events [SF-246] ([921ce32](https://github.com/secured-finance/sf-sdk/commit/921ce323a00395b8017bec0dda1b80852392d6ea))
+
+
+
+
+
 # [0.2.0-beta.20](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.19...v0.2.0-beta.20) (2022-10-20)
 
 **Note:** Version bump only for package @secured-finance/sf-graph-client

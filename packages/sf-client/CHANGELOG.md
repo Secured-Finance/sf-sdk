@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.22](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.21...v0.2.0-beta.22) (2022-11-29)
+
+
+### Bug Fixes
+
+* fix SDK from comments [SF-246] ([5ffb8e5](https://github.com/secured-finance/sf-sdk/commit/5ffb8e538ce71af9a6a3602d62c7e3da56089ca6))
+
+
+### Features
+
+* update the schema to handle market order ([3df7c1d](https://github.com/secured-finance/sf-sdk/commit/3df7c1d8dcf8088491e7372ad88820026f623ed6))
+
+
+
+
+
 # [0.2.0-beta.21](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.20...v0.2.0-beta.21) (2022-11-14)
 
 
