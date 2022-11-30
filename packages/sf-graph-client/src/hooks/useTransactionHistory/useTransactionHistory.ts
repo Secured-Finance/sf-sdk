@@ -1,22 +1,21 @@
-import { GraphApolloClient } from '../..';
+import { GraphApolloClient } from 'src';
 import {
-    BuyerTransactionsDocument,
-    BuyerTransactionsQuery,
-} from '../../graphclients';
-import { QueryResult, useQuery } from '../useQuery';
-import { TransactionHistoryVariables } from './useSellerTransactionHistory';
+    TransactionHistoryDocument,
+    TransactionHistoryQuery,
+} from 'src/graphclients';
+import { AccountVariable, QueryResult, useQuery } from 'src/hooks';
 
-export const useBuyerTransactionHistory = (
-    { account }: TransactionHistoryVariables,
+export const useTransactionHistory = (
+    { account }: AccountVariable,
     client?: GraphApolloClient
-): QueryResult<BuyerTransactionsQuery> => {
+): QueryResult<TransactionHistoryQuery> => {
     const variables = {
         address: account.toLowerCase(),
         awaitRefetchQueries: true,
     };
 
     const { error, data, refetch, networkStatus } =
-        useQuery<BuyerTransactionsQuery>(BuyerTransactionsDocument, {
+        useQuery<TransactionHistoryQuery>(TransactionHistoryDocument, {
             variables: variables,
             client: client,
             fetchPolicy: 'network-only',
@@ -32,3 +31,5 @@ export const useBuyerTransactionHistory = (
         networkStatus,
     };
 };
+
+export type TransactionHistory = TransactionHistoryQuery['transactions'];

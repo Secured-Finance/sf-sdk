@@ -9,26 +9,55 @@ export const LENDING_MARKETS = gql`
         ) {
             id
             contractAddress
-            currencyName
+            currency
             maturity
         }
     }
 `;
 
-export const LENDING_TRADING_HISTORY = gql`
-    query TradingHistory($id: ID!, $skip: Int!) {
-        lendingMarket(id: $id) {
-            transactions(
-                orderBy: createdAt
-                orderDirection: desc
-                first: 25
-                skip: $skip
-            ) {
-                rate
-                side
-                amount
-                createdAt
-            }
+export const TRANSACTION_HISTORY = gql`
+    query TransactionHistory($address: Bytes!) {
+        transactions(
+            orderBy: createdAt
+            orderDirection: desc
+            where: { taker: $address }
+        ) {
+            id
+            currency
+            maturity
+            side
+            orderPrice
+            taker
+            forwardValue
+            amount
+            averagePrice
+            createdAt
+            blockNumber
+            txHash
+        }
+    }
+`;
+
+export const ORDER_HISTORY = gql`
+    query OrderHistory($address: Bytes!) {
+        orders(
+            orderBy: createdAt
+            orderDirection: desc
+            where: { maker: $address }
+        ) {
+            id
+            orderId
+            originalOrderId
+            maker
+            currency
+            side
+            maturity
+            unitPrice
+            amount
+            status
+            createdAt
+            blockNumber
+            txHash
         }
     }
 `;

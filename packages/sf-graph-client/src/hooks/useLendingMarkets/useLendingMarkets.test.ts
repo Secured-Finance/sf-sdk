@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { renderHook } from '@testing-library/react-hooks';
 import Module from 'module';
-import { useLendingMarkets, useLendingTradingHistory } from '../../src';
+import { useLendingMarkets } from './';
 
 const mockUseQuery = useQuery as jest.Mock;
 
@@ -25,13 +25,6 @@ const lendingMarketsArray = [
     },
 ];
 
-const transactionsObj = {
-    rate: '200000',
-    side: '0',
-    amount: '1000000000000000000000',
-    createdAt: '1725148800',
-};
-
 describe('Lending market test', () => {
     const ccy = 'FIL';
 
@@ -51,23 +44,6 @@ describe('Lending market test', () => {
             expect(result.current.error).toBeUndefined();
             expect(result.current.data?.lendingMarkets).toEqual(
                 lendingMarketsArray
-            );
-        });
-    });
-
-    describe('useLendingTradingHistory hook test', () => {
-        it('Should get lending market trading history data from subgraph', async () => {
-            mockUseQuery.mockReturnValue({
-                data: { lendingMarket: { transactions: transactionsObj } },
-            });
-
-            const { result } = renderHook(() =>
-                useLendingTradingHistory({ lendingMarket: '0x01' })
-            );
-
-            expect(result.current.error).toBeUndefined();
-            expect(result.current.data?.lendingMarket?.transactions).toEqual(
-                transactionsObj
             );
         });
     });

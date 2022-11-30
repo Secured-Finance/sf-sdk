@@ -1,10 +1,7 @@
-import { GraphApolloClient } from '../../';
-import {
-    LendingMarketsDocument,
-    LendingMarketsQuery,
-} from '../../graphclients';
-import { generateCurrencyId } from '../../utils';
-import { QueryResult, useQuery } from '../useQuery';
+import { GraphApolloClient } from 'src';
+import { LendingMarketsDocument, LendingMarketsQuery } from 'src/graphclients';
+import { QueryResult, useQuery } from 'src/hooks';
+import { generateCurrencyId } from 'src/utils';
 
 export interface LendingMarketsVariables {
     ccy: string;

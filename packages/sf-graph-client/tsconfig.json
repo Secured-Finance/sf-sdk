@@ -5,7 +5,7 @@
     "jsx": "react",
     "esModuleInterop": true,
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": ".",
     "resolveJsonModule": true,
     "target": "esnext",
     "moduleResolution": "node",
@@ -13,7 +13,7 @@
     "sourceMap": true,
     "lib": ["esnext"]
   },
-  "include": ["src"],
+  "include": ["src", "jest.config.ts"],
   "exclude": ["node_modules/**/*", "src/**/*test.tsx"],
   "ts-node": {
     "compilerOptions": {
