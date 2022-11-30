@@ -1,8 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { renderHook } from '@testing-library/react-hooks';
-import { hexlify, randomBytes } from 'ethers/lib/utils';
 import Module from 'module';
-import { useLendingMarkets, useTransactionHistory } from '../../src';
+import { useLendingMarkets } from './';
 
 const mockUseQuery = useQuery as jest.Mock;
 
@@ -10,16 +9,6 @@ jest.mock('@apollo/client', () => ({
     ...(jest.requireActual('@apollo/client') as Module),
     useQuery: jest.fn(),
 }));
-
-const transactionsArray = [
-    {
-        currency: 'FIL',
-        side: '0',
-        maturity: '1733011200',
-        rate: '200000',
-        amount: '1000000000000000000000',
-    },
-];
 
 const lendingMarketsArray = [
     {
@@ -55,25 +44,6 @@ describe('Lending market test', () => {
             expect(result.current.error).toBeUndefined();
             expect(result.current.data?.lendingMarkets).toEqual(
                 lendingMarketsArray
-            );
-        });
-    });
-
-    describe('useTransactionHistory hook test', () => {
-        const account = hexlify(randomBytes(20));
-
-        it('Should return array of buyers transactions', async () => {
-            mockUseQuery.mockReturnValue({
-                data: { transactions: transactionsArray },
-            });
-
-            const { result } = renderHook(() =>
-                useTransactionHistory({ account })
-            );
-
-            expect(result.current.error).toBeUndefined();
-            expect(result.current.data?.transactions).toEqual(
-                transactionsArray
             );
         });
     });

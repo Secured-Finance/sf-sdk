@@ -1,10 +1,9 @@
-import { GraphApolloClient } from '../..';
+import { GraphApolloClient } from 'src';
 import {
     TransactionHistoryDocument,
     TransactionHistoryQuery,
-} from '../../graphclients';
-import { AccountVariable } from '../types';
-import { QueryResult, useQuery } from '../useQuery';
+} from 'src/graphclients';
+import { AccountVariable, QueryResult, useQuery } from 'src/hooks';
 
 export const useTransactionHistory = (
     { account }: AccountVariable,
