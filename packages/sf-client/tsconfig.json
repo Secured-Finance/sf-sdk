@@ -10,5 +10,5 @@
     "esModuleInterop": true
   },
   "include": ["src"],
-  "exclude": ["dist", "examples", "src/types"]
+  "exclude": ["dist", "examples", "src/types", "**/*.test.ts", "**/*.test.js"]
 }

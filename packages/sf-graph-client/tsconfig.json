@@ -5,7 +5,7 @@
     "jsx": "react",
     "esModuleInterop": true,
     "outDir": "dist",
-    "rootDir": ".",
+    "rootDir": "src",
     "resolveJsonModule": true,
     "target": "esnext",
     "moduleResolution": "node",
@@ -15,20 +15,16 @@
   },
   "include": ["src"],
   "exclude": [
-    "dist",
-    ".next",
-    "out",
     "node_modules",
     "**/*.spec.ts",
     "**/*.spec.tsx",
     "**/*.test.ts",
-    "**/*.test.tsx",
-    "coverage",
-    "jest.config.js"
+    "**/*.test.tsx"
   ],
   "ts-node": {
     "compilerOptions": {
-      "module": "commonjs"
+      "module": "commonjs",
+      "rootDir": "scripts"
     }
   }
 }

@@ -7,7 +7,10 @@
     "node_modules",
     "src/generated.ts",
     "src/.graphclient",
-    "dist"
+    "dist",
+    "scripts",
+    "jest.config.js",
+    "**/*.test.ts"
   ],
   "extends": ["plugin:react-hooks/recommended"]
 }
