@@ -1,6 +1,6 @@
 {
   "name": "@secured-finance/sf-client",
-  "version": "0.2.0-beta.22",
+  "version": "0.2.0-beta.24",
   "description": "Javascript client library for the Secured Finance protocol",
   "scripts": {
     "codegen": "ts-node ./scripts/generate.ts",
