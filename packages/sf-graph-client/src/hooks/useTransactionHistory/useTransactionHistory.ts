@@ -32,4 +32,4 @@ export const useTransactionHistory = (
     };
 };
 
-export type TransactionHistory = TransactionHistoryQuery['transactions'];
+export { TransactionHistoryQuery };

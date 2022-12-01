@@ -31,4 +31,4 @@ export const useOrderHistory = (
     };
 };
 
-export type OrderHistory = OrderHistoryQuery['orders'];
+export { OrderHistoryQuery };
