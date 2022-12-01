@@ -1,6 +1,7 @@
-import { GraphApolloClient } from 'src';
-import { OrderHistoryDocument, OrderHistoryQuery } from 'src/graphclients';
-import { AccountVariable, QueryResult, useQuery } from 'src/hooks';
+import { GraphApolloClient } from '../../components';
+import { OrderHistoryDocument, OrderHistoryQuery } from '../../graphclients';
+import { AccountVariable } from '../types';
+import { QueryResult, useQuery } from '../useQuery';
 
 export const useOrderHistory = (
     { account }: AccountVariable,
@@ -30,5 +31,3 @@ export const useOrderHistory = (
         networkStatus,
     };
 };
-
-export type OrderHistory = OrderHistoryQuery['orders'];
