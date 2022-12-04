@@ -10,5 +10,10 @@
     "esModuleInterop": true
   },
   "include": ["src"],
-  "exclude": ["dist", "examples", "src/types", "**/*.test.ts", "**/*.test.js"]
+  "exclude": ["dist", "examples", "src/types", "**/*.test.ts", "**/*.test.js"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
 }
