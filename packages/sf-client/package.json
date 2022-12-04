@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@secured-finance/sf-core": "^0.2.0-beta.22",
-    "@secured-finance/smart-contracts": "^0.0.5-beta.6",
+    "@secured-finance/smart-contracts": "0.0.5-beta.7",
     "bignumber.js": "^9.0.2",
     "dayjs": "^1.11.5",
     "ethers": "^5.7.1",
@@ -42,5 +42,6 @@
   },
   "engines": {
     "node": ">=10.0.0"
-  }
+  },
+  "files": ["dist"]
 }
