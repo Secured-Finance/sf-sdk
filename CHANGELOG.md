@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.27](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.26...v0.2.0-beta.27) (2022-12-05)
+
+
+### Bug Fixes
+
+* change the type export [SF-246] ([1abed3e](https://github.com/Secured-Finance/sf-sdk/commit/1abed3e33118f219f012dcf7634fdff872fbb36d))
+
+
+### Features
+
+* update the hooks [SF-246] ([38e8cd7](https://github.com/Secured-Finance/sf-sdk/commit/38e8cd77aa6ea787b08fd4f9f16a744ad514eae1))
+
+
+
+# [0.2.0-beta.22](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.21...v0.2.0-beta.22) (2022-11-29)
+
+
+### Bug Fixes
+
+* add network for template [SF-246] ([922f483](https://github.com/Secured-Finance/sf-sdk/commit/922f4833d211dca11ddd19897d2806a79eb7d46a))
+* fix SDK from comments [SF-246] ([5ffb8e5](https://github.com/Secured-Finance/sf-sdk/commit/5ffb8e538ce71af9a6a3602d62c7e3da56089ca6))
+
+
+### Features
+
+* add average price to the Transaction event ([4b90018](https://github.com/Secured-Finance/sf-sdk/commit/4b9001894fe569f8af247ac95e2b9ad731d1cf5f))
+* handle all events [SF-246] ([921ce32](https://github.com/Secured-Finance/sf-sdk/commit/921ce323a00395b8017bec0dda1b80852392d6ea))
+* update original order amount [SF-246] ([ada5f7e](https://github.com/Secured-Finance/sf-sdk/commit/ada5f7e4c67481efd32b75024df4fabf037939a2))
+* update the schema to handle market order ([3df7c1d](https://github.com/Secured-Finance/sf-sdk/commit/3df7c1d8dcf8088491e7372ad88820026f623ed6))
+
+
+
+# 0.2.0-beta.21 (2022-11-14)
+
+
+
+
+
 # [0.2.0-beta.26](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.25...v0.2.0-beta.26) (2022-12-02)
 
 
