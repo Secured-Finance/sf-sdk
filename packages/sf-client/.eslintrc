@@ -3,5 +3,13 @@
     "project": "tsconfig.json",
     "sourceType": "module"
   },
-  "ignorePatterns": ["node_modules", "src/types", "dist", "test", "scripts"]
+  "ignorePatterns": [
+    "node_modules",
+    "src/types",
+    "dist",
+    "test",
+    "scripts",
+    "**/*.test.ts",
+    "**/*.test.js"
+  ]
 }
