@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.29](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.28...v0.2.0-beta.29) (2022-12-09)
+
+
+### Bug Fixes
+
+* change the way we retrieve the contract addresses [SF-246] ([43fb2c3](https://github.com/secured-finance/sf-sdk/commit/43fb2c36cc8beabef9999ee8a63cccaa9758490d))
+
+
+
+# [0.2.0-beta.27](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.22...v0.2.0-beta.27) (2022-12-05)
+
+
+
+# [0.2.0-beta.22](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.21...v0.2.0-beta.22) (2022-11-29)
+
+
+
+
+
+# [0.2.0-beta.28](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.27...v0.2.0-beta.28) (2022-12-06)
+
+
+
+# [0.2.0-beta.22](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.21...v0.2.0-beta.22) (2022-11-29)
+
+**Note:** Version bump only for package @secured-finance/sf-client
+
+
+
+
+
 # [0.2.0-beta.27](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.26...v0.2.0-beta.27) (2022-12-05)
 
 
