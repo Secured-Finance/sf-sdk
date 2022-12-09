@@ -61,3 +61,6 @@ dist/
 
 src/types/
 src/!types/tsconfig.json
+
+# deployment files are automatically generated
+src/deployments/
