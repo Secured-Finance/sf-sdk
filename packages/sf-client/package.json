@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "codegen": "ts-node ./scripts/generate.ts",
+    "codegen": "ts-node ./scripts/generate.ts && ts-node ./scripts/copy-deployment-files.ts",
+    "postbuild": "cp -r ./src/deployments ./dist/deployments",
     "prebuild": "rm -rf dist",
     "watch": "tsc -p tsconfig.json -w",
     "build": "tsc --project tsconfig.json",
@@ -43,8 +44,5 @@
   "engines": {
     "node": ">=10.0.0"
   },
-  "files": ["dist"],
-  "peerDependencies": {
-    "@secured-finance/smart-contracts": "0.0.5-beta.7"
-  }
+  "files": ["dist"]
 }

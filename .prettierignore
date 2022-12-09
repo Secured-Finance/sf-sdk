@@ -5,6 +5,7 @@ packages/sf-client/src/types/
 packages/sf-graph-client/src/generated.ts
 **/.graphclient
 packages/secured-finance-subgraph/generated
+packages/sf-client/src/deployments
 packages/secured-finance-subgraph/build
 packages/secured-finance-subgraph/test/.latest.json
 **/coverage

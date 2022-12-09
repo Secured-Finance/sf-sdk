@@ -10,6 +10,7 @@
     "test",
     "scripts",
     "**/*.test.ts",
-    "**/*.test.js"
+    "**/*.test.js",
+    "jest.config.ts"
   ]
 }

@@ -43,9 +43,8 @@ export abstract class BaseContract<T extends EthersBaseContract> {
 
         const deploymentPath = DEPLOYMENT_PATH_MAP[environment][networkName];
 
-        const deployment = await import(
-            `@secured-finance/smart-contracts/deployments/${deploymentPath}/${contractName}.json`
-        );
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const deployment = require(`./../deployments/${deploymentPath}/${contractName}.json`);
 
         return deployment.address;
     }
