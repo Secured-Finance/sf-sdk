@@ -154,12 +154,22 @@ export class SecuredFinanceClient extends ContractsInstance {
         );
     }
 
+    /**
+     *
+     * @param ccy the Currency object of the selected market
+     * @param maturity the maturity of the selected market
+     * @param side Order position type, 0 for lend, 1 for borrow
+     * @param amount Amount of funds the maker wants to borrow/lend
+     * @param unitPrice Unit price the taker is willing to pay/receive
+     * @param onApproved callback function to be called after the approval transaction is mined
+     * @returns a `ContractTransaction`
+     */
     async placeLendingOrder(
         ccy: Currency,
-        maturity: number | BigNumber,
+        maturity: number,
         side: string,
         amount: number | BigNumber,
-        rate: number | BigNumber,
+        unitPrice: number,
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
         assertNonNullish(this.lendingMarketController);
@@ -167,7 +177,7 @@ export class SecuredFinanceClient extends ContractsInstance {
             return this.lendingMarketController.contract.createLendOrderWithETH(
                 this.convertCurrencyToBytes32(ccy),
                 maturity,
-                rate,
+                unitPrice,
                 { value: amount }
             );
         } else {
@@ -183,14 +193,14 @@ export class SecuredFinanceClient extends ContractsInstance {
                 maturity,
                 side,
                 amount,
-                rate
+                unitPrice
             );
         }
     }
 
     async cancelLendingOrder(
         ccy: Currency,
-        maturity: number | BigNumber,
+        maturity: number,
         orderID: number | BigNumber
     ) {
         assertNonNullish(this.lendingMarketController);
@@ -255,8 +265,8 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     async getBorrowOrderBook(
         currency: Currency,
-        maturity: number | BigNumber,
-        limit: number | BigNumber
+        maturity: number,
+        limit: number
     ) {
         assertNonNullish(this.lendingMarketController);
         return this.lendingMarketController.contract.getBorrowOrderBook(
@@ -268,8 +278,8 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     async getLendOrderBook(
         currency: Currency,
-        maturity: number | BigNumber,
-        limit: number | BigNumber
+        maturity: number,
+        limit: number
     ) {
         assertNonNullish(this.lendingMarketController);
         return this.lendingMarketController.contract.getLendOrderBook(
