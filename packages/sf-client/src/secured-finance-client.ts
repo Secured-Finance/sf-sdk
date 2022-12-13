@@ -17,6 +17,11 @@ import { ContractsInstance } from './contracts-instance';
 import { LendingMarketInfo, SecuredFinanceClientConfig } from './entities';
 import { NetworkName, networkNames, sendEther } from './utils';
 
+export enum Side {
+    LEND = '0',
+    BORROW = '1',
+}
+
 type NonNullable<T> = T extends null | undefined ? never : T;
 const CLIENT_NOT_INITIALIZED = 'Client is not initialized';
 
@@ -45,7 +50,10 @@ export class SecuredFinanceClient extends ContractsInstance {
     async init(
         signerOrProvider: Signer | Provider,
         network: Network,
-        options?: { defaultGas?: number; defaultGasPrice?: number }
+        options?: {
+            defaultGas?: number;
+            defaultGasPrice?: number;
+        }
     ) {
         const networkName = network.name as NetworkName;
 
@@ -160,41 +168,53 @@ export class SecuredFinanceClient extends ContractsInstance {
      * @param maturity the maturity of the selected market
      * @param side Order position type, 0 for lend, 1 for borrow
      * @param amount Amount of funds the maker wants to borrow/lend
-     * @param unitPrice Unit price the taker is willing to pay/receive
+     * @param unitPrice Unit price the taker is willing to pay/receive. 0 for placing a market order
      * @param onApproved callback function to be called after the approval transaction is mined
      * @returns a `ContractTransaction`
      */
     async placeLendingOrder(
         ccy: Currency,
         maturity: number,
-        side: string,
+        side: Side,
         amount: number | BigNumber,
-        unitPrice: number,
+        unitPrice?: number,
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
         assertNonNullish(this.lendingMarketController);
-        if (ccy.equals(Ether.onChain(this.config.networkId)) && side === '0') {
-            return this.lendingMarketController.contract.createLendOrderWithETH(
+        if (
+            ccy.equals(Ether.onChain(this.config.networkId)) &&
+            side === Side.LEND
+        ) {
+            return this.lendingMarketController.contract.depositAndCreateLendOrderWithETH(
                 this.convertCurrencyToBytes32(ccy),
                 maturity,
-                unitPrice,
+                unitPrice ?? 0,
                 { value: amount }
             );
         } else {
             const isApproved =
-                side === '0'
+                side === Side.LEND
                     ? await this.approveTokenTransfer(ccy, amount)
                     : false;
 
             await onApproved?.(isApproved);
-
-            return this.lendingMarketController.contract.createOrder(
-                this.convertCurrencyToBytes32(ccy),
-                maturity,
-                side,
-                amount,
-                unitPrice
-            );
+            if (side === Side.LEND) {
+                this.lendingMarketController.contract.depositAndCreateOrder(
+                    this.convertCurrencyToBytes32(ccy),
+                    maturity,
+                    side,
+                    amount,
+                    unitPrice ?? 0
+                );
+            } else {
+                return this.lendingMarketController.contract.createOrder(
+                    this.convertCurrencyToBytes32(ccy),
+                    maturity,
+                    side,
+                    amount,
+                    unitPrice ?? 0
+                );
+            }
         }
     }
 
