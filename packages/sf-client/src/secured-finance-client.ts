@@ -181,33 +181,18 @@ export class SecuredFinanceClient extends ContractsInstance {
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
         assertNonNullish(this.lendingMarketController);
-        if (
-            ccy.equals(Ether.onChain(this.config.networkId)) &&
-            side === Side.LEND
-        ) {
-            return this.lendingMarketController.contract.depositAndCreateLendOrderWithETH(
-                this.convertCurrencyToBytes32(ccy),
-                maturity,
-                unitPrice ?? 0,
-                { value: amount }
-            );
-        } else {
-            const isApproved =
-                side === Side.LEND
-                    ? await this.approveTokenTransfer(ccy, amount)
-                    : false;
-
-            await onApproved?.(isApproved);
-            if (side === Side.LEND) {
-                this.lendingMarketController.contract.depositAndCreateOrder(
+        if (side === Side.LEND) {
+            if (ccy.equals(Ether.onChain(this.config.networkId))) {
+                return this.lendingMarketController.contract.depositAndCreateLendOrderWithETH(
                     this.convertCurrencyToBytes32(ccy),
                     maturity,
-                    side,
-                    amount,
-                    unitPrice ?? 0
+                    unitPrice ?? 0,
+                    { value: amount }
                 );
             } else {
-                return this.lendingMarketController.contract.createOrder(
+                const isApproved = await this.approveTokenTransfer(ccy, amount);
+                await onApproved?.(isApproved);
+                return this.lendingMarketController.contract.depositAndCreateOrder(
                     this.convertCurrencyToBytes32(ccy),
                     maturity,
                     side,
@@ -215,6 +200,14 @@ export class SecuredFinanceClient extends ContractsInstance {
                     unitPrice ?? 0
                 );
             }
+        } else {
+            return this.lendingMarketController.contract.createOrder(
+                this.convertCurrencyToBytes32(ccy),
+                maturity,
+                side,
+                amount,
+                unitPrice ?? 0
+            );
         }
     }
 
