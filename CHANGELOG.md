@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.32](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.31...v0.2.0-beta.32) (2022-12-15)
+
+
+### Features
+
+* update to the latest smart contracts [SF-247] ([05d1394](https://github.com/Secured-Finance/sf-sdk/commit/05d1394c3ad08f78fa281952299ce478dab42f1a))
+
+
+
+# 0.2.0-beta.30 (2022-12-10)
+
+
+
+
+
 # [0.2.0-beta.31](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.30...v0.2.0-beta.31) (2022-12-13)
 
 **Note:** Version bump only for package sf-sdk
