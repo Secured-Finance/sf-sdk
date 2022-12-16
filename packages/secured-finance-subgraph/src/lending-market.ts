@@ -52,9 +52,12 @@ export function handleTakeOrders(event: TakeOrders): void {
     transaction.forwardValue = event.params.filledFutureValue;
     transaction.amount = event.params.filledAmount;
 
-    transaction.averagePrice = event.params.filledAmount.divDecimal(
-        new BigDecimal(event.params.filledFutureValue)
-    );
+    transaction.averagePrice =
+        event.params.filledFutureValue.isZero() === false
+            ? event.params.filledAmount.divDecimal(
+                  new BigDecimal(event.params.filledFutureValue)
+              )
+            : BigDecimal.zero();
 
     transaction.createdAt = event.block.timestamp;
     transaction.blockNumber = event.block.number;
