@@ -17,7 +17,7 @@ import { ContractsInstance } from './contracts-instance';
 import { LendingMarketInfo, SecuredFinanceClientConfig } from './entities';
 import { NetworkName, networkNames, sendEther } from './utils';
 
-export enum Side {
+export enum OrderSide {
     LEND = '0',
     BORROW = '1',
 }
@@ -175,13 +175,13 @@ export class SecuredFinanceClient extends ContractsInstance {
     async placeLendingOrder(
         ccy: Currency,
         maturity: number,
-        side: Side,
+        side: OrderSide,
         amount: number | BigNumber,
         unitPrice?: number,
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
         assertNonNullish(this.lendingMarketController);
-        if (side === Side.LEND) {
+        if (side === OrderSide.LEND) {
             if (ccy.equals(Ether.onChain(this.config.networkId))) {
                 return this.lendingMarketController.contract.depositAndCreateLendOrderWithETH(
                     this.convertCurrencyToBytes32(ccy),

@@ -35,6 +35,7 @@ jobs:
               - 'packages/secured-finance-subgraph/src/**'
               - 'packages/secured-finance-subgraph/schema.graphql'
               - 'packages/secured-finance-subgraph/subgraph.yaml'
+              - 'packages/secured-finance-subgraph/package.json'
   deploy:
     name: Deploy Graph
     runs-on: ubuntu-latest
