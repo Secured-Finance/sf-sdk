@@ -28,6 +28,7 @@ class Main {
     async run() {
         const rootDir = process.cwd();
         const yamlText = readFileSync(`${rootDir}/subgraph.yaml`, 'utf8');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const data = load(yamlText) as any;
 
         for (const dataSource of data.dataSources) {

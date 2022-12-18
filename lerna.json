@@ -1,33 +1,23 @@
 {
   "command": {
     "publish": {
-      "allowBranch": [
-        "main",
-        "develop"
-      ],
-      "ignoreChanges": [
-        "ignored-file",
-        "*.md"
-      ],
+      "allowBranch": ["main", "develop"],
+      "ignoreChanges": ["ignored-file", "*.md"],
       "message": "chore(release): update release notes and package versions",
       "conventionalCommits": true,
       "registry": "https://npm.pkg.github.com"
     },
     "bootstrap": {
       "ignore": "component-*",
-      "npmClientArgs": [
-        "--no-package-lock",
-        "--legacy-peer-deps"
-      ]
+      "npmClientArgs": ["--no-package-lock", "--legacy-peer-deps"]
     }
   },
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
   "nohoist": [
     "**/typechain",
     "**/@typechain/*",
-    "@secured-finance/smart-contracts"
+    "@secured-finance/smart-contracts",
+    "@graphprotocol/*"
   ],
   "version": "0.2.0-beta.32",
   "npmClient": "npm"
