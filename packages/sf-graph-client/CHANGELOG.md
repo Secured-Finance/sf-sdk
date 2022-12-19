@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.33](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.32...v0.2.0-beta.33) (2022-12-19)
+
+
+### Bug Fixes
+
+* upgrade end point version [SF-247] ([402fc37](https://github.com/secured-finance/sf-sdk/commit/402fc370d01de36b8417f6b378b13a3289dfa114))
+
+
+
+# 0.2.0-beta.30 (2022-12-10)
+
+
+
+
+
 # [0.2.0-beta.27](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.26...v0.2.0-beta.27) (2022-12-05)
 
 
