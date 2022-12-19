@@ -1,0 +1,16 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "rootDir": "./",
+    "resolveJsonModule": true,
+    "strictNullChecks": true
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
+}

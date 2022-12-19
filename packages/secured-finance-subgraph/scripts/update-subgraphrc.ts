@@ -19,6 +19,7 @@ class Main {
     run() {
         const path = `${process.cwd()}/deployment.json`;
         const jsonText = readFileSync(path, 'utf8');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const data = JSON.parse(jsonText) as any;
 
         const { version, isMajorUpdate, isMinorUpdate } =
