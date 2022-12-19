@@ -20,11 +20,5 @@
     "**/*.spec.tsx",
     "**/*.test.ts",
     "**/*.test.tsx"
-  ],
-  "ts-node": {
-    "compilerOptions": {
-      "module": "commonjs",
-      "rootDir": "scripts"
-    }
-  }
+  ]
 }
