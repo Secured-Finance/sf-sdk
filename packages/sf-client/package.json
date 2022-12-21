@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@secured-finance/sf-core": "^0.2.0-beta.22",
-    "@secured-finance/smart-contracts": "^0.0.5-beta.12",
+    "@secured-finance/smart-contracts": "0.0.5-beta.12",
     "dayjs": "^1.11.5",
     "ethers": "^5.7.1",
     "gas-price-oracle": "^0.4.4"
