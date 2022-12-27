@@ -42,6 +42,10 @@ export class SecuredFinanceClient extends ContractsInstance {
         }
     }
 
+    private parseBytes32String(ccy: string) {
+        return utils.parseBytes32String(ccy);
+    }
+
     private _config: SecuredFinanceClientConfig | null = null;
 
     ether: Ether | null = null;
@@ -248,20 +252,6 @@ export class SecuredFinanceClient extends ContractsInstance {
         ](this.convertCurrencyToBytes32(ccy), amount);
     }
 
-    async getCollateralBook(account: string, ccy: Currency) {
-        assertNonNullish(this.tokenVault);
-        const ccyIdentifier = this.convertCurrencyToBytes32(ccy);
-        const [collateralAmount, collateralCoverage] = await Promise.all([
-            this.tokenVault.contract.getDepositAmount(account, ccyIdentifier),
-            this.tokenVault.contract.getCoverage(account),
-        ]);
-
-        return {
-            collateralAmount,
-            collateralCoverage,
-        };
-    }
-
     async getUsedCurrencies(account: string) {
         assertNonNullish(this.tokenVault);
         return this.tokenVault.contract.getUsedCurrencies(account);
@@ -321,16 +311,59 @@ export class SecuredFinanceClient extends ContractsInstance {
         return this._config;
     }
 
+    async getCurrencies() {
+        assertNonNullish(this.currencyController);
+        return this.currencyController.contract.getCurrencies();
+    }
+
+    async getCollateralCurrencies() {
+        assertNonNullish(this.tokenVault);
+        return this.tokenVault.contract.getCollateralCurrencies();
+    }
+
+    async getERC20Balance(token: Token, account: string) {
+        const tokenContract = await this.getTokenContract(token);
+        return tokenContract.balanceOf(account);
+    }
+
+    async getCollateralBook(account: string) {
+        assertNonNullish(this.tokenVault);
+        const collateralCurrencies = await this.getCollateralCurrencies();
+        let collateral: Record<string, BigNumber> = {};
+
+        collateralCurrencies.forEach(async (ccy: string) => {
+            assertNonNullish(this.tokenVault);
+
+            const balance = await this.tokenVault.contract.getDepositAmount(
+                account,
+                ccy
+            );
+            collateral = {
+                ...collateral,
+                [this.parseBytes32String(ccy)]: balance,
+            };
+        });
+
+        const collateralCoverage = await this.tokenVault.contract.getCoverage(
+            account
+        );
+
+        return {
+            collateral,
+            collateralCoverage,
+        };
+    }
+
     private async approveTokenTransfer(
         ccy: Currency,
         amount: number | BigNumber
     ) {
         assertNonNullish(this.tokenVault);
-        if (!(this.config.signerOrProvider instanceof Signer)) {
+        if (!Signer.isSigner(this.config.signerOrProvider)) {
             throw new Error('Signer is not set');
         }
 
-        if (ccy instanceof Token) {
+        if (ccy.isToken) {
             const tokenContract = await this.getTokenContract(ccy);
             const owner = await this.config.signerOrProvider.getAddress();
             const spender = this.tokenVault.contract.address;
