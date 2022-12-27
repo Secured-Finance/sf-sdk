@@ -6,6 +6,7 @@ import {
     CurrencyController,
     GenesisValueVault,
     LendingMarketController,
+    TokenFaucet,
     TokenVault,
 } from './contracts';
 import { LendingMarkets } from './lib/lending-markets';
@@ -17,6 +18,7 @@ export class ContractsInstance {
     protected lendingMarketController: LendingMarketController | null = null;
     protected tokenVault: TokenVault | null = null;
     protected genesisValueVault: GenesisValueVault | null = null;
+    protected tokenFaucet: TokenFaucet | null = null;
 
     async getInstances(
         signerOrProvider: Signer | Provider,

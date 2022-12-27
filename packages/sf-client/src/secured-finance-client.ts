@@ -11,10 +11,9 @@ import {
     Signer,
     utils,
 } from 'ethers';
-import { MockERC20 } from './types';
-
 import { ContractsInstance } from './contracts-instance';
 import { LendingMarketInfo, SecuredFinanceClientConfig } from './entities';
+import { MockERC20 } from './types';
 import { NetworkName, networkNames, sendEther } from './utils';
 
 export enum OrderSide {
@@ -299,6 +298,21 @@ export class SecuredFinanceClient extends ContractsInstance {
             this.convertCurrencyToBytes32(currency),
             maturity,
             limit
+        );
+    }
+
+    // Mock ERC20 token related functions
+    async mintERC20Token(token: Token) {
+        assertNonNullish(this.tokenFaucet);
+        return this.tokenFaucet.contract.mint(
+            this.convertCurrencyToBytes32(token)
+        );
+    }
+
+    async getERC20TokenContractAddress(token: Token) {
+        assertNonNullish(this.tokenFaucet);
+        return this.tokenFaucet.contract.getCurrencyAddress(
+            this.convertCurrencyToBytes32(token)
         );
     }
 
