@@ -19,11 +19,11 @@ jobs:
         run: |
           echo "NPM_AUTH_TOKEN=${{ secrets.NPM_TOKEN }}" >> $GITHUB_ENV
       - name: Set env for development environment
-        if: github.ref != 'refs/heads/develop'
+        if: github.ref == 'refs/heads/develop'
         run: |
           echo "NETWORK=development" >> $GITHUB_ENV
       - name: Set env for staging environment
-        if: github.ref != 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         run: |
           echo "NETWORK=staging" >> $GITHUB_ENV
       - name: Install Dependencies
