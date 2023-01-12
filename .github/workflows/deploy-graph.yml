@@ -162,6 +162,8 @@ jobs:
           git commit -m "chore: update .graphclientrc.yml"
       - name: Generate artifacts
         run: npm run codegen
+        env:
+          GRAPH_ENV: ${{ env.NETWORK }}
       - name: Version and Publish
         env:
           NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
