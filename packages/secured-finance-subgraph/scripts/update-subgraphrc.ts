@@ -1,8 +1,7 @@
 import { readFileSync, writeFileSync } from 'fs';
-// import { dump, load } from 'js-yaml';
 
 const arrowedEnvironments = ['development', 'staging', 'production'] as const;
-type Environment = typeof arrowedEnvironments[number];
+type Environment = (typeof arrowedEnvironments)[number];
 
 class Main {
     private environment: Environment;

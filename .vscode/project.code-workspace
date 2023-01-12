@@ -39,6 +39,19 @@
       "editor.codeActionsOnSave": {
         "source.organizeImports": true
       }
-    }
+    },
+    "prettier.requireConfig": true,
+    "prettier.prettierPath": "../../node_modules/prettier",
+    "prettier.configPath": "../../.prettierrc.json",
+    "prettier.ignorePath": "../../.prettierignore"
+  },
+  "extensions": {
+    "recommendations": [
+      "folke.vscode-monorepo-workspace",
+      "esbenp.prettier-vscode",
+      "orta.vscode-jest",
+      "dbaeumer.vscode-eslint",
+      "streetsidesoftware.code-spell-checker"
+    ]
   }
 }

@@ -6,7 +6,7 @@ import { Signer } from 'ethers';
 import { NetworkName } from '../utils';
 
 const environments = ['development', 'staging', 'production'] as const;
-type Environment = typeof environments[number];
+type Environment = (typeof environments)[number];
 type NetworkMap = Record<NetworkName, string>;
 
 const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {

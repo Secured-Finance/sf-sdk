@@ -3,8 +3,8 @@ import { dump, load } from 'js-yaml';
 
 const arrowedEnvironments = ['development', 'staging', 'production'] as const;
 const arrowedNetworks = ['goerli', 'mainnet'] as const;
-type Environment = typeof arrowedEnvironments[number];
-type Network = typeof arrowedNetworks[number];
+type Environment = (typeof arrowedEnvironments)[number];
+type Network = (typeof arrowedNetworks)[number];
 
 class Main {
     private environment: Environment;

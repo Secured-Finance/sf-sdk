@@ -10,7 +10,7 @@ import * as GraphClientDev from '../graphclients/development/.graphclient';
 import * as GraphClientStg from '../graphclients/staging/.graphclient';
 
 const environments = ['development', 'staging', 'production'] as const;
-type Environments = typeof environments[number];
+type Environments = (typeof environments)[number];
 
 const getGraphClient = (network = 'none') => {
     let GraphClient;
