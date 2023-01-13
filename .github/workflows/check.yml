@@ -25,14 +25,14 @@ jobs:
         id: extract_branch
 
       - name: Set env for development environment from to the target branch of the pull request
-        if: ${{ github.base_ref != 'develop' }}
+        shell: bash
         run: |
-          echo "NETWORK=development" >> $GITHUB_ENV
-
-      - name: Set env for staging environment from to the target branch of the pull request
-        if: ${{ github.base_ref == 'main' }}
-        run: |
-          echo "NETWORK=staging" >> $GITHUB_ENV
+          if [ ${{ steps.extract_branch.outputs.branch }} = development ]; then
+            echo "NETWORK=development" >> $GITHUB_ENV
+          fi
+          if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
+            echo "NETWORK=staging" >> $GITHUB_ENV
+          fi
 
       - name: Install Dependencies
         run: npm ci
