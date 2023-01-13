@@ -18,18 +18,22 @@ jobs:
       - name: Set env
         run: |
           echo "NPM_AUTH_TOKEN=${{ secrets.NPM_TOKEN }}" >> $GITHUB_ENV
+
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
-      - name: Set env for development environment
-        if: ${{ steps.extract_branch.outputs.branch == 'develop' }}
+
+      - name: Set env for development environment from to the target branch of the pull request
+        if: ${{ github.base_ref != 'develop' }}
         run: |
           echo "NETWORK=development" >> $GITHUB_ENV
-      - name: Set env for staging environment
-        if: ${{ steps.extract_branch.outputs.branch == 'main' }}
+
+      - name: Set env for staging environment from to the target branch of the pull request
+        if: ${{ github.base_ref == 'main' }}
         run: |
           echo "NETWORK=staging" >> $GITHUB_ENV
+
       - name: Install Dependencies
         run: npm ci
       - name: Bootstrap Repo
