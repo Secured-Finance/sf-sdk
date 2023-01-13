@@ -27,11 +27,10 @@ jobs:
       - name: Set env for development environment from to the target branch of the pull request
         shell: bash
         run: |
-          if [ ${{ steps.extract_branch.outputs.branch }} = development ]; then
-            echo "NETWORK=development" >> $GITHUB_ENV
-          fi
-          if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
-            echo "NETWORK=staging" >> $GITHUB_ENV
+          if [ ${{ github.head_ref }} = main ]; then
+              echo "NETWORK=staging" >> $GITHUB_ENV
+            else
+              echo "NETWORK=development" >> $GITHUB_ENV
           fi
 
       - name: Install Dependencies
