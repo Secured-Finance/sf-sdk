@@ -15,10 +15,6 @@
     {
       "name": "sf-graph-client",
       "path": "../packages/sf-graph-client"
-    },
-    {
-      "name": "secured-finance-subgraph",
-      "path": "../packages/secured-finance-subgraph"
     }
   ],
   "settings": {
