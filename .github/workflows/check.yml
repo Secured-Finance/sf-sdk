@@ -15,56 +15,47 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-      - name: Set env
-        run: |
-          echo "NPM_AUTH_TOKEN=${{ secrets.NPM_TOKEN }}" >> $GITHUB_ENV
-
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
-
-      - name: Set env for development environment from to the target branch of the pull request
-        shell: bash
-        run: |
-          if [ ${{ github.head_ref }} = main ]; then
-              echo "NETWORK=staging" >> $GITHUB_ENV
-            else
-              echo "NETWORK=development" >> $GITHUB_ENV
-          fi
 
       - name: Install Dependencies
         run: npm ci
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Bootstrap Repo
         run: npm run bootstrap
+
       - name: Lint Code
         run: npm run lint:check
+
       - name: Format Code
         run: npm run format
+
       - name: Build Repo
         run: npm run build
-        env:
-          GRAPH_ENV: ${{ env.NETWORK }}
+
       - name: Generate artifacts
         run: npm run codegen
-        env:
-          GRAPH_ENV: ${{ env.NETWORK }}
+
       - name: Execute Test
         run: npm run test-all
+
       - name: Execute Coverage
         run: npm run coverage
+
       - name: Upload Client coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
           files: ./packages/sf-client/coverage/coverage-final.json
           flags: sf-client
           token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Upload Graph Client coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
           files: ./packages/sf-graph-client/coverage/coverage-final.json
           flags: sf-graph-client
           token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Upload SF-Core coverage to Codecov
         uses: codecov/codecov-action@v2
         with:

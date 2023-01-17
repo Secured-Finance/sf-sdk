@@ -7,9 +7,7 @@
   "scripts": {
     "precompile": "rm -rf dist",
     "compile": "tsc -p tsconfig.json",
-    "codegen": "npm run codegen:$GRAPH_ENV",
-    "codegen:development": "graphclient build --dir src/graphclients/development",
-    "codegen:staging": "graphclient build --dir src/graphclients/staging",
+    "codegen": "graphclient build --dir src/graphclient",
     "build": "npm run compile && tsc -b",
     "prebuild": "npm run codegen",
     "update-subgraph-version": "ts-node ./scripts/update-subgraph-version.ts",
