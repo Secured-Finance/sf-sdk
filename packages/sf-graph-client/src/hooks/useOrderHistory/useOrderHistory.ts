@@ -1,5 +1,5 @@
 import { GraphApolloClient } from '../../components';
-import { OrderHistoryDocument, OrderHistoryQuery } from '../../graphclients';
+import { OrderHistoryDocument, OrderHistoryQuery } from '../../graphclient';
 import { AccountVariable } from '../types';
 import { QueryResult, useQuery } from '../useQuery';
 

@@ -6,7 +6,7 @@ import {
 } from '@apollo/client';
 import { GraphApolloLink } from '@graphprotocol/client-apollo';
 
-import * as GraphClient from '../graphclients/development/.graphclient';
+import * as GraphClient from '../graphclient';
 
 const getGraphClient = (network = 'none') => {
     const sfNetwork = 'goerli';

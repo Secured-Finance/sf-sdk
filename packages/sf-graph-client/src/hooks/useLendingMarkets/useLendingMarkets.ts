@@ -1,8 +1,5 @@
 import { GraphApolloClient } from '../../components';
-import {
-    LendingMarketsDocument,
-    LendingMarketsQuery,
-} from '../../graphclients';
+import { LendingMarketsDocument, LendingMarketsQuery } from '../../graphclient';
 import { generateCurrencyId } from '../../utils';
 import { QueryResult, useQuery } from '../useQuery';
 
