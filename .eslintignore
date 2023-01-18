@@ -8,4 +8,3 @@ packages/sf-cient/src/types
 packages/sf-graph-client/src/generated.ts
 packages/sf-graph-client/src/.graphclient
 packages/sf-client/examples
-packages/secured-finance-subgraph

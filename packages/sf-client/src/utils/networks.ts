@@ -5,4 +5,4 @@ export const NETWORKS: { [key: number]: string } = {
 };
 
 export const networkNames = ['goerli', 'mainnet'] as const;
-export type NetworkName = typeof networkNames[number];
+export type NetworkName = (typeof networkNames)[number];

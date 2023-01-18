@@ -2,7 +2,7 @@ import { GraphApolloClient } from '../../components';
 import {
     TransactionHistoryDocument,
     TransactionHistoryQuery,
-} from '../../graphclients';
+} from '../../graphclient';
 import { AccountVariable } from '../types';
 import { QueryResult, useQuery } from '../useQuery';
 

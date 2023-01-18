@@ -15,37 +15,49 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-      - name: Set env
-        run: |
-          echo "NPM_AUTH_TOKEN=${{ secrets.NPM_TOKEN }}" >> $GITHUB_ENV
+
       - name: Install Dependencies
         run: npm ci
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
       - name: Bootstrap Repo
         run: npm run bootstrap
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
       - name: Lint Code
         run: npm run lint:check
+
       - name: Format Code
         run: npm run format
+
       - name: Build Repo
         run: npm run build
+
       - name: Generate artifacts
         run: npm run codegen
+
       - name: Execute Test
         run: npm run test-all
+
       - name: Execute Coverage
         run: npm run coverage
+
       - name: Upload Client coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
           files: ./packages/sf-client/coverage/coverage-final.json
           flags: sf-client
           token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Upload Graph Client coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
           files: ./packages/sf-graph-client/coverage/coverage-final.json
           flags: sf-graph-client
           token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Upload SF-Core coverage to Codecov
         uses: codecov/codecov-action@v2
         with:

@@ -1,0 +1,74 @@
+name: Deploy and Publish
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  publish:
+    name: Publish to NPM
+    runs-on: ubuntu-latest
+    if: ${{ always() && github.actor != 'secured-finance-machine-user[bot]' && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
+    steps:
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.MACHINE_USER_APP_ID }}
+          private_key: ${{ secrets.MACHINE_USER_PRIVATE_KEY }}
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ steps.generate_token.outputs.token }}
+
+      - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Set env
+        run: |
+          echo "NPM_AUTH_TOKEN=${{ secrets.NPM_AUTH_TOKEN }}" >> $GITHUB_ENV
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Bootstrap Repository
+        run: npm run bootstrap
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: Set env for development environment
+        if: ${{ steps.extract_branch.outputs.branch == 'develop' }}
+        run: |
+          echo "NETWORK=development" >> $GITHUB_ENV
+
+      - name: Set env for staging environment
+        if: ${{ steps.extract_branch.outputs.branch == 'main' }}
+        run: |
+          echo "NETWORK=staging" >> $GITHUB_ENV
+
+      - name: Generate artifacts
+        run: npm run codegen
+
+      - name: Version and Publish
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "SF Machine User[bot]"
+          git config user.email "${{ secrets.MACHINE_USER_APP_ID }}+sf-machine-user[bot]@users.noreply.github.com"
+          if [ ${{ steps.extract_branch.outputs.branch }} = main ]; then
+            npx lerna version --conventional-commits --conventional-graduate --yes
+          else
+            npx lerna version --conventional-commits --conventional-prerelease --preid beta --yes
+          fi
+          npx lerna publish from-package --conventional-commits --yes

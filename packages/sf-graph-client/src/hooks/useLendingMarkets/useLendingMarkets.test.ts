@@ -28,11 +28,6 @@ const lendingMarketsArray = [
 describe('Lending market test', () => {
     const ccy = 'FIL';
 
-    beforeEach(() => {
-        process.env.SUBGRAPH_NAME = 'sf-protocol-dev';
-        process.env.SF_ENV = 'development';
-    });
-
     describe('useLendingMarkets hook test', () => {
         it('Should get array of lending markets from subgraph', async () => {
             mockUseQuery.mockReturnValue({
