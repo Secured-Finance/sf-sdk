@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.37](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.36...v0.2.0-beta.37) (2023-01-18)
+
+
+### Bug Fixes
+
+* removed build errors [SF-264] ([e1c727f](https://github.com/secured-finance/sf-sdk/commit/e1c727fca79a8f500706a116bce4430e04d82670))
+
+
+### Features
+
+* use only the branch version of the subgraph ([7af484b](https://github.com/secured-finance/sf-sdk/commit/7af484b05e42078f8ec5c2b439edf8d89c205ea1))
+
+
+
+
+
 # [0.2.0-beta.34](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.33...v0.2.0-beta.34) (2022-12-26)
 
 **Note:** Version bump only for package @secured-finance/sf-graph-client
