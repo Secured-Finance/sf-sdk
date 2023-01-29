@@ -331,18 +331,22 @@ export class SecuredFinanceClient extends ContractsInstance {
         const collateralCurrencies = await this.getCollateralCurrencies();
         let collateral: Record<string, BigNumber> = {};
 
-        collateralCurrencies.forEach(async (ccy: string) => {
-            assertNonNullish(this.tokenVault);
-
-            const balance = await this.tokenVault.contract.getDepositAmount(
-                account,
-                ccy
+        if (collateralCurrencies && collateralCurrencies.length) {
+            await Promise.all(
+                collateralCurrencies.map(async ccy => {
+                    assertNonNullish(this.tokenVault);
+                    const balance =
+                        await this.tokenVault.contract.getDepositAmount(
+                            account,
+                            ccy
+                        );
+                    collateral = {
+                        ...collateral,
+                        [this.parseBytes32String(ccy)]: balance,
+                    };
+                })
             );
-            collateral = {
-                ...collateral,
-                [this.parseBytes32String(ccy)]: balance,
-            };
-        });
+        }
 
         const collateralCoverage = await this.tokenVault.contract.getCoverage(
             account
