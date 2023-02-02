@@ -1,8 +1,12 @@
 import { Network } from '@ethersproject/networks';
 import { Provider } from '@ethersproject/providers';
-import { Currency, Ether, Token } from '@secured-finance/sf-core';
+import {
+    Currency,
+    Ether,
+    getUTCMonthYear,
+    Token,
+} from '@secured-finance/sf-core';
 import ERC20 from '@secured-finance/smart-contracts/build/contracts/mocks/tokens/MockERC20.sol/MockERC20.json';
-import * as dayjs from 'dayjs';
 import {
     BigNumber,
     constants,
@@ -156,10 +160,7 @@ export class SecuredFinanceClient extends ContractsInstance {
                     lendUnitPrice: marketInfo.lendUnitPrice,
                     borrowUnitPrice: marketInfo.borrowUnitPrice,
                     maturity: marketInfo.maturity.toNumber(),
-                    name: dayjs
-                        .unix(marketInfo.maturity.toNumber())
-                        .format('MMMYY')
-                        .toUpperCase(),
+                    name: getUTCMonthYear(marketInfo.maturity.toNumber()),
                 };
             })
         );
