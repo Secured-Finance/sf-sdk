@@ -1,8 +1,14 @@
-import * as dayjs from 'dayjs';
-
 export const getUTCMonthYear = (timestamp: number) => {
-    const date = new Date(timestamp * 1000);
-    return dayjs(date.toUTCString()).format('MMMYY').toUpperCase();
+    return timestamp
+        ? Intl.DateTimeFormat('en-US', {
+              year: '2-digit',
+              month: 'short',
+              timeZone: 'GMT',
+          })
+              .format(new Date(timestamp * 1000))
+              .replace(' ', '')
+              .toUpperCase()
+        : '';
 };
 
 export const formatDate = (timestamp: number) => {
