@@ -1,6 +1,6 @@
 {
   "name": "@secured-finance/sf-client",
-  "version": "0.2.0-beta.38",
+  "version": "0.2.0-beta.39",
   "description": "Javascript client library for the Secured Finance protocol",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -25,7 +25,7 @@
     "url": "https://github.com/secured-finance/sf-sdk"
   },
   "dependencies": {
-    "@secured-finance/sf-core": "^0.2.0-beta.22",
+    "@secured-finance/sf-core": "^0.2.0-beta.39",
     "@secured-finance/smart-contracts": "0.0.5-beta.19",
     "ethers": "^5.7.1",
     "gas-price-oracle": "^0.4.4"
