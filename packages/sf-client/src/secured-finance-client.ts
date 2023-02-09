@@ -25,7 +25,6 @@ export enum OrderSide {
     BORROW = '1',
 }
 
-type NonNullable<T> = T extends null | undefined ? never : T;
 const CLIENT_NOT_INITIALIZED = 'Client is not initialized';
 
 function assertNonNullish<TValue>(
@@ -186,24 +185,22 @@ export class SecuredFinanceClient extends ContractsInstance {
     ) {
         assertNonNullish(this.lendingMarketController);
         if (side === OrderSide.LEND) {
+            let override = undefined;
             if (ccy.equals(Ether.onChain(this.config.networkId))) {
-                return this.lendingMarketController.contract.depositAndCreateLendOrderWithETH(
-                    this.convertCurrencyToBytes32(ccy),
-                    maturity,
-                    unitPrice ?? 0,
-                    { value: amount }
-                );
+                override = { value: amount };
             } else {
                 const isApproved = await this.approveTokenTransfer(ccy, amount);
                 await onApproved?.(isApproved);
-                return this.lendingMarketController.contract.depositAndCreateOrder(
-                    this.convertCurrencyToBytes32(ccy),
-                    maturity,
-                    side,
-                    amount,
-                    unitPrice ?? 0
-                );
             }
+
+            return this.lendingMarketController.contract.depositAndCreateOrder(
+                this.convertCurrencyToBytes32(ccy),
+                maturity,
+                side,
+                amount,
+                unitPrice ?? 0,
+                override
+            );
         } else {
             return this.lendingMarketController.contract.createOrder(
                 this.convertCurrencyToBytes32(ccy),
@@ -390,5 +387,33 @@ export class SecuredFinanceClient extends ContractsInstance {
             ERC20.abi,
             this.config.signerOrProvider
         ) as MockERC20;
+    }
+
+    async getTotalDepositAmount(currency: Currency) {
+        assertNonNullish(this.tokenVault);
+        return this.tokenVault.contract.getTotalDepositAmount(
+            this.convertCurrencyToBytes32(currency)
+        );
+    }
+
+    async getProtocolDepositAmount() {
+        assertNonNullish(this.tokenVault);
+        const currencyList = await this.getCurrencies();
+
+        const totalDepositAmounts = await Promise.allSettled(
+            currencyList.map(currency =>
+                this.tokenVault?.contract.getTotalDepositAmount(currency)
+            )
+        );
+
+        return totalDepositAmounts.reduce((acc, cur, index) => {
+            if (cur.status === 'fulfilled') {
+                if (cur.value) {
+                    acc[this.parseBytes32String(currencyList[index])] =
+                        cur.value;
+                }
+            }
+            return acc;
+        }, {} as Record<string, BigNumber>);
     }
 }
