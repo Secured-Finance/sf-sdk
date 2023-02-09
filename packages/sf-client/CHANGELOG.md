@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.41](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.40...v0.2.0-beta.41) (2023-02-09)
+
+
+### Features
+
+* add method to retrieve TVL [SF-301] ([d5e8420](https://github.com/secured-finance/sf-sdk/commit/d5e8420b56d6b7261eba0cdcd84882b0a49db8c3))
+
+
+
+
+
 # [0.2.0-beta.40](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.39...v0.2.0-beta.40) (2023-02-03)
 
 **Note:** Version bump only for package @secured-finance/sf-client
