@@ -185,22 +185,26 @@ export class SecuredFinanceClient extends ContractsInstance {
     ) {
         assertNonNullish(this.lendingMarketController);
         if (side === OrderSide.LEND) {
-            let override = undefined;
             if (ccy.equals(Ether.onChain(this.config.networkId))) {
-                override = { value: amount };
+                return this.lendingMarketController.contract.depositAndCreateOrder(
+                    this.convertCurrencyToBytes32(ccy),
+                    maturity,
+                    side,
+                    amount,
+                    unitPrice ?? 0,
+                    { value: amount }
+                );
             } else {
                 const isApproved = await this.approveTokenTransfer(ccy, amount);
                 await onApproved?.(isApproved);
+                return this.lendingMarketController.contract.depositAndCreateOrder(
+                    this.convertCurrencyToBytes32(ccy),
+                    maturity,
+                    side,
+                    amount,
+                    unitPrice ?? 0
+                );
             }
-
-            return this.lendingMarketController.contract.depositAndCreateOrder(
-                this.convertCurrencyToBytes32(ccy),
-                maturity,
-                side,
-                amount,
-                unitPrice ?? 0,
-                override
-            );
         } else {
             return this.lendingMarketController.contract.createOrder(
                 this.convertCurrencyToBytes32(ccy),
