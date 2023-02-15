@@ -14,9 +14,18 @@ export const LENDING_MARKETS = gql`
     }
 `;
 
-export const USER_TRANSACTION_HISTORY = gql`
-    query UserTransactionHistory($address: ID!) {
+export const USER_COUNT = gql`
+    query UserCount {
+        protocol(id: "ethereum") {
+            totalUsers
+        }
+    }
+`;
+
+export const USER_HISTORY = gql`
+    query UserHistory($address: ID!) {
         user(id: $address) {
+            id
             transactions(orderBy: createdAt, orderDirection: desc) {
                 id
                 currency
@@ -28,13 +37,6 @@ export const USER_TRANSACTION_HISTORY = gql`
                 averagePrice
                 createdAt
             }
-        }
-    }
-`;
-
-export const USER_ORDER_HISTORY = gql`
-    query UserOrderHistory($address: ID!) {
-        user(id: $address) {
             orders(orderBy: createdAt, orderDirection: desc) {
                 id
                 orderId
