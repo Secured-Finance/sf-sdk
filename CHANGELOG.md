@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.43](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.42...v0.2.0-beta.43) (2023-02-17)
+
+
+### Bug Fixes
+
+* fix lending function [SF-301] ([4edd656](https://github.com/Secured-Finance/sf-sdk/commit/4edd65693142227e6aaff0147e8259c8e196df0a))
+* upgrade to latest version of smart contract ([bd9ea6a](https://github.com/Secured-Finance/sf-sdk/commit/bd9ea6a23ab6cd93af30e24cb4378ea1b9646b9d))
+
+
+### Features
+
+* add method to retrieve TVL [SF-301] ([d5e8420](https://github.com/Secured-Finance/sf-sdk/commit/d5e8420b56d6b7261eba0cdcd84882b0a49db8c3))
+* update queries for latest graph [SF-301] ([bfd0b09](https://github.com/Secured-Finance/sf-sdk/commit/bfd0b093f9f5c9fbac3656825ba6c87005358cea))
+
+
+
+# 0.2.0-beta.40 (2023-02-03)
+
+
+
+
+
 # [0.2.0-beta.42](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.41...v0.2.0-beta.42) (2023-02-15)
 
 
