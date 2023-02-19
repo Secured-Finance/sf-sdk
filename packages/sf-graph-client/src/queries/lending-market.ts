@@ -22,6 +22,18 @@ export const USER_COUNT = gql`
     }
 `;
 
+export const DAILY_VOLUMES = gql`
+    query DailyVolumes {
+        dailyVolumes {
+            id
+            currency
+            maturity
+            day
+            timestamp
+            volume
+        }
+    }
+`;
 export const USER_HISTORY = gql`
     query UserHistory($address: ID!) {
         user(id: $address) {
