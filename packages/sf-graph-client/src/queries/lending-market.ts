@@ -66,3 +66,28 @@ export const USER_HISTORY = gql`
         }
     }
 `;
+
+export const TRADES = gql`
+    query Trades(
+        $currency: Bytes!
+        $maturity: BigInt!
+        $from: BigInt!
+        $to: BigInt!
+    ) {
+        transactions(
+            where: {
+                currency: $currency
+                maturity: $maturity
+                createdAt_gte: $from
+                createdAt_lt: $to
+            }
+        ) {
+            amount
+            maturity
+            side
+            createdAt
+            currency
+            averagePrice
+        }
+    }
+`;
