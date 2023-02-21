@@ -22,6 +22,18 @@ export const USER_COUNT = gql`
     }
 `;
 
+export const DAILY_VOLUMES = gql`
+    query DailyVolumes {
+        dailyVolumes {
+            id
+            currency
+            maturity
+            day
+            timestamp
+            volume
+        }
+    }
+`;
 export const USER_HISTORY = gql`
     query UserHistory($address: ID!) {
         user(id: $address) {
@@ -51,6 +63,31 @@ export const USER_HISTORY = gql`
                 blockNumber
                 txHash
             }
+        }
+    }
+`;
+
+export const TRADES = gql`
+    query Trades(
+        $currency: Bytes!
+        $maturity: BigInt!
+        $from: BigInt!
+        $to: BigInt!
+    ) {
+        transactions(
+            where: {
+                currency: $currency
+                maturity: $maturity
+                createdAt_gte: $from
+                createdAt_lt: $to
+            }
+        ) {
+            amount
+            maturity
+            side
+            createdAt
+            currency
+            averagePrice
         }
     }
 `;
