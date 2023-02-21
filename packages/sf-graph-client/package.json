@@ -1,6 +1,6 @@
 {
   "name": "@secured-finance/sf-graph-client",
-  "version": "0.2.0-beta.42",
+  "version": "0.2.0-beta.44",
   "description": "GraphQL react client for querying Secured Finance subgraph",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,9 +29,9 @@
     "@graphprotocol/client-apollo": "^1.0.11",
     "@graphprotocol/client-auto-pagination": "^1.1.8",
     "@graphprotocol/client-cli": "^2.2.10",
+    "graphql": "^16.6.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "graphql": "^16.6.0"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@types/jest": "27.4.1",
