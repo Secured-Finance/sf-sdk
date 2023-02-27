@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.45](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.44...v0.2.0-beta.45) (2023-02-27)
+
+
+
+# 0.2.0-beta.37 (2023-01-18)
+
+**Note:** Version bump only for package @secured-finance/sf-client
+
+
+
+
+
 # [0.2.0-beta.43](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.42...v0.2.0-beta.43) (2023-02-17)
 
 
