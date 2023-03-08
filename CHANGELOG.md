@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.49](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.48...v0.2.0-beta.49) (2023-03-08)
+
+
+### Bug Fixes
+
+* add initial value for dynamic import [SF-227] ([c17230b](https://github.com/Secured-Finance/sf-sdk/commit/c17230b26cf77567e80bb27fb31326cbda7092b1))
+* export the right values [SF-227] ([2127356](https://github.com/Secured-Finance/sf-sdk/commit/21273568c24160b6fd62de1744219d3429a1be43))
+
+
+
+# 0.2.0-beta.46 (2023-03-02)
+
+
+
+
+
 # [0.2.0-beta.48](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.47...v0.2.0-beta.48) (2023-03-08)
 
 
