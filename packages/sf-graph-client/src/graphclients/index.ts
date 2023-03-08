@@ -1,7 +1,7 @@
 import * as DEV_QUERIES from './development/.graphclient';
 import * as STAGING_QUERIES from './staging/.graphclient';
 
-let queries: typeof import('./development/.graphclient');
+let queries: typeof import('./development/.graphclient') = DEV_QUERIES;
 
 switch (process.env.NODE_ENV) {
     case 'development':
