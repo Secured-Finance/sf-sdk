@@ -39,7 +39,8 @@
     "prettier.requireConfig": true,
     "prettier.prettierPath": "../../node_modules/prettier",
     "prettier.configPath": "../../.prettierrc.json",
-    "prettier.ignorePath": "../../.prettierignore"
+    "prettier.ignorePath": "../../.prettierignore",
+    "cSpell.words": ["graphclient", "graphclients", "graphprotocol"]
   },
   "extensions": {
     "recommendations": [
