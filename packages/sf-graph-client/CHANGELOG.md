@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.48](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.47...v0.2.0-beta.48) (2023-03-08)
+
+
+### Bug Fixes
+
+* export the right values [SF-227] ([2127356](https://github.com/secured-finance/sf-sdk/commit/21273568c24160b6fd62de1744219d3429a1be43))
+
+
+
+# 0.2.0-beta.46 (2023-03-02)
+
+
+
+
+
 # [0.2.0-beta.47](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.46...v0.2.0-beta.47) (2023-03-08)
 
 **Note:** Version bump only for package @secured-finance/sf-graph-client
