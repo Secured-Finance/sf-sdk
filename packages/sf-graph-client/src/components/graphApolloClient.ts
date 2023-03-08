@@ -6,16 +6,54 @@ import {
 } from '@apollo/client';
 import { GraphApolloLink } from '@graphprotocol/client-apollo';
 
-import * as GraphClient from '../graphclient';
+import * as GraphClientDev from '../graphclients/development/.graphclient';
+import * as GraphClientStg from '../graphclients/staging/.graphclient';
+
+const environments = ['development', 'staging', 'production'] as const;
+type Environments = (typeof environments)[number];
 
 const getGraphClient = (network = 'none') => {
-    const sfNetwork = 'goerli';
-    if (network !== 'goerli') {
-        console.warn(`${network} is not a supported network.`);
+    let GraphClient;
+    let sfEnv: Environments | undefined;
+    let sfNetwork: string;
+
+    switch (process.env.SF_ENV) {
+        case 'development':
+            sfEnv = 'development';
+            sfNetwork = 'goerli';
+            if (network !== 'goerli') {
+                console.warn(`${network} is not a supported network.`);
+            }
+            GraphClient = GraphClientDev;
+            break;
+
+        case 'staging':
+            sfEnv = 'staging';
+            sfNetwork = 'goerli';
+            if (network !== 'goerli') {
+                console.warn(`${network} is not a supported network.`);
+            }
+            GraphClient = GraphClientStg;
+            break;
+
+        case 'production':
+        default:
+            sfEnv = 'production';
+            sfNetwork = network;
+            // TODO: Set the GraphClient depending on a target network for production environment.
+            // It will be the following.
+            //
+            // if (network === 'mainnet') {
+            //     GraphClient = GraphClientMainnet;
+            // } else if(network === 'goerli') {
+            //     GraphClient = GraphClientGoerli;
+            // }
+            //     :
+            break;
     }
 
     console.info(
-        `You are connecting the ${sfNetwork} data of the Secured Finance environment`
+        `You are connecting the ${sfNetwork} data of the Secured Finance ${sfEnv} environment`
     );
 
     return GraphClient;

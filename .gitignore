@@ -63,3 +63,4 @@ typings/
 .env.production.local
 
 **/dist/
+**/.DS_Store
