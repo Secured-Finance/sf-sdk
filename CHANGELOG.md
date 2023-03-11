@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.51](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.50...v0.2.0-beta.51) (2023-03-11)
+
+
+### Features
+
+* update graphclient version [SF-227] ([2293397](https://github.com/Secured-Finance/sf-sdk/commit/22933977dfcf316f24996cd27ba2257f9c636e41))
+
+
+
+
+
 # [0.2.0-beta.50](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.49...v0.2.0-beta.50) (2023-03-10)
 
 
