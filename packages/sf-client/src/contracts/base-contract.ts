@@ -14,7 +14,7 @@ const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
         goerli: 'development',
     },
     staging: {
-        goerli: 'development',
+        goerli: 'staging',
     },
     production: {
         goerli: 'goerli',
