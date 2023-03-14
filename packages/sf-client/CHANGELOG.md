@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.52](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.51...v0.2.0-beta.52) (2023-03-14)
+
+
+### Bug Fixes
+
+* fix staging environment contract path [SF-227] ([b6a58a7](https://github.com/secured-finance/sf-sdk/commit/b6a58a7ef7cee3409696fab9a7e874dbf63624d3))
+
+
+
+
+
 # [0.2.0-beta.50](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.49...v0.2.0-beta.50) (2023-03-10)
 
 
