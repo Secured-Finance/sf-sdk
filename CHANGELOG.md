@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.53](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.52...v0.2.0-beta.53) (2023-03-16)
+
+
+### Features
+
+* add openingDate in market info [SF-370] ([af5cdf5](https://github.com/Secured-Finance/sf-sdk/commit/af5cdf5442388eaf47060a9775a66835e69492d5))
+
+
+
+
+
 # [0.2.0-beta.52](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.51...v0.2.0-beta.52) (2023-03-14)
 
 
