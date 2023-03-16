@@ -160,6 +160,7 @@ export class SecuredFinanceClient extends ContractsInstance {
                     borrowUnitPrice: marketInfo.borrowUnitPrice,
                     maturity: marketInfo.maturity.toNumber(),
                     name: getUTCMonthYear(marketInfo.maturity.toNumber()),
+                    utcOpeningDate: marketInfo.openingDate.toNumber(),
                 };
             })
         );

@@ -15,4 +15,5 @@ export interface LendingMarketInfo {
     lendUnitPrice: BigNumber;
     borrowUnitPrice: BigNumber;
     midUnitPrice: BigNumber;
+    utcOpeningDate: number;
 }
