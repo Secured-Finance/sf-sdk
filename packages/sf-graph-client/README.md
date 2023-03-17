@@ -16,7 +16,7 @@ import { GraphClientProvider } from '@secured-finance/sf-graph-client';
 
 const App = () => {
     return (
-        <GraphClientProvider network="ropsten">
+        <GraphClientProvider network="goerli">
             <YourPage />
         </GraphClientProvider>
     );
@@ -25,10 +25,13 @@ const App = () => {
 export default App;
 ```
 
-4. Import and call specific hooks.
+4. Import the `useQuery` hook and use it to query the graph.
+5. Import all queries from `@secured-finance/sf-graph-client` to use with `useQuery`.
 
 ```ts
-import { useLendingMarkets } from '@secured-finance/sf-graph-client';
+import { useQuery } from '@secured-finance/sf-graph-client';
+import queries from '@secured-finance/sf-graph-client/dist/graphclients';
+
 ```
 
 ## Environment Variables
@@ -40,9 +43,3 @@ import { useLendingMarkets } from '@secured-finance/sf-graph-client';
 
 1. Run the `npm run codegen` command to generate the graph client to access the Subgraph.
 2. Run the `npm run build` command to compile the graph client.
-
-## Testing
-
-Run the `npm run test` command to execute e2e testing.
-
-The testing accesses actual Subgraphs that are deployed from the `secured-finance-subgraph` package.

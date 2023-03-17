@@ -6,6 +6,7 @@
 | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
 | [`@secured-finance/sf-client`](/packages/sf-client)   || Client library for the Secured Finance protocol        |
 | [`@secured-finance/sf-graph-client`](/packages/sf-graph-client)   || GraphQL library for querying data from SF subgraph        |
+| [`@secured-finance/sf-core`](/packages/sf-core)   || Core components used in different Secured Finance projects        |
 
 ## Using packages
 
@@ -22,7 +23,7 @@ npm run bootstrap
 To build updated packages, run:
 
 ```
-npm run build
+npm run build-all
 ```
 
 This will compile and build all packages inside the monorepo. To build individual package please run the same command from an individual repository
