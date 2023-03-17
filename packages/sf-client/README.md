@@ -31,8 +31,3 @@ await sfClient.init(signer, network);
 ## Testing
 
 Run the `npm run test` command to execute unit testing.
-
-
-## Example codes
-
-Run the `npx ts-node ./examples/<FILE NAME>.ts` command to execute example codes to test `SecuredFinanceClient`.
