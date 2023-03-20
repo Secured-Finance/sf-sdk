@@ -421,4 +421,12 @@ export class SecuredFinanceClient extends ContractsInstance {
             return acc;
         }, {} as Record<string, BigNumber>);
     }
+
+    async unwindOrder(currency: Currency, maturity: number) {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.unwindOrder(
+            this.convertCurrencyToBytes32(currency),
+            maturity
+        );
+    }
 }
