@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.54](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.53...v0.2.0-beta.54) (2023-03-20)
+
+
+### Features
+
+* add unwindOrder function to sdk [SF-354] ([fb622fb](https://github.com/secured-finance/sf-sdk/commit/fb622fb455b3462cf29e386072c3a79e92c5bf2a))
+
+
+
+
+
 # [0.2.0-beta.53](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.52...v0.2.0-beta.53) (2023-03-16)
 
 
