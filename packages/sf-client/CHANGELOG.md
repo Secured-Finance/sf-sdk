@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.56](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.55...v0.2.0-beta.56) (2023-04-04)
+
+
+### Features
+
+* add source wallet to place order [SF-304] ([0dcae81](https://github.com/secured-finance/sf-sdk/commit/0dcae81bbc16f920a70b562517a6f7a76bee8ac0))
+
+
+
+
+
 # [0.2.0-beta.55](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.54...v0.2.0-beta.55) (2023-03-27)
 
 **Note:** Version bump only for package @secured-finance/sf-client
