@@ -25,6 +25,11 @@ export enum OrderSide {
     BORROW = '1',
 }
 
+export enum WalletSource {
+    METAMASK = 'Metamask',
+    SF_VAULT = 'SF Vault',
+}
+
 const CLIENT_NOT_INITIALIZED = 'Client is not initialized';
 
 function assertNonNullish<TValue>(
@@ -181,11 +186,12 @@ export class SecuredFinanceClient extends ContractsInstance {
         maturity: number,
         side: OrderSide,
         amount: number | BigNumber,
+        sourceWallet: WalletSource,
         unitPrice?: number,
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
         assertNonNullish(this.lendingMarketController);
-        if (side === OrderSide.LEND) {
+        if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
             if (ccy.equals(Ether.onChain(this.config.networkId))) {
                 return this.lendingMarketController.contract.depositAndCreateOrder(
                     this.convertCurrencyToBytes32(ccy),
