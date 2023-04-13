@@ -181,7 +181,7 @@ export class SecuredFinanceClient extends ContractsInstance {
      * @param onApproved callback function to be called after the approval transaction is mined
      * @returns a `ContractTransaction`
      */
-    async placeLendingOrder(
+    async placeOrder(
         ccy: Currency,
         maturity: number,
         side: OrderSide,
@@ -219,6 +219,48 @@ export class SecuredFinanceClient extends ContractsInstance {
                 side,
                 amount,
                 unitPrice ?? 0
+            );
+        }
+    }
+
+    async placePreOrder(
+        ccy: Currency,
+        maturity: number,
+        side: OrderSide,
+        amount: number | BigNumber,
+        sourceWallet: WalletSource,
+        unitPrice: number,
+        onApproved?: (isApproved: boolean) => Promise<void> | void
+    ) {
+        assertNonNullish(this.lendingMarketController);
+        if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
+            if (ccy.equals(Ether.onChain(this.config.networkId))) {
+                return this.lendingMarketController.contract.depositAndCreatePreOrder(
+                    this.convertCurrencyToBytes32(ccy),
+                    maturity,
+                    side,
+                    amount,
+                    unitPrice,
+                    { value: amount }
+                );
+            } else {
+                const isApproved = await this.approveTokenTransfer(ccy, amount);
+                await onApproved?.(isApproved);
+                return this.lendingMarketController.contract.depositAndCreatePreOrder(
+                    this.convertCurrencyToBytes32(ccy),
+                    maturity,
+                    side,
+                    amount,
+                    unitPrice
+                );
+            }
+        } else {
+            return this.lendingMarketController.contract.createPreOrder(
+                this.convertCurrencyToBytes32(ccy),
+                maturity,
+                side,
+                amount,
+                unitPrice
             );
         }
     }
@@ -434,5 +476,18 @@ export class SecuredFinanceClient extends ContractsInstance {
             this.convertCurrencyToBytes32(currency),
             maturity
         );
+    }
+
+    async getLendingMarket(currency: Currency, maturity: number) {
+        assertNonNullish(this.lendingMarketController);
+        assertNonNullish(this.lendingMarkets);
+
+        const address =
+            await this.lendingMarketController.contract.getLendingMarket(
+                this.convertCurrencyToBytes32(currency),
+                maturity
+            );
+
+        return (await this.lendingMarkets.get(address)).contract;
     }
 }
