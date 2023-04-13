@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.60](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.59...v0.2.0-beta.60) (2023-04-13)
+
+
+### Features
+
+* add function to placePreOrder ([a1e550e](https://github.com/Secured-Finance/sf-sdk/commit/a1e550e42fe9e039e41afc2893af81d8ae4d8f5c))
+
+
+
+# 0.2.0-beta.57 (2023-04-06)
+
+
+
+
+
 # [0.2.0-beta.59](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.58...v0.2.0-beta.59) (2023-04-11)
 
 
