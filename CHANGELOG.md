@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.61](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.60...v0.2.0-beta.61) (2023-04-14)
+
+
+### Bug Fixes
+
+* export wallet source from sf-client [SF-304] ([ac2e445](https://github.com/Secured-Finance/sf-sdk/commit/ac2e4456f8971d7c735157644afa3813b980cda4))
+
+
+
+
+
 # [0.2.0-beta.60](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.59...v0.2.0-beta.60) (2023-04-13)
 
 
