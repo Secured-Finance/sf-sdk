@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.62](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.61...v0.2.0-beta.62) (2023-04-18)
+
+
+### Features
+
+* simplify getLendingMarkets [SF-345] ([d31ef9b](https://github.com/Secured-Finance/sf-sdk/commit/d31ef9bb2c19de647282537c5fe203961196a7e3))
+
+
+
+
+
 # [0.2.0-beta.61](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.60...v0.2.0-beta.61) (2023-04-14)
 
 
