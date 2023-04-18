@@ -1,4 +1,4 @@
-import { LendingMarketInfo, SecuredFinanceClientConfig } from './entities';
+import { SecuredFinanceClientConfig } from './entities';
 import {
     OrderSide,
     SecuredFinanceClient,
@@ -10,7 +10,6 @@ export {
     SecuredFinanceClient,
     utils,
     SecuredFinanceClientConfig,
-    LendingMarketInfo,
     OrderSide,
     WalletSource,
 };
