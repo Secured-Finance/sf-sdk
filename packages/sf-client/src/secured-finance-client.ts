@@ -16,7 +16,7 @@ import {
     utils,
 } from 'ethers';
 import { ContractsInstance } from './contracts-instance';
-import { LendingMarketInfo, SecuredFinanceClientConfig } from './entities';
+import { SecuredFinanceClientConfig } from './entities';
 import { MockERC20 } from './types';
 import { NetworkName, networkNames, sendEther } from './utils';
 
@@ -147,7 +147,7 @@ export class SecuredFinanceClient extends ContractsInstance {
         );
     }
 
-    async getLendingMarkets(ccy: Currency): Promise<LendingMarketInfo[]> {
+    async getLendingMarkets(ccy: Currency) {
         assertNonNullish(this.lendingMarketController);
         const ccyIdentifier = this.convertCurrencyToBytes32(ccy);
         const lendingMarketAddresses =
@@ -160,12 +160,8 @@ export class SecuredFinanceClient extends ContractsInstance {
                 const lendingMarket = await this.lendingMarkets.get(address);
                 const marketInfo = await lendingMarket.contract.getMarket();
                 return {
-                    midUnitPrice: marketInfo.midUnitPrice,
-                    lendUnitPrice: marketInfo.lendUnitPrice,
-                    borrowUnitPrice: marketInfo.borrowUnitPrice,
-                    maturity: marketInfo.maturity.toNumber(),
+                    ...marketInfo,
                     name: getUTCMonthYear(marketInfo.maturity.toNumber()),
-                    utcOpeningDate: marketInfo.openingDate.toNumber(),
                 };
             })
         );
