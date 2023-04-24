@@ -2,8 +2,10 @@
 
 ## Quick Start
 
-1. Run `npm install @secured-finance/sf-client --save` to install this client.
-2. Set the environment variable `SF_ENV`.
+1. Save your NPM auth token by storing it directly in the .npmrc file or through terminal(run `NPM_AUTH_TOKEN="Personal Access Token"`)
+Note: If you face an authentication issue please repeat this step for all packages individually. 
+2. Run `npm install @secured-finance/sf-client --save` to install this client.
+3. Set the environment variable `SF_ENV`.
 
 ```
 SF_ENV=development
