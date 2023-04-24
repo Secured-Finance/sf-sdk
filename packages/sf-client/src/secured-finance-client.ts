@@ -93,7 +93,7 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     async getCollateralParameters() {
         assertNonNullish(this.tokenVault);
-        return this.tokenVault?.contract.getCollateralParameters();
+        return this.tokenVault.contract.getCollateralParameters();
     }
 
     async depositCollateral(
