@@ -90,6 +90,12 @@ export class SecuredFinanceClient extends ContractsInstance {
      * @returns a `ContractTransaction`
      * @throws if the client is not initialized
      */
+
+    async getCollateralParameters() {
+        assertNonNullish(this.tokenVault);
+        return this.tokenVault.contract.getCollateralParameters();
+    }
+
     async depositCollateral(
         ccy: Currency,
         amount: number | BigNumber,
