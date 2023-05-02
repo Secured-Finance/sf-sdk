@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.63](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.62...v0.2.0-beta.63) (2023-05-02)
+
+
+### Bug Fixes
+
+* fetch collateral parameters from the smart contract [SF-424] ([f40a323](https://github.com/Secured-Finance/sf-sdk/commit/f40a32317ce55755b23ca84414c17901c58edc3b))
+* remove unnecessary code [SF-424] ([451df72](https://github.com/Secured-Finance/sf-sdk/commit/451df7274fa7147e18f088aaf9e266ca746a6310))
+
+
+
+
+
 # [0.2.0-beta.62](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.61...v0.2.0-beta.62) (2023-04-18)
 
 
