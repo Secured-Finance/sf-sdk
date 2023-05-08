@@ -11,6 +11,7 @@ const getQueries = () => {
             queries = STAGING_QUERIES;
             break;
         default:
+            queries = DEV_QUERIES;
             break;
     }
     return queries;
