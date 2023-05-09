@@ -3,7 +3,7 @@ import * as STAGING_QUERIES from './staging/.graphclient';
 
 const getQueries = () => {
     let queries;
-    switch (process.env.NODE_ENV) {
+    switch (process.env.SF_ENV) {
         case 'development':
             queries = DEV_QUERIES;
             break;
