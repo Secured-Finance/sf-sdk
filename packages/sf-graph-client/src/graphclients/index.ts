@@ -10,7 +10,9 @@ const getQueries = () => {
         case 'staging':
             queries = STAGING_QUERIES;
             break;
+        case 'production':
         default:
+            // TODO: set the queries to Prod Queries for production env
             break;
     }
     return queries;
