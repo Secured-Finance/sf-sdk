@@ -9,7 +9,7 @@ class Main {
             .replace('/package.json', '');
 
         const allFiles = glob(cwd, [
-            `${modulePath}/build/contracts/**.sol/+([a-zA-Z0-9_]).json`,
+            `${modulePath}/build/contracts/protocol/**.sol/+([a-zA-Z0-9_]).json`,
             `${modulePath}/build/contracts/mocks/tokens/**.sol/+([a-zA-Z0-9_]).json`,
         ]);
 

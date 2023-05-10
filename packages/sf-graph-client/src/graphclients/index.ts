@@ -3,14 +3,16 @@ import * as STAGING_QUERIES from './staging/.graphclient';
 
 const getQueries = () => {
     let queries;
-    switch (process.env.NODE_ENV) {
+    switch (process.env.SF_ENV) {
         case 'development':
             queries = DEV_QUERIES;
             break;
         case 'staging':
             queries = STAGING_QUERIES;
             break;
+        case 'production':
         default:
+            // TODO: set the queries to Prod Queries for production env
             break;
     }
     return queries;
