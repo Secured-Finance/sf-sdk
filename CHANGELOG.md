@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.65](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.64...v0.2.0-beta.65) (2023-05-10)
+
+
+### Bug Fixes
+
+* queries set to dev_queries for default [SF-363] ([2d23cd5](https://github.com/Secured-Finance/sf-sdk/commit/2d23cd52516c30d772610570553fc073589654c4))
+* queries should undefined if the sf_env not set [SF-363] ([42fa5a0](https://github.com/Secured-Finance/sf-sdk/commit/42fa5a0375a22b433d6ce4a44bfad1caa44e15ba))
+* requested changes done [SF-363] ([4360caa](https://github.com/Secured-Finance/sf-sdk/commit/4360caa30a096019126ca380e2eab89090a32dd0))
+* sf_env used instead of node_env [SF-363] ([23da5b8](https://github.com/Secured-Finance/sf-sdk/commit/23da5b8bf4bb68169b5a64f9ae5b9fe3e876ddbe))
+* todo comment added for queries to be set when prod is ready [SF-363] ([3454c4f](https://github.com/Secured-Finance/sf-sdk/commit/3454c4ffe87e380154e4692fff66844527ec8e8d))
+
+
+
+# 0.2.0-beta.63 (2023-05-02)
+
+
+
+
+
 # [0.2.0-beta.64](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.63...v0.2.0-beta.64) (2023-05-08)
 
 
