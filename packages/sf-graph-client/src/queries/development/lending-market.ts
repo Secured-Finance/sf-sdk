@@ -58,7 +58,6 @@ export const USER_HISTORY = gql`
                 maturity
                 unitPrice
                 amount
-                filledAmount
                 status
                 createdAt
                 blockNumber
