@@ -301,7 +301,7 @@ export class SecuredFinanceClient extends ContractsInstance {
     async convertToETH(ccy: Currency, amount: number | BigNumber) {
         assertNonNullish(this.lendingMarketController);
         return this.currencyController?.contract[
-            'convertToETH(bytes32,int256)'
+            'convertToBaseCurrency(bytes32,int256)'
         ](this.convertCurrencyToBytes32(ccy), amount);
     }
 
