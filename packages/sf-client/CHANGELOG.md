@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.67](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.66...v0.2.0-beta.67) (2023-05-15)
+
+
+### Bug Fixes
+
+* function name changed [SF-481] ([dd0a449](https://github.com/secured-finance/sf-sdk/commit/dd0a449118d539283cf82125dd835637bb634523))
+
+
+
+
+
 # [0.2.0-beta.65](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.64...v0.2.0-beta.65) (2023-05-10)
 
 
