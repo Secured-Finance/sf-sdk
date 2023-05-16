@@ -98,7 +98,7 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     async getWithdrawableCollateral(ccy: Currency, account: string) {
         assertNonNullish(this.tokenVault);
-        return await this.tokenVault.contract[
+        return this.tokenVault.contract[
             'getWithdrawableCollateral(bytes32,address)'
         ](this.convertCurrencyToBytes32(ccy), account);
     }
