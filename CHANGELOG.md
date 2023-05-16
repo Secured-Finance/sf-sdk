@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.68](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.67...v0.2.0-beta.68) (2023-05-16)
+
+
+### Bug Fixes
+
+* Add Available collateral per currency [SF-463] ([1108ed5](https://github.com/Secured-Finance/sf-sdk/commit/1108ed52a37aa0b6fdc7106a5847273dd58471c6))
+* remove unnecessary code [SF-463] ([1ffe73d](https://github.com/Secured-Finance/sf-sdk/commit/1ffe73de91443a7b75b721f229be6c6dc8864357))
+
+
+
+
+
 # [0.2.0-beta.67](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.66...v0.2.0-beta.67) (2023-05-15)
 
 
