@@ -96,6 +96,13 @@ export class SecuredFinanceClient extends ContractsInstance {
         return this.tokenVault.contract.getCollateralParameters();
     }
 
+    async getWithdrawableCollateral(ccy: Currency, account: string) {
+        assertNonNullish(this.tokenVault);
+        return this.tokenVault.contract[
+            'getWithdrawableCollateral(bytes32,address)'
+        ](this.convertCurrencyToBytes32(ccy), account);
+    }
+
     async depositCollateral(
         ccy: Currency,
         amount: number | BigNumber,
@@ -299,7 +306,7 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     async convertToBaseCurrency(ccy: Currency, amount: number | BigNumber) {
-        assertNonNullish(this.lendingMarketController);
+        assertNonNullish(this.currencyController);
         return this.currencyController?.contract[
             'convertToBaseCurrency(bytes32,int256)'
         ](this.convertCurrencyToBytes32(ccy), amount);
