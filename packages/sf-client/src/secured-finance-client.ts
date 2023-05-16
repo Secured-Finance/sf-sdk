@@ -496,14 +496,14 @@ export class SecuredFinanceClient extends ContractsInstance {
     async getOrderList(account: string) {
         assertNonNullish(this.lendingMarketController);
 
-        const usedCurrencies =
+        const usedCurrenciesForOrders =
             await this.lendingMarketController.contract.getUsedCurrencies(
                 account
             );
 
         const { activeOrders, inactiveOrders } =
             await this.lendingMarketController.contract.getOrders(
-                usedCurrencies,
+                usedCurrenciesForOrders,
                 account
             );
 
