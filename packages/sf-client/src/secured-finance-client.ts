@@ -493,13 +493,8 @@ export class SecuredFinanceClient extends ContractsInstance {
         return (await this.lendingMarkets.get(address)).contract;
     }
 
-    async getOrderList(account: string) {
+    async getOrderList(account: string, usedCurrenciesForOrders: string[]) {
         assertNonNullish(this.lendingMarketController);
-
-        const usedCurrenciesForOrders =
-            await this.lendingMarketController.contract.getUsedCurrencies(
-                account
-            );
 
         const { activeOrders, inactiveOrders } =
             await this.lendingMarketController.contract.getOrders(
@@ -508,5 +503,16 @@ export class SecuredFinanceClient extends ContractsInstance {
             );
 
         return { activeOrders, inactiveOrders };
+    }
+
+    async getUsedCurrenciesForOrders(account: string) {
+        assertNonNullish(this.lendingMarketController);
+
+        const usedCurrenciesForOrders =
+            await this.lendingMarketController.contract.getUsedCurrencies(
+                account
+            );
+
+        return usedCurrenciesForOrders;
     }
 }
