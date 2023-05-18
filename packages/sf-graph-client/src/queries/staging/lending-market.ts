@@ -39,7 +39,6 @@ export const USER_HISTORY = gql`
         user(id: $address) {
             id
             transactions(orderBy: createdAt, orderDirection: desc) {
-                id
                 currency
                 maturity
                 side
@@ -50,9 +49,7 @@ export const USER_HISTORY = gql`
                 createdAt
             }
             orders(orderBy: createdAt, orderDirection: desc) {
-                id
                 orderId
-                originalOrderId
                 currency
                 side
                 maturity
@@ -60,8 +57,6 @@ export const USER_HISTORY = gql`
                 amount
                 status
                 createdAt
-                blockNumber
-                txHash
             }
         }
     }
