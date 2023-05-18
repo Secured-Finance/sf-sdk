@@ -50,6 +50,12 @@ export class SecuredFinanceClient extends ContractsInstance {
         }
     }
 
+    private convertCurrencyArrayToBytes32Array(currencies: Currency[]) {
+        return currencies.map(currency =>
+            this.convertCurrencyToBytes32(currency)
+        );
+    }
+
     private parseBytes32String(ccy: string) {
         return utils.parseBytes32String(ccy);
     }
@@ -498,5 +504,25 @@ export class SecuredFinanceClient extends ContractsInstance {
             );
 
         return (await this.lendingMarkets.get(address)).contract;
+    }
+
+    async getOrderList(account: string, usedCurrenciesForOrders: Currency[]) {
+        assertNonNullish(this.lendingMarketController);
+
+        const { activeOrders, inactiveOrders } =
+            await this.lendingMarketController.contract.getOrders(
+                this.convertCurrencyArrayToBytes32Array(
+                    usedCurrenciesForOrders
+                ),
+                account
+            );
+
+        return { activeOrders, inactiveOrders };
+    }
+
+    async getUsedCurrenciesForOrders(account: string) {
+        assertNonNullish(this.lendingMarketController);
+
+        return this.lendingMarketController.contract.getUsedCurrencies(account);
     }
 }
