@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.69](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.68...v0.2.0-beta.69) (2023-05-18)
+
+
+### Bug Fixes
+
+* function added to get orderList from smart contract [SF-481] ([0ee7466](https://github.com/secured-finance/sf-sdk/commit/0ee74667d78420ddec60b4a8f615c4235690e10e))
+* requested changes done [SF-516] ([fe91f31](https://github.com/secured-finance/sf-sdk/commit/fe91f3168c98d42c560953f61342c1cba57a25b8))
+* requested changes done [SF-516] ([1d3a2f3](https://github.com/secured-finance/sf-sdk/commit/1d3a2f3694fda051aa17521f12e773b5f930189d))
+* requested changes done [SF-516] ([8f684d6](https://github.com/secured-finance/sf-sdk/commit/8f684d6c459b244856dc249ace0a4e0f300a5a24))
+* usedCurrenciesForOrders type changed to currency array [SF-516] ([37a54ad](https://github.com/secured-finance/sf-sdk/commit/37a54ad5d499cdc032c1598c9ac5786accb497dd))
+
+
+
+# 0.2.0-beta.67 (2023-05-15)
+
+
+
+
+
 # [0.2.0-beta.68](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.67...v0.2.0-beta.68) (2023-05-16)
 
 
