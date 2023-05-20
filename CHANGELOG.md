@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.70](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.69...v0.2.0-beta.70) (2023-05-20)
+
+
+### Bug Fixes
+
+* queries updated to bring expired or cancelled orders [SF-520] ([f060f54](https://github.com/Secured-Finance/sf-sdk/commit/f060f54f074bfee3285f0d15827218f7311e92a1))
+
+
+
+
+
 # [0.2.0-beta.69](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.68...v0.2.0-beta.69) (2023-05-18)
 
 
