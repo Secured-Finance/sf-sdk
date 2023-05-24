@@ -11,13 +11,13 @@ type NetworkMap = Record<NetworkName, string>;
 
 const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
     development: {
-        goerli: 'development',
+        sepolia: 'development',
     },
     staging: {
-        goerli: 'staging',
+        sepolia: 'staging',
     },
     production: {
-        goerli: 'goerli',
+        sepolia: 'sepolia',
         mainnet: 'production',
     },
 };

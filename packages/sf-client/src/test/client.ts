@@ -18,14 +18,14 @@ class Filecoin extends Token {
 
 const client = new SecuredFinanceClient();
 const provider = new providers.AlchemyProvider(
-    'goerli',
+    'sepolia',
     process.env.ALCHEMY_API_KEY
 );
 
 client
     .init(provider, {
-        chainId: 5,
-        name: 'goerli',
+        chainId: 11155111,
+        name: 'sepolia',
     })
     .then(() => {
         client.getLendingMarkets(new Filecoin()).then(markets => {
