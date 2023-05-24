@@ -16,7 +16,7 @@ import { GraphClientProvider } from '@secured-finance/sf-graph-client';
 
 const App = () => {
     return (
-        <GraphClientProvider network="goerli">
+        <GraphClientProvider network="sepolia">
             <YourPage />
         </GraphClientProvider>
     );

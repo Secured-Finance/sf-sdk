@@ -21,7 +21,7 @@ describe('Secured Finance Client', () => {
 
     it('should be able to init the client', async () => {
         const client = new SecuredFinanceClient();
-        const provider = getProvider('goerli');
+        const provider = getProvider('sepolia');
         await client.init(provider, await provider.getNetwork());
         expect(client).toBeTruthy();
     });
@@ -35,7 +35,7 @@ describe('config', () => {
 
     it('should return the config if the client is initialized', async () => {
         const client = new SecuredFinanceClient();
-        const provider = getProvider('goerli');
+        const provider = getProvider('sepolia');
         await client.init(provider, await provider.getNetwork());
         expect(client.config).toBeTruthy();
     });
@@ -51,7 +51,7 @@ describe('depositCollateral method', () => {
 
     it.skip('should call the depositCollateral contract in a payable way for ETH', async () => {
         const client = new SecuredFinanceClient();
-        const provider = getProvider('goerli');
+        const provider = getProvider('sepolia');
         const network = await provider.getNetwork();
         await client.init(provider, network);
 
@@ -68,7 +68,7 @@ describe('depositCollateral method', () => {
 
     it.skip('should call the depositCollateral contract in a non payable way for ERC20 token', async () => {
         const client = new SecuredFinanceClient();
-        const provider = getProvider('goerli');
+        const provider = getProvider('sepolia');
         const network = await provider.getNetwork();
         await client.init(provider, network);
 
@@ -91,7 +91,7 @@ describe('withdrawCollateral method', () => {
 
     it.skip('should call the withdrawCollateral contract', async () => {
         const client = new SecuredFinanceClient();
-        const provider = getProvider('goerli');
+        const provider = getProvider('sepolia');
         const network = await provider.getNetwork();
         await client.init(provider, network);
 
