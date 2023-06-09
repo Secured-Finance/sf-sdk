@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.74](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.73...v0.2.0-beta.74) (2023-06-09)
+
+
+### Bug Fixes
+
+* stg queries updated [SF-539] ([04fd067](https://github.com/Secured-Finance/sf-sdk/commit/04fd067ff0e36246813082d9e2c61ec823a2359c))
+
+
+
+# 0.2.0-beta.72 (2023-06-06)
+
+
+
+
+
 # [0.2.0-beta.73](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.72...v0.2.0-beta.73) (2023-06-08)
 
 
