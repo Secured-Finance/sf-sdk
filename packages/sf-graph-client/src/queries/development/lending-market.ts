@@ -51,13 +51,16 @@ export const USER_HISTORY = gql`
             orders(
                 orderBy: createdAt
                 orderDirection: desc
-                where: { status_in: [Expired, Cancelled] }
+                where: {
+                    status_in: [Expired, Cancelled, PartiallyFilled, Filled]
+                }
             ) {
                 orderId
                 currency
                 side
                 maturity
                 unitPrice
+                filledAmount
                 amount
                 status
                 createdAt
