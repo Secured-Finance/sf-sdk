@@ -520,9 +520,16 @@ export class SecuredFinanceClient extends ContractsInstance {
         return { activeOrders, inactiveOrders };
     }
 
+    async getPositions(account: string, usedCurrenciesForOrders: Currency[]) {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.getPositions(
+            this.convertCurrencyArrayToBytes32Array(usedCurrenciesForOrders),
+            account
+        );
+    }
+
     async getUsedCurrenciesForOrders(account: string) {
         assertNonNullish(this.lendingMarketController);
-
         return this.lendingMarketController.contract.getUsedCurrencies(account);
     }
 }
