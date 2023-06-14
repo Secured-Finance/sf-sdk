@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.76](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.75...v0.2.0-beta.76) (2023-06-14)
+
+
+### Features
+
+* getPositions function defined to fetch active positions from contracts [SF-563] ([c914e8b](https://github.com/secured-finance/sf-sdk/commit/c914e8b10dc2dc96eb08a8025bed762ade8646e3))
+
+
+
+
+
 # [0.2.0-beta.72](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.71...v0.2.0-beta.72) (2023-06-06)
 
 **Note:** Version bump only for package @secured-finance/sf-client
