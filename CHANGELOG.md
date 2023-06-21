@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.78](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.77...v0.2.0-beta.78) (2023-06-21)
+
+
+### Bug Fixes
+
+* query updated [SF-594] ([08e6d23](https://github.com/Secured-Finance/sf-sdk/commit/08e6d231f99ea6525df843dd3546d12e4badae55))
+
+
+### Features
+
+* txHash of orders added in userHistory query [SF-589] ([a2c4f74](https://github.com/Secured-Finance/sf-sdk/commit/a2c4f74d4923a8d3ec0b1e2ae40dc776908c1757))
+
+
+
+# 0.2.0-beta.76 (2023-06-14)
+
+
+
+
+
 # [0.2.0-beta.77](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.76...v0.2.0-beta.77) (2023-06-21)
 
 
