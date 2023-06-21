@@ -64,6 +64,7 @@ export const USER_HISTORY = gql`
                 amount
                 status
                 createdAt
+                txHash
             }
         }
     }
