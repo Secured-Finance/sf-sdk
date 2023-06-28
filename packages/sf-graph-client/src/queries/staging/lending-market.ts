@@ -48,13 +48,7 @@ export const USER_HISTORY = gql`
                 averagePrice
                 createdAt
             }
-            orders(
-                orderBy: createdAt
-                orderDirection: desc
-                where: {
-                    status_in: [Expired, Cancelled, PartiallyFilled, Filled]
-                }
-            ) {
+            orders(orderBy: createdAt, orderDirection: desc) {
                 orderId
                 currency
                 side
