@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.81](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.80...v0.2.0-beta.81) (2023-06-28)
+
+
+### Features
+
+* add order fee to the client [SF-561] ([a4044a0](https://github.com/Secured-Finance/sf-sdk/commit/a4044a098def9f46a9a930bcf764593938d57dcd))
+
+
+
+
+
 # [0.2.0-beta.80](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.79...v0.2.0-beta.80) (2023-06-27)
 
 **Note:** Version bump only for package sf-sdk
