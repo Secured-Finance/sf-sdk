@@ -64,20 +64,33 @@ export const USER_HISTORY = gql`
     }
 `;
 
-export const TRADES = gql`
-    query Trades(
+export const TRANSACTION_HISTORY = gql`
+    query TransactionHistory(
         $currency: Bytes!
         $maturity: BigInt!
         $from: BigInt!
         $to: BigInt!
     ) {
-        transactions(
+        transactionHistory: transactions(
             where: {
                 currency: $currency
                 maturity: $maturity
                 createdAt_gte: $from
                 createdAt_lt: $to
             }
+        ) {
+            amount
+            maturity
+            side
+            createdAt
+            currency
+            averagePrice
+        }
+        lastTransaction: transactions(
+            where: { currency: $currency, maturity: $maturity }
+            orderBy: createdAt
+            orderDirection: desc
+            first: 1
         ) {
             amount
             maturity
