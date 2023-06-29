@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.83](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.82...v0.2.0-beta.83) (2023-06-29)
+
+
+### Features
+
+* add lastTransaction in transaction query [SF-601] ([f4b8c33](https://github.com/Secured-Finance/sf-sdk/commit/f4b8c33599e583385f2ebd1867dafe6abdcca1fb))
+
+
+
+
+
 # [0.2.0-beta.82](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.81...v0.2.0-beta.82) (2023-06-28)
 
 
