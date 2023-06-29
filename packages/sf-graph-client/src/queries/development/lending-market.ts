@@ -38,6 +38,7 @@ export const DAILY_VOLUMES = gql`
 export const USER_TRANSACTION_HISTORY = gql`
     query UserTransactionHistory($address: ID!, $skip: Int!, $first: Int!) {
         user(id: $address) {
+            transactionCount
             transactions(
                 skip: $skip
                 first: $first
@@ -60,6 +61,7 @@ export const USER_TRANSACTION_HISTORY = gql`
 export const USER_ORDER_HISTORY = gql`
     query UserOrderHistory($address: ID!, $skip: Int!, $first: Int!) {
         user(id: $address) {
+            orderCount
             orders(
                 skip: $skip
                 first: $first
