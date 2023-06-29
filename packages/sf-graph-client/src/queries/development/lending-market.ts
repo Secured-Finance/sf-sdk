@@ -40,10 +40,10 @@ export const USER_TRANSACTION_HISTORY = gql`
         user(id: $address) {
             transactionCount
             transactions(
-                skip: $skip
-                first: $first
                 orderBy: createdAt
                 orderDirection: desc
+                skip: $skip
+                first: $first
             ) {
                 currency
                 maturity
@@ -63,10 +63,10 @@ export const USER_ORDER_HISTORY = gql`
         user(id: $address) {
             orderCount
             orders(
-                skip: $skip
-                first: $first
                 orderBy: createdAt
                 orderDirection: desc
+                skip: $skip
+                first: $first
             ) {
                 orderId
                 currency
