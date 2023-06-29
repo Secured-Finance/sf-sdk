@@ -34,11 +34,16 @@ export const DAILY_VOLUMES = gql`
         }
     }
 `;
-export const USER_HISTORY = gql`
-    query UserHistory($address: ID!) {
+
+export const USER_TRANSACTION_HISTORY = gql`
+    query UserTransactionHistory($address: ID!, $skip: Int!, $first: Int!) {
         user(id: $address) {
-            id
-            transactions(orderBy: createdAt, orderDirection: desc) {
+            transactions(
+                skip: $skip
+                first: $first
+                orderBy: createdAt
+                orderDirection: desc
+            ) {
                 currency
                 maturity
                 side
@@ -48,7 +53,19 @@ export const USER_HISTORY = gql`
                 averagePrice
                 createdAt
             }
-            orders(orderBy: createdAt, orderDirection: desc) {
+        }
+    }
+`;
+
+export const USER_ORDER_HISTORY = gql`
+    query UserOrderHistory($address: ID!, $skip: Int!, $first: Int!) {
+        user(id: $address) {
+            orders(
+                skip: $skip
+                first: $first
+                orderBy: createdAt
+                orderDirection: desc
+            ) {
                 orderId
                 currency
                 side
