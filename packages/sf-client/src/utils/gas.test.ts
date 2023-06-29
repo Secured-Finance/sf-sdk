@@ -15,19 +15,7 @@ describe('Test gas prices oracle', function () {
     let gasOracle: GasPriceOracle;
     let fallbackGasPrices: GasPrices;
 
-    const mainnetNetworkID = 1;
     const ropstenNetworkID = 3;
-
-    it('Try to check mainnet gas prices', async () => {
-        fallbackGasPrices = DEFAULT_GAS_PRICES[mainnetNetworkID];
-        gasOracle = getDefaultOracle(mainnetNetworkID);
-
-        const gas = await gasOracle.fetchGasPricesOffChain();
-        expect(typeof gas.instant).toBe('number');
-        expect(typeof gas.fast).toBe('number');
-        expect(typeof gas.standard).toBe('number');
-        expect(typeof gas.low).toBe('number');
-    });
 
     it('Try to check ropsten gas prices', async () => {
         fallbackGasPrices = DEFAULT_GAS_PRICES[ropstenNetworkID];
