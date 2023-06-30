@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.85](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.84...v0.2.0-beta.85) (2023-06-30)
+
+
+### Bug Fixes
+
+* fix itayose dates [SF-619] ([b674fb7](https://github.com/Secured-Finance/sf-sdk/commit/b674fb727602dc88896220b0aa2d431ebeff04c7))
+
+
+### Features
+
+* add all market status [SF-619] ([e222ee1](https://github.com/Secured-Finance/sf-sdk/commit/e222ee1ff28fba8b7da8f61a9df1d44afb2cc918))
+
+
+
+# 0.2.0-beta.83 (2023-06-29)
+
+
+
+
+
 # [0.2.0-beta.84](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.83...v0.2.0-beta.84) (2023-06-30)
 
 
