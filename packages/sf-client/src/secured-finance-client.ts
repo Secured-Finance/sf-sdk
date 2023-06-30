@@ -197,7 +197,7 @@ export class SecuredFinanceClient extends ContractsInstance {
                     isMatured,
                     isOpened,
                     isItayosePeriod:
-                        isReady && timestamp >= openingDate - ITAYOSE_PERIOD,
+                        !isReady && timestamp >= openingDate - ITAYOSE_PERIOD,
                     isPreOrderPeriod:
                         timestamp >= openingDate - PRE_ORDER_PERIOD &&
                         timestamp < openingDate - ITAYOSE_PERIOD,
