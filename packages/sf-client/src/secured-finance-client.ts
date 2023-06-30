@@ -41,6 +41,10 @@ function assertNonNullish<TValue>(
     }
 }
 
+// TODO: get those from the contracts
+const ITAYOSE_PERIOD = 60 * 60; // 1 hour
+const PRE_ORDER_PERIOD = 60 * 60 * 24 * 7; // 7 days
+
 export class SecuredFinanceClient extends ContractsInstance {
     private convertCurrencyToBytes32(ccy: Currency) {
         if (ccy.isNative) {
@@ -173,14 +177,30 @@ export class SecuredFinanceClient extends ContractsInstance {
             await this.lendingMarketController.contract.getLendingMarkets(
                 ccyIdentifier
             );
+        const timestamp = Math.floor(Date.now() / 1000);
         return Promise.all(
             lendingMarketAddresses.map(async address => {
                 assertNonNullish(this.lendingMarkets);
                 const lendingMarket = await this.lendingMarkets.get(address);
                 const marketInfo = await lendingMarket.contract.getMarket();
+                const maturity = marketInfo.maturity.toNumber();
+                const isReady = marketInfo.isReady;
+                const openingDate = marketInfo.openingDate.toNumber();
+
+                const isMatured = timestamp >= maturity;
+                const isOpened =
+                    isReady && !isMatured && timestamp >= openingDate;
+
                 return {
                     ...marketInfo,
-                    name: getUTCMonthYear(marketInfo.maturity.toNumber()),
+                    name: getUTCMonthYear(maturity),
+                    isMatured,
+                    isOpened,
+                    isItayosePeriod:
+                        !isReady && timestamp >= openingDate - ITAYOSE_PERIOD,
+                    isPreOrderPeriod:
+                        timestamp >= openingDate - PRE_ORDER_PERIOD &&
+                        timestamp < openingDate - ITAYOSE_PERIOD,
                 };
             })
         );
