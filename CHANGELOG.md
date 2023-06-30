@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.86](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.85...v0.2.0-beta.86) (2023-06-30)
+
+
+### Bug Fixes
+
+* staging queries updated [SF-592] ([07426e6](https://github.com/Secured-Finance/sf-sdk/commit/07426e6f685f1ef382e16b3994a1fb8ad6d87a3c))
+
+
+
+# 0.2.0-beta.84 (2023-06-30)
+
+
+
+
+
 # [0.2.0-beta.85](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.84...v0.2.0-beta.85) (2023-06-30)
 
 
