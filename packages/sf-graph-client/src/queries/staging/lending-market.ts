@@ -34,11 +34,17 @@ export const DAILY_VOLUMES = gql`
         }
     }
 `;
-export const USER_HISTORY = gql`
-    query UserHistory($address: ID!) {
+
+export const USER_TRANSACTION_HISTORY = gql`
+    query UserTransactionHistory($address: ID!, $skip: Int!, $first: Int!) {
         user(id: $address) {
-            id
-            transactions(orderBy: createdAt, orderDirection: desc) {
+            transactionCount
+            transactions(
+                orderBy: createdAt
+                orderDirection: desc
+                skip: $skip
+                first: $first
+            ) {
                 currency
                 maturity
                 side
@@ -48,7 +54,20 @@ export const USER_HISTORY = gql`
                 averagePrice
                 createdAt
             }
-            orders(orderBy: createdAt, orderDirection: desc) {
+        }
+    }
+`;
+
+export const USER_ORDER_HISTORY = gql`
+    query UserOrderHistory($address: ID!, $skip: Int!, $first: Int!) {
+        user(id: $address) {
+            orderCount
+            orders(
+                orderBy: createdAt
+                orderDirection: desc
+                skip: $skip
+                first: $first
+            ) {
                 orderId
                 currency
                 side
@@ -77,6 +96,7 @@ export const TRANSACTION_HISTORY = gql`
                 maturity: $maturity
                 createdAt_gte: $from
                 createdAt_lt: $to
+                executionType: Sync
             }
         ) {
             amount
@@ -87,7 +107,11 @@ export const TRANSACTION_HISTORY = gql`
             averagePrice
         }
         lastTransaction: transactions(
-            where: { currency: $currency, maturity: $maturity }
+            where: {
+                currency: $currency
+                maturity: $maturity
+                executionType: Sync
+            }
             orderBy: createdAt
             orderDirection: desc
             first: 1
