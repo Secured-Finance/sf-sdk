@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.84](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.83...v0.2.0-beta.84) (2023-06-30)
+
+
+### Bug Fixes
+
+* transactionCount and orderCount added [SF-592] ([23e48b3](https://github.com/Secured-Finance/sf-sdk/commit/23e48b3f5e035a42537054d834d96c0a34d4b35c))
+
+
+### Features
+
+* user history query updated separately for orders and transactions [SF-592] ([8790b6e](https://github.com/Secured-Finance/sf-sdk/commit/8790b6e63ea80c8cbf93e5e9adb7066c13987c18))
+
+
+
+
+
 # [0.2.0-beta.83](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.82...v0.2.0-beta.83) (2023-06-29)
 
 
