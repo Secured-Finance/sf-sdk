@@ -78,6 +78,10 @@ export const USER_ORDER_HISTORY = gql`
                 status
                 createdAt
                 txHash
+                lendingMarket {
+                    id
+                    isActive
+                }
             }
         }
     }
