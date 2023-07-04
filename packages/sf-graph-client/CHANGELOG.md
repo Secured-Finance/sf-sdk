@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.87](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.86...v0.2.0-beta.87) (2023-07-04)
+
+
+### Bug Fixes
+
+* queries update to fetch lending market status [SF-627] ([607ceaa](https://github.com/secured-finance/sf-sdk/commit/607ceaa0216b116d6dba130edb145997768955a8))
+
+
+
+
+
 # [0.2.0-beta.86](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.85...v0.2.0-beta.86) (2023-06-30)
 
 
