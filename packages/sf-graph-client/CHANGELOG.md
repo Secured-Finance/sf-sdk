@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.89](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.88...v0.2.0-beta.89) (2023-07-11)
+
+
+### Features
+
+* update with latest contract and replace methods name [SF-638] ([7112684](https://github.com/secured-finance/sf-sdk/commit/7112684fef2200712bb6a926fd6dfb9ea4a455ab))
+
+
+
+
+
 # [0.2.0-beta.88](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.87...v0.2.0-beta.88) (2023-07-11)
 
 
