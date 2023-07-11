@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.88](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.87...v0.2.0-beta.88) (2023-07-11)
+
+
+### Features
+
+* simplify useQuery [SF-591] ([6a9cc8b](https://github.com/secured-finance/sf-sdk/commit/6a9cc8b88fb3aa4d19d600be864146eb23468a92))
+
+
+
+
+
 # [0.2.0-beta.87](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.86...v0.2.0-beta.87) (2023-07-04)
 
 
