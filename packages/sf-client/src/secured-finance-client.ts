@@ -228,7 +228,7 @@ export class SecuredFinanceClient extends ContractsInstance {
         assertNonNullish(this.lendingMarketController);
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
             if (ccy.equals(Ether.onChain(this.config.networkId))) {
-                return this.lendingMarketController.contract.depositAndCreateOrder(
+                return this.lendingMarketController.contract.depositAndExecuteOrder(
                     this.convertCurrencyToBytes32(ccy),
                     maturity,
                     side,
@@ -239,7 +239,7 @@ export class SecuredFinanceClient extends ContractsInstance {
             } else {
                 const isApproved = await this.approveTokenTransfer(ccy, amount);
                 await onApproved?.(isApproved);
-                return this.lendingMarketController.contract.depositAndCreateOrder(
+                return this.lendingMarketController.contract.depositAndExecuteOrder(
                     this.convertCurrencyToBytes32(ccy),
                     maturity,
                     side,
@@ -248,7 +248,7 @@ export class SecuredFinanceClient extends ContractsInstance {
                 );
             }
         } else {
-            return this.lendingMarketController.contract.createOrder(
+            return this.lendingMarketController.contract.executeOrder(
                 this.convertCurrencyToBytes32(ccy),
                 maturity,
                 side,
@@ -270,7 +270,7 @@ export class SecuredFinanceClient extends ContractsInstance {
         assertNonNullish(this.lendingMarketController);
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
             if (ccy.equals(Ether.onChain(this.config.networkId))) {
-                return this.lendingMarketController.contract.depositAndCreatePreOrder(
+                return this.lendingMarketController.contract.depositAndExecutesPreOrder(
                     this.convertCurrencyToBytes32(ccy),
                     maturity,
                     side,
@@ -281,7 +281,7 @@ export class SecuredFinanceClient extends ContractsInstance {
             } else {
                 const isApproved = await this.approveTokenTransfer(ccy, amount);
                 await onApproved?.(isApproved);
-                return this.lendingMarketController.contract.depositAndCreatePreOrder(
+                return this.lendingMarketController.contract.depositAndExecutesPreOrder(
                     this.convertCurrencyToBytes32(ccy),
                     maturity,
                     side,
@@ -290,7 +290,7 @@ export class SecuredFinanceClient extends ContractsInstance {
                 );
             }
         } else {
-            return this.lendingMarketController.contract.createPreOrder(
+            return this.lendingMarketController.contract.executePreOrder(
                 this.convertCurrencyToBytes32(ccy),
                 maturity,
                 side,
