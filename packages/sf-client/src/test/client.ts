@@ -1,25 +1,24 @@
 // Run this client to retrieve smart contract data
 // SF_ENV=development ALCHEMY_API_KEY=xxx node packages/sf-client/dist/test/client.js
 import { Token } from '@secured-finance/sf-core';
-import { providers } from 'ethers';
+import { getDefaultProvider } from 'ethers';
 import { SecuredFinanceClient } from '../secured-finance-client';
 
-class Filecoin extends Token {
+class WBTC extends Token {
     constructor() {
         super(
             1,
-            '0xed4733fe7bac4c2934f7e9ce4e0696b2169701d8',
-            18,
-            'FIL',
-            'Filecoin'
+            '0xBc38CC10b73FA8daE91aFf98a1EEb30E70E774FF',
+            8,
+            'WBTC',
+            'Bitcoin'
         );
     }
 }
 
 const client = new SecuredFinanceClient();
-const provider = new providers.AlchemyProvider(
-    'sepolia',
-    process.env.ALCHEMY_API_KEY
+const provider = getDefaultProvider(
+    `https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
 );
 
 client
@@ -28,9 +27,7 @@ client
         name: 'sepolia',
     })
     .then(() => {
-        client
-            .getLendingMarketDetailsPerCurrency(new Filecoin())
-            .then(markets => {
-                console.log(markets);
-            });
+        client.getLendingMarketDetailsPerCurrency(new WBTC()).then(markets => {
+            console.log(markets);
+        });
     });
