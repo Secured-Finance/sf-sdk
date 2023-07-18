@@ -28,7 +28,9 @@ client
         name: 'sepolia',
     })
     .then(() => {
-        client.getLendingMarkets(new Filecoin()).then(markets => {
-            console.log(markets);
-        });
+        client
+            .getLendingMarketDetailsPerCurrency(new Filecoin())
+            .then(markets => {
+                console.log(markets);
+            });
     });

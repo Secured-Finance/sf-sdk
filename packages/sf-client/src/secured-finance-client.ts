@@ -170,40 +170,44 @@ export class SecuredFinanceClient extends ContractsInstance {
         );
     }
 
-    async getLendingMarkets(ccy: Currency) {
+    async getLendingMarketDetail(ccy: Currency, maturity: number) {
         assertNonNullish(this.lendingMarketController);
-        const ccyIdentifier = this.convertCurrencyToBytes32(ccy);
-        const lendingMarketAddresses =
-            await this.lendingMarketController.contract.getLendingMarkets(
-                ccyIdentifier
+        return this.lendingMarketController.contract.getLendingMarketDetail(
+            this.convertCurrencyToBytes32(ccy),
+            maturity
+        );
+    }
+
+    async getLendingMarketDetailsPerCurrency(ccy: Currency) {
+        return this.getLendingMarketDetails([ccy]);
+    }
+
+    async getLendingMarketDetails(ccys: Currency[]) {
+        assertNonNullish(this.lendingMarketController);
+        const lendingMarketDetails =
+            await this.lendingMarketController.contract.getLendingMarketDetails(
+                this.convertCurrencyArrayToBytes32Array(ccys)
             );
         const timestamp = Math.floor(Date.now() / 1000);
-        return Promise.all(
-            lendingMarketAddresses.map(async address => {
-                assertNonNullish(this.lendingMarkets);
-                const lendingMarket = await this.lendingMarkets.get(address);
-                const marketInfo = await lendingMarket.contract.getMarket();
-                const maturity = marketInfo.maturity.toNumber();
-                const isReady = marketInfo.isReady;
-                const openingDate = marketInfo.openingDate.toNumber();
+        return lendingMarketDetails.map(lendingMarket => {
+            const maturity = lendingMarket.maturity.toNumber();
+            const openingDate = lendingMarket.openingDate.toNumber();
+            const isReady = lendingMarket.isReady;
+            const isMatured = timestamp >= maturity;
+            const isOpened = isReady && !isMatured && timestamp >= openingDate;
 
-                const isMatured = timestamp >= maturity;
-                const isOpened =
-                    isReady && !isMatured && timestamp >= openingDate;
-
-                return {
-                    ...marketInfo,
-                    name: getUTCMonthYear(maturity),
-                    isMatured,
-                    isOpened,
-                    isItayosePeriod:
-                        !isReady && timestamp >= openingDate - ITAYOSE_PERIOD,
-                    isPreOrderPeriod:
-                        timestamp >= openingDate - PRE_ORDER_PERIOD &&
-                        timestamp < openingDate - ITAYOSE_PERIOD,
-                };
-            })
-        );
+            return {
+                ...lendingMarket,
+                name: getUTCMonthYear(maturity),
+                isMatured,
+                isOpened,
+                isItayosePeriod:
+                    !isReady && timestamp >= openingDate - ITAYOSE_PERIOD,
+                isPreOrderPeriod:
+                    timestamp >= openingDate - PRE_ORDER_PERIOD &&
+                    timestamp < openingDate - ITAYOSE_PERIOD,
+            };
+        });
     }
 
     /**
