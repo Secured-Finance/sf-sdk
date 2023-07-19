@@ -1,4 +1,34 @@
-import { cpSync, existsSync, mkdirSync, rmSync } from 'fs';
+import {
+    cpSync,
+    existsSync,
+    mkdirSync,
+    readdirSync,
+    readFileSync,
+    rmSync,
+    statSync,
+    writeFileSync,
+} from 'fs';
+
+function extractAddress(filePath: string) {
+    const fileContent = readFileSync(filePath, 'utf-8');
+    const contractData = JSON.parse(fileContent);
+    const { address } = contractData;
+    const newContent = JSON.stringify({ address }, null, 2);
+    writeFileSync(filePath, newContent);
+}
+
+function extractAddressesFromDeployments(deploymentDir: string) {
+    const files = readdirSync(deploymentDir);
+    for (const file of files) {
+        const filePath = `${deploymentDir}/${file}`;
+        const stat = statSync(filePath);
+        if (stat.isDirectory()) {
+            extractAddressesFromDeployments(filePath);
+        } else {
+            extractAddress(filePath);
+        }
+    }
+}
 
 class Main {
     run() {
@@ -16,6 +46,8 @@ class Main {
         cpSync(`${modulePath}/deployments/`, deploymentDir, {
             recursive: true,
         });
+
+        extractAddressesFromDeployments(deploymentDir);
     }
 }
 
