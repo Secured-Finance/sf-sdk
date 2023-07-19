@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.92](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.91...v0.2.0-beta.92) (2023-07-19)
+
+
+### Bug Fixes
+
+* fix client for sepolia [SF-651] ([905bc04](https://github.com/Secured-Finance/sf-sdk/commit/905bc04600556a8b9069041bec68fa1400984bfc))
+
+
+### Features
+
+* methods added to fetch lending market details [SF-651] ([6d6094e](https://github.com/Secured-Finance/sf-sdk/commit/6d6094e7928170ec54eb213fc6aaffebed4e660e))
+
+
+
+
+
 # [0.2.0-beta.91](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.90...v0.2.0-beta.91) (2023-07-18)
 
 **Note:** Version bump only for package sf-sdk
