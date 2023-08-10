@@ -170,7 +170,7 @@ export class SecuredFinanceClient extends ContractsInstance {
         );
     }
 
-    async getLendingMarketDetail(ccy: Currency, maturity: number) {
+    async getOrderBookDetail(ccy: Currency, maturity: number) {
         assertNonNullish(this.lendingMarketController);
         return this.lendingMarketController.contract.getOrderBookDetail(
             this.convertCurrencyToBytes32(ccy),
