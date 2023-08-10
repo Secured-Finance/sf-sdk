@@ -27,7 +27,7 @@ client
         name: 'sepolia',
     })
     .then(() => {
-        client.getLendingMarketDetailsPerCurrency(new WBTC()).then(markets => {
-            console.log(markets);
+        client.getOrderBookDetailsPerCurrency(new WBTC()).then(orderBooks => {
+            console.log(orderBooks);
         });
     });
