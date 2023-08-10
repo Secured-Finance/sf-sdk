@@ -112,8 +112,8 @@ export class SecuredFinanceClient extends ContractsInstance {
         side: OrderSide,
         amount: number | BigNumber,
         unitPrice: number,
-        additionalDepositAmount?: number | BigNumber,
-        ignoreBorrowedAmount?: boolean
+        additionalDepositAmount: number | BigNumber = 0,
+        ignoreBorrowedAmount = false
     ) {
         assertNonNullish(this.lendingMarketController);
         return this.lendingMarketController.contract.getOrderEstimation(
@@ -122,8 +122,8 @@ export class SecuredFinanceClient extends ContractsInstance {
             side,
             amount,
             unitPrice,
-            additionalDepositAmount ?? 0,
-            ignoreBorrowedAmount ?? true
+            additionalDepositAmount,
+            ignoreBorrowedAmount
         );
     }
 
