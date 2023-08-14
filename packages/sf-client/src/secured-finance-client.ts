@@ -106,6 +106,27 @@ export class SecuredFinanceClient extends ContractsInstance {
         return this.tokenVault.contract.getCollateralParameters();
     }
 
+    async getOrderEstimation(
+        ccy: Currency,
+        maturity: number,
+        side: OrderSide,
+        amount: number | BigNumber,
+        unitPrice: number,
+        additionalDepositAmount: number | BigNumber = 0,
+        ignoreBorrowedAmount = false
+    ) {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.getOrderEstimation(
+            this.convertCurrencyToBytes32(ccy),
+            maturity,
+            side,
+            amount,
+            unitPrice,
+            additionalDepositAmount,
+            ignoreBorrowedAmount
+        );
+    }
+
     async getWithdrawableCollateral(ccy: Currency, account: string) {
         assertNonNullish(this.tokenVault);
         return this.tokenVault.contract[
