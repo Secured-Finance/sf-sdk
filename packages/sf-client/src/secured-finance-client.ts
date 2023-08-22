@@ -109,6 +109,7 @@ export class SecuredFinanceClient extends ContractsInstance {
     async getOrderEstimation(
         ccy: Currency,
         maturity: number,
+        account: string,
         side: OrderSide,
         amount: number | BigNumber,
         unitPrice: number,
@@ -116,15 +117,16 @@ export class SecuredFinanceClient extends ContractsInstance {
         ignoreBorrowedAmount = false
     ) {
         assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getOrderEstimation(
-            this.convertCurrencyToBytes32(ccy),
+        return this.lendingMarketController.contract.getOrderEstimation({
+            ccy: this.convertCurrencyToBytes32(ccy),
             maturity,
+            user: account,
             side,
             amount,
             unitPrice,
             additionalDepositAmount,
-            ignoreBorrowedAmount
-        );
+            ignoreBorrowedAmount,
+        });
     }
 
     async getWithdrawableCollateral(ccy: Currency, account: string) {
