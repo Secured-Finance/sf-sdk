@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.97](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.96...v0.2.0-beta.97) (2023-08-22)
+
+
+### Bug Fixes
+
+* fix requested changes [SF-676] ([9ec4406](https://github.com/Secured-Finance/sf-sdk/commit/9ec4406db7204591d177ba07df4d097c15e2181f))
+
+
+### Features
+
+* add getOrderEstimation function [SF-676] ([6bfd1b8](https://github.com/Secured-Finance/sf-sdk/commit/6bfd1b8b29c4692f6409c490b1be6492b1336ac2))
+
+
+
+# 0.2.0-beta.95 (2023-08-03)
+
+
+
+
+
 # [0.2.0-beta.96](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.95...v0.2.0-beta.96) (2023-08-10)
 
 
