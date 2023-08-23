@@ -72,16 +72,17 @@ export const USER_ORDER_HISTORY = gql`
                 currency
                 side
                 maturity
-                unitPrice
+                inputUnitPrice
+                inputAmount
                 filledAmount
-                amount
                 status
-                createdAt
-                txHash
                 lendingMarket {
                     id
                     isActive
                 }
+                type
+                createdAt
+                txHash
             }
         }
     }
