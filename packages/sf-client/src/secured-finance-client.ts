@@ -461,14 +461,17 @@ export class SecuredFinanceClient extends ContractsInstance {
             );
         }
 
-        const collateralCoverage = await this.tokenVault.contract.getCoverage(
-            account
-        );
+        const collateralCoverage = await this.getCoverage(account);
 
         return {
             collateral,
             collateralCoverage,
         };
+    }
+
+    async getCoverage(account: string) {
+        assertNonNullish(this.tokenVault);
+        return await this.tokenVault.contract.getCoverage(account);
     }
 
     private async approveTokenTransfer(
@@ -594,5 +597,20 @@ export class SecuredFinanceClient extends ContractsInstance {
     async getUsedCurrenciesForOrders(account: string) {
         assertNonNullish(this.lendingMarketController);
         return this.lendingMarketController.contract.getUsedCurrencies(account);
+    }
+
+    async executeLiquidationCall(
+        collateralCcy: Currency,
+        debtCcy: Currency,
+        debtMaturity: number,
+        account: string
+    ) {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.executeLiquidationCall(
+            this.convertCurrencyToBytes32(collateralCcy),
+            this.convertCurrencyToBytes32(debtCcy),
+            debtMaturity,
+            account
+        );
     }
 }
