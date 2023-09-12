@@ -179,13 +179,6 @@ export class SecuredFinanceClient extends ContractsInstance {
         );
     }
 
-    async getMidUnitPrices(ccy: Currency) {
-        assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getMidUnitPrices(
-            this.convertCurrencyToBytes32(ccy)
-        );
-    }
-
     async getMaturities(ccy: Currency) {
         assertNonNullish(this.lendingMarketController);
         return this.lendingMarketController.contract.getMaturities(
