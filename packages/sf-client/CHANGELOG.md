@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.103](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.102...v0.2.0-beta.103) (2023-09-14)
+
+
+### Bug Fixes
+
+* update package-lock [SF-653] ([409ea39](https://github.com/secured-finance/sf-sdk/commit/409ea39bdf699af109647b4d39815a6b5b211bcd))
+
+
+
+
+
 # [0.2.0-beta.102](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.101...v0.2.0-beta.102) (2023-09-12)
 
 **Note:** Version bump only for package @secured-finance/sf-client
