@@ -10,6 +10,7 @@ class Main {
 
         const allFiles = glob(cwd, [
             `${modulePath}/build/contracts/protocol/**.sol/+([a-zA-Z0-9_]).json`,
+            `${modulePath}/build/contracts/external/**.sol/+([a-zA-Z0-9_]).json`,
             `${modulePath}/build/contracts/mocks/tokens/**.sol/+([a-zA-Z0-9_]).json`,
         ]);
 

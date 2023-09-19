@@ -6,6 +6,7 @@ import {
     CurrencyController,
     GenesisValueVault,
     LendingMarketController,
+    LendingMarketReader,
     TokenFaucet,
     TokenVault,
 } from './contracts';
@@ -16,6 +17,7 @@ export class ContractsInstance {
     protected currencyController: CurrencyController | null = null;
     protected lendingMarkets: LendingMarkets | null = null;
     protected lendingMarketController: LendingMarketController | null = null;
+    protected lendingMarketReader: LendingMarketReader | null = null;
     protected tokenVault: TokenVault | null = null;
     protected genesisValueVault: GenesisValueVault | null = null;
     protected tokenFaucet: TokenFaucet | null = null;
