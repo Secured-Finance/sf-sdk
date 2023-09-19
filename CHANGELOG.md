@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.104](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.103...v0.2.0-beta.104) (2023-09-19)
+
+
+### Features
+
+* add fee in transaction history [SF-653] ([72bad86](https://github.com/Secured-Finance/sf-sdk/commit/72bad861b2958c56c21624d5cafdcadc662c36b9))
+
+
+
+
+
 # [0.2.0-beta.103](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.102...v0.2.0-beta.103) (2023-09-14)
 
 
