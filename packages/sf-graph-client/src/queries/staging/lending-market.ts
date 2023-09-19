@@ -53,6 +53,7 @@ export const USER_TRANSACTION_HISTORY = gql`
                 amount
                 averagePrice
                 createdAt
+                feeInFV
             }
         }
     }
