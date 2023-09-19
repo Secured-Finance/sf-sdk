@@ -103,7 +103,7 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     async getCollateralParameters() {
         assertNonNullish(this.tokenVault);
-        return this.tokenVault.contract.getCollateralParameters();
+        return this.tokenVault.contract.getLiquidationConfiguration();
     }
 
     async getOrderEstimation(
@@ -166,15 +166,15 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     async getBestLendUnitPrices(ccy: Currency) {
-        assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getBestLendUnitPrices(
+        assertNonNullish(this.lendingMarketReader);
+        return this.lendingMarketReader.contract.getBestLendUnitPrices(
             this.convertCurrencyToBytes32(ccy)
         );
     }
 
     async getBestBorrowUnitPrices(ccy: Currency) {
-        assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getBestBorrowUnitPrices(
+        assertNonNullish(this.lendingMarketReader);
+        return this.lendingMarketReader.contract.getBestBorrowUnitPrices(
             this.convertCurrencyToBytes32(ccy)
         );
     }
@@ -187,8 +187,8 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     async getOrderBookDetail(ccy: Currency, maturity: number) {
-        assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getOrderBookDetail(
+        assertNonNullish(this.lendingMarketReader);
+        return this.lendingMarketReader.contract.getOrderBookDetail(
             this.convertCurrencyToBytes32(ccy),
             maturity
         );
@@ -199,11 +199,10 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     async getOrderBookDetails(ccys: Currency[]) {
-        assertNonNullish(this.lendingMarketController);
-        const orderBookDetails =
-            await this.lendingMarketController.contract.getOrderBookDetails(
-                this.convertCurrencyArrayToBytes32Array(ccys)
-            );
+        assertNonNullish(this.lendingMarketReader);
+        const orderBookDetails = await this.lendingMarketReader.contract[
+            'getOrderBookDetails(bytes32[])'
+        ](this.convertCurrencyArrayToBytes32Array(ccys));
         const timestamp = Math.floor(Date.now() / 1000);
         return orderBookDetails.map(orderBook => {
             const maturity = orderBook.maturity.toNumber();
@@ -376,8 +375,8 @@ export class SecuredFinanceClient extends ContractsInstance {
         maturity: number,
         limit: number
     ) {
-        assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getBorrowOrderBook(
+        assertNonNullish(this.lendingMarketReader);
+        return this.lendingMarketReader.contract.getBorrowOrderBook(
             this.convertCurrencyToBytes32(currency),
             maturity,
             limit
@@ -389,8 +388,8 @@ export class SecuredFinanceClient extends ContractsInstance {
         maturity: number,
         limit: number
     ) {
-        assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getLendOrderBook(
+        assertNonNullish(this.lendingMarketReader);
+        return this.lendingMarketReader.contract.getLendOrderBook(
             this.convertCurrencyToBytes32(currency),
             maturity,
             limit
@@ -566,10 +565,12 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     async getOrderList(account: string, usedCurrenciesForOrders: Currency[]) {
-        assertNonNullish(this.lendingMarketController);
+        assertNonNullish(this.lendingMarketReader);
 
         const { activeOrders, inactiveOrders } =
-            await this.lendingMarketController.contract.getOrders(
+            await this.lendingMarketReader.contract[
+                'getOrders(bytes32[],address)'
+            ](
                 this.convertCurrencyArrayToBytes32Array(
                     usedCurrenciesForOrders
                 ),
@@ -580,8 +581,10 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     async getPositions(account: string, usedCurrenciesForOrders: Currency[]) {
-        assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getPositions(
+        assertNonNullish(this.lendingMarketReader);
+        return this.lendingMarketReader.contract[
+            'getPositions(bytes32[],address)'
+        ](
             this.convertCurrencyArrayToBytes32Array(usedCurrenciesForOrders),
             account
         );
