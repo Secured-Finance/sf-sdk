@@ -610,15 +610,16 @@ export class SecuredFinanceClient extends ContractsInstance {
         );
     }
 
-    async getMarketUnitPrice(ccy: Currency, maturity: number) {
-        assertNonNullish(this.lendingMarketController);
-        const orderBookId =
-            await this.lendingMarketController.contract.getOrderBookId(
-                this.convertCurrencyToBytes32(ccy),
-                maturity
-            );
-        const lendingMarket = await this.getLendingMarket(ccy);
+    async getMarketUnitPrice(ccy: Currency) {
+        assertNonNullish(this.lendingMarketReader);
+        const orderBookDetails = await this.lendingMarketReader.contract[
+            'getOrderBookDetails(bytes32)'
+        ](this.convertCurrencyToBytes32(ccy));
 
-        return lendingMarket.getMarketUnitPrice(orderBookId);
+        return orderBookDetails.map(orderBook => {
+            return {
+                marketUnitPrice: orderBook.marketUnitPrice,
+            };
+        });
     }
 }
