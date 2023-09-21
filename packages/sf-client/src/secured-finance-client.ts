@@ -609,4 +609,16 @@ export class SecuredFinanceClient extends ContractsInstance {
             account
         );
     }
+
+    async getMarketUnitPrice(ccy: Currency, maturity: number) {
+        assertNonNullish(this.lendingMarketController);
+        const orderBookId =
+            await this.lendingMarketController.contract.getOrderBookId(
+                this.convertCurrencyToBytes32(ccy),
+                maturity
+            );
+        const lendingMarket = await this.getLendingMarket(ccy);
+
+        return lendingMarket.getMarketUnitPrice(orderBookId);
+    }
 }
