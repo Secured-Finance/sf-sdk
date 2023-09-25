@@ -609,4 +609,16 @@ export class SecuredFinanceClient extends ContractsInstance {
             account
         );
     }
+
+    async getLastPrice(currency: Currency) {
+        assertNonNullish(this.currencyController);
+        return this.currencyController.contract.getLastPrice(
+            this.convertCurrencyToBytes32(currency)
+        );
+    }
+
+    async getTotalCollateralAmount(account: string) {
+        assertNonNullish(this.tokenVault);
+        return this.tokenVault.contract.getTotalCollateralAmount(account);
+    }
 }
