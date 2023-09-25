@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.106](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.105...v0.2.0-beta.106) (2023-09-25)
+
+
+### Features
+
+* add methods for usd prices [SF-731] ([36a1f3c](https://github.com/Secured-Finance/sf-sdk/commit/36a1f3c0270bf3d95fefc500e057410bee17e5f3))
+
+
+
+
+
 # [0.2.0-beta.105](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.104...v0.2.0-beta.105) (2023-09-19)
 
 **Note:** Version bump only for package sf-sdk
