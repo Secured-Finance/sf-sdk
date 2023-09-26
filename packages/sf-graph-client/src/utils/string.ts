@@ -1,20 +1,9 @@
-import { utils } from 'ethers';
+import { hexToString, stringToHex } from 'viem';
 
 export const toBytes32 = (text: string) => {
-    return utils.formatBytes32String(text);
+    return stringToHex(text, { size: 32 });
 };
 
-export const fromBytes32 = (bytes32: string) => {
-    return utils.parseBytes32String(bytes32);
-};
-
-export const getProductPrefix = (name: string) => {
-    const encodedPosition = utils.defaultAbiCoder.encode(['string'], [name]);
-
-    const hash = utils.keccak256(encodedPosition);
-    return hash.slice(0, 10);
-};
-
-export const getCurrencyIdentifier = (shortName: string) => {
-    return toBytes32(shortName);
+export const fromBytes32 = (hex: string) => {
+    return hexToString(hex as `0x${string}`, { size: 32 });
 };
