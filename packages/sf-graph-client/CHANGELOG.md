@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.108](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.107...v0.2.0-beta.108) (2023-10-03)
+
+
+### Bug Fixes
+
+* remove ethers and unused functions [SF-726] ([27b4da7](https://github.com/secured-finance/sf-sdk/commit/27b4da783549242e5d1115c232d05be89673d44f))
+
+
+
+# 0.2.0-beta.106 (2023-09-25)
+
+
+
+
+
 # [0.2.0-beta.105](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.104...v0.2.0-beta.105) (2023-09-19)
 
 **Note:** Version bump only for package @secured-finance/sf-graph-client
