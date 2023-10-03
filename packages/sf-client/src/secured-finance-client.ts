@@ -65,6 +65,12 @@ export class SecuredFinanceClient extends ContractsInstance {
         return utils.parseBytes32String(ccy);
     }
 
+    private calculateAdjustedGas(amount: BigNumber) {
+        // NOTE: This adjustment is for the function that executes the collateral coverage check.
+        // Without this adjustment, the transaction often fails due to out-of-gas error.
+        return amount.mul(11).div(10);
+    }
+
     private _config: SecuredFinanceClientConfig | null = null;
 
     ether: Ether | null = null;
@@ -170,7 +176,7 @@ export class SecuredFinanceClient extends ContractsInstance {
         return this.tokenVault.contract.withdraw(
             this.convertCurrencyToBytes32(ccy),
             amount,
-            { gasLimit: estimatedGas.mul(11).div(10) }
+            { gasLimit: this.calculateAdjustedGas(estimatedGas) }
         );
     }
 
@@ -275,7 +281,7 @@ export class SecuredFinanceClient extends ContractsInstance {
                     overrides
                 );
 
-            overrides.gasLimit = estimatedGas.mul(11).div(10);
+            overrides.gasLimit = this.calculateAdjustedGas(estimatedGas);
 
             return this.lendingMarketController.contract.depositAndExecuteOrder(
                 this.convertCurrencyToBytes32(ccy),
@@ -302,7 +308,7 @@ export class SecuredFinanceClient extends ContractsInstance {
                 amount,
                 unitPrice ?? 0,
                 {
-                    gasLimit: estimatedGas.mul(11).div(10),
+                    gasLimit: this.calculateAdjustedGas(estimatedGas),
                 }
             );
         }
@@ -339,7 +345,7 @@ export class SecuredFinanceClient extends ContractsInstance {
                     overrides
                 );
 
-            overrides.gasLimit = estimatedGas.mul(11).div(10);
+            overrides.gasLimit = this.calculateAdjustedGas(estimatedGas);
 
             return this.lendingMarketController.contract.depositAndExecutesPreOrder(
                 this.convertCurrencyToBytes32(ccy),
@@ -366,7 +372,7 @@ export class SecuredFinanceClient extends ContractsInstance {
                 amount,
                 unitPrice,
                 {
-                    gasLimit: estimatedGas.mul(11).div(10),
+                    gasLimit: this.calculateAdjustedGas(estimatedGas),
                 }
             );
         }
@@ -593,7 +599,7 @@ export class SecuredFinanceClient extends ContractsInstance {
             this.convertCurrencyToBytes32(currency),
             maturity,
             {
-                gasLimit: estimatedGas.mul(11).div(10),
+                gasLimit: this.calculateAdjustedGas(estimatedGas),
             }
         );
     }
