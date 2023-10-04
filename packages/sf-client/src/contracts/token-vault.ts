@@ -1,21 +1,53 @@
-import { Provider } from '@ethersproject/providers';
-import { Signer } from 'ethers';
 import {
-    TokenVault as Contract,
-    TokenVault__factory as Factory,
-} from '../types';
-import { NetworkName } from '../utils';
-import { BaseContract } from './base-contract';
+    Address,
+    GetContractReturnType,
+    PublicClient,
+    WalletClient,
+    getContract,
+} from 'viem';
+import { NetworkName, getContractEnvironment } from '../utils';
+import {
+    abi as developmentAbi,
+    address as developmentAddress,
+} from './../deployments/development/TokenVault';
+import {
+    abi as stagingAbi,
+    address as stagingAddress,
+} from './../deployments/staging/TokenVault';
 
-export class TokenVault extends BaseContract<Contract> {
+export type TokenVaultContractType = GetContractReturnType<
+    typeof developmentAbi | typeof stagingAbi,
+    PublicClient,
+    WalletClient,
+    Address
+>;
+
+export class TokenVault {
     static async getInstance(
-        signerOrProvider: Signer | Provider,
-        networkName: NetworkName
+        networkName: NetworkName,
+        publicClient: PublicClient,
+        walletClient?: WalletClient
     ) {
-        const address = await this.getAddress('TokenVault', networkName);
-        const contract = Factory.connect(address, signerOrProvider);
+        const devContract = getContract({
+            abi: developmentAbi,
+            address: developmentAddress,
+            publicClient,
+            walletClient,
+        });
 
-        return new TokenVault(contract);
+        const stagingContract = getContract({
+            abi: stagingAbi,
+            address: stagingAddress,
+            publicClient,
+            walletClient,
+        });
+
+        const contractEnv = getContractEnvironment(networkName);
+
+        const contractToUse =
+            contractEnv === 'development' ? devContract : stagingContract;
+
+        return contractToUse;
     }
 }
 

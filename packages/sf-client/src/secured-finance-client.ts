@@ -1,24 +1,21 @@
-import { Network } from '@ethersproject/networks';
-import { Provider } from '@ethersproject/providers';
 import {
     Currency,
     Ether,
     getUTCMonthYear,
     Token,
 } from '@secured-finance/sf-core';
-import ERC20 from '@secured-finance/smart-contracts/build/contracts/mocks/tokens/MockERC20.sol/MockERC20.json';
 import {
-    BigNumber,
-    constants,
-    Contract,
-    getDefaultProvider,
-    Signer,
-    utils,
-} from 'ethers';
+    getContract,
+    Hex,
+    maxInt256,
+    PublicClient,
+    stringToHex,
+    WalletClient,
+} from 'viem';
 import { ContractsInstance } from './contracts-instance';
 import { SecuredFinanceClientConfig } from './entities';
-import { MockERC20 } from './types';
-import { NetworkName, networkNames, sendEther } from './utils';
+import { ERC20Abi } from './ERC20Abi';
+import { Network, NetworkName, networkNames } from './utils';
 
 export enum OrderSide {
     LEND = '0',
@@ -33,7 +30,7 @@ export enum WalletSource {
 const CLIENT_NOT_INITIALIZED = 'Client is not initialized';
 
 function assertNonNullish<TValue>(
-    value: TValue | null,
+    value: TValue | undefined,
     message = CLIENT_NOT_INITIALIZED
 ): asserts value is NonNullable<TValue> {
     if (!value) {
@@ -48,9 +45,9 @@ const PRE_ORDER_PERIOD = 60 * 60 * 24 * 7; // 7 days
 export class SecuredFinanceClient extends ContractsInstance {
     private convertCurrencyToBytes32(ccy: Currency) {
         if (ccy.isNative) {
-            return utils.formatBytes32String(ccy.symbol);
+            return stringToHex(ccy.symbol, { size: 32 });
         } else {
-            return utils.formatBytes32String(ccy.wrapped.symbol);
+            return stringToHex(ccy.wrapped.symbol, { size: 32 });
         }
     }
 
@@ -61,7 +58,7 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     private parseBytes32String(ccy: string) {
-        return utils.parseBytes32String(ccy);
+        return stringToHex(ccy, { size: 32 });
     }
 
     private _config: SecuredFinanceClientConfig | null = null;
@@ -69,8 +66,9 @@ export class SecuredFinanceClient extends ContractsInstance {
     ether: Ether | null = null;
 
     async init(
-        signerOrProvider: Signer | Provider,
         network: Network,
+        publicClient: PublicClient,
+        walletClient?: WalletClient,
         options?: {
             defaultGas?: number;
             defaultGasPrice?: number;
@@ -87,23 +85,15 @@ export class SecuredFinanceClient extends ContractsInstance {
             defaultGasPrice: options?.defaultGasPrice || 1000000000000,
             networkId: network.chainId,
             network: networkName,
-            signerOrProvider: signerOrProvider || getDefaultProvider(),
+            publicClient: publicClient,
+            walletClient: walletClient,
         };
-        await super.getInstances(signerOrProvider, networkName);
+        await super.getInstances(networkName, publicClient, walletClient);
     }
-
-    /**
-     * Deposit collateral into the vault.
-     *
-     * @param ccy the collateral currency to deposit
-     * @param amount the amount of collateral to deposit
-     * @returns a `ContractTransaction`
-     * @throws if the client is not initialized
-     */
 
     async getCollateralParameters() {
         assertNonNullish(this.tokenVault);
-        return this.tokenVault.contract.getLiquidationConfiguration();
+        return this.tokenVault.read.getLiquidationConfiguration();
     }
 
     async getOrderEstimation(
@@ -111,87 +101,94 @@ export class SecuredFinanceClient extends ContractsInstance {
         maturity: number,
         account: string,
         side: OrderSide,
-        amount: number | BigNumber,
+        amount: bigint,
         unitPrice: number,
-        additionalDepositAmount: number | BigNumber = 0,
+        additionalDepositAmount = BigInt(0),
         ignoreBorrowedAmount = false
     ) {
         assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getOrderEstimation({
-            ccy: this.convertCurrencyToBytes32(ccy),
-            maturity,
-            user: account,
-            side,
-            amount,
-            unitPrice,
-            additionalDepositAmount,
-            ignoreBorrowedAmount,
-        });
+        return this.lendingMarketController.read.getOrderEstimation([
+            {
+                ccy: this.convertCurrencyToBytes32(ccy),
+                maturity: BigInt(maturity),
+                user: account as Hex,
+                side: side === OrderSide.BORROW ? 1 : 0,
+                amount,
+                unitPrice: BigInt(unitPrice),
+                additionalDepositAmount,
+                ignoreBorrowedAmount,
+            },
+        ]);
     }
 
     async getWithdrawableCollateral(ccy: Currency, account: string) {
         assertNonNullish(this.tokenVault);
-        return this.tokenVault.contract[
-            'getWithdrawableCollateral(bytes32,address)'
-        ](this.convertCurrencyToBytes32(ccy), account);
+        return this.tokenVault.read.getWithdrawableCollateral([
+            this.convertCurrencyToBytes32(ccy),
+            account as Hex,
+        ]);
     }
 
     async depositCollateral(
         ccy: Currency,
-        amount: number | BigNumber,
+        amount: bigint,
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
-        assertNonNullish(this.config);
         assertNonNullish(this.tokenVault);
+        assertNonNullish(this.config.walletClient?.account?.address);
 
         const isApproved = await this.approveTokenTransfer(ccy, amount);
         await onApproved?.(isApproved);
 
-        const payableOverride = ccy.equals(Ether.onChain(this.config.networkId))
-            ? { value: amount }
-            : {};
-        return this.tokenVault.contract.deposit(
-            this.convertCurrencyToBytes32(ccy),
-            amount,
-            payableOverride
+        return this.tokenVault.write.deposit(
+            [this.convertCurrencyToBytes32(ccy), amount],
+            {
+                account: this.config.walletClient.account.address,
+                chain: this.config.walletClient.chain,
+            }
         );
     }
 
-    async withdrawCollateral(ccy: Currency, amount: number | BigNumber) {
+    async withdrawCollateral(ccy: Currency, amount: bigint) {
         assertNonNullish(this.tokenVault);
-        return this.tokenVault.contract.withdraw(
-            this.convertCurrencyToBytes32(ccy),
-            amount
+        assertNonNullish(this.config.walletClient?.account?.address);
+
+        return this.tokenVault.write.withdraw(
+            [this.convertCurrencyToBytes32(ccy), amount],
+            {
+                account: this.config.walletClient.account.address,
+                chain: this.config.walletClient.chain,
+            }
         );
     }
 
     async getBestLendUnitPrices(ccy: Currency) {
         assertNonNullish(this.lendingMarketReader);
-        return this.lendingMarketReader.contract.getBestLendUnitPrices(
-            this.convertCurrencyToBytes32(ccy)
-        );
+        return this.lendingMarketReader.read.getBestLendUnitPrices([
+            this.convertCurrencyToBytes32(ccy),
+        ]);
     }
 
     async getBestBorrowUnitPrices(ccy: Currency) {
         assertNonNullish(this.lendingMarketReader);
-        return this.lendingMarketReader.contract.getBestBorrowUnitPrices(
-            this.convertCurrencyToBytes32(ccy)
-        );
+        return this.lendingMarketReader.read.getBestBorrowUnitPrices([
+            this.convertCurrencyToBytes32(ccy),
+        ]);
     }
 
     async getMaturities(ccy: Currency) {
         assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getMaturities(
-            this.convertCurrencyToBytes32(ccy)
-        );
+        return this.lendingMarketController.read.getMaturities([
+            this.convertCurrencyToBytes32(ccy),
+        ]);
     }
 
     async getOrderBookDetail(ccy: Currency, maturity: number) {
         assertNonNullish(this.lendingMarketReader);
-        return this.lendingMarketReader.contract.getOrderBookDetail(
+        return this.lendingMarketReader.read.getOrderBookDetail([
             this.convertCurrencyToBytes32(ccy),
-            maturity
-        );
+            BigInt(maturity),
+        ]);
     }
 
     async getOrderBookDetailsPerCurrency(ccy: Currency) {
@@ -200,13 +197,15 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     async getOrderBookDetails(ccys: Currency[]) {
         assertNonNullish(this.lendingMarketReader);
-        const orderBookDetails = await this.lendingMarketReader.contract[
-            'getOrderBookDetails(bytes32[])'
-        ](this.convertCurrencyArrayToBytes32Array(ccys));
+
+        const orderBookDetails =
+            await this.lendingMarketReader.read.getOrderBookDetails([
+                this.convertCurrencyArrayToBytes32Array(ccys),
+            ]);
         const timestamp = Math.floor(Date.now() / 1000);
         return orderBookDetails.map(orderBook => {
-            const maturity = orderBook.maturity.toNumber();
-            const openingDate = orderBook.openingDate.toNumber();
+            const maturity = Number(orderBook.maturity);
+            const openingDate = Number(orderBook.openingDate);
             const isReady = orderBook.isReady;
             const isMatured = timestamp >= maturity;
             const isOpened = isReady && !isMatured && timestamp >= openingDate;
@@ -239,40 +238,59 @@ export class SecuredFinanceClient extends ContractsInstance {
         ccy: Currency,
         maturity: number,
         side: OrderSide,
-        amount: number | BigNumber,
+        amount: bigint,
         sourceWallet: WalletSource,
         unitPrice?: number,
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
         assertNonNullish(this.lendingMarketController);
+        assertNonNullish(this.config.walletClient?.account?.address);
+
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
             if (ccy.equals(Ether.onChain(this.config.networkId))) {
-                return this.lendingMarketController.contract.depositAndExecuteOrder(
-                    this.convertCurrencyToBytes32(ccy),
-                    maturity,
-                    side,
-                    amount,
-                    unitPrice ?? 0,
-                    { value: amount }
+                return this.lendingMarketController.write.depositAndExecuteOrder(
+                    [
+                        this.convertCurrencyToBytes32(ccy),
+                        BigInt(maturity),
+                        0,
+                        amount,
+                        BigInt(unitPrice ?? 0),
+                    ],
+                    {
+                        account: this.config.walletClient.account.address,
+                        chain: this.config.walletClient.chain,
+                    }
                 );
             } else {
                 const isApproved = await this.approveTokenTransfer(ccy, amount);
                 await onApproved?.(isApproved);
-                return this.lendingMarketController.contract.depositAndExecuteOrder(
-                    this.convertCurrencyToBytes32(ccy),
-                    maturity,
-                    side,
-                    amount,
-                    unitPrice ?? 0
+                return this.lendingMarketController.write.depositAndExecuteOrder(
+                    [
+                        this.convertCurrencyToBytes32(ccy),
+                        BigInt(maturity),
+                        0,
+                        amount,
+                        BigInt(unitPrice ?? 0),
+                    ],
+                    {
+                        account: this.config.walletClient.account.address,
+                        chain: this.config.walletClient.chain,
+                    }
                 );
             }
         } else {
-            return this.lendingMarketController.contract.executeOrder(
-                this.convertCurrencyToBytes32(ccy),
-                maturity,
-                side,
-                amount,
-                unitPrice ?? 0
+            return this.lendingMarketController.write.executeOrder(
+                [
+                    this.convertCurrencyToBytes32(ccy),
+                    BigInt(maturity),
+                    side === OrderSide.BORROW ? 1 : 0,
+                    amount,
+                    BigInt(unitPrice ?? 0),
+                ],
+                {
+                    account: this.config.walletClient.account.address,
+                    chain: this.config.walletClient.chain,
+                }
             );
         }
     }
@@ -281,93 +299,95 @@ export class SecuredFinanceClient extends ContractsInstance {
         ccy: Currency,
         maturity: number,
         side: OrderSide,
-        amount: number | BigNumber,
+        amount: bigint,
         sourceWallet: WalletSource,
         unitPrice: number,
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
         assertNonNullish(this.lendingMarketController);
+        assertNonNullish(this.config.walletClient?.account?.address);
+
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
             if (ccy.equals(Ether.onChain(this.config.networkId))) {
-                return this.lendingMarketController.contract.depositAndExecutesPreOrder(
-                    this.convertCurrencyToBytes32(ccy),
-                    maturity,
-                    side,
-                    amount,
-                    unitPrice,
-                    { value: amount }
+                return this.lendingMarketController.write.depositAndExecutesPreOrder(
+                    [
+                        this.convertCurrencyToBytes32(ccy),
+                        BigInt(maturity),
+                        0,
+                        amount,
+                        BigInt(unitPrice),
+                    ],
+                    {
+                        account: this.config.walletClient.account.address,
+                        chain: this.config.walletClient.chain,
+                    }
                 );
             } else {
                 const isApproved = await this.approveTokenTransfer(ccy, amount);
                 await onApproved?.(isApproved);
-                return this.lendingMarketController.contract.depositAndExecutesPreOrder(
-                    this.convertCurrencyToBytes32(ccy),
-                    maturity,
-                    side,
-                    amount,
-                    unitPrice
+                return this.lendingMarketController.write.depositAndExecutesPreOrder(
+                    [
+                        this.convertCurrencyToBytes32(ccy),
+                        BigInt(maturity),
+                        0,
+                        amount,
+                        BigInt(unitPrice),
+                    ],
+                    {
+                        account: this.config.walletClient.account.address,
+                        chain: this.config.walletClient.chain,
+                    }
                 );
             }
         } else {
-            return this.lendingMarketController.contract.executePreOrder(
-                this.convertCurrencyToBytes32(ccy),
-                maturity,
-                side,
-                amount,
-                unitPrice
+            return this.lendingMarketController.write.executePreOrder(
+                [
+                    this.convertCurrencyToBytes32(ccy),
+                    BigInt(maturity),
+                    side === OrderSide.BORROW ? 1 : 0,
+                    amount,
+                    BigInt(unitPrice),
+                ],
+                {
+                    account: this.config.walletClient.account.address,
+                    chain: this.config.walletClient.chain,
+                }
             );
         }
     }
 
-    async cancelLendingOrder(
-        ccy: Currency,
-        maturity: number,
-        orderID: number | BigNumber
-    ) {
+    async cancelLendingOrder(ccy: Currency, maturity: number, orderID: number) {
         assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.cancelOrder(
-            this.convertCurrencyToBytes32(ccy),
-            maturity,
-            orderID
+        assertNonNullish(this.config.walletClient?.account?.address);
+
+        return this.lendingMarketController.write.cancelOrder(
+            [this.convertCurrencyToBytes32(ccy), BigInt(maturity), orderID],
+            {
+                account: this.config.walletClient.account.address,
+                chain: this.config.walletClient.chain,
+            }
         );
     }
 
-    async sendEther(
-        amount: number | BigNumber,
-        to: string,
-        gasPrice?: number | BigNumber
-    ) {
-        let signer: Signer;
-        assertNonNullish(this.config, 'Client is not initialized');
-
-        if (Signer.isSigner(this.config.signerOrProvider)) {
-            signer = this.config.signerOrProvider;
-        } else {
-            console.error('signer is required for sending transaction');
-            return;
-        }
-
-        return sendEther(signer, amount, to, gasPrice);
-    }
-
-    async convertToBaseCurrency(ccy: Currency, amount: number | BigNumber) {
+    async convertToBaseCurrency(ccy: Currency, amount: bigint) {
         assertNonNullish(this.currencyController);
-        return this.currencyController?.contract[
-            'convertToBaseCurrency(bytes32,int256)'
-        ](this.convertCurrencyToBytes32(ccy), amount);
+        return this.currencyController.read.convertToBaseCurrency([
+            this.convertCurrencyToBytes32(ccy),
+            amount,
+        ]);
     }
 
     async getUsedCurrencies(account: string) {
         assertNonNullish(this.tokenVault);
-        return this.tokenVault.contract.getUsedCurrencies(account);
+        return this.tokenVault.read.getUsedCurrencies([account as Hex]);
     }
 
     async getTokenAllowance(token: Token, owner: string) {
         assertNonNullish(this.tokenVault);
 
         const tokenContract = await this.getTokenContract(token);
-        const spender = this.tokenVault.contract.address;
-        return tokenContract.allowance(owner, spender);
+        const spender = this.tokenVault.address;
+        return tokenContract.read.allowance([owner as Hex, spender]);
     }
 
     async getBorrowOrderBook(
@@ -376,11 +396,11 @@ export class SecuredFinanceClient extends ContractsInstance {
         limit: number
     ) {
         assertNonNullish(this.lendingMarketReader);
-        return this.lendingMarketReader.contract.getBorrowOrderBook(
+        return this.lendingMarketReader.read.getBorrowOrderBook([
             this.convertCurrencyToBytes32(currency),
-            maturity,
-            limit
-        );
+            BigInt(maturity),
+            BigInt(limit),
+        ]);
     }
 
     async getLendOrderBook(
@@ -389,26 +409,31 @@ export class SecuredFinanceClient extends ContractsInstance {
         limit: number
     ) {
         assertNonNullish(this.lendingMarketReader);
-        return this.lendingMarketReader.contract.getLendOrderBook(
+        return this.lendingMarketReader.read.getLendOrderBook([
             this.convertCurrencyToBytes32(currency),
-            maturity,
-            limit
-        );
+            BigInt(maturity),
+            BigInt(limit),
+        ]);
     }
 
     // Mock ERC20 token related functions
     async mintERC20Token(token: Token) {
         assertNonNullish(this.tokenFaucet);
-        return this.tokenFaucet.contract.mint(
-            this.convertCurrencyToBytes32(token)
+        assertNonNullish(this.config.walletClient?.account?.address);
+        return this.tokenFaucet.write.mint(
+            [this.convertCurrencyToBytes32(token)],
+            {
+                account: this.config.walletClient.account.address,
+                chain: this.config.walletClient.chain,
+            }
         );
     }
 
     async getERC20TokenContractAddress(token: Token) {
         assertNonNullish(this.tokenFaucet);
-        return this.tokenFaucet.contract.getCurrencyAddress(
-            this.convertCurrencyToBytes32(token)
-        );
+        return this.tokenFaucet.read.getCurrencyAddress([
+            this.convertCurrencyToBytes32(token),
+        ]);
     }
 
     get config() {
@@ -418,33 +443,31 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     async getCurrencies() {
         assertNonNullish(this.currencyController);
-        return this.currencyController.contract.getCurrencies();
+        return this.currencyController.read.getCurrencies();
     }
 
     async getCollateralCurrencies() {
         assertNonNullish(this.tokenVault);
-        return this.tokenVault.contract.getCollateralCurrencies();
+        return this.tokenVault.read.getCollateralCurrencies();
     }
 
     async getERC20Balance(token: Token, account: string) {
         const tokenContract = await this.getTokenContract(token);
-        return tokenContract.balanceOf(account);
+        return tokenContract.read.balanceOf([account as Hex]);
     }
 
     async getCollateralBook(account: string) {
         assertNonNullish(this.tokenVault);
         const currencies = await this.getCurrencies();
-        let collateral: Record<string, BigNumber> = {};
+        let collateral: Record<string, bigint> = {};
 
         if (currencies && currencies.length) {
             await Promise.all(
                 currencies.map(async ccy => {
                     assertNonNullish(this.tokenVault);
-                    const balance =
-                        await this.tokenVault.contract.getDepositAmount(
-                            account,
-                            ccy
-                        );
+                    const balance = await this.tokenVault.read.getDepositAmount(
+                        [account as Hex, ccy]
+                    );
                     collateral = {
                         ...collateral,
                         [this.parseBytes32String(ccy)]: balance,
@@ -463,28 +486,30 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     async getCoverage(account: string) {
         assertNonNullish(this.tokenVault);
-        return await this.tokenVault.contract.getCoverage(account);
+        return await this.tokenVault.read.getCoverage([account as Hex]);
     }
 
-    private async approveTokenTransfer(
-        ccy: Currency,
-        amount: number | BigNumber
-    ) {
+    private async approveTokenTransfer(ccy: Currency, amount: bigint) {
         assertNonNullish(this.tokenVault);
-        if (!Signer.isSigner(this.config.signerOrProvider)) {
-            throw new Error('Signer is not set');
-        }
+        assertNonNullish(this.config.walletClient?.account?.address);
 
         if (ccy.isToken) {
             const tokenContract = await this.getTokenContract(ccy);
-            const owner = await this.config.signerOrProvider.getAddress();
-            const spender = this.tokenVault.contract.address;
-            const allowance = await tokenContract.allowance(owner, spender);
+            const owner = this.config.walletClient.account.address;
+            const spender = this.tokenVault.address;
+            const allowance = await tokenContract.read.allowance([
+                owner,
+                spender,
+            ]);
 
-            if (allowance.lte(amount)) {
-                await tokenContract
-                    .approve(spender, constants.MaxUint256.sub(amount))
-                    .then(tx => tx.wait());
+            if (allowance <= amount) {
+                await tokenContract.write.approve(
+                    [spender, maxInt256 - amount],
+                    {
+                        account: this.config.walletClient.account.address,
+                        chain: this.config.walletClient.chain,
+                    }
+                );
                 return true;
             }
         }
@@ -492,18 +517,19 @@ export class SecuredFinanceClient extends ContractsInstance {
     }
 
     private async getTokenContract(token: Token) {
-        return new Contract(
-            token.address,
-            ERC20.abi,
-            this.config.signerOrProvider
-        ) as MockERC20;
+        return getContract({
+            abi: ERC20Abi,
+            address: token.address as Hex,
+            publicClient: this.config.publicClient,
+            walletClient: this.config.walletClient,
+        });
     }
 
     async getTotalDepositAmount(currency: Currency) {
         assertNonNullish(this.tokenVault);
-        return this.tokenVault.contract.getTotalDepositAmount(
-            this.convertCurrencyToBytes32(currency)
-        );
+        return this.tokenVault.read.getTotalDepositAmount([
+            this.convertCurrencyToBytes32(currency),
+        ]);
     }
 
     async getProtocolDepositAmount() {
@@ -512,7 +538,7 @@ export class SecuredFinanceClient extends ContractsInstance {
 
         const totalDepositAmounts = await Promise.allSettled(
             currencyList.map(currency =>
-                this.tokenVault?.contract.getTotalDepositAmount(currency)
+                this.tokenVault?.read.getTotalDepositAmount([currency])
             )
         );
 
@@ -524,75 +550,60 @@ export class SecuredFinanceClient extends ContractsInstance {
                 }
             }
             return acc;
-        }, {} as Record<string, BigNumber>);
+        }, {} as Record<string, bigint>);
     }
 
     async unwindPosition(currency: Currency, maturity: number) {
         assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.unwindPosition(
-            this.convertCurrencyToBytes32(currency),
-            maturity
+        assertNonNullish(this.config.walletClient?.account?.address);
+
+        return this.lendingMarketController.write.unwindPosition(
+            [this.convertCurrencyToBytes32(currency), BigInt(maturity)],
+            {
+                account: this.config.walletClient.account.address,
+                chain: this.config.walletClient.chain,
+            }
         );
     }
 
     async getOrderFeeRate(currency: Currency) {
         assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getOrderFeeRate(
-            this.convertCurrencyToBytes32(currency)
-        );
-    }
-
-    async getLendingMarket(currency: Currency) {
-        assertNonNullish(this.lendingMarketController);
-        assertNonNullish(this.lendingMarkets);
-
-        const address =
-            await this.lendingMarketController.contract.getLendingMarket(
-                this.convertCurrencyToBytes32(currency)
-            );
-
-        return (await this.lendingMarkets.get(address)).contract;
+        return this.lendingMarketController.read.getOrderFeeRate([
+            this.convertCurrencyToBytes32(currency),
+        ]);
     }
 
     async getOrderBookId(currency: Currency, maturity: number) {
         assertNonNullish(this.lendingMarketController);
-        assertNonNullish(this.lendingMarkets);
 
-        return this.lendingMarketController.contract.getOrderBookId(
+        return this.lendingMarketController.read.getOrderBookId([
             this.convertCurrencyToBytes32(currency),
-            maturity
-        );
+            BigInt(maturity),
+        ]);
     }
 
     async getOrderList(account: string, usedCurrenciesForOrders: Currency[]) {
         assertNonNullish(this.lendingMarketReader);
 
-        const { activeOrders, inactiveOrders } =
-            await this.lendingMarketReader.contract[
-                'getOrders(bytes32[],address)'
-            ](
-                this.convertCurrencyArrayToBytes32Array(
-                    usedCurrenciesForOrders
-                ),
-                account
-            );
-
-        return { activeOrders, inactiveOrders };
+        return this.lendingMarketReader.read.getOrders([
+            this.convertCurrencyArrayToBytes32Array(usedCurrenciesForOrders),
+            account as Hex,
+        ]);
     }
 
     async getPositions(account: string, usedCurrenciesForOrders: Currency[]) {
         assertNonNullish(this.lendingMarketReader);
-        return this.lendingMarketReader.contract[
-            'getPositions(bytes32[],address)'
-        ](
+        return this.lendingMarketReader.read.getPositions([
             this.convertCurrencyArrayToBytes32Array(usedCurrenciesForOrders),
-            account
-        );
+            account as Hex,
+        ]);
     }
 
     async getUsedCurrenciesForOrders(account: string) {
         assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.getUsedCurrencies(account);
+        return this.lendingMarketController.read.getUsedCurrencies([
+            account as Hex,
+        ]);
     }
 
     async executeLiquidationCall(
@@ -602,23 +613,30 @@ export class SecuredFinanceClient extends ContractsInstance {
         account: string
     ) {
         assertNonNullish(this.lendingMarketController);
-        return this.lendingMarketController.contract.executeLiquidationCall(
-            this.convertCurrencyToBytes32(collateralCcy),
-            this.convertCurrencyToBytes32(debtCcy),
-            debtMaturity,
-            account
+        assertNonNullish(this.config.walletClient?.account?.address);
+        return this.lendingMarketController.write.executeLiquidationCall(
+            [
+                this.convertCurrencyToBytes32(collateralCcy),
+                this.convertCurrencyToBytes32(debtCcy),
+                BigInt(debtMaturity),
+                account as Hex,
+            ],
+            {
+                account: this.config.walletClient.account.address,
+                chain: this.config.walletClient.chain,
+            }
         );
     }
 
     async getLastPrice(currency: Currency) {
         assertNonNullish(this.currencyController);
-        return this.currencyController.contract.getLastPrice(
-            this.convertCurrencyToBytes32(currency)
-        );
+        return this.currencyController.read.getLastPrice([
+            this.convertCurrencyToBytes32(currency),
+        ]);
     }
 
     async getTotalCollateralAmount(account: string) {
         assertNonNullish(this.tokenVault);
-        return this.tokenVault.contract.getTotalCollateralAmount(account);
+        return this.tokenVault.read.getTotalCollateralAmount([account as Hex]);
     }
 }

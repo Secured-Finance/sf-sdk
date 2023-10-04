@@ -1,10 +1,10 @@
-import { Provider } from '@ethersproject/providers';
-import { Signer } from 'ethers';
+import { PublicClient, WalletClient } from 'viem';
 
 export interface SecuredFinanceClientConfig {
     defaultGas: number;
     defaultGasPrice: number;
     network: string;
     networkId: number;
-    signerOrProvider: Signer | Provider;
+    publicClient: PublicClient;
+    walletClient?: WalletClient;
 }

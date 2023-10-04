@@ -1,21 +1,52 @@
-import { Provider } from '@ethersproject/providers';
-import { Signer } from 'ethers';
 import {
-    TokenFaucet as Contract,
-    TokenFaucet__factory as Factory,
-} from '../types';
-import { NetworkName } from '../utils';
-import { BaseContract } from './base-contract';
+    Address,
+    GetContractReturnType,
+    PublicClient,
+    WalletClient,
+    getContract,
+} from 'viem';
+import { NetworkName, getContractEnvironment } from '../utils';
+import {
+    abi as developmentAbi,
+    address as developmentAddress,
+} from './../deployments/development/TokenFaucet';
+import {
+    abi as stagingAbi,
+    address as stagingAddress,
+} from './../deployments/staging/TokenFaucet';
 
-export class TokenFaucet extends BaseContract<Contract> {
+export type TokenFaucetContractType = GetContractReturnType<
+    typeof developmentAbi | typeof stagingAbi,
+    PublicClient,
+    WalletClient,
+    Address
+>;
+
+export class TokenFaucet {
     static async getInstance(
-        signerOrProvider: Signer | Provider,
-        networkName: NetworkName
+        networkName: NetworkName,
+        publicClient: PublicClient,
+        walletClient?: WalletClient
     ) {
-        const address = await this.getAddress('TokenFaucet', networkName);
-        const contract = Factory.connect(address, signerOrProvider);
+        const devContract = getContract({
+            abi: developmentAbi,
+            address: developmentAddress,
+            publicClient,
+            walletClient,
+        });
 
-        return new TokenFaucet(contract);
+        const stagingContract = getContract({
+            abi: stagingAbi,
+            address: stagingAddress,
+            publicClient,
+            walletClient,
+        });
+
+        const contractEnv = getContractEnvironment(networkName);
+
+        const contractToUse =
+            contractEnv === 'development' ? devContract : stagingContract;
+        return contractToUse;
     }
 }
 

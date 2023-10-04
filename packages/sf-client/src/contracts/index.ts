@@ -1,27 +1,29 @@
-import CurrencyController from './currency-controller';
-import GenesisValueVault from './genesis-value-vault';
-import LendingMarket from './lending-market';
-import LendingMarketController from './lending-market-controller';
-import LendingMarketReader from './lending-market-reader';
-import TokenFaucet from './token-faucet';
-import TokenVault from './token-vault';
+import CurrencyController, {
+    CurrencyControllerContractType,
+} from './currency-controller';
+import GenesisValueVault, {
+    GenesisValueVaultContractType,
+} from './genesis-value-vault';
+import LendingMarketController, {
+    LendingMarketControllerContractType,
+} from './lending-market-controller';
+import LendingMarketReader, {
+    LendingMarketReaderContractType,
+} from './lending-market-reader';
+import TokenFaucet, { TokenFaucetContractType } from './token-faucet';
+import TokenVault, { TokenVaultContractType } from './token-vault';
 
-export * from './base-contract';
 export {
     CurrencyController,
+    CurrencyControllerContractType,
     GenesisValueVault,
-    LendingMarket,
+    GenesisValueVaultContractType,
     LendingMarketController,
+    LendingMarketControllerContractType,
     LendingMarketReader,
+    LendingMarketReaderContractType,
     TokenFaucet,
+    TokenFaucetContractType,
     TokenVault,
-};
-
-export const contracts = {
-    currencyController: CurrencyController,
-    lendingMarketController: LendingMarketController,
-    lendingMarketReader: LendingMarketReader,
-    tokenVault: TokenVault,
-    genesisValueVault: GenesisValueVault,
-    tokenFaucet: TokenFaucet,
+    TokenVaultContractType,
 };
