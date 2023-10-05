@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.109](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.108...v0.2.0-beta.109) (2023-10-05)
+
+
+### Bug Fixes
+
+* add logic to estimate gas costs [SF-667] ([48d5787](https://github.com/secured-finance/sf-sdk/commit/48d5787662f10cf0e0a506d1d3ae433cddbeaa85))
+
+
+
+# 0.2.0-beta.107 (2023-09-29)
+
+
+
+
+
 # [0.2.0-beta.108](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.107...v0.2.0-beta.108) (2023-10-03)
 
 
