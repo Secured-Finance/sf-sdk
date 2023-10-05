@@ -12,6 +12,7 @@ import {
     constants,
     Contract,
     getDefaultProvider,
+    PayableOverrides,
     Signer,
     utils,
 } from 'ethers';
@@ -62,6 +63,12 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     private parseBytes32String(ccy: string) {
         return utils.parseBytes32String(ccy);
+    }
+
+    private calculateAdjustedGas(amount: BigNumber) {
+        // NOTE: This adjustment is for the function that executes the collateral coverage check.
+        // Without this adjustment, the transaction often fails due to out-of-gas error.
+        return amount.mul(11).div(10);
     }
 
     private _config: SecuredFinanceClientConfig | null = null;
@@ -159,9 +166,17 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     async withdrawCollateral(ccy: Currency, amount: number | BigNumber) {
         assertNonNullish(this.tokenVault);
+
+        const estimatedGas =
+            await this.tokenVault.contract.estimateGas.withdraw(
+                this.convertCurrencyToBytes32(ccy),
+                amount
+            );
+
         return this.tokenVault.contract.withdraw(
             this.convertCurrencyToBytes32(ccy),
-            amount
+            amount,
+            { gasLimit: this.calculateAdjustedGas(estimatedGas) }
         );
     }
 
@@ -245,34 +260,56 @@ export class SecuredFinanceClient extends ContractsInstance {
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
         assertNonNullish(this.lendingMarketController);
+
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
+            const overrides: PayableOverrides = {};
+
             if (ccy.equals(Ether.onChain(this.config.networkId))) {
-                return this.lendingMarketController.contract.depositAndExecuteOrder(
+                overrides.value = amount;
+            } else {
+                const isApproved = await this.approveTokenTransfer(ccy, amount);
+                await onApproved?.(isApproved);
+            }
+
+            const estimatedGas =
+                await this.lendingMarketController.contract.estimateGas.depositAndExecuteOrder(
                     this.convertCurrencyToBytes32(ccy),
                     maturity,
                     side,
                     amount,
                     unitPrice ?? 0,
-                    { value: amount }
+                    overrides
                 );
-            } else {
-                const isApproved = await this.approveTokenTransfer(ccy, amount);
-                await onApproved?.(isApproved);
-                return this.lendingMarketController.contract.depositAndExecuteOrder(
+
+            overrides.gasLimit = this.calculateAdjustedGas(estimatedGas);
+
+            return this.lendingMarketController.contract.depositAndExecuteOrder(
+                this.convertCurrencyToBytes32(ccy),
+                maturity,
+                side,
+                amount,
+                unitPrice ?? 0,
+                overrides
+            );
+        } else {
+            const estimatedGas =
+                await this.lendingMarketController.contract.estimateGas.executeOrder(
                     this.convertCurrencyToBytes32(ccy),
                     maturity,
                     side,
                     amount,
                     unitPrice ?? 0
                 );
-            }
-        } else {
+
             return this.lendingMarketController.contract.executeOrder(
                 this.convertCurrencyToBytes32(ccy),
                 maturity,
                 side,
                 amount,
-                unitPrice ?? 0
+                unitPrice ?? 0,
+                {
+                    gasLimit: this.calculateAdjustedGas(estimatedGas),
+                }
             );
         }
     }
@@ -287,34 +324,56 @@ export class SecuredFinanceClient extends ContractsInstance {
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
         assertNonNullish(this.lendingMarketController);
+
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
+            const overrides: PayableOverrides = {};
+
             if (ccy.equals(Ether.onChain(this.config.networkId))) {
-                return this.lendingMarketController.contract.depositAndExecutesPreOrder(
+                overrides.value = amount;
+            } else {
+                const isApproved = await this.approveTokenTransfer(ccy, amount);
+                await onApproved?.(isApproved);
+            }
+
+            const estimatedGas =
+                await this.lendingMarketController.contract.estimateGas.depositAndExecutesPreOrder(
                     this.convertCurrencyToBytes32(ccy),
                     maturity,
                     side,
                     amount,
                     unitPrice,
-                    { value: amount }
+                    overrides
                 );
-            } else {
-                const isApproved = await this.approveTokenTransfer(ccy, amount);
-                await onApproved?.(isApproved);
-                return this.lendingMarketController.contract.depositAndExecutesPreOrder(
+
+            overrides.gasLimit = this.calculateAdjustedGas(estimatedGas);
+
+            return this.lendingMarketController.contract.depositAndExecutesPreOrder(
+                this.convertCurrencyToBytes32(ccy),
+                maturity,
+                side,
+                amount,
+                unitPrice,
+                overrides
+            );
+        } else {
+            const estimatedGas =
+                await this.lendingMarketController.contract.estimateGas.executePreOrder(
                     this.convertCurrencyToBytes32(ccy),
                     maturity,
                     side,
                     amount,
                     unitPrice
                 );
-            }
-        } else {
+
             return this.lendingMarketController.contract.executePreOrder(
                 this.convertCurrencyToBytes32(ccy),
                 maturity,
                 side,
                 amount,
-                unitPrice
+                unitPrice,
+                {
+                    gasLimit: this.calculateAdjustedGas(estimatedGas),
+                }
             );
         }
     }
@@ -529,9 +588,19 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     async unwindPosition(currency: Currency, maturity: number) {
         assertNonNullish(this.lendingMarketController);
+
+        const estimatedGas =
+            await this.lendingMarketController.contract.estimateGas.unwindPosition(
+                this.convertCurrencyToBytes32(currency),
+                maturity
+            );
+
         return this.lendingMarketController.contract.unwindPosition(
             this.convertCurrencyToBytes32(currency),
-            maturity
+            maturity,
+            {
+                gasLimit: this.calculateAdjustedGas(estimatedGas),
+            }
         );
     }
 
