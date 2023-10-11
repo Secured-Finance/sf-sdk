@@ -480,6 +480,13 @@ export class SecuredFinanceClient extends ContractsInstance {
         return this.currencyController.contract.getCurrencies();
     }
 
+    async currencyExists(ccy: Currency) {
+        assertNonNullish(this.currencyController);
+        return this.currencyController.contract.currencyExists(
+            this.convertCurrencyToBytes32(ccy)
+        );
+    }
+
     async getCollateralCurrencies() {
         assertNonNullish(this.tokenVault);
         return this.tokenVault.contract.getCollateralCurrencies();
@@ -601,6 +608,22 @@ export class SecuredFinanceClient extends ContractsInstance {
             {
                 gasLimit: this.calculateAdjustedGas(estimatedGas),
             }
+        );
+    }
+
+    async executeRepayment(currency: Currency, maturity: number) {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.executeRepayment(
+            this.convertCurrencyToBytes32(currency),
+            maturity
+        );
+    }
+
+    async executeRedemption(currency: Currency, maturity: number) {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.executeRedemption(
+            this.convertCurrencyToBytes32(currency),
+            maturity
         );
     }
 
