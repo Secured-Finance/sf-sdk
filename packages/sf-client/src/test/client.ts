@@ -1,7 +1,8 @@
 // Run this client to retrieve smart contract data
-// SF_ENV=development ALCHEMY_API_KEY=xxx node packages/sf-client/dist/test/client.js
+// SF_ENV=development node packages/sf-client/dist/test/client.js
 import { Token } from '@secured-finance/sf-core';
-import { getDefaultProvider } from 'ethers';
+import { createPublicClient, http } from 'viem';
+import { sepolia } from 'viem/chains';
 import { SecuredFinanceClient } from '../secured-finance-client';
 
 class WBTC extends Token {
@@ -16,18 +17,23 @@ class WBTC extends Token {
     }
 }
 
-const client = new SecuredFinanceClient();
-const provider = getDefaultProvider(
-    `https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
-);
+const sfClient = new SecuredFinanceClient();
 
-client
-    .init(provider, {
-        chainId: 11155111,
-        name: 'sepolia',
-    })
+const publicClient = createPublicClient({
+    chain: sepolia,
+    transport: http(),
+});
+
+sfClient
+    .init(
+        {
+            chainId: 11155111,
+            name: 'sepolia',
+        },
+        publicClient
+    )
     .then(() => {
-        client.getOrderBookDetailsPerCurrency(new WBTC()).then(orderBooks => {
+        sfClient.getMaturities(new WBTC()).then(orderBooks => {
             console.log(orderBooks);
         });
     });

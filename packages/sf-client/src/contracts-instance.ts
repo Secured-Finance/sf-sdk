@@ -1,43 +1,75 @@
-import { Provider } from '@ethersproject/providers';
-import { Signer } from 'ethers';
 import {
-    BaseContractStatic,
-    contracts,
-    CurrencyController,
-    GenesisValueVault,
-    LendingMarketController,
-    LendingMarketReader,
-    TokenFaucet,
-    TokenVault,
-} from './contracts';
-import { LendingMarkets } from './lib/lending-markets';
-import { NetworkName } from './utils';
+    abi as currencyControllerDevAbi,
+    address as currencyControllerDevAddress,
+} from './deployments/development/CurrencyController';
+import {
+    abi as genesisValueVaultDevAbi,
+    address as genesisValueVaultDevAddress,
+} from './deployments/development/GenesisValueVault';
+import {
+    abi as lendingMarketControllerDevAbi,
+    address as lendingMarketControllerDevAddress,
+} from './deployments/development/LendingMarketController';
+import {
+    abi as lendingMarketReaderDevAbi,
+    address as lendingMarketReaderDevAddress,
+} from './deployments/development/LendingMarketReader';
+import {
+    abi as tokenFaucetDevAbi,
+    address as tokenFaucetDevAddress,
+} from './deployments/development/TokenFaucet';
+import {
+    abi as tokenVaultDevAbi,
+    address as tokenVaultDevAddress,
+} from './deployments/development/TokenVault';
+import {
+    abi as currencyControllerStgAbi,
+    address as currencyControllerStgAddress,
+} from './deployments/staging/CurrencyController';
+import {
+    abi as genesisValueVaultStgAbi,
+    address as genesisValueVaultStgAddress,
+} from './deployments/staging/GenesisValueVault';
+import {
+    abi as lendingMarketControllerStgAbi,
+    address as lendingMarketControllerStgAddress,
+} from './deployments/staging/LendingMarketController';
+import {
+    abi as lendingMarketReaderStgAbi,
+    address as lendingMarketReaderStgAddress,
+} from './deployments/staging/LendingMarketReader';
+import {
+    abi as tokenFaucetStgAbi,
+    address as tokenFaucetStgAddress,
+} from './deployments/staging/TokenFaucet';
+import {
+    abi as tokenVaultStgAbi,
+    address as tokenVaultStgAddress,
+} from './deployments/staging/TokenVault';
 
-export class ContractsInstance {
-    protected currencyController: CurrencyController | null = null;
-    protected lendingMarkets: LendingMarkets | null = null;
-    protected lendingMarketController: LendingMarketController | null = null;
-    protected lendingMarketReader: LendingMarketReader | null = null;
-    protected tokenVault: TokenVault | null = null;
-    protected genesisValueVault: GenesisValueVault | null = null;
-    protected tokenFaucet: TokenFaucet | null = null;
-
-    async getInstances(
-        signerOrProvider: Signer | Provider,
-        network: NetworkName
-    ) {
-        let key: keyof typeof contracts;
-        for (key in contracts) {
-            if (Object.prototype.hasOwnProperty.call(contracts, key)) {
-                const Contract = contracts[key] as BaseContractStatic;
-                this[key] = (await Contract.getInstance(
-                    signerOrProvider,
-                    network
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                )) as any;
-            }
-        }
-
-        this.lendingMarkets = new LendingMarkets(signerOrProvider);
-    }
-}
+export {
+    currencyControllerDevAbi,
+    currencyControllerDevAddress,
+    currencyControllerStgAbi,
+    currencyControllerStgAddress,
+    genesisValueVaultDevAbi,
+    genesisValueVaultDevAddress,
+    genesisValueVaultStgAbi,
+    genesisValueVaultStgAddress,
+    lendingMarketControllerDevAbi,
+    lendingMarketControllerDevAddress,
+    lendingMarketControllerStgAbi,
+    lendingMarketControllerStgAddress,
+    lendingMarketReaderDevAbi,
+    lendingMarketReaderDevAddress,
+    lendingMarketReaderStgAbi,
+    lendingMarketReaderStgAddress,
+    tokenFaucetDevAbi,
+    tokenFaucetDevAddress,
+    tokenFaucetStgAbi,
+    tokenFaucetStgAddress,
+    tokenVaultDevAbi,
+    tokenVaultDevAddress,
+    tokenVaultStgAbi,
+    tokenVaultStgAddress,
+};
