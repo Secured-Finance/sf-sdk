@@ -15,7 +15,13 @@ import {
     tokenVaultDevAddress,
 } from './contracts-instance';
 import { SecuredFinanceClientConfig } from './entities';
-import { CHAINS, Network, NetworkName, getContractEnvironment, networkNames } from './utils';
+import {
+    CHAINS,
+    Network,
+    NetworkName,
+    getContractEnvironment,
+    networkNames,
+} from './utils';
 
 export enum OrderSide {
     LEND = '0',
