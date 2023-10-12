@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.111](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.110...v0.2.0-beta.111) (2023-10-12)
+
+
+### Features
+
+* add delisted currency related functions [SF-585] ([ed8e69a](https://github.com/secured-finance/sf-sdk/commit/ed8e69a8599390e2d5006a35ea5b431b1fd00ac7))
+
+
+
+# 0.2.0-beta.109 (2023-10-05)
+
+
+
+
+
 # [0.2.0-beta.110](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.109...v0.2.0-beta.110) (2023-10-11)
 
 
