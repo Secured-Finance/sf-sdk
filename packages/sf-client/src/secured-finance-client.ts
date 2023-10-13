@@ -499,7 +499,7 @@ export class SecuredFinanceClient extends ContractsInstance {
 
     async getCollateralBook(account: string) {
         assertNonNullish(this.tokenVault);
-        const currencies = await this.getCurrencies();
+        const currencies = await this.getUsedCurrencies(account);
         let collateral: Record<string, BigNumber> = {};
 
         if (currencies && currencies.length) {
