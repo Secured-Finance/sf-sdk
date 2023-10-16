@@ -1,3 +1,4 @@
+import { Hex } from 'viem';
 import {
     abi as currencyControllerDevAbi,
     address as currencyControllerDevAddress,
@@ -47,29 +48,62 @@ import {
     address as tokenVaultStgAddress,
 } from './deployments/staging/TokenVault';
 
-export {
-    currencyControllerDevAbi,
-    currencyControllerDevAddress,
-    currencyControllerStgAbi,
-    currencyControllerStgAddress,
-    genesisValueVaultDevAbi,
-    genesisValueVaultDevAddress,
-    genesisValueVaultStgAbi,
-    genesisValueVaultStgAddress,
-    lendingMarketControllerDevAbi,
-    lendingMarketControllerDevAddress,
-    lendingMarketControllerStgAbi,
-    lendingMarketControllerStgAddress,
-    lendingMarketReaderDevAbi,
-    lendingMarketReaderDevAddress,
-    lendingMarketReaderStgAbi,
-    lendingMarketReaderStgAddress,
-    tokenFaucetDevAbi,
-    tokenFaucetDevAddress,
-    tokenFaucetStgAbi,
-    tokenFaucetStgAddress,
-    tokenVaultDevAbi,
-    tokenVaultDevAddress,
-    tokenVaultStgAbi,
-    tokenVaultStgAddress,
+export const tokenVaultDevContract = {
+    abi: tokenVaultDevAbi,
+    address: tokenVaultDevAddress as Hex,
+};
+
+export const tokenVaultStgContract = {
+    abi: tokenVaultStgAbi,
+    address: tokenVaultStgAddress as Hex,
+};
+
+export const tokenFaucetDevContract = {
+    abi: tokenFaucetDevAbi,
+    address: tokenFaucetDevAddress as Hex,
+};
+
+export const tokenFaucetStgContract = {
+    abi: tokenFaucetStgAbi,
+    address: tokenFaucetStgAddress as Hex,
+};
+
+export const lendingMarketReaderDevContract = {
+    abi: lendingMarketReaderDevAbi,
+    address: lendingMarketReaderDevAddress as Hex,
+};
+
+export const lendingMarketReaderStgContract = {
+    abi: lendingMarketReaderStgAbi,
+    address: lendingMarketReaderStgAddress as Hex,
+};
+
+export const lendingMarketControllerDevContract = {
+    abi: lendingMarketControllerDevAbi,
+    address: lendingMarketControllerDevAddress as Hex,
+};
+
+export const lendingMarketControllerStgContract = {
+    abi: lendingMarketControllerStgAbi,
+    address: lendingMarketControllerStgAddress as Hex,
+};
+
+export const genesisValueVaultDevContract = {
+    abi: genesisValueVaultDevAbi,
+    address: genesisValueVaultDevAddress as Hex,
+};
+
+export const genesisValueVaultStgContract = {
+    abi: genesisValueVaultStgAbi,
+    address: genesisValueVaultStgAddress as Hex,
+};
+
+export const currencyControllerDevContract = {
+    abi: currencyControllerDevAbi,
+    address: currencyControllerDevAddress as Hex,
+};
+
+export const currencyControllerStgContract = {
+    abi: currencyControllerStgAbi,
+    address: currencyControllerStgAddress as Hex,
 };
