@@ -713,4 +713,43 @@ export class SecuredFinanceClient extends ContractsInstance {
         assertNonNullish(this.tokenVault);
         return this.tokenVault.contract.getTotalCollateralAmount(account);
     }
+
+    /*
+     * Global Emergency Settlement
+     */
+    async isTerminated() {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.isTerminated();
+    }
+
+    async getMarketTerminationDate() {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.getMarketTerminationDate();
+    }
+
+    async getMarketTerminationRatio(currency: Currency) {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.getMarketTerminationRatio(
+            this.convertCurrencyToBytes32(currency)
+        );
+    }
+
+    async getMarketTerminationPrice(currency: Currency) {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.getMarketTerminationPrice(
+            this.convertCurrencyToBytes32(currency)
+        );
+    }
+
+    async isRedemptionRequired(account: string) {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.isRedemptionRequired(
+            account
+        );
+    }
+
+    async executeEmergencySettlement() {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.executeEmergencySettlement();
+    }
 }
