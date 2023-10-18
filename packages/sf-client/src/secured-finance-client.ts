@@ -4,7 +4,7 @@ import {
     Currency,
     Ether,
     getUTCMonthYear,
-    Token
+    Token,
 } from '@secured-finance/sf-core';
 import ERC20 from '@secured-finance/smart-contracts/build/contracts/mocks/tokens/MockERC20.sol/MockERC20.json';
 import {
@@ -14,7 +14,7 @@ import {
     getDefaultProvider,
     PayableOverrides,
     Signer,
-    utils
+    utils,
 } from 'ethers';
 import { ContractsInstance } from './contracts-instance';
 import { SecuredFinanceClientConfig } from './entities';
@@ -714,10 +714,9 @@ export class SecuredFinanceClient extends ContractsInstance {
         return this.tokenVault.contract.getTotalCollateralAmount(account);
     }
 
-
     /*
-    * Global Emergency Settlement
-    */
+     * Global Emergency Settlement
+     */
     async isTerminated() {
         assertNonNullish(this.lendingMarketController);
         return this.lendingMarketController.contract.isTerminated();
@@ -734,7 +733,6 @@ export class SecuredFinanceClient extends ContractsInstance {
             this.convertCurrencyToBytes32(currency)
         );
     }
-
 
     async getMarketTerminationPrice(currency: Currency) {
         assertNonNullish(this.lendingMarketController);
