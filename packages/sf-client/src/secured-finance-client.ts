@@ -740,4 +740,16 @@ export class SecuredFinanceClient extends ContractsInstance {
             this.convertCurrencyToBytes32(currency)
         );
     }
+
+    async isRedemptionRequired(account: string) {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.isRedemptionRequired(
+            account
+        );
+    }
+
+    async executeEmergencySettlement() {
+        assertNonNullish(this.lendingMarketController);
+        return this.lendingMarketController.contract.executeEmergencySettlement();
+    }
 }
