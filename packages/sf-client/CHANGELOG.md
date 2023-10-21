@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.113](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.112...v0.2.0-beta.113) (2023-10-18)
+
+
+### Bug Fixes
+
+* update package-lock [SF-709] ([8f16aab](https://github.com/secured-finance/sf-sdk/commit/8f16aabe9b15aef0291b365601a652f878a27368))
+
+
+### Features
+
+* add global emergency settlement functions [SF-709] ([48f8573](https://github.com/secured-finance/sf-sdk/commit/48f8573dbabd8decbdf39988f28a5e92f2e9ab5f))
+* add missing emergency function [SF-709] ([21311c5](https://github.com/secured-finance/sf-sdk/commit/21311c5a67195b41665418c48ec8d521192407dd))
+* update smart contract to a soon to be terminated version [SF-707] ([52b10d9](https://github.com/secured-finance/sf-sdk/commit/52b10d9e7deb9392134e61bed961a405946cb9ac))
+
+
+
+
+
+# [0.2.0-beta.112](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.111...v0.2.0-beta.112) (2023-10-13)
+
+
+### Bug Fixes
+
+* use getUsedCurrencies for collateral [SF-585] ([fd332de](https://github.com/secured-finance/sf-sdk/commit/fd332de37e33efc3d0b78b6a4f4deeaa670e1007))
+
+
+### Features
+
+* add delisted currency related functions [SF-585] ([ed8e69a](https://github.com/secured-finance/sf-sdk/commit/ed8e69a8599390e2d5006a35ea5b431b1fd00ac7))
+
+
+
+# 0.2.0-beta.109 (2023-10-05)
+
+
+
+
+
 # [0.2.0-beta.111](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.110...v0.2.0-beta.111) (2023-10-12)
 
 
