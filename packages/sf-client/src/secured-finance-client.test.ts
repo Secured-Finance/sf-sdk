@@ -1,108 +1,40 @@
-// import { Ether } from '@secured-finance/sf-core';
-// import { TokenVault } from './contracts';
-// import { SecuredFinanceClient } from './secured-finance-client';
-// import { getProvider } from './utils';
+import { createPublicClient, http } from 'viem';
+import { sepolia } from 'viem/chains';
+import { SecuredFinanceClient } from './secured-finance-client';
 
-// const CcyBytes32 = {
-//     ETH: '0x4554480000000000000000000000000000000000000000000000000000000000',
-// };
+const publicClient = createPublicClient({
+    chain: sepolia,
+    transport: http(),
+});
 
-// beforeAll(() => {
-//     process.env.SF_ENV = 'development';
-// });
+beforeAll(() => {
+    process.env.SF_ENV = 'development';
+});
 
-// beforeEach(() => jest.resetAllMocks());
+beforeEach(() => jest.resetAllMocks());
 
-// describe('Secured Finance Client', () => {
-//     it('should be able to create a new client', async () => {
-//         const client = new SecuredFinanceClient();
-//         expect(client).toBeTruthy();
-//     });
+describe('Secured Finance Client', () => {
+    it('should be able to create a new client', async () => {
+        const client = new SecuredFinanceClient();
+        expect(client).toBeTruthy();
+    });
 
-//     it('should be able to init the client', async () => {
-//         const client = new SecuredFinanceClient();
-//         const provider = getProvider('sepolia');
-//         await client.init(provider, await provider.getNetwork());
-//         expect(client).toBeTruthy();
-//     });
-// });
+    it('should be able to init the client', async () => {
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+        expect(client).toBeTruthy();
+    });
+});
 
-// describe('config', () => {
-//     it('should throw an error if the client is not initialized when calling the config', async () => {
-//         const client = new SecuredFinanceClient();
-//         expect(() => client.config).toThrowError(/Client is not initialized/);
-//     });
+describe('config', () => {
+    it('should throw an error if the client is not initialized when calling the config', async () => {
+        const client = new SecuredFinanceClient();
+        expect(() => client.config).toThrowError(/Client is not initialized/);
+    });
 
-//     it('should return the config if the client is initialized', async () => {
-//         const client = new SecuredFinanceClient();
-//         const provider = getProvider('sepolia');
-//         await client.init(provider, await provider.getNetwork());
-//         expect(client.config).toBeTruthy();
-//     });
-// });
-
-// // describe('depositCollateral method', () => {
-// //     it('should thrown an error if the client is not initialized when calling depositCollateral', async () => {
-// //         const client = new SecuredFinanceClient();
-// //         expect(
-// //             client.depositCollateral(Ether.onChain(1), 1)
-// //         ).rejects.toThrowError('Client is not initialized');
-// //     });
-
-// //     it.skip('should call the depositCollateral contract in a payable way for ETH', async () => {
-// //         const client = new SecuredFinanceClient();
-// //         const provider = getProvider('sepolia');
-// //         const network = await provider.getNetwork();
-// //         await client.init(provider, network);
-
-// //         const spy = jest
-// //             .spyOn(TokenVault.prototype.contract, 'deposit')
-// //             .mockImplementation(jest.fn().mockResolvedValue(true));
-// //         const result = await client.depositCollateral(
-// //             Ether.onChain(network.chainId),
-// //             1
-// //         );
-// //         expect(result).toBeTruthy();
-// //         expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1, { value: 1 });
-// //     });
-
-// //     it.skip('should call the depositCollateral contract in a non payable way for ERC20 token', async () => {
-// //         const client = new SecuredFinanceClient();
-// //         const provider = getProvider('sepolia');
-// //         const network = await provider.getNetwork();
-// //         await client.init(provider, network);
-
-// //         const spy = jest
-// //             .spyOn(TokenVault.prototype.contract, 'deposit')
-// //             .mockImplementation(jest.fn().mockResolvedValue(true));
-// //         const result = await client.depositCollateral(Ether.onChain(1221), 1);
-// //         expect(result).toBeTruthy();
-// //         expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1, undefined);
-// //     });
-// // });
-
-// // describe('withdrawCollateral method', () => {
-// //     it('should thrown an error if the client is not initialized when calling a withdrawCollateral', async () => {
-// //         const client = new SecuredFinanceClient();
-// //         expect(
-// //             client.withdrawCollateral(Ether.onChain(1), 1)
-// //         ).rejects.toThrowError('Client is not initialized');
-// //     });
-
-// //     it.skip('should call the withdrawCollateral contract', async () => {
-// //         const client = new SecuredFinanceClient();
-// //         const provider = getProvider('sepolia');
-// //         const network = await provider.getNetwork();
-// //         await client.init(provider, network);
-
-// //         const spy = jest
-// //             .spyOn(TokenVault.prototype.contract, 'withdraw')
-// //             .mockImplementation(jest.fn().mockResolvedValue(true));
-// //         const result = await client.withdrawCollateral(
-// //             Ether.onChain(network.chainId),
-// //             1
-// //         );
-// //         expect(result).toBeTruthy();
-// //         expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1);
-// //     });
-// // });
+    it('should return the config if the client is initialized', async () => {
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+        expect(client.config).toBeTruthy();
+    });
+});
