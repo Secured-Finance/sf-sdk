@@ -4,10 +4,6 @@ import {
     address as currencyControllerDevAddress,
 } from './deployments/development/CurrencyController';
 import {
-    abi as genesisValueVaultDevAbi,
-    address as genesisValueVaultDevAddress,
-} from './deployments/development/GenesisValueVault';
-import {
     abi as lendingMarketControllerDevAbi,
     address as lendingMarketControllerDevAddress,
 } from './deployments/development/LendingMarketController';
@@ -27,10 +23,6 @@ import {
     abi as currencyControllerStgAbi,
     address as currencyControllerStgAddress,
 } from './deployments/staging/CurrencyController';
-import {
-    abi as genesisValueVaultStgAbi,
-    address as genesisValueVaultStgAddress,
-} from './deployments/staging/GenesisValueVault';
 import {
     abi as lendingMarketControllerStgAbi,
     address as lendingMarketControllerStgAddress,
@@ -86,16 +78,6 @@ export const lendingMarketControllerDevContract = {
 export const lendingMarketControllerStgContract = {
     abi: lendingMarketControllerStgAbi,
     address: lendingMarketControllerStgAddress as Hex,
-};
-
-export const genesisValueVaultDevContract = {
-    abi: genesisValueVaultDevAbi,
-    address: genesisValueVaultDevAddress as Hex,
-};
-
-export const genesisValueVaultStgContract = {
-    abi: genesisValueVaultStgAbi,
-    address: genesisValueVaultStgAddress as Hex,
 };
 
 export const currencyControllerDevContract = {

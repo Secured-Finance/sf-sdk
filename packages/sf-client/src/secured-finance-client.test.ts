@@ -41,68 +41,68 @@
 //     });
 // });
 
-// describe('depositCollateral method', () => {
-//     it('should thrown an error if the client is not initialized when calling depositCollateral', async () => {
-//         const client = new SecuredFinanceClient();
-//         expect(
-//             client.depositCollateral(Ether.onChain(1), 1)
-//         ).rejects.toThrowError('Client is not initialized');
-//     });
+// // describe('depositCollateral method', () => {
+// //     it('should thrown an error if the client is not initialized when calling depositCollateral', async () => {
+// //         const client = new SecuredFinanceClient();
+// //         expect(
+// //             client.depositCollateral(Ether.onChain(1), 1)
+// //         ).rejects.toThrowError('Client is not initialized');
+// //     });
 
-//     it.skip('should call the depositCollateral contract in a payable way for ETH', async () => {
-//         const client = new SecuredFinanceClient();
-//         const provider = getProvider('sepolia');
-//         const network = await provider.getNetwork();
-//         await client.init(provider, network);
+// //     it.skip('should call the depositCollateral contract in a payable way for ETH', async () => {
+// //         const client = new SecuredFinanceClient();
+// //         const provider = getProvider('sepolia');
+// //         const network = await provider.getNetwork();
+// //         await client.init(provider, network);
 
-//         const spy = jest
-//             .spyOn(TokenVault.prototype.contract, 'deposit')
-//             .mockImplementation(jest.fn().mockResolvedValue(true));
-//         const result = await client.depositCollateral(
-//             Ether.onChain(network.chainId),
-//             1
-//         );
-//         expect(result).toBeTruthy();
-//         expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1, { value: 1 });
-//     });
+// //         const spy = jest
+// //             .spyOn(TokenVault.prototype.contract, 'deposit')
+// //             .mockImplementation(jest.fn().mockResolvedValue(true));
+// //         const result = await client.depositCollateral(
+// //             Ether.onChain(network.chainId),
+// //             1
+// //         );
+// //         expect(result).toBeTruthy();
+// //         expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1, { value: 1 });
+// //     });
 
-//     it.skip('should call the depositCollateral contract in a non payable way for ERC20 token', async () => {
-//         const client = new SecuredFinanceClient();
-//         const provider = getProvider('sepolia');
-//         const network = await provider.getNetwork();
-//         await client.init(provider, network);
+// //     it.skip('should call the depositCollateral contract in a non payable way for ERC20 token', async () => {
+// //         const client = new SecuredFinanceClient();
+// //         const provider = getProvider('sepolia');
+// //         const network = await provider.getNetwork();
+// //         await client.init(provider, network);
 
-//         const spy = jest
-//             .spyOn(TokenVault.prototype.contract, 'deposit')
-//             .mockImplementation(jest.fn().mockResolvedValue(true));
-//         const result = await client.depositCollateral(Ether.onChain(1221), 1);
-//         expect(result).toBeTruthy();
-//         expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1, undefined);
-//     });
-// });
+// //         const spy = jest
+// //             .spyOn(TokenVault.prototype.contract, 'deposit')
+// //             .mockImplementation(jest.fn().mockResolvedValue(true));
+// //         const result = await client.depositCollateral(Ether.onChain(1221), 1);
+// //         expect(result).toBeTruthy();
+// //         expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1, undefined);
+// //     });
+// // });
 
-// describe('withdrawCollateral method', () => {
-//     it('should thrown an error if the client is not initialized when calling a withdrawCollateral', async () => {
-//         const client = new SecuredFinanceClient();
-//         expect(
-//             client.withdrawCollateral(Ether.onChain(1), 1)
-//         ).rejects.toThrowError('Client is not initialized');
-//     });
+// // describe('withdrawCollateral method', () => {
+// //     it('should thrown an error if the client is not initialized when calling a withdrawCollateral', async () => {
+// //         const client = new SecuredFinanceClient();
+// //         expect(
+// //             client.withdrawCollateral(Ether.onChain(1), 1)
+// //         ).rejects.toThrowError('Client is not initialized');
+// //     });
 
-//     it.skip('should call the withdrawCollateral contract', async () => {
-//         const client = new SecuredFinanceClient();
-//         const provider = getProvider('sepolia');
-//         const network = await provider.getNetwork();
-//         await client.init(provider, network);
+// //     it.skip('should call the withdrawCollateral contract', async () => {
+// //         const client = new SecuredFinanceClient();
+// //         const provider = getProvider('sepolia');
+// //         const network = await provider.getNetwork();
+// //         await client.init(provider, network);
 
-//         const spy = jest
-//             .spyOn(TokenVault.prototype.contract, 'withdraw')
-//             .mockImplementation(jest.fn().mockResolvedValue(true));
-//         const result = await client.withdrawCollateral(
-//             Ether.onChain(network.chainId),
-//             1
-//         );
-//         expect(result).toBeTruthy();
-//         expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1);
-//     });
-// });
+// //         const spy = jest
+// //             .spyOn(TokenVault.prototype.contract, 'withdraw')
+// //             .mockImplementation(jest.fn().mockResolvedValue(true));
+// //         const result = await client.withdrawCollateral(
+// //             Ether.onChain(network.chainId),
+// //             1
+// //         );
+// //         expect(result).toBeTruthy();
+// //         expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1);
+// //     });
+// // });

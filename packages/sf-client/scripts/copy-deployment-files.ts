@@ -9,8 +9,9 @@ import {
     unlinkSync,
     writeFileSync,
 } from 'fs';
+import { contractsList } from '../contractsList';
 
-function extractAddress(filePath: string) {
+function extractAddressAndABI(filePath: string) {
     const fileContent = readFileSync(filePath, 'utf-8');
     const contractData = JSON.parse(fileContent);
     const { address, abi } = contractData;
@@ -23,7 +24,6 @@ function extractAddress(filePath: string) {
     const newContent =
         addressStr && abiStr ? addressStr + '\n' + '\n' + abiStr : '';
     writeFileSync(filePath.replace('.json', '.ts'), newContent);
-    unlinkSync(filePath);
 }
 
 function extractAddressesFromDeployments(deploymentDir: string) {
@@ -34,7 +34,14 @@ function extractAddressesFromDeployments(deploymentDir: string) {
         if (stat.isDirectory()) {
             extractAddressesFromDeployments(filePath);
         } else {
-            extractAddress(filePath);
+            contractsList.every(value => {
+                if (filePath.includes(value)) {
+                    extractAddressAndABI(filePath);
+                    return false;
+                }
+                return true;
+            });
+            unlinkSync(filePath);
         }
     }
 }

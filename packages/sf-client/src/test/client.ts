@@ -26,32 +26,6 @@ const publicClient = createPublicClient({
 
 const account = '0x'; // insert your account here
 
-sfClient
-    .init(
-        {
-            chainId: 11155111,
-            name: 'sepolia',
-        },
-        publicClient
-    )
-    .then(() => {
-        // sfClient.getCollateralParameters().then(res => console.log(res));
-        // sfClient
-        //     .getWithdrawableCollateral(new WBTC(), acc)
-        //     .then(res => console.log(res));
-        // sfClient
-        //     .getBestLendUnitPrices(new WBTC())
-        //     .then(res => console.log(res));
-        // sfClient
-        //     .getBestBorrowUnitPrices(new WBTC())
-        //     .then(res => console.log(res));
-        // sfClient.getMaturities(new WBTC()).then(res => console.log(res));
-        // sfClient
-        //     .getOrderBookDetail(new WBTC(), 1698364800)
-        //     .then(res => console.log(res));
-        // sfClient
-        //     .getOrderBookDetails([new WBTC()])
-        //     .then(res => console.log(res));
-        // sfClient.getERC20Balance(new WBTC(), acc).then(res => console.log(res));
-        sfClient.getProtocolDepositAmount().then(res => console.log(res));
-    });
+sfClient.init(publicClient).then(() => {
+    sfClient.getProtocolDepositAmount().then(res => console.log(res));
+});
