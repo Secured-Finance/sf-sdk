@@ -86,7 +86,7 @@ export class SecuredFinanceClient {
     private calculateAdjustedGas(amount: bigint) {
         // NOTE: This adjustment is for the function that executes the collateral coverage check.
         // Without this adjustment, the transaction often fails due to out-of-gas error.
-        return BigInt(Math.round(Number(amount) * 1.1));
+        return (amount * 11n) / 10n;
     }
 
     private _config: SecuredFinanceClientConfig | undefined;
@@ -166,7 +166,7 @@ export class SecuredFinanceClient {
         side: OrderSide,
         amount: bigint,
         unitPrice: number,
-        additionalDepositAmount = BigInt(0),
+        additionalDepositAmount = 0n,
         ignoreBorrowedAmount = false
     ) {
         const args = {
@@ -1389,7 +1389,7 @@ export class SecuredFinanceClient {
                 functionName: 'getMarketTerminationDate',
             });
         } else {
-            return BigInt(0);
+            return 0n;
         }
     }
 
@@ -1401,7 +1401,7 @@ export class SecuredFinanceClient {
                 args: [this.convertCurrencyToBytes32(currency)],
             });
         } else {
-            return BigInt(0);
+            return 0n;
         }
     }
 
@@ -1413,7 +1413,7 @@ export class SecuredFinanceClient {
                 args: [this.convertCurrencyToBytes32(currency)],
             });
         } else {
-            return BigInt(0);
+            return 0n;
         }
     }
 

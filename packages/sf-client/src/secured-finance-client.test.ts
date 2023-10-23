@@ -38,3 +38,42 @@ describe('config', () => {
         expect(client.config).toBeTruthy();
     });
 });
+
+describe('getCollateralParameters', () => {
+    it('should return the collateral parameters', async () => {
+        jest.spyOn(publicClient, 'readContract').mockImplementationOnce(() =>
+            Promise.resolve([12500n, 200n, 500n])
+        );
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+
+        expect(await client.getCollateralParameters()).toEqual({
+            liquidationThresholdRate: 12500n,
+            liquidationProtocolFeeRate: 200n,
+            liquidatorFeeRate: 500n,
+        });
+    });
+});
+
+describe('getMarketTerminationDate', () => {
+    it('should return the market termination date', async () => {
+        jest.spyOn(publicClient, 'readContract').mockImplementation(() =>
+            Promise.resolve(1698089813n)
+        );
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+
+        expect(await client.getMarketTerminationDate()).toEqual(1698089813n);
+    });
+
+    it('should return zero market termination date in staging', async () => {
+        process.env.SF_ENV = 'staging';
+        jest.spyOn(publicClient, 'readContract').mockImplementation(() =>
+            Promise.resolve(1698089813n)
+        );
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+
+        expect(await client.getMarketTerminationDate()).toEqual(0n);
+    });
+});
