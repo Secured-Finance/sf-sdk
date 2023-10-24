@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.114](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.113...v0.2.0-beta.114) (2023-10-24)
+
+
+### Bug Fixes
+
+* fix contract number [SF-853] ([819757b](https://github.com/Secured-Finance/sf-sdk/commit/819757b98fd56e4281eef8b9616348869f814e1d))
+
+
+### Features
+
+* update to latest smart contract [SF-853] ([634f5ea](https://github.com/Secured-Finance/sf-sdk/commit/634f5eab2bf6082083ba4649a6e06a465cb0d212))
+
+
+
+
+
 # [0.2.0-beta.113](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.112...v0.2.0-beta.113) (2023-10-18)
 
 
