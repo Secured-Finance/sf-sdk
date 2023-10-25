@@ -105,10 +105,15 @@ export class SecuredFinanceClient {
         const networkName = NETWORKS[chainId] as NetworkName;
 
         if (!networkNames.includes(networkName)) {
-            throw new Error(`${networkName} is not supported.`);
+            throw new Error(`ChainId ${chainId} is not supported.`);
         }
 
-        const env = getContractEnvironment(networkName) || 'production';
+        const env = getContractEnvironment(networkName);
+        if (!env) {
+            throw new Error(
+                `${networkName} is not supported on ${process.env.SF_ENV} environment.`
+            );
+        }
 
         this._config = {
             defaultGas: options?.defaultGas || 6000000,

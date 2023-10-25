@@ -1,5 +1,5 @@
 import { createPublicClient, http } from 'viem';
-import { sepolia } from 'viem/chains';
+import { goerli, polygon, sepolia } from 'viem/chains';
 import { SecuredFinanceClient } from './secured-finance-client';
 
 const publicClient = createPublicClient({
@@ -23,6 +23,34 @@ describe('Secured Finance Client', () => {
         const client = new SecuredFinanceClient();
         await client.init(publicClient);
         expect(client).toBeTruthy();
+    });
+});
+
+describe('Unsupported chain on platform', () => {
+    const pubClient = createPublicClient({
+        chain: polygon,
+        transport: http(),
+    });
+
+    it('should throw an error if the publicClient uses an unsupported chain', async () => {
+        const client = new SecuredFinanceClient();
+        expect(async () => await client.init(pubClient)).rejects.toThrowError(
+            /ChainId 137 is not supported./
+        );
+    });
+});
+
+describe('Unsupported chain on environment', () => {
+    const pubClient = createPublicClient({
+        chain: goerli,
+        transport: http(),
+    });
+
+    it('should throw an error if the publicClient uses an unsupported chain for a given environment', async () => {
+        const client = new SecuredFinanceClient();
+        expect(async () => await client.init(pubClient)).rejects.toThrowError(
+            /goerli is not supported on development environment./
+        );
     });
 });
 
