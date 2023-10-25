@@ -1389,7 +1389,10 @@ export class SecuredFinanceClient {
                 functionName: 'getMarketTerminationDate',
             });
         } else {
-            return 0n;
+            return this.publicClient.readContract({
+                ...lendingMarketControllerStgContract,
+                functionName: 'getMarketTerminationDate',
+            });
         }
     }
 
@@ -1401,7 +1404,11 @@ export class SecuredFinanceClient {
                 args: [this.convertCurrencyToBytes32(currency)],
             });
         } else {
-            return 0n;
+            return this.publicClient.readContract({
+                ...lendingMarketControllerStgContract,
+                functionName: 'getMarketTerminationRatio',
+                args: [this.convertCurrencyToBytes32(currency)],
+            });
         }
     }
 
@@ -1413,7 +1420,11 @@ export class SecuredFinanceClient {
                 args: [this.convertCurrencyToBytes32(currency)],
             });
         } else {
-            return 0n;
+            return this.publicClient.readContract({
+                ...lendingMarketControllerStgContract,
+                functionName: 'getMarketTerminationPrice',
+                args: [this.convertCurrencyToBytes32(currency)],
+            });
         }
     }
 

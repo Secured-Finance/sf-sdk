@@ -69,11 +69,11 @@ describe('getMarketTerminationDate', () => {
     it('should return zero market termination date in staging', async () => {
         process.env.SF_ENV = 'staging';
         jest.spyOn(publicClient, 'readContract').mockImplementation(() =>
-            Promise.resolve(1698089813n)
+            Promise.resolve(123n)
         );
         const client = new SecuredFinanceClient();
         await client.init(publicClient);
 
-        expect(await client.getMarketTerminationDate()).toEqual(0n);
+        expect(await client.getMarketTerminationDate()).toEqual(123n);
     });
 });
