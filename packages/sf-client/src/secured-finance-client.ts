@@ -109,11 +109,6 @@ export class SecuredFinanceClient {
         }
 
         const env = getContractEnvironment(networkName);
-        if (!env) {
-            throw new Error(
-                `${networkName} is not supported on ${process.env.SF_ENV} environment.`
-            );
-        }
 
         this._config = {
             defaultGas: options?.defaultGas || 6000000,
