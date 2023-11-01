@@ -94,7 +94,7 @@ describe('getMarketTerminationDate', () => {
         expect(await client.getMarketTerminationDate()).toEqual(1698089813n);
     });
 
-    it('should return zero market termination date in staging', async () => {
+    it('should return the market termination date in staging', async () => {
         process.env.SF_ENV = 'staging';
         jest.spyOn(publicClient, 'readContract').mockImplementation(() =>
             Promise.resolve(123n)
@@ -103,5 +103,89 @@ describe('getMarketTerminationDate', () => {
         await client.init(publicClient);
 
         expect(await client.getMarketTerminationDate()).toEqual(123n);
+    });
+});
+
+describe('getOrderBookDetails', () => {
+    it('should return the market termination date', async () => {
+        jest.spyOn(publicClient, 'readContract').mockImplementation(() =>
+            Promise.resolve([
+                {
+                    ccy: '0x5742544300000000000000000000000000000000000000000000000000000000',
+                    maturity: 1703203200n,
+                    bestLendUnitPrice: 10000n,
+                    bestBorrowUnitPrice: 0n,
+                    marketUnitPrice: 0n,
+                    lastOrderBlockNumber: 0n,
+                    blockUnitPriceHistory: [0n, 0n, 0n, 0n, 0n],
+                    maxLendUnitPrice: 10000n,
+                    minBorrowUnitPrice: 1n,
+                    openingUnitPrice: 0n,
+                    openingDate: 1698710400n,
+                    preOpeningDate: 1698105600n,
+                    isReady: true,
+                },
+                {
+                    ccy: '0x5742544300000000000000000000000000000000000000000000000000000000',
+                    maturity: 1703808000n,
+                    bestLendUnitPrice: 9800n,
+                    bestBorrowUnitPrice: 0n,
+                    marketUnitPrice: 0n,
+                    lastOrderBlockNumber: 0n,
+                    blockUnitPriceHistory: [0n, 0n, 0n, 0n, 0n],
+                    maxLendUnitPrice: 10000n,
+                    minBorrowUnitPrice: 1n,
+                    openingUnitPrice: 0n,
+                    openingDate: 1698969600n,
+                    preOpeningDate: 1698364800n,
+                    isReady: false,
+                },
+            ])
+        );
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+
+        expect(await client.getOrderBookDetails([])).toEqual([
+            {
+                ccy: '0x5742544300000000000000000000000000000000000000000000000000000000',
+                maturity: 1703203200n,
+                bestLendUnitPrice: 10000n,
+                bestBorrowUnitPrice: 0n,
+                marketUnitPrice: 0n,
+                lastOrderBlockNumber: 0n,
+                blockUnitPriceHistory: [0n, 0n, 0n, 0n, 0n],
+                maxLendUnitPrice: 10000n,
+                minBorrowUnitPrice: 1n,
+                openingUnitPrice: 0n,
+                openingDate: 1698710400n,
+                preOpeningDate: 1698105600n,
+                isReady: true,
+                name: 'DEC23',
+                isMatured: false,
+                isOpened: true,
+                isItayosePeriod: false,
+                isPreOrderPeriod: false,
+            },
+            {
+                ccy: '0x5742544300000000000000000000000000000000000000000000000000000000',
+                maturity: 1703808000n,
+                bestLendUnitPrice: 9800n,
+                bestBorrowUnitPrice: 0n,
+                marketUnitPrice: 0n,
+                lastOrderBlockNumber: 0n,
+                blockUnitPriceHistory: [0n, 0n, 0n, 0n, 0n],
+                maxLendUnitPrice: 10000n,
+                minBorrowUnitPrice: 1n,
+                openingUnitPrice: 0n,
+                openingDate: 1698969600n,
+                preOpeningDate: 1698364800n,
+                isReady: false,
+                name: 'DEC23',
+                isMatured: false,
+                isOpened: false,
+                isItayosePeriod: false,
+                isPreOrderPeriod: true,
+            },
+        ]);
     });
 });
