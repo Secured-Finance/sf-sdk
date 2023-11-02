@@ -140,16 +140,19 @@ export class SecuredFinanceClient {
 
     async getCollateralParameters() {
         let result: readonly [bigint, bigint, bigint];
-        if (this.config.env === 'development') {
-            result = await this.publicClient.readContract({
-                ...tokenVaultDevContract,
-                functionName: 'getLiquidationConfiguration',
-            });
-        } else {
-            result = await this.publicClient.readContract({
-                ...tokenVaultStgContract,
-                functionName: 'getLiquidationConfiguration',
-            });
+        switch (this.config.env) {
+            case 'development':
+                result = await this.publicClient.readContract({
+                    ...tokenVaultDevContract,
+                    functionName: 'getLiquidationConfiguration',
+                });
+                break;
+            default:
+            case 'staging':
+                result = await this.publicClient.readContract({
+                    ...tokenVaultStgContract,
+                    functionName: 'getLiquidationConfiguration',
+                });
         }
 
         return {
@@ -179,34 +182,38 @@ export class SecuredFinanceClient {
             additionalDepositAmount,
             ignoreBorrowedAmount,
         };
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerDevContract,
-                functionName: 'getOrderEstimation',
-                args: [args],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerStgContract,
-                functionName: 'getOrderEstimation',
-                args: [args],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerDevContract,
+                    functionName: 'getOrderEstimation',
+                    args: [args],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerStgContract,
+                    functionName: 'getOrderEstimation',
+                    args: [args],
+                });
         }
     }
 
     async getWithdrawableCollateral(ccy: Currency, account: string) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...tokenVaultDevContract,
-                functionName: 'getWithdrawableCollateral',
-                args: [this.convertCurrencyToBytes32(ccy), account as Hex],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...tokenVaultStgContract,
-                functionName: 'getWithdrawableCollateral',
-                args: [this.convertCurrencyToBytes32(ccy), account as Hex],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...tokenVaultDevContract,
+                    functionName: 'getWithdrawableCollateral',
+                    args: [this.convertCurrencyToBytes32(ccy), account as Hex],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...tokenVaultStgContract,
+                    functionName: 'getWithdrawableCollateral',
+                    args: [this.convertCurrencyToBytes32(ccy), account as Hex],
+                });
         }
     }
 
@@ -225,124 +232,146 @@ export class SecuredFinanceClient {
             ? { value: amount }
             : {};
 
-        if (this.config.env === 'development') {
-            return this.walletClient.writeContract({
-                ...tokenVaultDevContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'deposit',
-                args: [this.convertCurrencyToBytes32(ccy), amount],
-                ...payableOverride,
-            });
-        } else {
-            return this.walletClient.writeContract({
-                ...tokenVaultStgContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'deposit',
-                args: [this.convertCurrencyToBytes32(ccy), amount],
-                ...payableOverride,
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.walletClient.writeContract({
+                    ...tokenVaultDevContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'deposit',
+                    args: [this.convertCurrencyToBytes32(ccy), amount],
+                    ...payableOverride,
+                });
+            default:
+            case 'staging':
+                return this.walletClient.writeContract({
+                    ...tokenVaultStgContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'deposit',
+                    args: [this.convertCurrencyToBytes32(ccy), amount],
+                    ...payableOverride,
+                });
         }
     }
 
     async withdrawCollateral(ccy: Currency, amount: bigint) {
         const [address] = await this.walletClient.getAddresses();
 
-        if (this.config.env === 'development') {
-            const estimatedGas = await this.publicClient.estimateContractGas({
-                ...tokenVaultDevContract,
-                account: address,
-                functionName: 'withdraw',
-                args: [this.convertCurrencyToBytes32(ccy), amount],
-            });
-            return this.walletClient.writeContract({
-                ...tokenVaultDevContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'withdraw',
-                args: [this.convertCurrencyToBytes32(ccy), amount],
-                gas: this.calculateAdjustedGas(estimatedGas),
-            });
-        } else {
-            const estimatedGas = await this.publicClient.estimateContractGas({
-                ...tokenVaultStgContract,
-                account: address,
-                functionName: 'withdraw',
-                args: [this.convertCurrencyToBytes32(ccy), amount],
-            });
-            return this.walletClient.writeContract({
-                ...tokenVaultStgContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'withdraw',
-                args: [this.convertCurrencyToBytes32(ccy), amount],
-                gas: this.calculateAdjustedGas(estimatedGas),
-            });
+        switch (this.config.env) {
+            case 'development': {
+                const estimatedGas =
+                    await this.publicClient.estimateContractGas({
+                        ...tokenVaultDevContract,
+                        account: address,
+                        functionName: 'withdraw',
+                        args: [this.convertCurrencyToBytes32(ccy), amount],
+                    });
+                return this.walletClient.writeContract({
+                    ...tokenVaultDevContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'withdraw',
+                    args: [this.convertCurrencyToBytes32(ccy), amount],
+                    gas: this.calculateAdjustedGas(estimatedGas),
+                });
+            }
+            default:
+            case 'staging': {
+                const estimatedGas =
+                    await this.publicClient.estimateContractGas({
+                        ...tokenVaultStgContract,
+                        account: address,
+                        functionName: 'withdraw',
+                        args: [this.convertCurrencyToBytes32(ccy), amount],
+                    });
+                return this.walletClient.writeContract({
+                    ...tokenVaultStgContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'withdraw',
+                    args: [this.convertCurrencyToBytes32(ccy), amount],
+                    gas: this.calculateAdjustedGas(estimatedGas),
+                });
+            }
         }
     }
 
     async getBestLendUnitPrices(ccy: Currency) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...lendingMarketReaderDevContract,
-                functionName: 'getBestLendUnitPrices',
-                args: [this.convertCurrencyToBytes32(ccy)],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...lendingMarketReaderStgContract,
-                functionName: 'getBestLendUnitPrices',
-                args: [this.convertCurrencyToBytes32(ccy)],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...lendingMarketReaderDevContract,
+                    functionName: 'getBestLendUnitPrices',
+                    args: [this.convertCurrencyToBytes32(ccy)],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...lendingMarketReaderStgContract,
+                    functionName: 'getBestLendUnitPrices',
+                    args: [this.convertCurrencyToBytes32(ccy)],
+                });
         }
     }
 
     async getBestBorrowUnitPrices(ccy: Currency) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...lendingMarketReaderDevContract,
-                functionName: 'getBestBorrowUnitPrices',
-                args: [this.convertCurrencyToBytes32(ccy)],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...lendingMarketReaderStgContract,
-                functionName: 'getBestBorrowUnitPrices',
-                args: [this.convertCurrencyToBytes32(ccy)],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...lendingMarketReaderDevContract,
+                    functionName: 'getBestBorrowUnitPrices',
+                    args: [this.convertCurrencyToBytes32(ccy)],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...lendingMarketReaderStgContract,
+                    functionName: 'getBestBorrowUnitPrices',
+                    args: [this.convertCurrencyToBytes32(ccy)],
+                });
         }
     }
 
     async getMaturities(ccy: Currency) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerDevContract,
-                functionName: 'getMaturities',
-                args: [this.convertCurrencyToBytes32(ccy)],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerStgContract,
-                functionName: 'getMaturities',
-                args: [this.convertCurrencyToBytes32(ccy)],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerDevContract,
+                    functionName: 'getMaturities',
+                    args: [this.convertCurrencyToBytes32(ccy)],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerStgContract,
+                    functionName: 'getMaturities',
+                    args: [this.convertCurrencyToBytes32(ccy)],
+                });
         }
     }
 
     async getOrderBookDetail(ccy: Currency, maturity: number) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...lendingMarketReaderDevContract,
-                functionName: 'getOrderBookDetail',
-                args: [this.convertCurrencyToBytes32(ccy), BigInt(maturity)],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...lendingMarketReaderStgContract,
-                functionName: 'getOrderBookDetail',
-                args: [this.convertCurrencyToBytes32(ccy), BigInt(maturity)],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...lendingMarketReaderDevContract,
+                    functionName: 'getOrderBookDetail',
+                    args: [
+                        this.convertCurrencyToBytes32(ccy),
+                        BigInt(maturity),
+                    ],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...lendingMarketReaderStgContract,
+                    functionName: 'getOrderBookDetail',
+                    args: [
+                        this.convertCurrencyToBytes32(ccy),
+                        BigInt(maturity),
+                    ],
+                });
         }
     }
 
@@ -352,18 +381,21 @@ export class SecuredFinanceClient {
 
     async getOrderBookDetails(ccys: Currency[]) {
         let orderBookDetails;
-        if (this.config.env === 'development') {
-            orderBookDetails = await this.publicClient.readContract({
-                ...lendingMarketReaderDevContract,
-                functionName: 'getOrderBookDetails',
-                args: [this.convertCurrencyArrayToBytes32Array(ccys)],
-            });
-        } else {
-            orderBookDetails = await this.publicClient.readContract({
-                ...lendingMarketReaderStgContract,
-                functionName: 'getOrderBookDetails',
-                args: [this.convertCurrencyArrayToBytes32Array(ccys)],
-            });
+        switch (this.config.env) {
+            case 'development':
+                orderBookDetails = await this.publicClient.readContract({
+                    ...lendingMarketReaderDevContract,
+                    functionName: 'getOrderBookDetails',
+                    args: [this.convertCurrencyArrayToBytes32Array(ccys)],
+                });
+                break;
+            default:
+            case 'staging':
+                orderBookDetails = await this.publicClient.readContract({
+                    ...lendingMarketReaderStgContract,
+                    functionName: 'getOrderBookDetails',
+                    args: [this.convertCurrencyArrayToBytes32Array(ccys)],
+                });
         }
 
         const timestamp = Math.floor(Date.now() / 1000);
@@ -419,11 +451,29 @@ export class SecuredFinanceClient {
                 await onApproved?.(isApproved);
             }
 
-            if (this.config.env === 'development') {
-                const estimatedGas =
-                    await this.publicClient.estimateContractGas({
+            switch (this.config.env) {
+                case 'development': {
+                    const estimatedGas =
+                        await this.publicClient.estimateContractGas({
+                            ...lendingMarketControllerDevContract,
+                            account: address,
+                            functionName: 'depositAndExecuteOrder',
+                            args: [
+                                this.convertCurrencyToBytes32(ccy),
+                                BigInt(maturity),
+                                side,
+                                amount,
+                                BigInt(unitPrice ?? 0),
+                            ],
+                            ...overrides,
+                        });
+
+                    overrides.gas = this.calculateAdjustedGas(estimatedGas);
+
+                    return this.walletClient.writeContract({
                         ...lendingMarketControllerDevContract,
                         account: address,
+                        chain: this.config.chain,
                         functionName: 'depositAndExecuteOrder',
                         args: [
                             this.convertCurrencyToBytes32(ccy),
@@ -434,28 +484,30 @@ export class SecuredFinanceClient {
                         ],
                         ...overrides,
                     });
+                }
+                default:
+                case 'staging': {
+                    const estimatedGas =
+                        await this.publicClient.estimateContractGas({
+                            ...lendingMarketControllerStgContract,
+                            account: address,
+                            functionName: 'depositAndExecuteOrder',
+                            args: [
+                                this.convertCurrencyToBytes32(ccy),
+                                BigInt(maturity),
+                                side,
+                                amount,
+                                BigInt(unitPrice ?? 0),
+                            ],
+                            ...overrides,
+                        });
 
-                overrides.gas = this.calculateAdjustedGas(estimatedGas);
+                    overrides.gas = this.calculateAdjustedGas(estimatedGas);
 
-                return this.walletClient.writeContract({
-                    ...lendingMarketControllerDevContract,
-                    account: address,
-                    chain: this.config.chain,
-                    functionName: 'depositAndExecuteOrder',
-                    args: [
-                        this.convertCurrencyToBytes32(ccy),
-                        BigInt(maturity),
-                        side,
-                        amount,
-                        BigInt(unitPrice ?? 0),
-                    ],
-                    ...overrides,
-                });
-            } else {
-                const estimatedGas =
-                    await this.publicClient.estimateContractGas({
+                    return this.walletClient.writeContract({
                         ...lendingMarketControllerStgContract,
                         account: address,
+                        chain: this.config.chain,
                         functionName: 'depositAndExecuteOrder',
                         args: [
                             this.convertCurrencyToBytes32(ccy),
@@ -466,30 +518,29 @@ export class SecuredFinanceClient {
                         ],
                         ...overrides,
                     });
-
-                overrides.gas = this.calculateAdjustedGas(estimatedGas);
-
-                return this.walletClient.writeContract({
-                    ...lendingMarketControllerStgContract,
-                    account: address,
-                    chain: this.config.chain,
-                    functionName: 'depositAndExecuteOrder',
-                    args: [
-                        this.convertCurrencyToBytes32(ccy),
-                        BigInt(maturity),
-                        side,
-                        amount,
-                        BigInt(unitPrice ?? 0),
-                    ],
-                    ...overrides,
-                });
+                }
             }
         } else {
-            if (this.config.env === 'development') {
-                const estimatedGas =
-                    await this.publicClient.estimateContractGas({
+            switch (this.config.env) {
+                case 'development': {
+                    const estimatedGas =
+                        await this.publicClient.estimateContractGas({
+                            ...lendingMarketControllerDevContract,
+                            account: address,
+                            functionName: 'executeOrder',
+                            args: [
+                                this.convertCurrencyToBytes32(ccy),
+                                BigInt(maturity),
+                                side,
+                                amount,
+                                BigInt(unitPrice ?? 0),
+                            ],
+                        });
+
+                    return this.walletClient.writeContract({
                         ...lendingMarketControllerDevContract,
                         account: address,
+                        chain: this.config.chain,
                         functionName: 'executeOrder',
                         args: [
                             this.convertCurrencyToBytes32(ccy),
@@ -498,27 +549,29 @@ export class SecuredFinanceClient {
                             amount,
                             BigInt(unitPrice ?? 0),
                         ],
+                        gas: this.calculateAdjustedGas(estimatedGas),
                     });
+                }
+                default:
+                case 'staging': {
+                    const estimatedGas =
+                        await this.publicClient.estimateContractGas({
+                            ...lendingMarketControllerStgContract,
+                            account: address,
+                            functionName: 'executeOrder',
+                            args: [
+                                this.convertCurrencyToBytes32(ccy),
+                                BigInt(maturity),
+                                side,
+                                amount,
+                                BigInt(unitPrice ?? 0),
+                            ],
+                        });
 
-                return this.walletClient.writeContract({
-                    ...lendingMarketControllerDevContract,
-                    account: address,
-                    chain: this.config.chain,
-                    functionName: 'executeOrder',
-                    args: [
-                        this.convertCurrencyToBytes32(ccy),
-                        BigInt(maturity),
-                        side,
-                        amount,
-                        BigInt(unitPrice ?? 0),
-                    ],
-                    gas: this.calculateAdjustedGas(estimatedGas),
-                });
-            } else {
-                const estimatedGas =
-                    await this.publicClient.estimateContractGas({
+                    return this.walletClient.writeContract({
                         ...lendingMarketControllerStgContract,
                         account: address,
+                        chain: this.config.chain,
                         functionName: 'executeOrder',
                         args: [
                             this.convertCurrencyToBytes32(ccy),
@@ -527,22 +580,9 @@ export class SecuredFinanceClient {
                             amount,
                             BigInt(unitPrice ?? 0),
                         ],
+                        gas: this.calculateAdjustedGas(estimatedGas),
                     });
-
-                return this.walletClient.writeContract({
-                    ...lendingMarketControllerStgContract,
-                    account: address,
-                    chain: this.config.chain,
-                    functionName: 'executeOrder',
-                    args: [
-                        this.convertCurrencyToBytes32(ccy),
-                        BigInt(maturity),
-                        side,
-                        amount,
-                        BigInt(unitPrice ?? 0),
-                    ],
-                    gas: this.calculateAdjustedGas(estimatedGas),
-                });
+                }
             }
         }
     }
@@ -568,11 +608,29 @@ export class SecuredFinanceClient {
                 await onApproved?.(isApproved);
             }
 
-            if (this.config.env === 'development') {
-                const estimatedGas =
-                    await this.publicClient.estimateContractGas({
+            switch (this.config.env) {
+                case 'development': {
+                    const estimatedGas =
+                        await this.publicClient.estimateContractGas({
+                            ...lendingMarketControllerDevContract,
+                            account: address,
+                            functionName: 'depositAndExecutesPreOrder',
+                            args: [
+                                this.convertCurrencyToBytes32(ccy),
+                                BigInt(maturity),
+                                side,
+                                amount,
+                                BigInt(unitPrice),
+                            ],
+                            ...overrides,
+                        });
+
+                    overrides.gas = this.calculateAdjustedGas(estimatedGas);
+
+                    return this.walletClient.writeContract({
                         ...lendingMarketControllerDevContract,
                         account: address,
+                        chain: this.config.chain,
                         functionName: 'depositAndExecutesPreOrder',
                         args: [
                             this.convertCurrencyToBytes32(ccy),
@@ -583,28 +641,30 @@ export class SecuredFinanceClient {
                         ],
                         ...overrides,
                     });
+                }
+                default:
+                case 'staging': {
+                    const estimatedGas =
+                        await this.publicClient.estimateContractGas({
+                            ...lendingMarketControllerStgContract,
+                            account: address,
+                            functionName: 'depositAndExecutesPreOrder',
+                            args: [
+                                this.convertCurrencyToBytes32(ccy),
+                                BigInt(maturity),
+                                side,
+                                amount,
+                                BigInt(unitPrice),
+                            ],
+                            ...overrides,
+                        });
 
-                overrides.gas = this.calculateAdjustedGas(estimatedGas);
+                    overrides.gas = this.calculateAdjustedGas(estimatedGas);
 
-                return this.walletClient.writeContract({
-                    ...lendingMarketControllerDevContract,
-                    account: address,
-                    chain: this.config.chain,
-                    functionName: 'depositAndExecutesPreOrder',
-                    args: [
-                        this.convertCurrencyToBytes32(ccy),
-                        BigInt(maturity),
-                        side,
-                        amount,
-                        BigInt(unitPrice),
-                    ],
-                    ...overrides,
-                });
-            } else {
-                const estimatedGas =
-                    await this.publicClient.estimateContractGas({
+                    return this.walletClient.writeContract({
                         ...lendingMarketControllerStgContract,
                         account: address,
+                        chain: this.config.chain,
                         functionName: 'depositAndExecutesPreOrder',
                         args: [
                             this.convertCurrencyToBytes32(ccy),
@@ -615,30 +675,29 @@ export class SecuredFinanceClient {
                         ],
                         ...overrides,
                     });
-
-                overrides.gas = this.calculateAdjustedGas(estimatedGas);
-
-                return this.walletClient.writeContract({
-                    ...lendingMarketControllerStgContract,
-                    account: address,
-                    chain: this.config.chain,
-                    functionName: 'depositAndExecutesPreOrder',
-                    args: [
-                        this.convertCurrencyToBytes32(ccy),
-                        BigInt(maturity),
-                        side,
-                        amount,
-                        BigInt(unitPrice),
-                    ],
-                    ...overrides,
-                });
+                }
             }
         } else {
-            if (this.config.env === 'development') {
-                const estimatedGas =
-                    await this.publicClient.estimateContractGas({
+            switch (this.config.env) {
+                case 'development': {
+                    const estimatedGas =
+                        await this.publicClient.estimateContractGas({
+                            ...lendingMarketControllerDevContract,
+                            account: address,
+                            functionName: 'executePreOrder',
+                            args: [
+                                this.convertCurrencyToBytes32(ccy),
+                                BigInt(maturity),
+                                side,
+                                amount,
+                                BigInt(unitPrice),
+                            ],
+                        });
+
+                    return this.walletClient.writeContract({
                         ...lendingMarketControllerDevContract,
                         account: address,
+                        chain: this.config.chain,
                         functionName: 'executePreOrder',
                         args: [
                             this.convertCurrencyToBytes32(ccy),
@@ -647,27 +706,29 @@ export class SecuredFinanceClient {
                             amount,
                             BigInt(unitPrice),
                         ],
+                        gas: this.calculateAdjustedGas(estimatedGas),
                     });
+                }
+                default:
+                case 'staging': {
+                    const estimatedGas =
+                        await this.publicClient.estimateContractGas({
+                            ...lendingMarketControllerStgContract,
+                            account: address,
+                            functionName: 'executePreOrder',
+                            args: [
+                                this.convertCurrencyToBytes32(ccy),
+                                BigInt(maturity),
+                                side,
+                                amount,
+                                BigInt(unitPrice),
+                            ],
+                        });
 
-                return this.walletClient.writeContract({
-                    ...lendingMarketControllerDevContract,
-                    account: address,
-                    chain: this.config.chain,
-                    functionName: 'executePreOrder',
-                    args: [
-                        this.convertCurrencyToBytes32(ccy),
-                        BigInt(maturity),
-                        side,
-                        amount,
-                        BigInt(unitPrice),
-                    ],
-                    gas: this.calculateAdjustedGas(estimatedGas),
-                });
-            } else {
-                const estimatedGas =
-                    await this.publicClient.estimateContractGas({
+                    return this.walletClient.writeContract({
                         ...lendingMarketControllerStgContract,
                         account: address,
+                        chain: this.config.chain,
                         functionName: 'executePreOrder',
                         args: [
                             this.convertCurrencyToBytes32(ccy),
@@ -676,22 +737,9 @@ export class SecuredFinanceClient {
                             amount,
                             BigInt(unitPrice),
                         ],
+                        gas: this.calculateAdjustedGas(estimatedGas),
                     });
-
-                return this.walletClient.writeContract({
-                    ...lendingMarketControllerStgContract,
-                    account: address,
-                    chain: this.config.chain,
-                    functionName: 'executePreOrder',
-                    args: [
-                        this.convertCurrencyToBytes32(ccy),
-                        BigInt(maturity),
-                        side,
-                        amount,
-                        BigInt(unitPrice),
-                    ],
-                    gas: this.calculateAdjustedGas(estimatedGas),
-                });
+                }
             }
         }
     }
@@ -699,71 +747,82 @@ export class SecuredFinanceClient {
     async cancelLendingOrder(ccy: Currency, maturity: number, orderID: number) {
         const [address] = await this.walletClient.getAddresses();
 
-        if (this.config.env === 'development') {
-            return this.walletClient.writeContract({
-                ...lendingMarketControllerDevContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'cancelOrder',
-                args: [
-                    this.convertCurrencyToBytes32(ccy),
-                    BigInt(maturity),
-                    orderID,
-                ],
-            });
-        } else {
-            return this.walletClient.writeContract({
-                ...lendingMarketControllerStgContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'cancelOrder',
-                args: [
-                    this.convertCurrencyToBytes32(ccy),
-                    BigInt(maturity),
-                    orderID,
-                ],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.walletClient.writeContract({
+                    ...lendingMarketControllerDevContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'cancelOrder',
+                    args: [
+                        this.convertCurrencyToBytes32(ccy),
+                        BigInt(maturity),
+                        orderID,
+                    ],
+                });
+            default:
+            case 'staging':
+                return this.walletClient.writeContract({
+                    ...lendingMarketControllerStgContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'cancelOrder',
+                    args: [
+                        this.convertCurrencyToBytes32(ccy),
+                        BigInt(maturity),
+                        orderID,
+                    ],
+                });
         }
     }
 
     async convertToBaseCurrency(ccy: Currency, amount: bigint) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...currencyControllerDevContract,
-                functionName: 'convertToBaseCurrency',
-                args: [this.convertCurrencyToBytes32(ccy), amount],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...currencyControllerStgContract,
-                functionName: 'convertToBaseCurrency',
-                args: [this.convertCurrencyToBytes32(ccy), amount],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...currencyControllerDevContract,
+                    functionName: 'convertToBaseCurrency',
+                    args: [this.convertCurrencyToBytes32(ccy), amount],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...currencyControllerStgContract,
+                    functionName: 'convertToBaseCurrency',
+                    args: [this.convertCurrencyToBytes32(ccy), amount],
+                });
         }
     }
 
     async getUsedCurrencies(account: string) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...tokenVaultDevContract,
-                functionName: 'getUsedCurrencies',
-                args: [account as Hex],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...tokenVaultStgContract,
-                functionName: 'getUsedCurrencies',
-                args: [account as Hex],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...tokenVaultDevContract,
+                    functionName: 'getUsedCurrencies',
+                    args: [account as Hex],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...tokenVaultStgContract,
+                    functionName: 'getUsedCurrencies',
+                    args: [account as Hex],
+                });
         }
     }
 
     async getTokenAllowance(token: Token, owner: string) {
         const tokenContract = await this.getTokenContract(token);
-        const spender =
-            this.config.env === 'development'
-                ? tokenVaultDevContract.address
-                : tokenVaultStgContract.address;
+        let spender: Hex;
+        switch (this.config.env) {
+            case 'development':
+                spender = tokenVaultDevContract.address;
+                break;
+            default:
+            case 'staging':
+                spender = tokenVaultStgContract.address;
+        }
         return tokenContract.read.allowance([owner as Hex, spender]);
     }
 
@@ -777,26 +836,29 @@ export class SecuredFinanceClient {
             readonly bigint[],
             readonly bigint[]
         ];
-        if (this.config.env === 'development') {
-            result = await this.publicClient.readContract({
-                ...lendingMarketReaderDevContract,
-                functionName: 'getBorrowOrderBook',
-                args: [
-                    this.convertCurrencyToBytes32(currency),
-                    BigInt(maturity),
-                    BigInt(limit),
-                ],
-            });
-        } else {
-            result = await this.publicClient.readContract({
-                ...lendingMarketReaderStgContract,
-                functionName: 'getBorrowOrderBook',
-                args: [
-                    this.convertCurrencyToBytes32(currency),
-                    BigInt(maturity),
-                    BigInt(limit),
-                ],
-            });
+        switch (this.config.env) {
+            case 'development':
+                result = await this.publicClient.readContract({
+                    ...lendingMarketReaderDevContract,
+                    functionName: 'getBorrowOrderBook',
+                    args: [
+                        this.convertCurrencyToBytes32(currency),
+                        BigInt(maturity),
+                        BigInt(limit),
+                    ],
+                });
+                break;
+            default:
+            case 'staging':
+                result = await this.publicClient.readContract({
+                    ...lendingMarketReaderStgContract,
+                    functionName: 'getBorrowOrderBook',
+                    args: [
+                        this.convertCurrencyToBytes32(currency),
+                        BigInt(maturity),
+                        BigInt(limit),
+                    ],
+                });
         }
         return {
             unitPrices: result[0],
@@ -815,26 +877,29 @@ export class SecuredFinanceClient {
             readonly bigint[],
             readonly bigint[]
         ];
-        if (this.config.env === 'development') {
-            result = await this.publicClient.readContract({
-                ...lendingMarketReaderDevContract,
-                functionName: 'getLendOrderBook',
-                args: [
-                    this.convertCurrencyToBytes32(currency),
-                    BigInt(maturity),
-                    BigInt(limit),
-                ],
-            });
-        } else {
-            result = await this.publicClient.readContract({
-                ...lendingMarketReaderStgContract,
-                functionName: 'getLendOrderBook',
-                args: [
-                    this.convertCurrencyToBytes32(currency),
-                    BigInt(maturity),
-                    BigInt(limit),
-                ],
-            });
+        switch (this.config.env) {
+            case 'development':
+                result = await this.publicClient.readContract({
+                    ...lendingMarketReaderDevContract,
+                    functionName: 'getLendOrderBook',
+                    args: [
+                        this.convertCurrencyToBytes32(currency),
+                        BigInt(maturity),
+                        BigInt(limit),
+                    ],
+                });
+                break;
+            default:
+            case 'staging':
+                result = await this.publicClient.readContract({
+                    ...lendingMarketReaderStgContract,
+                    functionName: 'getLendOrderBook',
+                    args: [
+                        this.convertCurrencyToBytes32(currency),
+                        BigInt(maturity),
+                        BigInt(limit),
+                    ],
+                });
         }
         return {
             unitPrices: result[0],
@@ -846,83 +911,92 @@ export class SecuredFinanceClient {
     // Mock ERC20 token related functions
     async mintERC20Token(token: Token) {
         const [address] = await this.walletClient.getAddresses();
-
-        if (this.config.env === 'development') {
-            return this.walletClient.writeContract({
-                ...tokenFaucetDevContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'mint',
-                args: [this.convertCurrencyToBytes32(token)],
-            });
-        } else {
-            return this.walletClient.writeContract({
-                ...tokenFaucetStgContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'mint',
-                args: [this.convertCurrencyToBytes32(token)],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.walletClient.writeContract({
+                    ...tokenFaucetDevContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'mint',
+                    args: [this.convertCurrencyToBytes32(token)],
+                });
+            default:
+            case 'staging':
+                return this.walletClient.writeContract({
+                    ...tokenFaucetStgContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'mint',
+                    args: [this.convertCurrencyToBytes32(token)],
+                });
         }
     }
 
     async getERC20TokenContractAddress(token: Token) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...tokenFaucetDevContract,
-                functionName: 'getCurrencyAddress',
-                args: [this.convertCurrencyToBytes32(token)],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...tokenFaucetStgContract,
-                functionName: 'getCurrencyAddress',
-                args: [this.convertCurrencyToBytes32(token)],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...tokenFaucetDevContract,
+                    functionName: 'getCurrencyAddress',
+                    args: [this.convertCurrencyToBytes32(token)],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...tokenFaucetStgContract,
+                    functionName: 'getCurrencyAddress',
+                    args: [this.convertCurrencyToBytes32(token)],
+                });
         }
     }
 
     async getCurrencies() {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...currencyControllerDevContract,
-                functionName: 'getCurrencies',
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...currencyControllerStgContract,
-                functionName: 'getCurrencies',
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...currencyControllerDevContract,
+                    functionName: 'getCurrencies',
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...currencyControllerStgContract,
+                    functionName: 'getCurrencies',
+                });
         }
     }
 
     async currencyExists(ccy: Currency) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...currencyControllerDevContract,
-                functionName: 'currencyExists',
-                args: [this.convertCurrencyToBytes32(ccy)],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...currencyControllerStgContract,
-                functionName: 'currencyExists',
-                args: [this.convertCurrencyToBytes32(ccy)],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...currencyControllerDevContract,
+                    functionName: 'currencyExists',
+                    args: [this.convertCurrencyToBytes32(ccy)],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...currencyControllerStgContract,
+                    functionName: 'currencyExists',
+                    args: [this.convertCurrencyToBytes32(ccy)],
+                });
         }
     }
 
     async getCollateralCurrencies() {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...tokenVaultDevContract,
-                functionName: 'getCollateralCurrencies',
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...tokenVaultStgContract,
-                functionName: 'getCollateralCurrencies',
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...tokenVaultDevContract,
+                    functionName: 'getCollateralCurrencies',
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...tokenVaultStgContract,
+                    functionName: 'getCollateralCurrencies',
+                });
         }
     }
 
@@ -938,26 +1012,34 @@ export class SecuredFinanceClient {
         if (currencies && currencies.length) {
             await Promise.all(
                 currencies.map(async ccy => {
-                    if (this.config.env === 'development') {
-                        const balance = await this.publicClient.readContract({
-                            ...tokenVaultDevContract,
-                            functionName: 'getDepositAmount',
-                            args: [account as Hex, ccy],
-                        });
-                        collateral = {
-                            ...collateral,
-                            [this.parseBytes32String(ccy)]: balance,
-                        };
-                    } else {
-                        const balance = await this.publicClient.readContract({
-                            ...tokenVaultStgContract,
-                            functionName: 'getDepositAmount',
-                            args: [account as Hex, ccy],
-                        });
-                        collateral = {
-                            ...collateral,
-                            [this.parseBytes32String(ccy)]: balance,
-                        };
+                    switch (this.config.env) {
+                        case 'development':
+                            {
+                                const balance =
+                                    await this.publicClient.readContract({
+                                        ...tokenVaultDevContract,
+                                        functionName: 'getDepositAmount',
+                                        args: [account as Hex, ccy],
+                                    });
+                                collateral = {
+                                    ...collateral,
+                                    [this.parseBytes32String(ccy)]: balance,
+                                };
+                            }
+                            break;
+                        default:
+                        case 'staging': {
+                            const balance =
+                                await this.publicClient.readContract({
+                                    ...tokenVaultStgContract,
+                                    functionName: 'getDepositAmount',
+                                    args: [account as Hex, ccy],
+                                });
+                            collateral = {
+                                ...collateral,
+                                [this.parseBytes32String(ccy)]: balance,
+                            };
+                        }
                     }
                 })
             );
@@ -972,18 +1054,20 @@ export class SecuredFinanceClient {
     }
 
     async getCoverage(account: string) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...tokenVaultDevContract,
-                functionName: 'getCoverage',
-                args: [account as Hex],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...tokenVaultStgContract,
-                functionName: 'getCoverage',
-                args: [account as Hex],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...tokenVaultDevContract,
+                    functionName: 'getCoverage',
+                    args: [account as Hex],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...tokenVaultStgContract,
+                    functionName: 'getCoverage',
+                    args: [account as Hex],
+                });
         }
     }
 
@@ -992,11 +1076,16 @@ export class SecuredFinanceClient {
 
         if (ccy.isToken) {
             const tokenContract = await this.getTokenContract(ccy);
+            let spender: Hex;
+            switch (this.config.env) {
+                case 'development':
+                    spender = tokenVaultDevContract.address;
+                    break;
+                default:
+                case 'staging':
+                    spender = tokenVaultStgContract.address;
+            }
             const owner = address;
-            const spender =
-                this.config.env === 'development'
-                    ? tokenVaultDevContract.address
-                    : tokenVaultStgContract.address;
             const allowance = await tokenContract.read.allowance([
                 owner,
                 spender,
@@ -1029,18 +1118,20 @@ export class SecuredFinanceClient {
     }
 
     async getTotalDepositAmount(currency: Currency) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...tokenVaultDevContract,
-                functionName: 'getTotalDepositAmount',
-                args: [this.convertCurrencyToBytes32(currency)],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...tokenVaultStgContract,
-                functionName: 'getTotalDepositAmount',
-                args: [this.convertCurrencyToBytes32(currency)],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...tokenVaultDevContract,
+                    functionName: 'getTotalDepositAmount',
+                    args: [this.convertCurrencyToBytes32(currency)],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...tokenVaultStgContract,
+                    functionName: 'getTotalDepositAmount',
+                    args: [this.convertCurrencyToBytes32(currency)],
+                });
         }
     }
 
@@ -1048,26 +1139,29 @@ export class SecuredFinanceClient {
         const currencyList = await this.getCurrencies();
         let totalDepositAmounts;
 
-        if (this.config.env === 'development') {
-            totalDepositAmounts = await Promise.allSettled(
-                currencyList.map(currency =>
-                    this.publicClient.readContract({
-                        ...tokenVaultDevContract,
-                        functionName: 'getTotalDepositAmount',
-                        args: [currency],
-                    })
-                )
-            );
-        } else {
-            totalDepositAmounts = await Promise.allSettled(
-                currencyList.map(currency =>
-                    this.publicClient.readContract({
-                        ...tokenVaultStgContract,
-                        functionName: 'getTotalDepositAmount',
-                        args: [currency],
-                    })
-                )
-            );
+        switch (this.config.env) {
+            case 'development':
+                totalDepositAmounts = await Promise.allSettled(
+                    currencyList.map(currency =>
+                        this.publicClient.readContract({
+                            ...tokenVaultDevContract,
+                            functionName: 'getTotalDepositAmount',
+                            args: [currency],
+                        })
+                    )
+                );
+                break;
+            default:
+            case 'staging':
+                totalDepositAmounts = await Promise.allSettled(
+                    currencyList.map(currency =>
+                        this.publicClient.readContract({
+                            ...tokenVaultStgContract,
+                            functionName: 'getTotalDepositAmount',
+                            args: [currency],
+                        })
+                    )
+                );
         }
 
         return totalDepositAmounts.reduce((acc, cur, index) => {
@@ -1084,215 +1178,236 @@ export class SecuredFinanceClient {
     async unwindPosition(currency: Currency, maturity: number) {
         const [address] = await this.walletClient.getAddresses();
 
-        if (this.config.env === 'development') {
-            const estimatedGas = await this.publicClient.estimateContractGas({
-                ...lendingMarketControllerDevContract,
-                account: address,
-                functionName: 'unwindPosition',
-                args: [
-                    this.convertCurrencyToBytes32(currency),
-                    BigInt(maturity),
-                ],
-            });
+        switch (this.config.env) {
+            case 'development': {
+                const estimatedGas =
+                    await this.publicClient.estimateContractGas({
+                        ...lendingMarketControllerDevContract,
+                        account: address,
+                        functionName: 'unwindPosition',
+                        args: [
+                            this.convertCurrencyToBytes32(currency),
+                            BigInt(maturity),
+                        ],
+                    });
 
-            return this.walletClient.writeContract({
-                ...lendingMarketControllerDevContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'unwindPosition',
-                args: [
-                    this.convertCurrencyToBytes32(currency),
-                    BigInt(maturity),
-                ],
-                gas: this.calculateAdjustedGas(estimatedGas),
-            });
-        } else {
-            const estimatedGas = await this.publicClient.estimateContractGas({
-                ...lendingMarketControllerStgContract,
-                account: address,
-                functionName: 'unwindPosition',
-                args: [
-                    this.convertCurrencyToBytes32(currency),
-                    BigInt(maturity),
-                ],
-            });
+                return this.walletClient.writeContract({
+                    ...lendingMarketControllerDevContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'unwindPosition',
+                    args: [
+                        this.convertCurrencyToBytes32(currency),
+                        BigInt(maturity),
+                    ],
+                    gas: this.calculateAdjustedGas(estimatedGas),
+                });
+            }
+            default:
+            case 'staging': {
+                const estimatedGas =
+                    await this.publicClient.estimateContractGas({
+                        ...lendingMarketControllerStgContract,
+                        account: address,
+                        functionName: 'unwindPosition',
+                        args: [
+                            this.convertCurrencyToBytes32(currency),
+                            BigInt(maturity),
+                        ],
+                    });
 
-            return this.walletClient.writeContract({
-                ...lendingMarketControllerStgContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'unwindPosition',
-                args: [
-                    this.convertCurrencyToBytes32(currency),
-                    BigInt(maturity),
-                ],
-                gas: this.calculateAdjustedGas(estimatedGas),
-            });
+                return this.walletClient.writeContract({
+                    ...lendingMarketControllerStgContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'unwindPosition',
+                    args: [
+                        this.convertCurrencyToBytes32(currency),
+                        BigInt(maturity),
+                    ],
+                    gas: this.calculateAdjustedGas(estimatedGas),
+                });
+            }
         }
     }
 
     async executeRepayment(currency: Currency, maturity: number) {
         const [address] = await this.walletClient.getAddresses();
 
-        if (this.config.env === 'development') {
-            return this.walletClient.writeContract({
-                ...lendingMarketControllerDevContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'executeRepayment',
-                args: [
-                    this.convertCurrencyToBytes32(currency),
-                    BigInt(maturity),
-                ],
-            });
-        } else {
-            return this.walletClient.writeContract({
-                ...lendingMarketControllerStgContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'executeRepayment',
-                args: [
-                    this.convertCurrencyToBytes32(currency),
-                    BigInt(maturity),
-                ],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.walletClient.writeContract({
+                    ...lendingMarketControllerDevContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'executeRepayment',
+                    args: [
+                        this.convertCurrencyToBytes32(currency),
+                        BigInt(maturity),
+                    ],
+                });
+            default:
+            case 'staging':
+                return this.walletClient.writeContract({
+                    ...lendingMarketControllerStgContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'executeRepayment',
+                    args: [
+                        this.convertCurrencyToBytes32(currency),
+                        BigInt(maturity),
+                    ],
+                });
         }
     }
 
     async executeRedemption(currency: Currency, maturity: number) {
         const [address] = await this.walletClient.getAddresses();
 
-        if (this.config.env === 'development') {
-            return this.walletClient.writeContract({
-                ...lendingMarketControllerDevContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'executeRedemption',
-                args: [
-                    this.convertCurrencyToBytes32(currency),
-                    BigInt(maturity),
-                ],
-            });
-        } else {
-            return this.walletClient.writeContract({
-                ...lendingMarketControllerStgContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'executeRedemption',
-                args: [
-                    this.convertCurrencyToBytes32(currency),
-                    BigInt(maturity),
-                ],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.walletClient.writeContract({
+                    ...lendingMarketControllerDevContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'executeRedemption',
+                    args: [
+                        this.convertCurrencyToBytes32(currency),
+                        BigInt(maturity),
+                    ],
+                });
+            default:
+            case 'staging':
+                return this.walletClient.writeContract({
+                    ...lendingMarketControllerStgContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'executeRedemption',
+                    args: [
+                        this.convertCurrencyToBytes32(currency),
+                        BigInt(maturity),
+                    ],
+                });
         }
     }
 
     async getOrderFeeRate(currency: Currency) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerDevContract,
-                functionName: 'getOrderFeeRate',
-                args: [this.convertCurrencyToBytes32(currency)],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerStgContract,
-                functionName: 'getOrderFeeRate',
-                args: [this.convertCurrencyToBytes32(currency)],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerDevContract,
+                    functionName: 'getOrderFeeRate',
+                    args: [this.convertCurrencyToBytes32(currency)],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerStgContract,
+                    functionName: 'getOrderFeeRate',
+                    args: [this.convertCurrencyToBytes32(currency)],
+                });
         }
     }
 
     async getOrderBookId(currency: Currency, maturity: number) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerDevContract,
-                functionName: 'getOrderBookId',
-                args: [
-                    this.convertCurrencyToBytes32(currency),
-                    BigInt(maturity),
-                ],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerStgContract,
-                functionName: 'getOrderBookId',
-                args: [
-                    this.convertCurrencyToBytes32(currency),
-                    BigInt(maturity),
-                ],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerDevContract,
+                    functionName: 'getOrderBookId',
+                    args: [
+                        this.convertCurrencyToBytes32(currency),
+                        BigInt(maturity),
+                    ],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerStgContract,
+                    functionName: 'getOrderBookId',
+                    args: [
+                        this.convertCurrencyToBytes32(currency),
+                        BigInt(maturity),
+                    ],
+                });
         }
     }
 
     async getOrderList(account: string, usedCurrenciesForOrders: Currency[]) {
         let res;
-        if (this.config.env === 'development') {
-            res = await this.publicClient.readContract({
-                ...lendingMarketReaderDevContract,
-                functionName: 'getOrders',
-                args: [
-                    this.convertCurrencyArrayToBytes32Array(
-                        usedCurrenciesForOrders
-                    ),
-                    account as Hex,
-                ],
-            });
-        } else {
-            res = await this.publicClient.readContract({
-                ...lendingMarketReaderStgContract,
-                functionName: 'getOrders',
-                args: [
-                    this.convertCurrencyArrayToBytes32Array(
-                        usedCurrenciesForOrders
-                    ),
-                    account as Hex,
-                ],
-            });
+        switch (this.config.env) {
+            case 'development':
+                res = await this.publicClient.readContract({
+                    ...lendingMarketReaderDevContract,
+                    functionName: 'getOrders',
+                    args: [
+                        this.convertCurrencyArrayToBytes32Array(
+                            usedCurrenciesForOrders
+                        ),
+                        account as Hex,
+                    ],
+                });
+                break;
+            default:
+            case 'staging':
+                res = await this.publicClient.readContract({
+                    ...lendingMarketReaderStgContract,
+                    functionName: 'getOrders',
+                    args: [
+                        this.convertCurrencyArrayToBytes32Array(
+                            usedCurrenciesForOrders
+                        ),
+                        account as Hex,
+                    ],
+                });
         }
 
         return { activeOrders: res[0], inactiveOrders: res[1] };
     }
 
     async getPositions(account: string, usedCurrenciesForOrders: Currency[]) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...lendingMarketReaderDevContract,
-                functionName: 'getPositions',
-                args: [
-                    this.convertCurrencyArrayToBytes32Array(
-                        usedCurrenciesForOrders
-                    ),
-                    account as Hex,
-                ],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...lendingMarketReaderStgContract,
-                functionName: 'getPositions',
-                args: [
-                    this.convertCurrencyArrayToBytes32Array(
-                        usedCurrenciesForOrders
-                    ),
-                    account as Hex,
-                ],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...lendingMarketReaderDevContract,
+                    functionName: 'getPositions',
+                    args: [
+                        this.convertCurrencyArrayToBytes32Array(
+                            usedCurrenciesForOrders
+                        ),
+                        account as Hex,
+                    ],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...lendingMarketReaderStgContract,
+                    functionName: 'getPositions',
+                    args: [
+                        this.convertCurrencyArrayToBytes32Array(
+                            usedCurrenciesForOrders
+                        ),
+                        account as Hex,
+                    ],
+                });
         }
     }
 
     async getUsedCurrenciesForOrders(account: string) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerDevContract,
-                functionName: 'getUsedCurrencies',
-                args: [account as Hex],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerStgContract,
-                functionName: 'getUsedCurrencies',
-                args: [account as Hex],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerDevContract,
+                    functionName: 'getUsedCurrencies',
+                    args: [account as Hex],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerStgContract,
+                    functionName: 'getUsedCurrencies',
+                    args: [account as Hex],
+                });
         }
     }
 
@@ -1304,64 +1419,70 @@ export class SecuredFinanceClient {
     ) {
         const [address] = await this.walletClient.getAddresses();
 
-        if (this.config.env === 'development') {
-            return this.walletClient.writeContract({
-                ...lendingMarketControllerDevContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'executeLiquidationCall',
-                args: [
-                    this.convertCurrencyToBytes32(collateralCcy),
-                    this.convertCurrencyToBytes32(debtCcy),
-                    BigInt(debtMaturity),
-                    account as Hex,
-                ],
-            });
-        } else {
-            return this.walletClient.writeContract({
-                ...lendingMarketControllerStgContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'executeLiquidationCall',
-                args: [
-                    this.convertCurrencyToBytes32(collateralCcy),
-                    this.convertCurrencyToBytes32(debtCcy),
-                    BigInt(debtMaturity),
-                    account as Hex,
-                ],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.walletClient.writeContract({
+                    ...lendingMarketControllerDevContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'executeLiquidationCall',
+                    args: [
+                        this.convertCurrencyToBytes32(collateralCcy),
+                        this.convertCurrencyToBytes32(debtCcy),
+                        BigInt(debtMaturity),
+                        account as Hex,
+                    ],
+                });
+            default:
+            case 'staging':
+                return this.walletClient.writeContract({
+                    ...lendingMarketControllerStgContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'executeLiquidationCall',
+                    args: [
+                        this.convertCurrencyToBytes32(collateralCcy),
+                        this.convertCurrencyToBytes32(debtCcy),
+                        BigInt(debtMaturity),
+                        account as Hex,
+                    ],
+                });
         }
     }
 
     async getLastPrice(currency: Currency) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...currencyControllerDevContract,
-                functionName: 'getLastPrice',
-                args: [this.convertCurrencyToBytes32(currency)],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...currencyControllerStgContract,
-                functionName: 'getLastPrice',
-                args: [this.convertCurrencyToBytes32(currency)],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...currencyControllerDevContract,
+                    functionName: 'getLastPrice',
+                    args: [this.convertCurrencyToBytes32(currency)],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...currencyControllerStgContract,
+                    functionName: 'getLastPrice',
+                    args: [this.convertCurrencyToBytes32(currency)],
+                });
         }
     }
 
     async getTotalCollateralAmount(account: string) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...tokenVaultDevContract,
-                functionName: 'getTotalCollateralAmount',
-                args: [account as Hex],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...tokenVaultStgContract,
-                functionName: 'getTotalCollateralAmount',
-                args: [account as Hex],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...tokenVaultDevContract,
+                    functionName: 'getTotalCollateralAmount',
+                    args: [account as Hex],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...tokenVaultStgContract,
+                    functionName: 'getTotalCollateralAmount',
+                    args: [account as Hex],
+                });
         }
     }
 
@@ -1369,98 +1490,110 @@ export class SecuredFinanceClient {
      * Global Emergency Settlement
      */
     async isTerminated() {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerDevContract,
-                functionName: 'isTerminated',
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerStgContract,
-                functionName: 'isTerminated',
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerDevContract,
+                    functionName: 'isTerminated',
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerStgContract,
+                    functionName: 'isTerminated',
+                });
         }
     }
 
     async getMarketTerminationDate() {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerDevContract,
-                functionName: 'getMarketTerminationDate',
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerStgContract,
-                functionName: 'getMarketTerminationDate',
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerDevContract,
+                    functionName: 'getMarketTerminationDate',
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerStgContract,
+                    functionName: 'getMarketTerminationDate',
+                });
         }
     }
 
     async getMarketTerminationRatio(currency: Currency) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerDevContract,
-                functionName: 'getMarketTerminationRatio',
-                args: [this.convertCurrencyToBytes32(currency)],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerStgContract,
-                functionName: 'getMarketTerminationRatio',
-                args: [this.convertCurrencyToBytes32(currency)],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerDevContract,
+                    functionName: 'getMarketTerminationRatio',
+                    args: [this.convertCurrencyToBytes32(currency)],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerStgContract,
+                    functionName: 'getMarketTerminationRatio',
+                    args: [this.convertCurrencyToBytes32(currency)],
+                });
         }
     }
 
     async getMarketTerminationPrice(currency: Currency) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerDevContract,
-                functionName: 'getMarketTerminationPrice',
-                args: [this.convertCurrencyToBytes32(currency)],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerStgContract,
-                functionName: 'getMarketTerminationPrice',
-                args: [this.convertCurrencyToBytes32(currency)],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerDevContract,
+                    functionName: 'getMarketTerminationPrice',
+                    args: [this.convertCurrencyToBytes32(currency)],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerStgContract,
+                    functionName: 'getMarketTerminationPrice',
+                    args: [this.convertCurrencyToBytes32(currency)],
+                });
         }
     }
 
     async isRedemptionRequired(account: string) {
-        if (this.config.env === 'development') {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerDevContract,
-                functionName: 'isRedemptionRequired',
-                args: [account as Hex],
-            });
-        } else {
-            return this.publicClient.readContract({
-                ...lendingMarketControllerStgContract,
-                functionName: 'isRedemptionRequired',
-                args: [account as Hex],
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerDevContract,
+                    functionName: 'isRedemptionRequired',
+                    args: [account as Hex],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...lendingMarketControllerStgContract,
+                    functionName: 'isRedemptionRequired',
+                    args: [account as Hex],
+                });
         }
     }
 
     async executeEmergencySettlement() {
         const [address] = await this.walletClient.getAddresses();
 
-        if (this.config.env === 'development') {
-            return this.walletClient.writeContract({
-                ...lendingMarketControllerDevContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'executeEmergencySettlement',
-            });
-        } else {
-            return this.walletClient.writeContract({
-                ...lendingMarketControllerStgContract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'executeEmergencySettlement',
-            });
+        switch (this.config.env) {
+            case 'development':
+                return this.walletClient.writeContract({
+                    ...lendingMarketControllerDevContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'executeEmergencySettlement',
+                });
+            default:
+            case 'staging':
+                return this.walletClient.writeContract({
+                    ...lendingMarketControllerStgContract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'executeEmergencySettlement',
+                });
         }
     }
 }
