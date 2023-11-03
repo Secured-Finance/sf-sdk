@@ -5,8 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "codegen": "ts-node ./scripts/generate.ts && ts-node ./scripts/copy-deployment-files.ts",
-    "postbuild": "cp -r ./src/deployments ./dist/deployments",
+    "codegen": "ts-node ./scripts/copy-deployment-files.ts",
     "prebuild": "rm -rf dist",
     "watch": "tsc -p tsconfig.json -w",
     "build": "tsc --project tsconfig.json",
@@ -26,20 +25,17 @@
   },
   "dependencies": {
     "@secured-finance/sf-core": "^0.2.0-beta.108",
-    "@secured-finance/smart-contracts": "0.1.11-beta.0",
-    "ethers": "^5.7.1",
-    "gas-price-oracle": "^0.4.4"
+    "@secured-finance/smart-contracts": "0.1.11-beta.0"
   },
   "devDependencies": {
-    "@typechain/ethers-v5": "^10.0.0",
     "@types/jest": "27.4.1",
     "dotenv": "^10.0.0",
-    "ethers": "^5.7.1",
     "jest": "^29.1.2",
+    "timemachine": "^0.3.2",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.1.0",
-    "typechain": "^8.0.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "viem": "^1.2.12"
   },
   "engines": {
     "node": ">=10.0.0"

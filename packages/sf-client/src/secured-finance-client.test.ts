@@ -1,17 +1,27 @@
-import { Ether } from '@secured-finance/sf-core';
-import { TokenVault } from './contracts';
+import timemachine from 'timemachine';
+import { createPublicClient, http } from 'viem';
+import { goerli, polygon, sepolia } from 'viem/chains';
 import { SecuredFinanceClient } from './secured-finance-client';
-import { getProvider } from './utils';
 
-const CcyBytes32 = {
-    ETH: '0x4554480000000000000000000000000000000000000000000000000000000000',
-};
+const publicClient = createPublicClient({
+    chain: sepolia,
+    transport: http(),
+});
 
 beforeAll(() => {
     process.env.SF_ENV = 'development';
+    timemachine.reset();
+    timemachine.config({
+        dateString: '2023-11-01T11:00:00.00Z',
+    });
 });
 
 beforeEach(() => jest.resetAllMocks());
+
+afterAll(() => {
+    jest.clearAllMocks();
+    jest.clearAllTimers();
+});
 
 describe('Secured Finance Client', () => {
     it('should be able to create a new client', async () => {
@@ -21,9 +31,36 @@ describe('Secured Finance Client', () => {
 
     it('should be able to init the client', async () => {
         const client = new SecuredFinanceClient();
-        const provider = getProvider('sepolia');
-        await client.init(provider, await provider.getNetwork());
+        await client.init(publicClient);
         expect(client).toBeTruthy();
+    });
+});
+
+describe('Unsupported chain on platform', () => {
+    const pubClient = createPublicClient({
+        chain: polygon,
+        transport: http(),
+    });
+
+    it('should throw an error if the publicClient uses an unsupported chain', async () => {
+        const client = new SecuredFinanceClient();
+        expect(async () => await client.init(pubClient)).rejects.toThrowError(
+            /ChainId 137 is not supported./
+        );
+    });
+});
+
+describe('Unsupported chain on environment', () => {
+    const pubClient = createPublicClient({
+        chain: goerli,
+        transport: http(),
+    });
+
+    it('should throw an error if the publicClient uses an unsupported chain for a given environment', async () => {
+        const client = new SecuredFinanceClient();
+        expect(async () => await client.init(pubClient)).rejects.toThrowError(
+            /goerli is not supported on development environment./
+        );
     });
 });
 
@@ -35,74 +72,130 @@ describe('config', () => {
 
     it('should return the config if the client is initialized', async () => {
         const client = new SecuredFinanceClient();
-        const provider = getProvider('sepolia');
-        await client.init(provider, await provider.getNetwork());
+        await client.init(publicClient);
         expect(client.config).toBeTruthy();
     });
 });
 
-describe('depositCollateral method', () => {
-    it('should thrown an error if the client is not initialized when calling depositCollateral', async () => {
-        const client = new SecuredFinanceClient();
-        expect(
-            client.depositCollateral(Ether.onChain(1), 1)
-        ).rejects.toThrowError('Client is not initialized');
-    });
-
-    it.skip('should call the depositCollateral contract in a payable way for ETH', async () => {
-        const client = new SecuredFinanceClient();
-        const provider = getProvider('sepolia');
-        const network = await provider.getNetwork();
-        await client.init(provider, network);
-
-        const spy = jest
-            .spyOn(TokenVault.prototype.contract, 'deposit')
-            .mockImplementation(jest.fn().mockResolvedValue(true));
-        const result = await client.depositCollateral(
-            Ether.onChain(network.chainId),
-            1
+describe('getCollateralParameters', () => {
+    it('should return the collateral parameters', async () => {
+        jest.spyOn(publicClient, 'readContract').mockImplementationOnce(() =>
+            Promise.resolve([12500n, 200n, 500n])
         );
-        expect(result).toBeTruthy();
-        expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1, { value: 1 });
-    });
-
-    it.skip('should call the depositCollateral contract in a non payable way for ERC20 token', async () => {
         const client = new SecuredFinanceClient();
-        const provider = getProvider('sepolia');
-        const network = await provider.getNetwork();
-        await client.init(provider, network);
+        await client.init(publicClient);
 
-        const spy = jest
-            .spyOn(TokenVault.prototype.contract, 'deposit')
-            .mockImplementation(jest.fn().mockResolvedValue(true));
-        const result = await client.depositCollateral(Ether.onChain(1221), 1);
-        expect(result).toBeTruthy();
-        expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1, undefined);
+        expect(await client.getCollateralParameters()).toEqual({
+            liquidationThresholdRate: 12500n,
+            liquidationProtocolFeeRate: 200n,
+            liquidatorFeeRate: 500n,
+        });
     });
 });
 
-describe('withdrawCollateral method', () => {
-    it('should thrown an error if the client is not initialized when calling a withdrawCollateral', async () => {
+describe('getMarketTerminationDate', () => {
+    it('should return the market termination date', async () => {
+        jest.spyOn(publicClient, 'readContract').mockImplementation(() =>
+            Promise.resolve(1698089813n)
+        );
         const client = new SecuredFinanceClient();
-        expect(
-            client.withdrawCollateral(Ether.onChain(1), 1)
-        ).rejects.toThrowError('Client is not initialized');
+        await client.init(publicClient);
+
+        expect(await client.getMarketTerminationDate()).toEqual(1698089813n);
     });
 
-    it.skip('should call the withdrawCollateral contract', async () => {
-        const client = new SecuredFinanceClient();
-        const provider = getProvider('sepolia');
-        const network = await provider.getNetwork();
-        await client.init(provider, network);
-
-        const spy = jest
-            .spyOn(TokenVault.prototype.contract, 'withdraw')
-            .mockImplementation(jest.fn().mockResolvedValue(true));
-        const result = await client.withdrawCollateral(
-            Ether.onChain(network.chainId),
-            1
+    it('should return the market termination date in staging', async () => {
+        process.env.SF_ENV = 'staging';
+        jest.spyOn(publicClient, 'readContract').mockImplementation(() =>
+            Promise.resolve(123n)
         );
-        expect(result).toBeTruthy();
-        expect(spy).toHaveBeenCalledWith(CcyBytes32['ETH'], 1);
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+
+        expect(await client.getMarketTerminationDate()).toEqual(123n);
+    });
+});
+
+describe('getOrderBookDetails', () => {
+    it('should return the market termination date', async () => {
+        jest.spyOn(publicClient, 'readContract').mockImplementation(() =>
+            Promise.resolve([
+                {
+                    ccy: '0x5742544300000000000000000000000000000000000000000000000000000000',
+                    maturity: 1703203200n,
+                    bestLendUnitPrice: 10000n,
+                    bestBorrowUnitPrice: 0n,
+                    marketUnitPrice: 0n,
+                    lastOrderBlockNumber: 0n,
+                    blockUnitPriceHistory: [0n, 0n, 0n, 0n, 0n],
+                    maxLendUnitPrice: 10000n,
+                    minBorrowUnitPrice: 1n,
+                    openingUnitPrice: 0n,
+                    openingDate: 1698710400n,
+                    preOpeningDate: 1698105600n,
+                    isReady: true,
+                },
+                {
+                    ccy: '0x5742544300000000000000000000000000000000000000000000000000000000',
+                    maturity: 1703808000n,
+                    bestLendUnitPrice: 9800n,
+                    bestBorrowUnitPrice: 0n,
+                    marketUnitPrice: 0n,
+                    lastOrderBlockNumber: 0n,
+                    blockUnitPriceHistory: [0n, 0n, 0n, 0n, 0n],
+                    maxLendUnitPrice: 10000n,
+                    minBorrowUnitPrice: 1n,
+                    openingUnitPrice: 0n,
+                    openingDate: 1698969600n,
+                    preOpeningDate: 1698364800n,
+                    isReady: false,
+                },
+            ])
+        );
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+
+        expect(await client.getOrderBookDetails([])).toEqual([
+            {
+                ccy: '0x5742544300000000000000000000000000000000000000000000000000000000',
+                maturity: 1703203200n,
+                bestLendUnitPrice: 10000n,
+                bestBorrowUnitPrice: 0n,
+                marketUnitPrice: 0n,
+                lastOrderBlockNumber: 0n,
+                blockUnitPriceHistory: [0n, 0n, 0n, 0n, 0n],
+                maxLendUnitPrice: 10000n,
+                minBorrowUnitPrice: 1n,
+                openingUnitPrice: 0n,
+                openingDate: 1698710400n,
+                preOpeningDate: 1698105600n,
+                isReady: true,
+                name: 'DEC23',
+                isMatured: false,
+                isOpened: true,
+                isItayosePeriod: false,
+                isPreOrderPeriod: false,
+            },
+            {
+                ccy: '0x5742544300000000000000000000000000000000000000000000000000000000',
+                maturity: 1703808000n,
+                bestLendUnitPrice: 9800n,
+                bestBorrowUnitPrice: 0n,
+                marketUnitPrice: 0n,
+                lastOrderBlockNumber: 0n,
+                blockUnitPriceHistory: [0n, 0n, 0n, 0n, 0n],
+                maxLendUnitPrice: 10000n,
+                minBorrowUnitPrice: 1n,
+                openingUnitPrice: 0n,
+                openingDate: 1698969600n,
+                preOpeningDate: 1698364800n,
+                isReady: false,
+                name: 'DEC23',
+                isMatured: false,
+                isOpened: false,
+                isItayosePeriod: false,
+                isPreOrderPeriod: true,
+            },
+        ]);
     });
 });
