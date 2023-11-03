@@ -172,6 +172,15 @@ export class SecuredFinanceClient {
         additionalDepositAmount = 0n,
         ignoreBorrowedAmount = false
     ) {
+        let result: readonly [
+            bigint,
+            bigint,
+            bigint,
+            bigint,
+            bigint,
+            bigint,
+            boolean
+        ];
         const args = {
             ccy: this.convertCurrencyToBytes32(ccy),
             maturity: BigInt(maturity),
@@ -184,19 +193,30 @@ export class SecuredFinanceClient {
         };
         switch (this.config.env) {
             case 'development':
-                return this.publicClient.readContract({
+                result = await this.publicClient.readContract({
                     ...lendingMarketControllerDevContract,
                     functionName: 'getOrderEstimation',
                     args: [args],
                 });
+                break;
             default:
             case 'staging':
-                return this.publicClient.readContract({
+                result = await this.publicClient.readContract({
                     ...lendingMarketControllerStgContract,
                     functionName: 'getOrderEstimation',
                     args: [args],
                 });
         }
+
+        return {
+            lastUnitPrice: result[0],
+            filledAmount: result[1],
+            filledAmountInFV: result[2],
+            orderFeeInFV: result[3],
+            placedAmount: result[4],
+            coverage: result[5],
+            isInsufficientDepositAmount: result[6],
+        };
     }
 
     async getWithdrawableCollateral(ccy: Currency, account: string) {
@@ -863,7 +883,7 @@ export class SecuredFinanceClient {
         return {
             unitPrices: result[0],
             amounts: result[1],
-            quantitites: result[2],
+            quantities: result[2],
         };
     }
 
