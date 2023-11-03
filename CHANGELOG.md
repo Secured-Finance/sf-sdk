@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.119](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.118...v0.2.0-beta.119) (2023-11-03)
+
+
+
+# [0.2.0-beta.117](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.115...v0.2.0-beta.117) (2023-10-30)
+
+
+### Bug Fixes
+
+* add goerli as production testnet chain [SF-726] ([0e2c8d1](https://github.com/Secured-Finance/sf-sdk/commit/0e2c8d1cb16ca5d324e2ad51c258d2e2a89b60e4))
+* address review comments [SF-726] ([ee2eb6c](https://github.com/Secured-Finance/sf-sdk/commit/ee2eb6c1c77c37573400f6f860da09624beb01c3))
+
+
+### Features
+
+* update staging methods [SF-726] ([d64cdc9](https://github.com/Secured-Finance/sf-sdk/commit/d64cdc9544c7636d778f879d61ee6b422866c9d4))
+
+
+
+# [0.2.0-beta.115](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.113...v0.2.0-beta.115) (2023-10-25)
+
+
+### Bug Fixes
+
+* fix bigint issue [SF-726] ([4b0fce9](https://github.com/Secured-Finance/sf-sdk/commit/4b0fce93bce4fe02e44a24b8e72c5b3aa82ba2be))
+
+
+
+# [0.2.0-beta.113](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.111...v0.2.0-beta.113) (2023-10-18)
+
+
+### Bug Fixes
+
+* migrate more methods [SF-726] ([bec2052](https://github.com/Secured-Finance/sf-sdk/commit/bec2052db8056cd217b3bc71676026152bd944ca))
+* migrate to viem [SF-726] ([3df54ea](https://github.com/Secured-Finance/sf-sdk/commit/3df54ea384d5d1a376881bd7e1ee5f1e15add901))
+
+
+
+# 0.2.0-beta.111 (2023-10-12)
+
+
+
+
+
 # [0.2.0-beta.118](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.117...v0.2.0-beta.118) (2023-11-03)
 
 
