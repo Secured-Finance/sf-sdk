@@ -924,7 +924,7 @@ export class SecuredFinanceClient {
         return {
             unitPrices: result[0],
             amounts: result[1],
-            quantitites: result[2],
+            quantities: result[2],
         };
     }
 
