@@ -1,11 +1,49 @@
+import { Token } from '@secured-finance/sf-core';
+import { Wallet } from 'ethers';
 import timemachine from 'timemachine';
-import { createPublicClient, http } from 'viem';
+import { createPublicClient, custom } from 'viem';
 import { goerli, polygon, sepolia } from 'viem/chains';
+import { CustomizedBridge } from './customBridge';
 import { SecuredFinanceClient } from './secured-finance-client';
+
+class WBTC extends Token {
+    constructor() {
+        super(
+            1,
+            '0xBc38CC10b73FA8daE91aFf98a1EEb30E70E774FF',
+            8,
+            'WBTC',
+            'Bitcoin'
+        );
+    }
+}
+
+class ProviderMock {
+    constructor() {}
+    getBlockNumber() {
+        return 123;
+    }
+}
+
+const wallet = Wallet.createRandom();
+
+const sepoliaSigner = new CustomizedBridge(
+    wallet,
+    new ProviderMock() as any,
+    11155111
+);
+
+const polygonSigner = new CustomizedBridge(
+    wallet,
+    new ProviderMock() as any,
+    137
+);
+
+const goerliSigner = new CustomizedBridge(wallet, new ProviderMock() as any, 5);
 
 const publicClient = createPublicClient({
     chain: sepolia,
-    transport: http(),
+    transport: custom(sepoliaSigner),
 });
 
 beforeAll(() => {
@@ -39,7 +77,7 @@ describe('Secured Finance Client', () => {
 describe('Unsupported chain on platform', () => {
     const pubClient = createPublicClient({
         chain: polygon,
-        transport: http(),
+        transport: custom(polygonSigner),
     });
 
     it('should throw an error if the publicClient uses an unsupported chain', async () => {
@@ -53,7 +91,7 @@ describe('Unsupported chain on platform', () => {
 describe('Unsupported chain on environment', () => {
     const pubClient = createPublicClient({
         chain: goerli,
-        transport: http(),
+        transport: custom(goerliSigner),
     });
 
     it('should throw an error if the publicClient uses an unsupported chain for a given environment', async () => {
@@ -89,6 +127,35 @@ describe('getCollateralParameters', () => {
             liquidationThresholdRate: 12500n,
             liquidationProtocolFeeRate: 200n,
             liquidatorFeeRate: 500n,
+        });
+    });
+});
+
+describe('getOrderEstimation', () => {
+    it('should return the order estimation parameters', async () => {
+        jest.spyOn(publicClient, 'readContract').mockImplementationOnce(() =>
+            Promise.resolve([9991n, 1000n, 1002n, 149n, 0n, 6334n, true])
+        );
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+
+        expect(
+            await client.getOrderEstimation(
+                new WBTC(),
+                123,
+                '0x123',
+                0,
+                123n,
+                9912
+            )
+        ).toEqual({
+            lastUnitPrice: 9991n,
+            filledAmount: 1000n,
+            filledAmountInFV: 1002n,
+            orderFeeInFV: 149n,
+            placedAmount: 0n,
+            coverage: 6334n,
+            isInsufficientDepositAmount: true,
         });
     });
 });
