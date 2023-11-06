@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.120](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.119...v0.2.0-beta.120) (2023-11-06)
+
+
+### Bug Fixes
+
+* add custom rpc for tests [SF-726] ([edefa8e](https://github.com/Secured-Finance/sf-sdk/commit/edefa8efe3c5f24a116a805c8142fd0dfa96f8ca))
+* remove erc20 contract instance and call methods via client [SF-726] ([a7b97b2](https://github.com/Secured-Finance/sf-sdk/commit/a7b97b23e9d284deb0e887d1ffc32abef3266680))
+
+
+### Features
+
+* use alchemy rpc url for public client [SF-726] ([15cd632](https://github.com/Secured-Finance/sf-sdk/commit/15cd632037ceba5594d23c1c372c2ee1cceefc92))
+
+
+
+
+
 # [0.2.0-beta.119](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.118...v0.2.0-beta.119) (2023-11-03)
 
 
