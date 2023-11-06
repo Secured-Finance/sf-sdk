@@ -8,7 +8,6 @@ import {
     Hex,
     PublicClient,
     WalletClient,
-    getContract,
     hexToString,
     stringToHex,
 } from 'viem';
@@ -54,6 +53,7 @@ export const ITAYOSE_PERIOD = 60 * 60; // 1 hour in seconds
 export const PRE_ORDER_PERIOD = 60 * 60 * 24 * 7; // 7 days in seconds
 
 const CLIENT_NOT_INITIALIZED = 'Client is not initialized';
+const maxUint256 = 2n ** 256n - 1n;
 
 function assertNonNullish<TValue>(
     value: TValue | undefined,
@@ -172,6 +172,15 @@ export class SecuredFinanceClient {
         additionalDepositAmount = 0n,
         ignoreBorrowedAmount = false
     ) {
+        let result: readonly [
+            bigint,
+            bigint,
+            bigint,
+            bigint,
+            bigint,
+            bigint,
+            boolean
+        ];
         const args = {
             ccy: this.convertCurrencyToBytes32(ccy),
             maturity: BigInt(maturity),
@@ -184,19 +193,30 @@ export class SecuredFinanceClient {
         };
         switch (this.config.env) {
             case 'development':
-                return this.publicClient.readContract({
+                result = await this.publicClient.readContract({
                     ...lendingMarketControllerDevContract,
                     functionName: 'getOrderEstimation',
                     args: [args],
                 });
+                break;
             default:
             case 'staging':
-                return this.publicClient.readContract({
+                result = await this.publicClient.readContract({
                     ...lendingMarketControllerStgContract,
                     functionName: 'getOrderEstimation',
                     args: [args],
                 });
         }
+
+        return {
+            lastUnitPrice: result[0],
+            filledAmount: result[1],
+            filledAmountInFV: result[2],
+            orderFeeInFV: result[3],
+            placedAmount: result[4],
+            coverage: result[5],
+            isInsufficientDepositAmount: result[6],
+        };
     }
 
     async getWithdrawableCollateral(ccy: Currency, account: string) {
@@ -812,20 +832,6 @@ export class SecuredFinanceClient {
         }
     }
 
-    async getTokenAllowance(token: Token, owner: string) {
-        const tokenContract = await this.getTokenContract(token);
-        let spender: Hex;
-        switch (this.config.env) {
-            case 'development':
-                spender = tokenVaultDevContract.address;
-                break;
-            default:
-            case 'staging':
-                spender = tokenVaultStgContract.address;
-        }
-        return tokenContract.read.allowance([owner as Hex, spender]);
-    }
-
     async getBorrowOrderBook(
         currency: Currency,
         maturity: number,
@@ -863,7 +869,7 @@ export class SecuredFinanceClient {
         return {
             unitPrices: result[0],
             amounts: result[1],
-            quantitites: result[2],
+            quantities: result[2],
         };
     }
 
@@ -904,7 +910,7 @@ export class SecuredFinanceClient {
         return {
             unitPrices: result[0],
             amounts: result[1],
-            quantitites: result[2],
+            quantities: result[2],
         };
     }
 
@@ -1000,11 +1006,6 @@ export class SecuredFinanceClient {
         }
     }
 
-    async getERC20Balance(token: Token, account: string) {
-        const tokenContract = await this.getTokenContract(token);
-        return tokenContract.read.balanceOf([account as Hex]);
-    }
-
     async getCollateralBook(account: string) {
         const currencies = await this.getUsedCurrencies(account);
         let collateral: Record<string, bigint> = {};
@@ -1071,11 +1072,28 @@ export class SecuredFinanceClient {
         }
     }
 
+    async getERC20Balance(token: Token, account: string) {
+        return this.publicClient.readContract({
+            abi: ERC20Abi,
+            address: token.address as Hex,
+            functionName: 'balanceOf',
+            args: [account as Hex],
+        });
+    }
+
+    async getTokenAllowance(token: Token, owner: Hex, spender: Hex) {
+        return this.publicClient.readContract({
+            abi: ERC20Abi,
+            address: token.address as Hex,
+            functionName: 'allowance',
+            args: [owner, spender],
+        });
+    }
+
     private async approveTokenTransfer(ccy: Currency, amount: bigint) {
         const [address] = await this.walletClient.getAddresses();
 
         if (ccy.isToken) {
-            const tokenContract = await this.getTokenContract(ccy);
             let spender: Hex;
             switch (this.config.env) {
                 case 'development':
@@ -1085,20 +1103,21 @@ export class SecuredFinanceClient {
                 case 'staging':
                     spender = tokenVaultStgContract.address;
             }
-            const owner = address;
-            const allowance = await tokenContract.read.allowance([
-                owner,
-                spender,
-            ]);
+            const allowance = await this.getTokenAllowance(
+                ccy,
+                address,
+                spender
+            );
 
             if (allowance <= amount) {
-                const tx = await tokenContract.write.approve(
-                    [spender, amount],
-                    {
-                        account: owner,
-                        chain: this.config.chain,
-                    }
-                );
+                const tx = await this.walletClient.writeContract({
+                    abi: ERC20Abi,
+                    address: ccy.address as Hex,
+                    functionName: 'approve',
+                    args: [spender, maxUint256 - amount],
+                    account: address,
+                    chain: this.config.chain,
+                });
                 await this.publicClient.waitForTransactionReceipt({
                     hash: tx,
                 });
@@ -1106,15 +1125,6 @@ export class SecuredFinanceClient {
             }
         }
         return false;
-    }
-
-    private async getTokenContract(token: Token) {
-        return getContract({
-            abi: ERC20Abi,
-            address: token.address as Hex,
-            publicClient: this.publicClient,
-            walletClient: this.walletClient,
-        });
     }
 
     async getTotalDepositAmount(currency: Currency) {
