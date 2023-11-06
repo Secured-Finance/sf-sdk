@@ -1,6 +1,6 @@
 import { Token } from '@secured-finance/sf-core';
 import timemachine from 'timemachine';
-import { createPublicClient, http } from 'viem';
+import { createPublicClient, custom } from 'viem';
 import { goerli, polygon, sepolia } from 'viem/chains';
 import { SecuredFinanceClient } from './secured-finance-client';
 
@@ -18,7 +18,13 @@ class WBTC extends Token {
 
 const publicClient = createPublicClient({
     chain: sepolia,
-    transport: http(),
+    transport: custom({
+        async request({ method }) {
+            if (method === 'eth_chainId') {
+                return Promise.resolve(sepolia.id);
+            }
+        },
+    }),
 });
 
 beforeAll(() => {
@@ -52,7 +58,13 @@ describe('Secured Finance Client', () => {
 describe('Unsupported chain on platform', () => {
     const pubClient = createPublicClient({
         chain: polygon,
-        transport: http(),
+        transport: custom({
+            async request({ method }) {
+                if (method === 'eth_chainId') {
+                    return Promise.resolve(polygon.id);
+                }
+            },
+        }),
     });
 
     it('should throw an error if the publicClient uses an unsupported chain', async () => {
@@ -66,7 +78,13 @@ describe('Unsupported chain on platform', () => {
 describe('Unsupported chain on environment', () => {
     const pubClient = createPublicClient({
         chain: goerli,
-        transport: http(),
+        transport: custom({
+            async request({ method }) {
+                if (method === 'eth_chainId') {
+                    return Promise.resolve(goerli.id);
+                }
+            },
+        }),
     });
 
     it('should throw an error if the publicClient uses an unsupported chain for a given environment', async () => {
