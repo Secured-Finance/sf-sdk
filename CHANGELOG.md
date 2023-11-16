@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.121](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.120...v0.2.0-beta.121) (2023-11-16)
+
+
+### Features
+
+* add get borrowable function [SF-887] ([f741821](https://github.com/Secured-Finance/sf-sdk/commit/f741821e65c83d2273824a5f1735af811c39896b))
+
+
+
+
+
 # [0.2.0-beta.120](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.119...v0.2.0-beta.120) (2023-11-06)
 
 
