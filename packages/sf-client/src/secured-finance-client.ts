@@ -1606,4 +1606,28 @@ export class SecuredFinanceClient {
                 });
         }
     }
+
+    async getBorrowableAmount(account: string, currency: Currency) {
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...tokenVaultDevContract,
+                    functionName: 'getBorrowableAmount',
+                    args: [
+                        account as Hex,
+                        this.convertCurrencyToBytes32(currency),
+                    ],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...tokenVaultStgContract,
+                    functionName: 'getBorrowableAmount',
+                    args: [
+                        account as Hex,
+                        this.convertCurrencyToBytes32(currency),
+                    ],
+                });
+        }
+    }
 }
