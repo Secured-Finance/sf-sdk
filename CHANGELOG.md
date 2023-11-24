@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.122](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.121...v0.2.0-beta.122) (2023-11-24)
+
+
+### Features
+
+* add get borrowable function [SF-887] ([f741821](https://github.com/Secured-Finance/sf-sdk/commit/f741821e65c83d2273824a5f1735af811c39896b))
+* add unused collateral and total collateral to get collateral book [SF-887] ([e1cccb7](https://github.com/Secured-Finance/sf-sdk/commit/e1cccb7813c90d54e7879b91d36b7d08ba8a5aea))
+
+
+
+# 0.2.0-beta.120 (2023-11-06)
+
+
+
+
+
 # [0.2.0-beta.121](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.120...v0.2.0-beta.121) (2023-11-16)
 
 
