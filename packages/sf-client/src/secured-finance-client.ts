@@ -1006,6 +1006,24 @@ export class SecuredFinanceClient {
         }
     }
 
+    async getTotalUnusedCollateralAmount(account: string) {
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...tokenVaultDevContract,
+                    functionName: 'getTotalUnusedCollateralAmount',
+                    args: [account as Hex],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...tokenVaultStgContract,
+                    functionName: 'getTotalUnusedCollateralAmount',
+                    args: [account as Hex],
+                });
+        }
+    }
+
     async getCollateralBook(account: string) {
         const currencies = await this.getUsedCurrencies(account);
         let collateral: Record<string, bigint> = {};
@@ -1046,11 +1064,21 @@ export class SecuredFinanceClient {
             );
         }
 
-        const collateralCoverage = await this.getCoverage(account);
+        const [
+            collateralCoverage,
+            totalCollateralAmount,
+            totalUnusedCollateralAmount,
+        ] = await Promise.all([
+            this.getCoverage(account),
+            this.getTotalCollateralAmount(account),
+            this.getTotalUnusedCollateralAmount(account),
+        ]);
 
         return {
             collateral,
             collateralCoverage,
+            totalCollateralAmount,
+            totalUnusedCollateralAmount,
         };
     }
 
