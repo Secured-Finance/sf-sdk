@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.123](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.122...v0.2.0-beta.123) (2023-11-28)
+
+
+### Features
+
+* add getDecimals function to the sdk [SF-731] ([be7576e](https://github.com/secured-finance/sf-sdk/commit/be7576eb8460250c2457148f427ef46d61b100de))
+
+
+
+
+
 # [0.2.0-beta.122](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.121...v0.2.0-beta.122) (2023-11-24)
 
 
