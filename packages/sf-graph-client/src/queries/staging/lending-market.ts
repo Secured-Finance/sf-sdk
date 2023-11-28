@@ -59,7 +59,7 @@ export const USER_TRANSACTION_HISTORY = gql`
     }
 `;
 
-export const FILTERED_USER_TRANSACTION_HISTORY_ = gql`
+export const FILTERED_USER_TRANSACTION_HISTORY = gql`
     query FilteredUserTransactionHistory(
         $address: ID!
         $currency: Bytes!
