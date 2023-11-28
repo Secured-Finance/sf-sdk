@@ -259,3 +259,15 @@ describe('getOrderBookDetails', () => {
         ]);
     });
 });
+
+describe('getDecimals', () => {
+    it('should return the decimals', async () => {
+        jest.spyOn(publicClient, 'readContract').mockImplementation(() =>
+            Promise.resolve(8n)
+        );
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+
+        expect(await client.getDecimals(new WBTC())).toEqual(8n);
+    });
+});

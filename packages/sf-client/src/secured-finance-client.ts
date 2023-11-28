@@ -1506,6 +1506,28 @@ export class SecuredFinanceClient {
         }
     }
 
+    /**
+     * Gets aggregated and cached decimals of the price feeds for the selected currency
+     * @param currency
+     */
+    async getDecimals(currency: Currency) {
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...currencyControllerDevContract,
+                    functionName: 'getDecimals',
+                    args: [this.convertCurrencyToBytes32(currency)],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...currencyControllerStgContract,
+                    functionName: 'getDecimals',
+                    args: [this.convertCurrencyToBytes32(currency)],
+                });
+        }
+    }
+
     async getTotalCollateralAmount(account: string) {
         switch (this.config.env) {
             case 'development':
