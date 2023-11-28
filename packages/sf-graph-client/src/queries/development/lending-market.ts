@@ -59,6 +59,32 @@ export const USER_TRANSACTION_HISTORY = gql`
     }
 `;
 
+export const FILTERED_USER_TRANSACTION_HISTORY_ = gql`
+    query FilteredUserTransactionHistory(
+        $address: ID!
+        $currency: Bytes!
+        $maturity: BigInt!
+    ) {
+        user(id: $address) {
+            transactions(
+                orderBy: createdAt
+                orderDirection: desc
+                where: { currency: $currency, maturity: $maturity }
+            ) {
+                currency
+                maturity
+                side
+                orderPrice
+                forwardValue
+                amount
+                averagePrice
+                createdAt
+                feeInFV
+            }
+        }
+    }
+`;
+
 export const USER_ORDER_HISTORY = gql`
     query UserOrderHistory($address: ID!, $skip: Int!, $first: Int!) {
         user(id: $address) {
@@ -68,6 +94,38 @@ export const USER_ORDER_HISTORY = gql`
                 orderDirection: desc
                 skip: $skip
                 first: $first
+            ) {
+                orderId
+                currency
+                side
+                maturity
+                inputUnitPrice
+                inputAmount
+                filledAmount
+                status
+                lendingMarket {
+                    id
+                    isActive
+                }
+                type
+                createdAt
+                txHash
+            }
+        }
+    }
+`;
+
+export const FILTERED_USER_ORDER_HISTORY = gql`
+    query FilteredUserOrderHistory(
+        $address: ID!
+        $currency: Bytes!
+        $maturity: BigInt!
+    ) {
+        user(id: $address) {
+            orders(
+                orderBy: createdAt
+                orderDirection: desc
+                where: { currency: $currency, maturity: $maturity }
             ) {
                 orderId
                 currency
