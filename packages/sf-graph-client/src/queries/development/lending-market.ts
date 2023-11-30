@@ -117,6 +117,9 @@ export const TRANSACTION_HISTORY = gql`
             createdAt
             currency
             averagePrice
+            taker {
+                id
+            }
         }
         lastTransaction: transactions(
             where: {
@@ -134,6 +137,9 @@ export const TRANSACTION_HISTORY = gql`
             createdAt
             currency
             averagePrice
+            taker {
+                id
+            }
         }
     }
 `;
