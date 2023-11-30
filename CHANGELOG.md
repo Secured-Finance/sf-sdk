@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.124](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.123...v0.2.0-beta.124) (2023-11-29)
+
+
+### Features
+
+* add filtered queries for ccy and maturity [SF-924] ([dcc62e2](https://github.com/Secured-Finance/sf-sdk/commit/dcc62e2bfcbee1de5ccdd923e119cbf77ade20dd))
+
+
+
+# 0.2.0-beta.122 (2023-11-24)
+
+
+
+
+
 # [0.2.0-beta.123](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.122...v0.2.0-beta.123) (2023-11-28)
 
 
