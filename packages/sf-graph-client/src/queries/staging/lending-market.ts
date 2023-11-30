@@ -54,6 +54,9 @@ export const USER_TRANSACTION_HISTORY = gql`
                 averagePrice
                 createdAt
                 feeInFV
+                taker {
+                    id
+                }
             }
         }
     }
@@ -80,6 +83,9 @@ export const FILTERED_USER_TRANSACTION_HISTORY = gql`
                 averagePrice
                 createdAt
                 feeInFV
+                taker {
+                    id
+                }
             }
         }
     }
@@ -110,6 +116,9 @@ export const USER_ORDER_HISTORY = gql`
                 type
                 createdAt
                 txHash
+                maker {
+                    id
+                }
             }
         }
     }
@@ -142,6 +151,9 @@ export const FILTERED_USER_ORDER_HISTORY = gql`
                 type
                 createdAt
                 txHash
+                maker {
+                    id
+                }
             }
         }
     }
