@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.125](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.124...v0.2.0-beta.125) (2023-11-30)
+
+
+### Bug Fixes
+
+* filtered queries [SF-926] ([4e3c711](https://github.com/Secured-Finance/sf-sdk/commit/4e3c7119d4df07cc3409bdc331e8b0419f03581f))
+
+
+### Features
+
+* add user id to filtered queries [SF-926] ([1a2b16b](https://github.com/Secured-Finance/sf-sdk/commit/1a2b16b9a68f7589f42f950047c9d3f8ae826847))
+* add user id to order and transaction history [SF-926] ([169c4bd](https://github.com/Secured-Finance/sf-sdk/commit/169c4bd62cf55ff6fed37c03a3c2528964160cb7))
+
+
+
+# 0.2.0-beta.123 (2023-11-28)
+
+
+
+
+
 # [0.2.0-beta.124](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.123...v0.2.0-beta.124) (2023-11-29)
 
 
