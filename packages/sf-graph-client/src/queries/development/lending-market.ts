@@ -74,6 +74,7 @@ export const FILTERED_USER_TRANSACTION_HISTORY = gql`
                 orderDirection: desc
                 where: { currency: $currency, maturity: $maturity }
             ) {
+                id
                 currency
                 maturity
                 side
@@ -136,6 +137,7 @@ export const FILTERED_USER_ORDER_HISTORY = gql`
                 orderDirection: desc
                 where: { currency: $currency, maturity: $maturity }
             ) {
+                id
                 orderId
                 currency
                 side
