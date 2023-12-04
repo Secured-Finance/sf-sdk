@@ -29,6 +29,6 @@
     "**/@typechain/*",
     "@secured-finance/smart-contracts"
   ],
-  "version": "0.2.0-beta.125",
+  "version": "0.2.0-beta.126",
   "npmClient": "npm"
 }

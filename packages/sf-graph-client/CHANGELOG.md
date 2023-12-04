@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.126](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.125...v0.2.0-beta.126) (2023-12-04)
+
+
+### Bug Fixes
+
+* add id to filtered queries [SF-924] ([5af456c](https://github.com/secured-finance/sf-sdk/commit/5af456c43bb3c4a2ac6972abf687c700ca9d2180))
+
+
+
+
+
 # [0.2.0-beta.125](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.124...v0.2.0-beta.125) (2023-11-30)
 
 
