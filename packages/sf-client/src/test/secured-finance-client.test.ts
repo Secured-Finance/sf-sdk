@@ -1,7 +1,7 @@
 import { createPublicClient, custom } from 'viem';
 import { goerli, polygon } from 'viem/chains';
-import { SecuredFinanceClient } from './secured-finance-client';
-import { WBTC, publicClient } from './test/helper';
+import { SecuredFinanceClient } from '../secured-finance-client';
+import { WBTC, publicClient } from './helper';
 
 describe('Secured Finance Client', () => {
     it('should be able to create a new client', async () => {

@@ -1,8 +1,5 @@
-import { Token } from '@secured-finance/sf-core';
-import { createPublicClient, custom } from 'viem';
-import { sepolia } from 'viem/chains';
 import { SecuredFinanceClient } from '../secured-finance-client';
-import { WBTC, publicClient } from './../test/helper';
+import { WBTC, publicClient } from './helper';
 
 describe('getTokenAddress', () => {
     it('should return the token address for a given currency', async () => {
