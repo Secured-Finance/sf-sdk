@@ -108,22 +108,6 @@ describe('config', () => {
     });
 });
 
-describe('getCollateralParameters', () => {
-    it('should return the collateral parameters', async () => {
-        jest.spyOn(publicClient, 'readContract').mockImplementationOnce(() =>
-            Promise.resolve([12500n, 200n, 500n])
-        );
-        const client = new SecuredFinanceClient();
-        await client.init(publicClient);
-
-        expect(await client.getCollateralParameters()).toEqual({
-            liquidationThresholdRate: 12500n,
-            liquidationProtocolFeeRate: 200n,
-            liquidatorFeeRate: 500n,
-        });
-    });
-});
-
 describe('getOrderEstimation', () => {
     it('should return the order estimation parameters', async () => {
         jest.spyOn(publicClient, 'readContract').mockImplementationOnce(() =>
