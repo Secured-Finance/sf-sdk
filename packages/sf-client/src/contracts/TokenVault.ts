@@ -33,21 +33,10 @@ export class TokenVault extends BaseContract {
      * @returns An object containing the liquidation threshold rate, liquidation protocol fee rate, and liquidator fee rate.
      */
     async getCollateralParameters() {
-        let result: readonly [bigint, bigint, bigint];
-        switch (this.config.env) {
-            case 'development':
-                result = await this.publicClient.readContract({
-                    ...tokenVaultDevContract,
-                    functionName: 'getLiquidationConfiguration',
-                });
-                break;
-            default:
-            case 'staging':
-                result = await this.publicClient.readContract({
-                    ...tokenVaultStgContract,
-                    functionName: 'getLiquidationConfiguration',
-                });
-        }
+        const result = await this.publicClient.readContract({
+            ...this.getAbi(),
+            functionName: 'getLiquidationConfiguration',
+        });
 
         return {
             liquidationThresholdRate: result[0],
@@ -64,21 +53,11 @@ export class TokenVault extends BaseContract {
      * @returns A Promise that resolves to the withdrawable collateral amount.
      */
     async getWithdrawableCollateral(ccy: Currency, account: string) {
-        switch (this.config.env) {
-            case 'development':
-                return this.publicClient.readContract({
-                    ...tokenVaultDevContract,
-                    functionName: 'getWithdrawableCollateral',
-                    args: [this.convertCurrencyToBytes32(ccy), account as Hex],
-                });
-            default:
-            case 'staging':
-                return this.publicClient.readContract({
-                    ...tokenVaultStgContract,
-                    functionName: 'getWithdrawableCollateral',
-                    args: [this.convertCurrencyToBytes32(ccy), account as Hex],
-                });
-        }
+        return this.publicClient.readContract({
+            ...this.getAbi(),
+            functionName: 'getWithdrawableCollateral',
+            args: [this.convertCurrencyToBytes32(ccy), account as Hex],
+        });
     }
 
     /**
@@ -91,43 +70,22 @@ export class TokenVault extends BaseContract {
     async withdrawCollateral(ccy: Currency, amount: bigint) {
         const [address] = await this.walletClient.getAddresses();
 
-        switch (this.config.env) {
-            case 'development': {
-                const estimatedGas =
-                    await this.publicClient.estimateContractGas({
-                        ...tokenVaultDevContract,
-                        account: address,
-                        functionName: 'withdraw',
-                        args: [this.convertCurrencyToBytes32(ccy), amount],
-                    });
-                return this.walletClient.writeContract({
-                    ...tokenVaultDevContract,
-                    account: address,
-                    chain: this.config.chain,
-                    functionName: 'withdraw',
-                    args: [this.convertCurrencyToBytes32(ccy), amount],
-                    gas: this.calculateAdjustedGas(estimatedGas),
-                });
-            }
-            default:
-            case 'staging': {
-                const estimatedGas =
-                    await this.publicClient.estimateContractGas({
-                        ...tokenVaultStgContract,
-                        account: address,
-                        functionName: 'withdraw',
-                        args: [this.convertCurrencyToBytes32(ccy), amount],
-                    });
-                return this.walletClient.writeContract({
-                    ...tokenVaultStgContract,
-                    account: address,
-                    chain: this.config.chain,
-                    functionName: 'withdraw',
-                    args: [this.convertCurrencyToBytes32(ccy), amount],
-                    gas: this.calculateAdjustedGas(estimatedGas),
-                });
-            }
-        }
+        const abi = this.getAbi();
+        const estimatedGas = await this.publicClient.estimateContractGas({
+            ...abi,
+            account: address,
+            functionName: 'withdraw',
+            args: [this.convertCurrencyToBytes32(ccy), amount],
+        });
+
+        return this.walletClient.writeContract({
+            ...abi,
+            account: address,
+            chain: this.config.chain,
+            functionName: 'withdraw',
+            args: [this.convertCurrencyToBytes32(ccy), amount],
+            gas: this.calculateAdjustedGas(estimatedGas),
+        });
     }
 
     /**
@@ -137,21 +95,11 @@ export class TokenVault extends BaseContract {
      * @returns A promise that resolves to the used currencies.
      */
     async getUsedCurrencies(account: string) {
-        switch (this.config.env) {
-            case 'development':
-                return this.publicClient.readContract({
-                    ...tokenVaultDevContract,
-                    functionName: 'getUsedCurrencies',
-                    args: [account as Hex],
-                });
-            default:
-            case 'staging':
-                return this.publicClient.readContract({
-                    ...tokenVaultStgContract,
-                    functionName: 'getUsedCurrencies',
-                    args: [account as Hex],
-                });
-        }
+        return this.publicClient.readContract({
+            ...this.getAbi(),
+            functionName: 'getUsedCurrencies',
+            args: [account as Hex],
+        });
     }
 
     /**
@@ -161,21 +109,11 @@ export class TokenVault extends BaseContract {
      * @returns A promise that resolves to the total unused collateral amount.
      */
     async getTotalUnusedCollateralAmount(account: string) {
-        switch (this.config.env) {
-            case 'development':
-                return this.publicClient.readContract({
-                    ...tokenVaultDevContract,
-                    functionName: 'getTotalUnusedCollateralAmount',
-                    args: [account as Hex],
-                });
-            default:
-            case 'staging':
-                return this.publicClient.readContract({
-                    ...tokenVaultStgContract,
-                    functionName: 'getTotalUnusedCollateralAmount',
-                    args: [account as Hex],
-                });
-        }
+        return this.publicClient.readContract({
+            ...this.getAbi(),
+            functionName: 'getTotalUnusedCollateralAmount',
+            args: [account as Hex],
+        });
     }
 
     /**
@@ -191,35 +129,15 @@ export class TokenVault extends BaseContract {
         if (currencies && currencies.length) {
             await Promise.all(
                 currencies.map(async ccy => {
-                    switch (this.config.env) {
-                        case 'development':
-                            {
-                                const balance =
-                                    await this.publicClient.readContract({
-                                        ...tokenVaultDevContract,
-                                        functionName: 'getDepositAmount',
-                                        args: [account as Hex, ccy],
-                                    });
-                                collateral = {
-                                    ...collateral,
-                                    [this.parseBytes32String(ccy)]: balance,
-                                };
-                            }
-                            break;
-                        default:
-                        case 'staging': {
-                            const balance =
-                                await this.publicClient.readContract({
-                                    ...tokenVaultStgContract,
-                                    functionName: 'getDepositAmount',
-                                    args: [account as Hex, ccy],
-                                });
-                            collateral = {
-                                ...collateral,
-                                [this.parseBytes32String(ccy)]: balance,
-                            };
-                        }
-                    }
+                    const balance = await this.publicClient.readContract({
+                        ...this.getAbi(),
+                        functionName: 'getDepositAmount',
+                        args: [account as Hex, ccy],
+                    });
+                    collateral = {
+                        ...collateral,
+                        [this.parseBytes32String(ccy)]: balance,
+                    };
                 })
             );
         }
@@ -249,21 +167,11 @@ export class TokenVault extends BaseContract {
      * @returns A promise that resolves to the coverage value.
      */
     async getCoverage(account: string) {
-        switch (this.config.env) {
-            case 'development':
-                return this.publicClient.readContract({
-                    ...tokenVaultDevContract,
-                    functionName: 'getCoverage',
-                    args: [account as Hex],
-                });
-            default:
-            case 'staging':
-                return this.publicClient.readContract({
-                    ...tokenVaultStgContract,
-                    functionName: 'getCoverage',
-                    args: [account as Hex],
-                });
-        }
+        return this.publicClient.readContract({
+            ...this.getAbi(),
+            functionName: 'getCoverage',
+            args: [account as Hex],
+        });
     }
 
     /**
@@ -273,21 +181,11 @@ export class TokenVault extends BaseContract {
      * @returns A promise that resolves to the total deposit amount.
      */
     async getTotalDepositAmount(currency: Currency) {
-        switch (this.config.env) {
-            case 'development':
-                return this.publicClient.readContract({
-                    ...tokenVaultDevContract,
-                    functionName: 'getTotalDepositAmount',
-                    args: [this.convertCurrencyToBytes32(currency)],
-                });
-            default:
-            case 'staging':
-                return this.publicClient.readContract({
-                    ...tokenVaultStgContract,
-                    functionName: 'getTotalDepositAmount',
-                    args: [this.convertCurrencyToBytes32(currency)],
-                });
-        }
+        return this.publicClient.readContract({
+            ...this.getAbi(),
+            functionName: 'getTotalDepositAmount',
+            args: [this.convertCurrencyToBytes32(currency)],
+        });
     }
 
     /**
@@ -297,21 +195,11 @@ export class TokenVault extends BaseContract {
      * @returns A promise that resolves to the total collateral amount.
      */
     async getTotalCollateralAmount(account: string) {
-        switch (this.config.env) {
-            case 'development':
-                return this.publicClient.readContract({
-                    ...tokenVaultDevContract,
-                    functionName: 'getTotalCollateralAmount',
-                    args: [account as Hex],
-                });
-            default:
-            case 'staging':
-                return this.publicClient.readContract({
-                    ...tokenVaultStgContract,
-                    functionName: 'getTotalCollateralAmount',
-                    args: [account as Hex],
-                });
-        }
+        return this.publicClient.readContract({
+            ...this.getAbi(),
+            functionName: 'getTotalCollateralAmount',
+            args: [account as Hex],
+        });
     }
 
     /**
@@ -322,26 +210,10 @@ export class TokenVault extends BaseContract {
      * @returns A Promise that resolves to the borrowable amount.
      */
     async getBorrowableAmount(account: string, currency: Currency) {
-        switch (this.config.env) {
-            case 'development':
-                return this.publicClient.readContract({
-                    ...tokenVaultDevContract,
-                    functionName: 'getBorrowableAmount',
-                    args: [
-                        account as Hex,
-                        this.convertCurrencyToBytes32(currency),
-                    ],
-                });
-            default:
-            case 'staging':
-                return this.publicClient.readContract({
-                    ...tokenVaultStgContract,
-                    functionName: 'getBorrowableAmount',
-                    args: [
-                        account as Hex,
-                        this.convertCurrencyToBytes32(currency),
-                    ],
-                });
-        }
+        return this.publicClient.readContract({
+            ...this.getAbi(),
+            functionName: 'getBorrowableAmount',
+            args: [account as Hex, this.convertCurrencyToBytes32(currency)],
+        });
     }
 }
