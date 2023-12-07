@@ -128,12 +128,12 @@ export class SecuredFinanceClient {
         return this._config;
     }
 
-    get publicClient() {
+    get publicClient(): PublicClient {
         assertNonNullish(this._publicClient);
         return this._publicClient;
     }
 
-    get walletClient() {
+    get walletClient(): WalletClient {
         assertNonNullish(this._walletClient);
         return this._walletClient;
     }
@@ -1458,7 +1458,19 @@ export class SecuredFinanceClient {
         const [address] = await this.walletClient.getAddresses();
 
         switch (this.config.env) {
-            case 'development':
+            case 'development': {
+                const estimatedGas =
+                    await this.publicClient.estimateContractGas({
+                        ...lendingMarketControllerDevContract,
+                        account: address,
+                        functionName: 'executeLiquidationCall',
+                        args: [
+                            this.convertCurrencyToBytes32(collateralCcy),
+                            this.convertCurrencyToBytes32(debtCcy),
+                            BigInt(debtMaturity),
+                            account as Hex,
+                        ],
+                    });
                 return this.walletClient.writeContract({
                     ...lendingMarketControllerDevContract,
                     account: address,
@@ -1470,9 +1482,23 @@ export class SecuredFinanceClient {
                         BigInt(debtMaturity),
                         account as Hex,
                     ],
+                    gas: this.calculateAdjustedGas(estimatedGas),
                 });
+            }
             default:
-            case 'staging':
+            case 'staging': {
+                const estimatedGas =
+                    await this.publicClient.estimateContractGas({
+                        ...lendingMarketControllerStgContract,
+                        account: address,
+                        functionName: 'executeLiquidationCall',
+                        args: [
+                            this.convertCurrencyToBytes32(collateralCcy),
+                            this.convertCurrencyToBytes32(debtCcy),
+                            BigInt(debtMaturity),
+                            account as Hex,
+                        ],
+                    });
                 return this.walletClient.writeContract({
                     ...lendingMarketControllerStgContract,
                     account: address,
@@ -1484,7 +1510,9 @@ export class SecuredFinanceClient {
                         BigInt(debtMaturity),
                         account as Hex,
                     ],
+                    gas: this.calculateAdjustedGas(estimatedGas),
                 });
+            }
         }
     }
 
