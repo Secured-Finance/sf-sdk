@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.127](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.126...v0.2.0-beta.127) (2023-12-07)
+
+
+### Bug Fixes
+
+* add estimates gas order while executing liquidation [SF-939] ([22fcdcb](https://github.com/secured-finance/sf-sdk/commit/22fcdcb3e10b5086363bfa51836241deea19a88d))
+
+
+
+
+
 # [0.2.0-beta.123](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.122...v0.2.0-beta.123) (2023-11-28)
 
 
