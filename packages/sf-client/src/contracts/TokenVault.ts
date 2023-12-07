@@ -4,7 +4,7 @@ import { tokenVaultDevContract, tokenVaultStgContract } from '../contracts';
 import { BaseContract } from './BaseContract';
 
 export class TokenVault extends BaseContract {
-    private getAbi() {
+    private getContract() {
         switch (this.config.env) {
             case 'development':
                 return tokenVaultDevContract;
@@ -21,7 +21,7 @@ export class TokenVault extends BaseContract {
      */
     async getTokenAddress(currency: Currency) {
         return this.publicClient.readContract({
-            ...this.getAbi(),
+            ...this.getContract(),
             functionName: 'getTokenAddress',
             args: [this.convertCurrencyToBytes32(currency)],
         });
@@ -34,7 +34,7 @@ export class TokenVault extends BaseContract {
      */
     async getCollateralParameters() {
         const result = await this.publicClient.readContract({
-            ...this.getAbi(),
+            ...this.getContract(),
             functionName: 'getLiquidationConfiguration',
         });
 
@@ -54,7 +54,7 @@ export class TokenVault extends BaseContract {
      */
     async getWithdrawableCollateral(ccy: Currency, account: string) {
         return this.publicClient.readContract({
-            ...this.getAbi(),
+            ...this.getContract(),
             functionName: 'getWithdrawableCollateral',
             args: [this.convertCurrencyToBytes32(ccy), account as Hex],
         });
@@ -70,7 +70,7 @@ export class TokenVault extends BaseContract {
     async withdrawCollateral(ccy: Currency, amount: bigint) {
         const [address] = await this.walletClient.getAddresses();
 
-        const abi = this.getAbi();
+        const abi = this.getContract();
         const estimatedGas = await this.publicClient.estimateContractGas({
             ...abi,
             account: address,
@@ -96,7 +96,7 @@ export class TokenVault extends BaseContract {
      */
     async getUsedCurrencies(account: string) {
         return this.publicClient.readContract({
-            ...this.getAbi(),
+            ...this.getContract(),
             functionName: 'getUsedCurrencies',
             args: [account as Hex],
         });
@@ -110,7 +110,7 @@ export class TokenVault extends BaseContract {
      */
     async getTotalUnusedCollateralAmount(account: string) {
         return this.publicClient.readContract({
-            ...this.getAbi(),
+            ...this.getContract(),
             functionName: 'getTotalUnusedCollateralAmount',
             args: [account as Hex],
         });
@@ -130,7 +130,7 @@ export class TokenVault extends BaseContract {
             await Promise.all(
                 currencies.map(async ccy => {
                     const balance = await this.publicClient.readContract({
-                        ...this.getAbi(),
+                        ...this.getContract(),
                         functionName: 'getDepositAmount',
                         args: [account as Hex, ccy],
                     });
@@ -168,7 +168,7 @@ export class TokenVault extends BaseContract {
      */
     async getCoverage(account: string) {
         return this.publicClient.readContract({
-            ...this.getAbi(),
+            ...this.getContract(),
             functionName: 'getCoverage',
             args: [account as Hex],
         });
@@ -182,7 +182,7 @@ export class TokenVault extends BaseContract {
      */
     async getTotalDepositAmount(currency: Currency) {
         return this.publicClient.readContract({
-            ...this.getAbi(),
+            ...this.getContract(),
             functionName: 'getTotalDepositAmount',
             args: [this.convertCurrencyToBytes32(currency)],
         });
@@ -196,7 +196,7 @@ export class TokenVault extends BaseContract {
      */
     async getTotalCollateralAmount(account: string) {
         return this.publicClient.readContract({
-            ...this.getAbi(),
+            ...this.getContract(),
             functionName: 'getTotalCollateralAmount',
             args: [account as Hex],
         });
@@ -211,7 +211,7 @@ export class TokenVault extends BaseContract {
      */
     async getBorrowableAmount(account: string, currency: Currency) {
         return this.publicClient.readContract({
-            ...this.getAbi(),
+            ...this.getContract(),
             functionName: 'getBorrowableAmount',
             args: [account as Hex, this.convertCurrencyToBytes32(currency)],
         });
