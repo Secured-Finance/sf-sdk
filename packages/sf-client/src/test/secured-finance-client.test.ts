@@ -1,46 +1,7 @@
-import { Token } from '@secured-finance/sf-core';
-import timemachine from 'timemachine';
 import { createPublicClient, custom } from 'viem';
-import { goerli, polygon, sepolia } from 'viem/chains';
-import { SecuredFinanceClient } from './secured-finance-client';
-
-class WBTC extends Token {
-    constructor() {
-        super(
-            1,
-            '0xBc38CC10b73FA8daE91aFf98a1EEb30E70E774FF',
-            8,
-            'WBTC',
-            'Bitcoin'
-        );
-    }
-}
-
-const publicClient = createPublicClient({
-    chain: sepolia,
-    transport: custom({
-        async request({ method }) {
-            if (method === 'eth_chainId') {
-                return Promise.resolve(sepolia.id);
-            }
-        },
-    }),
-});
-
-beforeAll(() => {
-    process.env.SF_ENV = 'development';
-    timemachine.reset();
-    timemachine.config({
-        dateString: '2023-11-01T11:00:00.00Z',
-    });
-});
-
-beforeEach(() => jest.resetAllMocks());
-
-afterAll(() => {
-    jest.clearAllMocks();
-    jest.clearAllTimers();
-});
+import { goerli, polygon } from 'viem/chains';
+import { SecuredFinanceClient } from '../secured-finance-client';
+import { WBTC, publicClient } from './helper';
 
 describe('Secured Finance Client', () => {
     it('should be able to create a new client', async () => {
@@ -105,22 +66,6 @@ describe('config', () => {
         const client = new SecuredFinanceClient();
         await client.init(publicClient);
         expect(client.config).toBeTruthy();
-    });
-});
-
-describe('getCollateralParameters', () => {
-    it('should return the collateral parameters', async () => {
-        jest.spyOn(publicClient, 'readContract').mockImplementationOnce(() =>
-            Promise.resolve([12500n, 200n, 500n])
-        );
-        const client = new SecuredFinanceClient();
-        await client.init(publicClient);
-
-        expect(await client.getCollateralParameters()).toEqual({
-            liquidationThresholdRate: 12500n,
-            liquidationProtocolFeeRate: 200n,
-            liquidatorFeeRate: 500n,
-        });
     });
 });
 

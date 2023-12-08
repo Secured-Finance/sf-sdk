@@ -1,6 +1,5 @@
 module.exports = {
     moduleFileExtensions: ['js', 'json', 'ts'],
-    testRegex: '.*\\.test\\.ts$',
     transform: {
         '^.+\\.(t|j)s$': 'ts-jest',
     },
@@ -8,4 +7,6 @@ module.exports = {
     collectCoverageFrom: ['src/**/*.ts', '!**/*.module.ts', '!**/index.ts'],
     coverageDirectory: './coverage',
     testEnvironment: 'node',
+    testMatch: ['**/*.test.ts'],
+    setupFilesAfterEnv: ['<rootDir>/src/test/jest.setup.ts'],
 };
