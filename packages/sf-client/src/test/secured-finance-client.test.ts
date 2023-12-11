@@ -122,7 +122,7 @@ describe('getMarketTerminationDate', () => {
 });
 
 describe('getOrderBookDetails', () => {
-    it('should return the market termination date', async () => {
+    it('should return the order book details', async () => {
         jest.spyOn(publicClient, 'readContract').mockImplementation(() =>
             Promise.resolve([
                 {
