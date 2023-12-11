@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.129](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.128...v0.2.0-beta.129) (2023-12-11)
+
+
+### Features
+
+* use contracts package [SF-896] ([dff6008](https://github.com/Secured-Finance/sf-sdk/commit/dff60081b22db2b105e4d3965dd2e78fc98e5fc8))
+
+
+
+
+
 # [0.2.0-beta.128](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.127...v0.2.0-beta.128) (2023-12-08)
 
 
