@@ -745,12 +745,14 @@ export class SecuredFinanceClient {
     async getBorrowOrderBook(
         currency: Currency,
         maturity: number,
+        start: number,
         limit: number
     ) {
         let result: readonly [
             readonly bigint[],
             readonly bigint[],
-            readonly bigint[]
+            readonly bigint[],
+            bigint
         ];
         switch (this.config.env) {
             case 'development':
@@ -760,6 +762,7 @@ export class SecuredFinanceClient {
                     args: [
                         this.convertCurrencyToBytes32(currency),
                         BigInt(maturity),
+                        BigInt(start),
                         BigInt(limit),
                     ],
                 });
@@ -772,6 +775,7 @@ export class SecuredFinanceClient {
                     args: [
                         this.convertCurrencyToBytes32(currency),
                         BigInt(maturity),
+                        BigInt(start),
                         BigInt(limit),
                     ],
                 });
@@ -780,18 +784,21 @@ export class SecuredFinanceClient {
             unitPrices: result[0],
             amounts: result[1],
             quantities: result[2],
+            next: result[3],
         };
     }
 
     async getLendOrderBook(
         currency: Currency,
         maturity: number,
+        start: number,
         limit: number
     ) {
         let result: readonly [
             readonly bigint[],
             readonly bigint[],
-            readonly bigint[]
+            readonly bigint[],
+            bigint
         ];
         switch (this.config.env) {
             case 'development':
@@ -801,6 +808,7 @@ export class SecuredFinanceClient {
                     args: [
                         this.convertCurrencyToBytes32(currency),
                         BigInt(maturity),
+                        BigInt(start),
                         BigInt(limit),
                     ],
                 });
@@ -813,6 +821,7 @@ export class SecuredFinanceClient {
                     args: [
                         this.convertCurrencyToBytes32(currency),
                         BigInt(maturity),
+                        BigInt(start),
                         BigInt(limit),
                     ],
                 });
@@ -821,6 +830,7 @@ export class SecuredFinanceClient {
             unitPrices: result[0],
             amounts: result[1],
             quantities: result[2],
+            next: result[3],
         };
     }
 
@@ -1378,13 +1388,13 @@ export class SecuredFinanceClient {
             case 'development':
                 return this.publicClient.readContract({
                     ...lendingMarketControllerDevContract,
-                    functionName: 'getMarketTerminationDate',
+                    functionName: 'getTerminationDate',
                 });
             default:
             case 'staging':
                 return this.publicClient.readContract({
                     ...lendingMarketControllerStgContract,
-                    functionName: 'getMarketTerminationDate',
+                    functionName: 'getTerminationDate',
                 });
         }
     }
@@ -1394,32 +1404,32 @@ export class SecuredFinanceClient {
             case 'development':
                 return this.publicClient.readContract({
                     ...lendingMarketControllerDevContract,
-                    functionName: 'getMarketTerminationRatio',
+                    functionName: 'getTerminationCollateralRatio',
                     args: [this.convertCurrencyToBytes32(currency)],
                 });
             default:
             case 'staging':
                 return this.publicClient.readContract({
                     ...lendingMarketControllerStgContract,
-                    functionName: 'getMarketTerminationRatio',
+                    functionName: 'getTerminationCollateralRatio',
                     args: [this.convertCurrencyToBytes32(currency)],
                 });
         }
     }
 
-    async getMarketTerminationPrice(currency: Currency) {
+    async getMarketTerminationPriceAndDecimals(currency: Currency) {
         switch (this.config.env) {
             case 'development':
                 return this.publicClient.readContract({
                     ...lendingMarketControllerDevContract,
-                    functionName: 'getMarketTerminationPrice',
+                    functionName: 'getTerminationCurrencyCache',
                     args: [this.convertCurrencyToBytes32(currency)],
                 });
             default:
             case 'staging':
                 return this.publicClient.readContract({
                     ...lendingMarketControllerStgContract,
-                    functionName: 'getMarketTerminationPrice',
+                    functionName: 'getTerminationCurrencyCache',
                     args: [this.convertCurrencyToBytes32(currency)],
                 });
         }
