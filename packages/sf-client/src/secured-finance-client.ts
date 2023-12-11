@@ -1417,7 +1417,7 @@ export class SecuredFinanceClient {
         }
     }
 
-    async getMarketTerminationPrice(currency: Currency) {
+    async getMarketTerminationPriceAndDecimals(currency: Currency) {
         switch (this.config.env) {
             case 'development':
                 return this.publicClient.readContract({
