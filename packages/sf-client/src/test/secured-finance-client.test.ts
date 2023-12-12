@@ -1,5 +1,5 @@
 import { createPublicClient, custom } from 'viem';
-import { goerli, polygon } from 'viem/chains';
+import { goerli, mainnet } from 'viem/chains';
 import { SecuredFinanceClient } from '../secured-finance-client';
 import { WBTC, publicClient } from './helper';
 
@@ -18,26 +18,6 @@ describe('Secured Finance Client', () => {
 
 describe('Unsupported chain on platform', () => {
     const pubClient = createPublicClient({
-        chain: polygon,
-        transport: custom({
-            async request({ method }) {
-                if (method === 'eth_chainId') {
-                    return Promise.resolve(polygon.id);
-                }
-            },
-        }),
-    });
-
-    it('should throw an error if the publicClient uses an unsupported chain', async () => {
-        const client = new SecuredFinanceClient();
-        expect(async () => await client.init(pubClient)).rejects.toThrowError(
-            /ChainId 137 is not supported./
-        );
-    });
-});
-
-describe('Unsupported chain on environment', () => {
-    const pubClient = createPublicClient({
         chain: goerli,
         transport: custom({
             async request({ method }) {
@@ -48,10 +28,30 @@ describe('Unsupported chain on environment', () => {
         }),
     });
 
+    it('should throw an error if the publicClient uses an unsupported chain', async () => {
+        const client = new SecuredFinanceClient();
+        expect(async () => await client.init(pubClient)).rejects.toThrowError(
+            /ChainId 5 is not supported./
+        );
+    });
+});
+
+describe('Unsupported chain on environment', () => {
+    const pubClient = createPublicClient({
+        chain: mainnet,
+        transport: custom({
+            async request({ method }) {
+                if (method === 'eth_chainId') {
+                    return Promise.resolve(mainnet.id);
+                }
+            },
+        }),
+    });
+
     it('should throw an error if the publicClient uses an unsupported chain for a given environment', async () => {
         const client = new SecuredFinanceClient();
         expect(async () => await client.init(pubClient)).rejects.toThrowError(
-            /goerli is not supported on development environment./
+            /mainnet is not supported on development environment./
         );
     });
 });

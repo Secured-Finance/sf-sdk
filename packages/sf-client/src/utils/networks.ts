@@ -1,19 +1,16 @@
-import { Chain, goerli, mainnet, sepolia } from 'viem/chains';
+import { Chain, mainnet, sepolia } from 'viem/chains';
 
 export const NETWORKS: { [key: number]: string } = {
     1: 'mainnet',
     11155111: 'sepolia',
-    1337: 'localhost',
-    5: 'goerli',
 };
 
 export const CHAINS: { [key: number]: Chain } = {
     1: mainnet,
     11155111: sepolia,
-    5: goerli,
 };
 
-export const networkNames = ['sepolia', 'mainnet', 'goerli'] as const;
+export const networkNames = ['sepolia', 'mainnet'] as const;
 export type NetworkName = (typeof networkNames)[number];
 
 export type Network = {
@@ -33,7 +30,7 @@ const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
         sepolia: 'staging',
     },
     production: {
-        goerli: 'goerli',
+        sepolia: 'sepolia',
         mainnet: 'production',
     },
 };
