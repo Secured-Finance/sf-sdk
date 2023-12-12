@@ -1474,4 +1474,36 @@ export class SecuredFinanceClient {
                 });
         }
     }
+
+    async getItayoseEstimation(currency: Currency, maturity: number) {
+        let result: readonly [bigint, bigint, bigint, bigint];
+        switch (this.config.env) {
+            case 'development':
+                result = await this.publicClient.readContract({
+                    ...lendingMarketReaderDevContract,
+                    functionName: 'getItayoseEstimation',
+                    args: [
+                        this.convertCurrencyToBytes32(currency),
+                        BigInt(maturity),
+                    ],
+                });
+                break;
+            default:
+            case 'staging':
+                result = await this.publicClient.readContract({
+                    ...lendingMarketReaderStgContract,
+                    functionName: 'getItayoseEstimation',
+                    args: [
+                        this.convertCurrencyToBytes32(currency),
+                        BigInt(maturity),
+                    ],
+                });
+        }
+        return {
+            openingUnitPrice: result[0],
+            lastLendUnitPrice: result[1],
+            lastBorrowUnitPrice: result[2],
+            totalOffsetAmount: result[3],
+        };
+    }
 }
