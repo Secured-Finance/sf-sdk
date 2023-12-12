@@ -936,16 +936,6 @@ export class SecuredFinanceClient {
         });
     }
 
-    async getTokenAllowance(token: Token, owner: Hex, spender: Hex) {
-        const address = await this.tokenVault.getTokenAddress(token);
-        return this.publicClient.readContract({
-            abi: ERC20Abi,
-            address: address as Hex,
-            functionName: 'allowance',
-            args: [owner, spender],
-        });
-    }
-
     private async approveTokenTransfer(ccy: Currency, amount: bigint) {
         const [address] = await this.walletClient.getAddresses();
         const tokenAddress = await this.tokenVault.getTokenAddress(ccy);
@@ -960,11 +950,13 @@ export class SecuredFinanceClient {
                 case 'staging':
                     spender = tokenVaultStgContract.address;
             }
-            const allowance = await this.getTokenAllowance(
-                ccy,
-                address,
-                spender
-            );
+
+            const allowance = await this.publicClient.readContract({
+                abi: ERC20Abi,
+                address: tokenAddress,
+                functionName: 'allowance',
+                args: [address, spender],
+            });
 
             if (allowance <= amount) {
                 const tx = await this.walletClient.writeContract({
