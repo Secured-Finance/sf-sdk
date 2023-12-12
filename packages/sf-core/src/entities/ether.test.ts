@@ -29,7 +29,7 @@ describe('ether', () => {
     });
 
     it('should be different from other currencies', () => {
-        const token = new Token(1, '0x123', 18, 'TKN', 'Token');
+        const token = new Token(1, 18, 'TKN', 'Token');
         expect(eth.equals(token)).toBeFalsy();
     });
 });

@@ -1,7 +1,7 @@
 import { Token } from './token';
 
 describe('token', () => {
-    const token = new Token(1, '0x123', 18, 'TKN', 'Token');
+    const token = new Token(1, 18, 'TKN', 'Token');
     it('should create an instance', () => {
         expect(token).toBeTruthy();
     });
@@ -18,12 +18,16 @@ describe('token', () => {
         expect(token.chainId).toBe(1);
     });
 
-    it('should be different from token with different contract address', () => {
-        const token2 = new Token(1, '0x456', 18, 'TKN', 'Token');
-        expect(token.equals(token2)).toBeFalsy();
-    });
-
     it('should be wrapped by itself', () => {
         expect(token.wrapped).toBe(token);
+    });
+
+    it('should be equal to itself', () => {
+        expect(token.equals(token)).toBeTruthy();
+    });
+
+    it('should be different from another token', () => {
+        const other = new Token(1, 18, 'TKN1', 'Token');
+        expect(token.equals(other)).toBeFalsy();
     });
 });
