@@ -5,17 +5,13 @@ export class Token extends BaseCurrency {
     public readonly isNative = false;
     public readonly isToken = true;
 
-    public readonly address: string;
-
     public constructor(
         chainId: number,
-        address: string,
         decimals: number,
         symbol: string,
         name: string
     ) {
         super(chainId, decimals, symbol, name);
-        this.address = address;
     }
 
     /**
@@ -26,7 +22,9 @@ export class Token extends BaseCurrency {
         return (
             other.isToken &&
             this.chainId === other.chainId &&
-            this.address === other.address
+            this.decimals === other.decimals &&
+            this.symbol === other.symbol &&
+            this.name === other.name
         );
     }
 
