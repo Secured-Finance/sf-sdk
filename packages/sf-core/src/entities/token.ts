@@ -19,7 +19,13 @@ export class Token extends BaseCurrency {
      * @param other other token to compare
      */
     public equals(other: Currency): boolean {
-        return other.isToken && this.chainId === other.chainId;
+        return (
+            other.isToken &&
+            this.chainId === other.chainId &&
+            this.decimals === other.decimals &&
+            this.symbol === other.symbol &&
+            this.name === other.name
+        );
     }
 
     public get wrapped(): BaseCurrency {

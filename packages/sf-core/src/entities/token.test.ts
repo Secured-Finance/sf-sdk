@@ -21,4 +21,13 @@ describe('token', () => {
     it('should be wrapped by itself', () => {
         expect(token.wrapped).toBe(token);
     });
+
+    it('should be equal to itself', () => {
+        expect(token.equals(token)).toBeTruthy();
+    });
+
+    it('should be different from another token', () => {
+        const other = new Token(1, 18, 'TKN1', 'Token');
+        expect(token.equals(other)).toBeFalsy();
+    });
 });
