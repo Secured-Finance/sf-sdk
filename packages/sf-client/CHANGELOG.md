@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.130](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.129...v0.2.0-beta.130) (2023-12-12)
+
+
+### Bug Fixes
+
+* reduce token address call [SF-937] ([186ac57](https://github.com/secured-finance/sf-sdk/commit/186ac57b8b86be7362d192a65b4bd2d3775fedb2))
+
+
+### Features
+
+* remove contract from token class [SF-973] ([a1c1662](https://github.com/secured-finance/sf-sdk/commit/a1c166247d76c989486c7671bca9df62998d6d15))
+
+
+
+
+
 # [0.2.0-beta.129](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.128...v0.2.0-beta.129) (2023-12-11)
 
 
