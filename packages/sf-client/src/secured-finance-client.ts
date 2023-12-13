@@ -1470,7 +1470,11 @@ export class SecuredFinanceClient {
         }
     }
 
-    async getLiquidationAmount(user: string, liquidationCurrency: Currency, maxLiquidationAmount: bigint) {
+    async getLiquidationAmount(
+        user: string,
+        liquidationCurrency: Currency,
+        maxLiquidationAmount: bigint
+    ) {
         switch (this.config.env) {
             case 'development':
                 return this.publicClient.readContract({
@@ -1479,7 +1483,7 @@ export class SecuredFinanceClient {
                     args: [
                         user as Hex,
                         this.convertCurrencyToBytes32(liquidationCurrency),
-                        maxLiquidationAmount
+                        maxLiquidationAmount,
                     ],
                 });
             default:
@@ -1490,7 +1494,7 @@ export class SecuredFinanceClient {
                     args: [
                         user as Hex,
                         this.convertCurrencyToBytes32(liquidationCurrency),
-                        maxLiquidationAmount
+                        maxLiquidationAmount,
                     ],
                 });
         }
