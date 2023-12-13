@@ -1469,4 +1469,30 @@ export class SecuredFinanceClient {
                 });
         }
     }
+
+    async getLiquidationAmount(user: string, liquidationCurrency: Currency, maxLiquidationAmount: bigint) {
+        switch (this.config.env) {
+            case 'development':
+                return this.publicClient.readContract({
+                    ...tokenVaultDevContract,
+                    functionName: 'getLiquidationAmount',
+                    args: [
+                        user as Hex,
+                        this.convertCurrencyToBytes32(liquidationCurrency),
+                        maxLiquidationAmount
+                    ],
+                });
+            default:
+            case 'staging':
+                return this.publicClient.readContract({
+                    ...tokenVaultStgContract,
+                    functionName: 'getLiquidationAmount',
+                    args: [
+                        user as Hex,
+                        this.convertCurrencyToBytes32(liquidationCurrency),
+                        maxLiquidationAmount
+                    ],
+                });
+        }
+    }
 }
