@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.131](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.130...v0.2.0-beta.131) (2023-12-13)
+
+
+### Features
+
+* add getItayoseEstimation function [SF-896] ([067d831](https://github.com/secured-finance/sf-sdk/commit/067d83143d7b30801a7e0a5a8097a16ce4162c78))
+* change prod testnet chain to sepolia [SF-896] ([123152a](https://github.com/secured-finance/sf-sdk/commit/123152a54890ec40e020ab09666778636f16fe43))
+
+
+
+# 0.2.0-beta.129 (2023-12-11)
+
+
+
+
+
 # [0.2.0-beta.130](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.129...v0.2.0-beta.130) (2023-12-12)
 
 
