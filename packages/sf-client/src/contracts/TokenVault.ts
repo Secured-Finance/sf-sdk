@@ -216,4 +216,28 @@ export class TokenVault extends BaseContract {
             args: [account as Hex, this.convertCurrencyToBytes32(currency)],
         });
     }
+
+    /**
+     * Retrieves the liquidation related info for a given account in the given currency.
+     *
+     * @param account - The account for which to retrieve the liquidation info.
+     * @param liquidationCurrency - The currency in which to retrieve the liquidation amount.
+     * @param maxLiquidationAmount - The maximum amount that can be liquidated in the liquidated currency.
+     * @returns A Promise that resolves to the liquidation amount, protocol fee and liquidation fee.
+     */
+    async getLiquidationAmount(
+        account: string,
+        liquidationCurrency: Currency,
+        maxLiquidationAmount: bigint
+    ) {
+        return this.publicClient.readContract({
+            ...this.getContract(),
+            functionName: 'getLiquidationAmount',
+            args: [
+                account as Hex,
+                this.convertCurrencyToBytes32(liquidationCurrency),
+                maxLiquidationAmount,
+            ],
+        });
+    }
 }

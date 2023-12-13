@@ -28,12 +28,12 @@ export abstract class BaseContract {
         return this._config;
     }
 
-    get publicClient() {
+    get publicClient(): PublicClient {
         assertNonNullish(this._publicClient);
         return this._publicClient;
     }
 
-    get walletClient() {
+    get walletClient(): WalletClient {
         assertNonNullish(this._walletClient);
         return this._walletClient;
     }

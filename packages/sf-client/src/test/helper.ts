@@ -1,5 +1,5 @@
 import { Token } from '@secured-finance/sf-core';
-import { createPublicClient, custom } from 'viem';
+import { createPublicClient, custom, PublicClient } from 'viem';
 import { sepolia } from 'viem/chains';
 
 export class WBTC extends Token {
@@ -8,7 +8,7 @@ export class WBTC extends Token {
     }
 }
 
-export const publicClient = createPublicClient({
+export const publicClient: PublicClient = createPublicClient({
     chain: sepolia,
     transport: custom({
         async request({ method }) {
