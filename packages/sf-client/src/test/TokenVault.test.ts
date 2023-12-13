@@ -69,3 +69,22 @@ describe('getUsedCurrencies', () => {
         ]);
     });
 });
+
+describe('getLiquidationAmount', () => {
+    it('should return the liquidation related info', async () => {
+        jest.spyOn(publicClient, 'readContract').mockImplementationOnce(() =>
+            Promise.resolve([981200000n, 19624000n, 49060000n])
+        );
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+        const [liquidationAmount, protocolFee, liquidationFee] =
+            await client.tokenVault.getLiquidationAmount(
+                '0xBc38CC10b73FA8daE91aFf98a1EEb30E70E774FF',
+                new WBTC(),
+                1000000000n
+            );
+        expect(liquidationAmount).toEqual(981200000n);
+        expect(protocolFee).toEqual(19624000n);
+        expect(liquidationFee).toEqual(49060000n);
+    });
+});
