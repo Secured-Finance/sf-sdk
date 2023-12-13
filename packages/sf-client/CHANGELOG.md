@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.132](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.131...v0.2.0-beta.132) (2023-12-13)
+
+
+### Bug Fixes
+
+* format issue [SF-938] ([b81060f](https://github.com/secured-finance/sf-sdk/commit/b81060f1f8c6c39e9f8df158656f1993b5647142))
+
+
+### Features
+
+* add getLiquidationAmount [SF-938] ([36d2185](https://github.com/secured-finance/sf-sdk/commit/36d21858a186d9637ecba17471817416a33d4bf6))
+
+
+
+# 0.2.0-beta.130 (2023-12-12)
+
+
+
+
+
 # [0.2.0-beta.131](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.130...v0.2.0-beta.131) (2023-12-13)
 
 
