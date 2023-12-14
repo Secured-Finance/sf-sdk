@@ -25,7 +25,7 @@ const getGraphClient = (network = 'none') => {
                 console.info(
                     `You are connecting the ${network} data of the Secured Finance ${sfEnv} environment`
                 );
-            } else if (network !== 'sepolia') {
+            } else {
                 console.warn(`${network} is not a supported network.`);
             }
             GraphClient = GraphClientDev;
@@ -37,7 +37,7 @@ const getGraphClient = (network = 'none') => {
                 console.info(
                     `You are connecting the ${network} data of the Secured Finance ${sfEnv} environment`
                 );
-            } else if (network !== 'sepolia') {
+            } else {
                 console.warn(`${network} is not a supported network.`);
             }
             GraphClient = GraphClientStg;
