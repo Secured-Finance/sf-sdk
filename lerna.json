@@ -29,6 +29,6 @@
     "**/@typechain/*",
     "@secured-finance/contracts"
   ],
-  "version": "0.2.0-beta.135",
+  "version": "0.2.0-beta.136",
   "npmClient": "npm"
 }
