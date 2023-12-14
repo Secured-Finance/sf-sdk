@@ -3,8 +3,11 @@ import * as STAGING_QUERIES from './staging/.graphclient';
 import * as PROD_SEPOLIA_QUERIES from './production/sepolia/.graphclient';
 import * as PROD_MAINNET_QUERIES from './production/mainnet/.graphclient';
 
-// TODO: add typeof PROD_QUERIES to queries also
-let queries: typeof DEV_QUERIES | typeof STAGING_QUERIES;
+let queries:
+    | typeof DEV_QUERIES
+    | typeof STAGING_QUERIES
+    | typeof PROD_SEPOLIA_QUERIES
+    | typeof PROD_MAINNET_QUERIES;
 
 switch (process.env.SF_ENV) {
     case 'development':
