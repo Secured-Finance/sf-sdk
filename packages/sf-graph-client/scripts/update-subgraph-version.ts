@@ -3,13 +3,16 @@ import { readFileSync, writeFileSync } from 'fs';
 import { dump, load } from 'js-yaml';
 
 const arrowedEnvironments = ['development', 'staging', 'production'] as const;
+const arrowedNetworks = ['sepolia', 'mainnet'] as const;
 type Environment = (typeof arrowedEnvironments)[number];
+type Network = (typeof arrowedNetworks)[number];
 
 class Main {
     private environment: Environment;
+    private network: Network;
     private label: string;
 
-    constructor(environment: string, label: string) {
+    constructor(environment: string, network: Network, label: string) {
         if (!label) {
             console.error('error: label is empty.');
             process.exit(1);
@@ -20,14 +23,22 @@ class Main {
             process.exit(1);
         }
 
+        if (!arrowedNetworks.includes(network as Network)) {
+            console.error('error: invalid network:', network);
+            process.exit(1);
+        }
+
         this.environment = environment as Environment;
         this.label = label;
+        this.network = Network;
     }
 
     run() {
-        const path = `${process.cwd()}/src/graphclients/${
-            this.environment
-        }/.graphclientrc.yml`;
+        const networkName =
+            this.environment === 'development' || this.environment === 'staging'
+                ? this.environment
+                : this.network;
+        const path = `${process.cwd()}/src/graphclients/${networkPath}/.graphclientrc.yml`;
         const yamlText = readFileSync(path, 'utf8');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const data = load(yamlText) as any;
