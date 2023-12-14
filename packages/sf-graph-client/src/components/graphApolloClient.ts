@@ -17,13 +17,15 @@ type Environments = (typeof environments)[number];
 const getGraphClient = (network = 'none') => {
     let GraphClient;
     let sfEnv: Environments | undefined;
-    let sfNetwork: string;
 
     switch (process.env.SF_ENV) {
         case 'development':
             sfEnv = 'development';
-            sfNetwork = 'sepolia';
-            if (network !== 'sepolia') {
+            if (network === 'sepolia') {
+                console.info(
+                    `You are connecting the ${network} data of the Secured Finance ${sfEnv} environment`
+                );
+            } else if (network !== 'sepolia') {
                 console.warn(`${network} is not a supported network.`);
             }
             GraphClient = GraphClientDev;
@@ -31,8 +33,11 @@ const getGraphClient = (network = 'none') => {
 
         case 'staging':
             sfEnv = 'staging';
-            sfNetwork = 'sepolia';
-            if (network !== 'sepolia') {
+            if (network === 'sepolia') {
+                console.info(
+                    `You are connecting the ${network} data of the Secured Finance ${sfEnv} environment`
+                );
+            } else if (network !== 'sepolia') {
                 console.warn(`${network} is not a supported network.`);
             }
             GraphClient = GraphClientStg;
@@ -41,21 +46,19 @@ const getGraphClient = (network = 'none') => {
         case 'production':
         default:
             sfEnv = 'production';
-            sfNetwork = network;
             if (network === 'mainnet') {
                 GraphClient = GraphClientMainnet;
-            } else if (network === 'sepolia') {
-                GraphClient = GraphClientSepolia;
+                console.info(
+                    `You are connecting the ${network} data of the Secured Finance ${sfEnv} environment`
+                );
+                // } else if (network === 'sepolia') {
+                //     GraphClient = GraphClientSepolia;
             } else {
+                GraphClient = GraphClientSepolia;
                 console.warn(`${network} is not a supported network.`);
             }
             break;
     }
-
-    console.info(
-        `You are connecting the ${sfNetwork} data of the Secured Finance ${sfEnv} environment`
-    );
-
     return GraphClient;
 };
 
