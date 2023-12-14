@@ -30,7 +30,7 @@ class Main {
 
         this.environment = environment as Environment;
         this.label = label;
-        this.network = Network;
+        this.network = network;
     }
 
     run() {
