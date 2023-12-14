@@ -41,14 +41,17 @@ const getGraphClient = (network = 'none') => {
         case 'production':
         default:
             sfEnv = 'production';
-            sfNetwork = network;
             if (network === 'mainnet') {
                 GraphClient = GraphClientMainnet;
+                sfNetwork = network;
             } else if (network === 'sepolia') {
                 GraphClient = GraphClientSepolia;
+                sfNetwork = network;
             } else {
+                sfNetwork = 'sepolia';
                 console.warn(`${network} is not a supported network.`);
             }
+            GraphClient = GraphClientSepolia;
             break;
     }
 
