@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.133](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.132...v0.2.0-beta.133) (2023-12-14)
+
+
+### Bug Fixes
+
+* update dev and stg graph endpoints [SF-953] ([97a4391](https://github.com/Secured-Finance/sf-sdk/commit/97a439137a7730c4297d6eae8bcc4fc0eb5a318e))
+
+
+### Features
+
+* prepare graph client for production [SF-953] ([a101a90](https://github.com/Secured-Finance/sf-sdk/commit/a101a90d5299a94b4f0d5357bca6290e1edcd6d7))
+
+
+
+
+
 # [0.2.0-beta.132](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.131...v0.2.0-beta.132) (2023-12-13)
 
 
