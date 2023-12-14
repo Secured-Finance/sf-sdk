@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.134](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.133...v0.2.0-beta.134) (2023-12-14)
+
+
+### Features
+
+* initial changes to sf client for prod [SF-954] ([f86c486](https://github.com/secured-finance/sf-sdk/commit/f86c4867864c959dfe676f37b272a2f4cfe913a0))
+
+
+
+# 0.2.0-beta.132 (2023-12-13)
+
+
+
+
+
 # [0.2.0-beta.132](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.131...v0.2.0-beta.132) (2023-12-13)
 
 
