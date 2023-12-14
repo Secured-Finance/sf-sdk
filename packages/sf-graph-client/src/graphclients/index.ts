@@ -1,8 +1,13 @@
 import * as DEV_QUERIES from './development/.graphclient';
 import * as STAGING_QUERIES from './staging/.graphclient';
+import * as PROD_SEPOLIA_QUERIES from './production/sepolia/.graphclient';
+import * as PROD_MAINNET_QUERIES from './production/mainnet/.graphclient';
 
-// TODO: add typeof PROD_QUERIES to queries also
-let queries: typeof DEV_QUERIES | typeof STAGING_QUERIES;
+let queries:
+    | typeof DEV_QUERIES
+    | typeof STAGING_QUERIES
+    | typeof PROD_SEPOLIA_QUERIES
+    | typeof PROD_MAINNET_QUERIES;
 
 switch (process.env.SF_ENV) {
     case 'development':
@@ -12,9 +17,18 @@ switch (process.env.SF_ENV) {
         queries = STAGING_QUERIES;
         break;
     case 'production':
+        switch (process.env.SF_NETWORK) {
+            case 'sepolia':
+                queries = PROD_SEPOLIA_QUERIES;
+                break;
+            case 'mainnet':
+            default:
+                queries = PROD_MAINNET_QUERIES;
+                break;
+        }
+        break;
     default:
-        // TODO: queries need to be set for production once ready
-        queries = DEV_QUERIES;
+        queries = PROD_MAINNET_QUERIES;
         break;
 }
 
