@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.136](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.135...v0.2.0-beta.136) (2023-12-14)
+
+
+### Bug Fixes
+
+* graph client fixed [SF-938] ([439de12](https://github.com/secured-finance/sf-sdk/commit/439de12915ca3a4dfd9fd74a5e6e74147f1544fb))
+* should return sepolia data if changed to other chain [SF-938] ([5d0d4e9](https://github.com/secured-finance/sf-sdk/commit/5d0d4e9f12f2d2ca3d5c36b5379e8528c4b1b16b))
+
+
+
+
+
 # [0.2.0-beta.135](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.134...v0.2.0-beta.135) (2023-12-14)
 
 
