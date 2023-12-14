@@ -19,8 +19,15 @@ export type Network = {
 };
 
 const environments = ['development', 'staging', 'production'] as const;
+const contractEnvironments = [
+    'development',
+    'staging',
+    'sepolia',
+    'mainnet',
+] as const;
 type Environment = (typeof environments)[number];
-type NetworkMap = Record<NetworkName, string>;
+export type ContractEnvironments = (typeof contractEnvironments)[number];
+type NetworkMap = Record<NetworkName, ContractEnvironments>;
 
 const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
     development: {
@@ -31,7 +38,7 @@ const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
     },
     production: {
         sepolia: 'sepolia',
-        mainnet: 'production',
+        mainnet: 'mainnet',
     },
 };
 

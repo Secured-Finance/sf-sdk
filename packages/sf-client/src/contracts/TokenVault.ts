@@ -1,19 +1,9 @@
 import { Currency } from '@secured-finance/sf-core';
 import { Hex } from 'viem';
-import { tokenVaultDevContract, tokenVaultStgContract } from '../contracts';
+import { getTokenVaultContract } from '../contracts';
 import { BaseContract } from './BaseContract';
 
 export class TokenVault extends BaseContract {
-    private getContract() {
-        switch (this.config.env) {
-            case 'development':
-                return tokenVaultDevContract;
-            default:
-            case 'staging':
-                return tokenVaultStgContract;
-        }
-    }
-
     /**
      * Retrieves the token address for the specified currency.
      * @param currency The currency for which to retrieve the token address.
@@ -21,7 +11,7 @@ export class TokenVault extends BaseContract {
      */
     async getTokenAddress(currency: Currency) {
         return this.publicClient.readContract({
-            ...this.getContract(),
+            ...getTokenVaultContract(this.config.env),
             functionName: 'getTokenAddress',
             args: [this.convertCurrencyToBytes32(currency)],
         });
@@ -34,7 +24,7 @@ export class TokenVault extends BaseContract {
      */
     async getCollateralParameters() {
         const result = await this.publicClient.readContract({
-            ...this.getContract(),
+            ...getTokenVaultContract(this.config.env),
             functionName: 'getLiquidationConfiguration',
         });
 
@@ -54,7 +44,7 @@ export class TokenVault extends BaseContract {
      */
     async getWithdrawableCollateral(ccy: Currency, account: string) {
         return this.publicClient.readContract({
-            ...this.getContract(),
+            ...getTokenVaultContract(this.config.env),
             functionName: 'getWithdrawableCollateral',
             args: [this.convertCurrencyToBytes32(ccy), account as Hex],
         });
@@ -69,17 +59,16 @@ export class TokenVault extends BaseContract {
      */
     async withdrawCollateral(ccy: Currency, amount: bigint) {
         const [address] = await this.walletClient.getAddresses();
-
-        const abi = this.getContract();
+        const contract = getTokenVaultContract(this.config.env);
         const estimatedGas = await this.publicClient.estimateContractGas({
-            ...abi,
+            ...contract,
             account: address,
             functionName: 'withdraw',
             args: [this.convertCurrencyToBytes32(ccy), amount],
         });
 
         return this.walletClient.writeContract({
-            ...abi,
+            ...contract,
             account: address,
             chain: this.config.chain,
             functionName: 'withdraw',
@@ -96,7 +85,7 @@ export class TokenVault extends BaseContract {
      */
     async getUsedCurrencies(account: string) {
         return this.publicClient.readContract({
-            ...this.getContract(),
+            ...getTokenVaultContract(this.config.env),
             functionName: 'getUsedCurrencies',
             args: [account as Hex],
         });
@@ -110,7 +99,7 @@ export class TokenVault extends BaseContract {
      */
     async getTotalUnusedCollateralAmount(account: string) {
         return this.publicClient.readContract({
-            ...this.getContract(),
+            ...getTokenVaultContract(this.config.env),
             functionName: 'getTotalUnusedCollateralAmount',
             args: [account as Hex],
         });
@@ -124,13 +113,14 @@ export class TokenVault extends BaseContract {
      */
     async getCollateralBook(account: string) {
         const currencies = await this.getUsedCurrencies(account);
+        const contract = getTokenVaultContract(this.config.env);
         let collateral: Record<string, bigint> = {};
 
         if (currencies && currencies.length) {
             await Promise.all(
                 currencies.map(async ccy => {
                     const balance = await this.publicClient.readContract({
-                        ...this.getContract(),
+                        ...contract,
                         functionName: 'getDepositAmount',
                         args: [account as Hex, ccy],
                     });
@@ -168,7 +158,7 @@ export class TokenVault extends BaseContract {
      */
     async getCoverage(account: string) {
         return this.publicClient.readContract({
-            ...this.getContract(),
+            ...getTokenVaultContract(this.config.env),
             functionName: 'getCoverage',
             args: [account as Hex],
         });
@@ -182,7 +172,7 @@ export class TokenVault extends BaseContract {
      */
     async getTotalDepositAmount(currency: Currency) {
         return this.publicClient.readContract({
-            ...this.getContract(),
+            ...getTokenVaultContract(this.config.env),
             functionName: 'getTotalDepositAmount',
             args: [this.convertCurrencyToBytes32(currency)],
         });
@@ -196,7 +186,7 @@ export class TokenVault extends BaseContract {
      */
     async getTotalCollateralAmount(account: string) {
         return this.publicClient.readContract({
-            ...this.getContract(),
+            ...getTokenVaultContract(this.config.env),
             functionName: 'getTotalCollateralAmount',
             args: [account as Hex],
         });
@@ -211,7 +201,7 @@ export class TokenVault extends BaseContract {
      */
     async getBorrowableAmount(account: string, currency: Currency) {
         return this.publicClient.readContract({
-            ...this.getContract(),
+            ...getTokenVaultContract(this.config.env),
             functionName: 'getBorrowableAmount',
             args: [account as Hex, this.convertCurrencyToBytes32(currency)],
         });
@@ -231,7 +221,7 @@ export class TokenVault extends BaseContract {
         maxLiquidationAmount: bigint
     ) {
         return this.publicClient.readContract({
-            ...this.getContract(),
+            ...getTokenVaultContract(this.config.env),
             functionName: 'getLiquidationAmount',
             args: [
                 account as Hex,
