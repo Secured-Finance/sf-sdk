@@ -24,7 +24,7 @@
     "url": "https://github.com/secured-finance/sf-sdk"
   },
   "dependencies": {
-    "@secured-finance/contracts": "0.2.0-beta.2",
+    "@secured-finance/contracts": "1.0.0",
     "@secured-finance/sf-core": "^0.2.0-beta.130"
   },
   "devDependencies": {

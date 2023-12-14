@@ -1,4 +1,5 @@
 import { Chain } from 'viem';
+import { ContractEnvironments } from './utils';
 
 export interface SecuredFinanceClientConfig {
     defaultGas: number;
@@ -6,5 +7,5 @@ export interface SecuredFinanceClientConfig {
     network: string;
     chain: Chain;
     networkId: number;
-    env: string;
+    env: ContractEnvironments;
 }
