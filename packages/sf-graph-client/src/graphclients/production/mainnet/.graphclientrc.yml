@@ -9,5 +9,5 @@ sources:
       - autoPagination:
           validateSchema: true
 documents:
-  - ../../../queries/production/mainnet/*.{ts,tsx,js,jsx}
-  - ../../../queries/production/mainnet/*.graphql
+  - ../../../queries/production/*.{ts,tsx,js,jsx}
+  - ../../../queries/production/*.graphql
