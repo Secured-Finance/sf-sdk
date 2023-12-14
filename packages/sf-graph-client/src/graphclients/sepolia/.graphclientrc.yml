@@ -9,5 +9,5 @@ sources:
       - autoPagination:
           validateSchema: true
 documents:
-  - ../../../queries/production/sepolia/*.{ts,tsx,js,jsx}
-  - ../../../queries/production/sepolia/*.graphql
+  - ../../queries/production/*.{ts,tsx,js,jsx}
+  - ../../queries/production/*.graphql

@@ -7,7 +7,7 @@
   "scripts": {
     "precompile": "rm -rf dist",
     "compile": "tsc -p tsconfig.json",
-    "codegen": "graphclient build --dir src/graphclients/development && graphclient build --dir src/graphclients/staging && graphclient build --dir src/graphclients/production/sepolia && graphclient build --dir src/graphclients/production/mainnet ",
+    "codegen": "graphclient build --dir src/graphclients/development && graphclient build --dir src/graphclients/staging && graphclient build --dir src/graphclients/sepolia && graphclient build --dir src/graphclients/mainnet ",
     "build": "npm run compile && tsc -b",
     "prebuild": "npm run codegen",
     "update-subgraph-version": "ts-node ./scripts/update-subgraph-version.ts",

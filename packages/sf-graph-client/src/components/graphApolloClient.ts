@@ -8,6 +8,8 @@ import { GraphApolloLink } from '@graphprotocol/client-apollo';
 
 import * as GraphClientDev from '../graphclients/development/.graphclient';
 import * as GraphClientStg from '../graphclients/staging/.graphclient';
+import * as GraphClientSepolia from '../graphclients/sepolia/.graphclient';
+import * as GraphClientMainnet from '../graphclients/mainnet/.graphclient';
 
 const environments = ['development', 'staging', 'production'] as const;
 type Environments = (typeof environments)[number];
@@ -40,15 +42,13 @@ const getGraphClient = (network = 'none') => {
         default:
             sfEnv = 'production';
             sfNetwork = network;
-            // TODO: Set the GraphClient depending on a target network for production environment.
-            // It will be the following.
-            //
-            // if (network === 'mainnet') {
-            //     GraphClient = GraphClientMainnet;
-            // } else if(network === 'sepolia') {
-            //     GraphClient = GraphClientSepolia;
-            // }
-            //     :
+            if (network === 'mainnet') {
+                GraphClient = GraphClientMainnet;
+            } else if (network === 'sepolia') {
+                GraphClient = GraphClientSepolia;
+            } else {
+                console.warn(`${network} is not a supported network.`);
+            }
             break;
     }
 
