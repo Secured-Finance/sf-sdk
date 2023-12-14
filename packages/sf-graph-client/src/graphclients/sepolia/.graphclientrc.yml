@@ -2,12 +2,12 @@ sources:
   - name: sf-protocol
     handler:
       graphql:
-        endpoint: https://api.studio.thegraph.com/query/61214/sf-protocol-prd-mainnet/0.0.1
+        endpoint: https://api.studio.thegraph.com/query/61214/sf-protocol-prd-sepolia/0.0.1
     transforms:
       - blockTracking:
           validateSchema: true
       - autoPagination:
           validateSchema: true
 documents:
-  - ../../../queries/production/*.{ts,tsx,js,jsx}
-  - ../../../queries/production/*.graphql
+  - ../../queries/production/*.{ts,tsx,js,jsx}
+  - ../../queries/production/*.graphql

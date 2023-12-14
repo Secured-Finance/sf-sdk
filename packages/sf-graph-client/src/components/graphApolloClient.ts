@@ -8,8 +8,8 @@ import { GraphApolloLink } from '@graphprotocol/client-apollo';
 
 import * as GraphClientDev from '../graphclients/development/.graphclient';
 import * as GraphClientStg from '../graphclients/staging/.graphclient';
-import * as GraphClientProdSepolia from '../graphclients/production/sepolia/.graphclient';
-import * as GraphClientProdMainnet from '../graphclients/production/mainnet/.graphclient';
+import * as GraphClientSepolia from '../graphclients/sepolia/.graphclient';
+import * as GraphClientMainnet from '../graphclients/mainnet/.graphclient';
 
 const environments = ['development', 'staging', 'production'] as const;
 type Environments = (typeof environments)[number];
@@ -43,9 +43,9 @@ const getGraphClient = (network = 'none') => {
             sfEnv = 'production';
             sfNetwork = network;
             if (network === 'mainnet') {
-                GraphClient = GraphClientProdMainnet;
+                GraphClient = GraphClientMainnet;
             } else if (network === 'sepolia') {
-                GraphClient = GraphClientProdSepolia;
+                GraphClient = GraphClientSepolia;
             } else {
                 console.warn(`${network} is not a supported network.`);
             }
