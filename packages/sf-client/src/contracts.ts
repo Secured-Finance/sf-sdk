@@ -23,10 +23,10 @@ import { address as currencyControllerMainnetAddress } from './deployments/mainn
 import { address as lendingMarketControllerMainnetAddress } from './deployments/mainnet/LendingMarketController';
 import { address as lendingMarketReaderMainnetAddress } from './deployments/mainnet/LendingMarketReader';
 import { address as tokenVaultMainnetAddress } from './deployments/mainnet/TokenVault';
-import { address as currencyControllerSepoliaAddress } from './deployments/sepolia/CurrencyController';
-import { address as lendingMarketControllerSepoliaAddress } from './deployments/sepolia/LendingMarketController';
-import { address as lendingMarketReaderSepoliaAddress } from './deployments/sepolia/LendingMarketReader';
-import { address as tokenVaultSepoliaAddress } from './deployments/sepolia/TokenVault';
+// import { address as currencyControllerSepoliaAddress } from './deployments/sepolia/CurrencyController';
+// import { address as lendingMarketControllerSepoliaAddress } from './deployments/sepolia/LendingMarketController';
+// import { address as lendingMarketReaderSepoliaAddress } from './deployments/sepolia/LendingMarketReader';
+// import { address as tokenVaultSepoliaAddress } from './deployments/sepolia/TokenVault';
 import { address as currencyControllerStgAddress } from './deployments/staging/CurrencyController';
 import { address as lendingMarketControllerStgAddress } from './deployments/staging/LendingMarketController';
 import { address as lendingMarketReaderStgAddress } from './deployments/staging/LendingMarketReader';
@@ -43,9 +43,9 @@ export const getTokenVaultContract = (env: ContractEnvironments) => {
         case 'staging':
             contractAddress = tokenVaultStgAddress;
             break;
-        case 'sepolia':
-            contractAddress = tokenVaultSepoliaAddress;
-            break;
+        // case 'sepolia':
+        //     contractAddress = tokenVaultSepoliaAddress;
+        //     break;
         case 'mainnet':
             contractAddress = tokenVaultMainnetAddress;
     }
@@ -64,7 +64,7 @@ export const getTokenFaucetContract = (env: ContractEnvironments) => {
         case 'staging':
             contractAddress = tokenFaucetStgAddress;
             break;
-        case 'sepolia':
+        // case 'sepolia':
         case 'mainnet':
             contractAddress = '';
     }
@@ -83,9 +83,9 @@ export const getLendingMarketReaderContract = (env: ContractEnvironments) => {
         case 'staging':
             contractAddress = lendingMarketReaderStgAddress;
             break;
-        case 'sepolia':
-            contractAddress = lendingMarketReaderSepoliaAddress;
-            break;
+        // case 'sepolia':
+        //     contractAddress = lendingMarketReaderSepoliaAddress;
+        //     break;
         case 'mainnet':
             contractAddress = lendingMarketReaderMainnetAddress;
     }
@@ -106,9 +106,9 @@ export const getLendingMarketControllerContract = (
         case 'staging':
             contractAddress = lendingMarketControllerStgAddress;
             break;
-        case 'sepolia':
-            contractAddress = lendingMarketControllerSepoliaAddress;
-            break;
+        // case 'sepolia':
+        //     contractAddress = lendingMarketControllerSepoliaAddress;
+        //     break;
         case 'mainnet':
             contractAddress = lendingMarketControllerMainnetAddress;
     }
@@ -127,9 +127,9 @@ export const getCurrencyControllerContract = (env: ContractEnvironments) => {
         case 'staging':
             contractAddress = currencyControllerStgAddress;
             break;
-        case 'sepolia':
-            contractAddress = currencyControllerSepoliaAddress;
-            break;
+        // case 'sepolia':
+        //     contractAddress = currencyControllerSepoliaAddress;
+        //     break;
         case 'mainnet':
             contractAddress = currencyControllerMainnetAddress;
     }
