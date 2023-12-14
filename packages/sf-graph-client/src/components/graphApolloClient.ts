@@ -48,10 +48,10 @@ const getGraphClient = (network = 'none') => {
                 GraphClient = GraphClientSepolia;
                 sfNetwork = network;
             } else {
+                GraphClient = GraphClientSepolia;
                 sfNetwork = 'sepolia';
                 console.warn(`${network} is not a supported network.`);
             }
-            GraphClient = GraphClientSepolia;
             break;
     }
 
