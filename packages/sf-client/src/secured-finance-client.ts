@@ -46,7 +46,7 @@ export enum WalletSource {
 
 // TODO: get those from the contracts
 export const ITAYOSE_PERIOD = 60 * 60; // 1 hour in seconds
-export const PRE_ORDER_PERIOD = 60 * 60 * 24 * 7; // 7 days in seconds
+export const PRE_ORDER_PERIOD = 60 * 60 * 24 * 14; // 7 days in seconds
 
 const CLIENT_NOT_INITIALIZED = 'Client is not initialized';
 const maxUint256 = 2n ** 256n - 1n;
