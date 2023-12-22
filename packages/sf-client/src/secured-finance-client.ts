@@ -46,7 +46,6 @@ export enum WalletSource {
 
 // TODO: get those from the contracts
 export const ITAYOSE_PERIOD = 60 * 60; // 1 hour in seconds
-export const PRE_ORDER_PERIOD = 60 * 60 * 24 * 14; // 7 days in seconds
 
 const CLIENT_NOT_INITIALIZED = 'Client is not initialized';
 const maxUint256 = 2n ** 256n - 1n;
@@ -255,6 +254,7 @@ export class SecuredFinanceClient {
         return orderBookDetails.map(orderBook => {
             const maturity = Number(orderBook.maturity);
             const openingDate = Number(orderBook.openingDate);
+            const preOpeningDate = Number(orderBook.preOpeningDate);
             const isReady = orderBook.isReady;
             const isMatured = timestamp >= maturity;
             const isOpened = isReady && !isMatured && timestamp >= openingDate;
@@ -267,7 +267,7 @@ export class SecuredFinanceClient {
                 isItayosePeriod:
                     !isReady && timestamp >= openingDate - ITAYOSE_PERIOD,
                 isPreOrderPeriod:
-                    timestamp >= openingDate - PRE_ORDER_PERIOD &&
+                    timestamp >= preOpeningDate &&
                     timestamp < openingDate - ITAYOSE_PERIOD,
             };
         });
