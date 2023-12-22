@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.138](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.137...v0.2.0-beta.138) (2023-12-22)
+
+
+### Bug Fixes
+
+* remove hard coded calculation based of pre order time [SF-954] ([fe3baa8](https://github.com/secured-finance/sf-sdk/commit/fe3baa873981b646b7a2a8502f6dad881592cc22))
+
+
+
+
+
 # [0.2.0-beta.137](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.136...v0.2.0-beta.137) (2023-12-15)
 
 
