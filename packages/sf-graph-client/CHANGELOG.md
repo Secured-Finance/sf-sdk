@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.140](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.139...v0.2.0-beta.140) (2023-12-28)
+
+
+### Bug Fixes
+
+* fix a GraphApolloClient bug [SF-970] ([7d7d912](https://github.com/secured-finance/sf-sdk/commit/7d7d9125695e9030a8648921b5a307555bf34144))
+
+
+
+
+
 # [0.2.0-beta.139](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.138...v0.2.0-beta.139) (2023-12-28)
 
 
