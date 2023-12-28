@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.141](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.140...v0.2.0-beta.141) (2023-12-28)
+
+
+### Bug Fixes
+
+* fix a Faucet bug [SF-970] ([83897cc](https://github.com/Secured-Finance/sf-sdk/commit/83897cc82ad82afc9b80a746be7c14844d44e84c))
+
+
+
+
+
 # [0.2.0-beta.140](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.139...v0.2.0-beta.140) (2023-12-28)
 
 
