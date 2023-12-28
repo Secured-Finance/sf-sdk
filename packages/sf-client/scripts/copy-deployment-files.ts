@@ -9,6 +9,8 @@ import {
 } from 'fs';
 import { contractsList } from './constants';
 
+const DEFAULT_NETWORK = 'development';
+
 class Main {
     run() {
         const rootDir = process.cwd();
@@ -23,6 +25,7 @@ class Main {
         mkdirSync(deploymentDir);
 
         this.extractAddressesFromDeployments(moduleDir, deploymentDir);
+        this.writeTsFiles(deploymentDir);
     }
 
     private extractAddressesFromDeployments(
@@ -39,8 +42,6 @@ class Main {
                 this.extractAddressAndABI(modulePath, filePath, network);
             }
         }
-
-        this.writeFiles(deploymentDir);
     }
 
     private extractAddressAndABI(
@@ -59,7 +60,11 @@ class Main {
 
         if (existsSync(modulePath)) {
             const moduleContent = readFileSync(modulePath, 'utf-8');
-            ({ address: addresses[network], abi } = JSON.parse(moduleContent));
+            const { address: newAddress, abi: newAbi } =
+                JSON.parse(moduleContent);
+
+            addresses[network] = newAddress;
+            abi = network === DEFAULT_NETWORK ? newAbi : abi;
         } else {
             addresses[network] = '';
         }
@@ -67,7 +72,7 @@ class Main {
         writeFileSync(filePath, JSON.stringify({ addresses, abi }, null, 2));
     }
 
-    private writeFiles(deploymentDir: string) {
+    private writeTsFiles(deploymentDir: string) {
         const files = readdirSync(deploymentDir);
 
         for (const file of files) {
