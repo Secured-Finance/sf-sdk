@@ -31,7 +31,7 @@ export const getTokenVaultContract = (env: ContractEnvironments) => {
 export const getTokenFaucetContract = (env: ContractEnvironments) => {
     return {
         abi: tokenFaucetAbi,
-        address: tokenFaucetAddresses[env] as Hex,
+        address: tokenFaucetAddresses[env] as Hex | null,
     };
 };
 
