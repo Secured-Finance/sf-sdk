@@ -1,13 +1,23 @@
-import { Chain, mainnet, sepolia } from 'viem/chains';
+import {
+    Chain,
+    arbitrum,
+    arbitrumSepolia,
+    mainnet,
+    sepolia,
+} from 'viem/chains';
 
 export const NETWORKS: { [key: number]: string } = {
     1: 'mainnet',
     11155111: 'sepolia',
+    42161: 'arbitrum-one',
+    421614: 'arbitrum-sepolia',
 };
 
 export const CHAINS: { [key: number]: Chain } = {
     1: mainnet,
     11155111: sepolia,
+    42161: arbitrum,
+    421614: arbitrumSepolia,
 };
 
 export const networkNames = [
