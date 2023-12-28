@@ -66,7 +66,7 @@ class Main {
             addresses[network] = newAddress;
             abi = network === DEFAULT_NETWORK ? newAbi : abi;
         } else {
-            addresses[network] = '';
+            addresses[network] = null;
         }
 
         writeFileSync(filePath, JSON.stringify({ addresses, abi }, null, 2));

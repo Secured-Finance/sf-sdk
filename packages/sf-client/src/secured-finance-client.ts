@@ -524,14 +524,14 @@ export class SecuredFinanceClient {
 
     // Mock ERC20 token related functions
     async mintERC20Token(token: Token) {
-        const [address] = await this.walletClient.getAddresses();
-        if (
-            this.config.env === 'development' ||
-            this.config.env === 'staging'
-        ) {
+        const [account] = await this.walletClient.getAddresses();
+        const { abi, address } = getTokenFaucetContract(this.config.env);
+
+        if (address) {
             return this.walletClient.writeContract({
-                ...getTokenFaucetContract(this.config.env),
-                account: address,
+                abi,
+                address,
+                account,
                 chain: this.config.chain,
                 functionName: 'mint',
                 args: [this.convertCurrencyToBytes32(token)],
@@ -542,12 +542,11 @@ export class SecuredFinanceClient {
     }
 
     async getERC20TokenContractAddress(token: Token) {
-        if (
-            this.config.env === 'development' ||
-            this.config.env === 'staging'
-        ) {
+        const { abi, address } = getTokenFaucetContract(this.config.env);
+        if (address) {
             return this.publicClient.readContract({
-                ...getTokenFaucetContract(this.config.env),
+                abi,
+                address,
                 functionName: 'getCurrencyAddress',
                 args: [this.convertCurrencyToBytes32(token)],
             });
