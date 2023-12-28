@@ -1,16 +1,31 @@
-import { Chain, mainnet, sepolia } from 'viem/chains';
+import {
+    Chain,
+    arbitrum,
+    arbitrumSepolia,
+    mainnet,
+    sepolia,
+} from 'viem/chains';
 
 export const NETWORKS: { [key: number]: string } = {
     1: 'mainnet',
     11155111: 'sepolia',
+    42161: 'arbitrum-one',
+    421614: 'arbitrum-sepolia',
 };
 
 export const CHAINS: { [key: number]: Chain } = {
     1: mainnet,
     11155111: sepolia,
+    42161: arbitrum,
+    421614: arbitrumSepolia,
 };
 
-export const networkNames = ['sepolia', 'mainnet'] as const;
+export const networkNames = [
+    'sepolia',
+    'mainnet',
+    'arbitrum-sepolia',
+    'arbitrum-one',
+] as const;
 export type NetworkName = (typeof networkNames)[number];
 
 export type Network = {
@@ -21,9 +36,12 @@ export type Network = {
 const environments = ['development', 'staging', 'production'] as const;
 const contractEnvironments = [
     'development',
+    'development-arb',
     'staging',
+    'staging-arb',
     'sepolia',
     'mainnet',
+    // 'arbitrum-one',
 ] as const;
 type Environment = (typeof environments)[number];
 export type ContractEnvironments = (typeof contractEnvironments)[number];
@@ -32,13 +50,16 @@ type NetworkMap = Record<NetworkName, ContractEnvironments>;
 const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
     development: {
         sepolia: 'development',
+        'arbitrum-sepolia': 'development-arb',
     },
     staging: {
         sepolia: 'staging',
+        'arbitrum-sepolia': 'staging-arb',
     },
     production: {
         sepolia: 'sepolia',
         mainnet: 'mainnet',
+        // 'arbitrum-one': 'arbitrum-one'
     },
 };
 

@@ -6,10 +6,13 @@ import {
 } from '@apollo/client';
 import { GraphApolloLink } from '@graphprotocol/client-apollo';
 
+import * as GraphClientDevArb from '../graphclients/development-arb/.graphclient';
 import * as GraphClientDev from '../graphclients/development/.graphclient';
-import * as GraphClientStg from '../graphclients/staging/.graphclient';
-import * as GraphClientSepolia from '../graphclients/sepolia/.graphclient';
 import * as GraphClientMainnet from '../graphclients/mainnet/.graphclient';
+import * as GraphClientSepolia from '../graphclients/sepolia/.graphclient';
+import * as GraphClientStgArb from '../graphclients/staging-arb/.graphclient';
+import * as GraphClientStg from '../graphclients/staging/.graphclient';
+// import * as GraphClientArbitrumOne from '../graphclients/arbitrum-one/.graphclient';
 
 const environments = ['development', 'staging', 'production'] as const;
 type Environments = (typeof environments)[number];
@@ -22,8 +25,14 @@ const getGraphClient = (network = 'none') => {
     switch (process.env.SF_ENV) {
         case 'development':
             sfEnv = 'development';
-            sfNetwork = 'sepolia';
-            if (network !== 'sepolia') {
+            sfNetwork = network;
+            if (network === 'sepolia') {
+                GraphClient = GraphClientDev;
+            } else if (network === 'arb-sepolia') {
+                GraphClient = GraphClientDevArb;
+            } else {
+                GraphClient = GraphClientDev;
+                sfNetwork = 'sepolia';
                 console.warn(`${network} is not a supported network.`);
             }
             GraphClient = GraphClientDev;
@@ -31,8 +40,14 @@ const getGraphClient = (network = 'none') => {
 
         case 'staging':
             sfEnv = 'staging';
-            sfNetwork = 'sepolia';
-            if (network !== 'sepolia') {
+            sfNetwork = network;
+            if (network === 'sepolia') {
+                GraphClient = GraphClientStg;
+            } else if (network === 'arb-sepolia') {
+                GraphClient = GraphClientStgArb;
+            } else {
+                GraphClient = GraphClientStg;
+                sfNetwork = 'sepolia';
                 console.warn(`${network} is not a supported network.`);
             }
             GraphClient = GraphClientStg;
@@ -41,15 +56,16 @@ const getGraphClient = (network = 'none') => {
         case 'production':
         default:
             sfEnv = 'production';
+            sfNetwork = network;
             if (network === 'mainnet') {
                 GraphClient = GraphClientMainnet;
-                sfNetwork = network;
             } else if (network === 'sepolia') {
                 GraphClient = GraphClientSepolia;
-                sfNetwork = network;
+                // } else if (network === 'arbitrum-one') {
+                //     GraphClient = GraphClientArbitrumOne;
             } else {
-                GraphClient = GraphClientSepolia;
-                sfNetwork = 'sepolia';
+                GraphClient = GraphClientMainnet;
+                sfNetwork = 'mainnet';
                 console.warn(`${network} is not a supported network.`);
             }
             break;
