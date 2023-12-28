@@ -35,7 +35,6 @@ const getGraphClient = (network = 'none') => {
                 sfNetwork = 'sepolia';
                 console.warn(`${network} is not a supported network.`);
             }
-            GraphClient = GraphClientDev;
             break;
 
         case 'staging':
@@ -50,7 +49,6 @@ const getGraphClient = (network = 'none') => {
                 sfNetwork = 'sepolia';
                 console.warn(`${network} is not a supported network.`);
             }
-            GraphClient = GraphClientStg;
             break;
 
         case 'production':
