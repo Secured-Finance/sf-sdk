@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.142](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.141...v0.2.0-beta.142) (2023-12-29)
+
+
+### Features
+
+* add getTotalPresentValueInBaseCurrency [SF-961] ([b49294e](https://github.com/secured-finance/sf-sdk/commit/b49294ece5f2f0da4e88b3be22ffd53271ad24e5))
+
+
+
+# 0.2.0-beta.138 (2023-12-22)
+
+
+
+
+
 # [0.2.0-beta.141](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.140...v0.2.0-beta.141) (2023-12-28)
 
 
