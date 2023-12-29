@@ -663,6 +663,14 @@ export class SecuredFinanceClient {
         });
     }
 
+    async getTotalPresentValueInBaseCurrency(account: string) {
+        return this.publicClient.readContract({
+            ...getLendingMarketControllerContract(this.config.env),
+            functionName: 'getTotalPresentValueInBaseCurrency',
+            args: [account as Hex],
+        });
+    }
+
     async executeRepayment(currency: Currency, maturity: number) {
         const [address] = await this.walletClient.getAddresses();
         return this.walletClient.writeContract({
