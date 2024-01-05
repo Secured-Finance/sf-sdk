@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.143](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.142...v0.2.0-beta.143) (2024-01-05)
+
+
+### Bug Fixes
+
+* fix a ETH market bug [SF-981] ([19d91b8](https://github.com/Secured-Finance/sf-sdk/commit/19d91b83ce1fc082172c42a3f8f0ab0b2a979404))
+
+
+
+
+
 # [0.2.0-beta.142](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.141...v0.2.0-beta.142) (2023-12-29)
 
 
