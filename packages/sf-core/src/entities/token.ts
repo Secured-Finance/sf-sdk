@@ -5,13 +5,8 @@ export class Token extends BaseCurrency {
     public readonly isNative = false;
     public readonly isToken = true;
 
-    public constructor(
-        chainId: number,
-        decimals: number,
-        symbol: string,
-        name: string
-    ) {
-        super(chainId, decimals, symbol, name);
+    public constructor(decimals: number, symbol: string, name: string) {
+        super(decimals, symbol, name);
     }
 
     /**
@@ -21,7 +16,6 @@ export class Token extends BaseCurrency {
     public equals(other: Currency): boolean {
         return (
             other.isToken &&
-            this.chainId === other.chainId &&
             this.decimals === other.decimals &&
             this.symbol === other.symbol &&
             this.name === other.name
