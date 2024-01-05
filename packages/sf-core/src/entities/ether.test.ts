@@ -2,7 +2,7 @@ import { Ether } from './ether';
 import { Token } from './token';
 
 describe('ether', () => {
-    const eth = Ether.onChain(1);
+    const eth = Ether.onChain();
     it('should create an instance', () => {
         expect(eth).toBeTruthy();
     });
@@ -15,21 +15,12 @@ describe('ether', () => {
         expect(eth.isToken).toBeFalsy();
     });
 
-    it('should return the correct chainId', () => {
-        expect(eth.chainId).toBe(1);
-    });
-
-    it('should be different from other network ether', () => {
-        const eth2 = Ether.onChain(2);
-        expect(eth.equals(eth2)).toBeFalsy();
-    });
-
     it('should be equal to itself', () => {
         expect(eth.equals(eth)).toBeTruthy();
     });
 
     it('should be different from other currencies', () => {
-        const token = new Token(1, 18, 'TKN', 'Token');
+        const token = new Token(18, 'TKN', 'Token');
         expect(eth.equals(token)).toBeFalsy();
     });
 });

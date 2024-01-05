@@ -4,7 +4,7 @@ import { sepolia } from 'viem/chains';
 
 export class WBTC extends Token {
     constructor() {
-        super(1, 8, 'WBTC', 'Bitcoin');
+        super(8, 'WBTC', 'Bitcoin');
     }
 }
 
