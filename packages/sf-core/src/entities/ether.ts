@@ -2,25 +2,18 @@ import { BaseCurrency } from './baseCurrency';
 import { NativeCurrency } from './nativeCurrency';
 
 export class Ether extends NativeCurrency {
-    private constructor(chainId: number) {
-        super(chainId, 18, 'ETH', 'Ethereum');
+    private constructor() {
+        super(18, 'ETH', 'Ethereum');
     }
 
-    private static etherCache: { [chainId: number]: Ether } = {};
+    private static instance: Ether;
 
-    public static onChain(chainId: number): Ether {
-        return (
-            this.etherCache[chainId] ??
-            (this.etherCache[chainId] = new Ether(chainId))
-        );
+    public static onChain(): Ether {
+        return this.instance ?? (this.instance = new Ether());
     }
 
     public readonly wrapped = this;
     public equals(other: BaseCurrency): boolean {
-        return (
-            other.chainId === this.chainId &&
-            other.isNative &&
-            other.symbol === this.symbol
-        );
+        return other.isNative && other.symbol === this.symbol;
     }
 }

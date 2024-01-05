@@ -1,9 +1,4 @@
-import {
-    Currency,
-    Ether,
-    Token,
-    getUTCMonthYear,
-} from '@secured-finance/sf-core';
+import { Currency, Token, getUTCMonthYear } from '@secured-finance/sf-core';
 import {
     Hex,
     PublicClient,
@@ -191,9 +186,7 @@ export class SecuredFinanceClient {
         const isApproved = await this.approveTokenTransfer(ccy, amount);
         await onApproved?.(isApproved);
 
-        const payableOverride: PayableOverrides = ccy.equals(
-            Ether.onChain(this.config.networkId)
-        )
+        const payableOverride: PayableOverrides = ccy.isNative
             ? { value: amount }
             : {};
 
@@ -298,7 +291,7 @@ export class SecuredFinanceClient {
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
             const overrides: PayableOverrides = {};
 
-            if (ccy.equals(Ether.onChain(this.config.networkId))) {
+            if (ccy.isNative) {
                 overrides.value = amount;
             } else {
                 const isApproved = await this.approveTokenTransfer(ccy, amount);
@@ -381,7 +374,7 @@ export class SecuredFinanceClient {
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
             const overrides: PayableOverrides = {};
 
-            if (ccy.equals(Ether.onChain(this.config.networkId))) {
+            if (ccy.isNative) {
                 overrides.value = amount;
             } else {
                 const isApproved = await this.approveTokenTransfer(ccy, amount);
