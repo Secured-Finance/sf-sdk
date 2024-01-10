@@ -41,7 +41,8 @@ const contractEnvironments = [
     'staging-arb',
     'sepolia',
     'mainnet',
-    // 'arbitrum-one',
+    'arbitrum-sepolia',
+    'arbitrum-one',
 ] as const;
 type Environment = (typeof environments)[number];
 export type ContractEnvironments = (typeof contractEnvironments)[number];
@@ -59,7 +60,8 @@ const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
     production: {
         sepolia: 'sepolia',
         mainnet: 'mainnet',
-        // 'arbitrum-one': 'arbitrum-one'
+        'arbitrum-sepolia': 'arbitrum-sepolia',
+        'arbitrum-one': 'arbitrum-one',
     },
 };
 
