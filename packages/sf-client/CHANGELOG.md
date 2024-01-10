@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.144](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.143...v0.2.0-beta.144) (2024-01-10)
+
+
+### Features
+
+* support Arbitrum [Sf-985] ([911d459](https://github.com/secured-finance/sf-sdk/commit/911d4597874b16a5098afb7ba4aba74c9531f0fc))
+
+
+
+
+
 # [0.2.0-beta.143](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.142...v0.2.0-beta.143) (2024-01-05)
 
 
