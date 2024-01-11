@@ -29,7 +29,7 @@ const getGraphClient = (network = 'none') => {
             sfNetwork = network;
             if (network === 'sepolia') {
                 GraphClient = GraphClientDev;
-            } else if (network === 'arb-sepolia') {
+            } else if (network === 'arbitrum-sepolia') {
                 GraphClient = GraphClientDevArb;
             } else {
                 GraphClient = GraphClientDev;
@@ -43,7 +43,7 @@ const getGraphClient = (network = 'none') => {
             sfNetwork = network;
             if (network === 'sepolia') {
                 GraphClient = GraphClientStg;
-            } else if (network === 'arb-sepolia') {
+            } else if (network === 'arbitrum-sepolia') {
                 GraphClient = GraphClientStgArb;
             } else {
                 GraphClient = GraphClientStg;
