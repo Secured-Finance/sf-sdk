@@ -465,6 +465,18 @@ export class SecuredFinanceClient {
         });
     }
 
+    async convert(fromCcy: Currency, toCcy: Currency, amount: bigint) {
+        return this.publicClient.readContract({
+            ...getCurrencyControllerContract(this.config.env),
+            functionName: 'convert',
+            args: [
+                this.convertCurrencyToBytes32(fromCcy),
+                this.convertCurrencyToBytes32(toCcy),
+                amount,
+            ],
+        });
+    }
+
     async getBorrowOrderBook(
         currency: Currency,
         maturity: number,
