@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.146](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.145...v0.2.0-beta.146) (2024-01-12)
+
+
+### Features
+
+* added a method to convert amount into another currency [SF-938] ([ec61c9e](https://github.com/secured-finance/sf-sdk/commit/ec61c9e5fe70aafc3341cfc01efa32c44d42a0f6))
+
+
+
+
+
 # [0.2.0-beta.144](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.143...v0.2.0-beta.144) (2024-01-10)
 
 
