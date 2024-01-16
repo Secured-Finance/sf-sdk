@@ -9,7 +9,7 @@ import { GraphApolloLink } from '@graphprotocol/client-apollo';
 // Production clients
 import * as GraphClientArbitrumOne from '../graphclients/arbitrum-one/.graphclient';
 import * as GraphClientArbitrumSepolia from '../graphclients/arbitrum-sepolia/.graphclient';
-// import * as GraphClientAvalancheMainnet from '../graphclients/avalanche-mainnet/.graphclient';
+import * as GraphClientAvalancheMainnet from '../graphclients/avalanche-mainnet/.graphclient';
 import * as GraphClientMainnet from '../graphclients/mainnet/.graphclient';
 import * as GraphClientSepolia from '../graphclients/sepolia/.graphclient';
 // Staging clients
@@ -74,8 +74,8 @@ const getGraphClient = (network = 'none') => {
                 GraphClient = GraphClientArbitrumOne;
             } else if (network === 'arbitrum-sepolia') {
                 GraphClient = GraphClientArbitrumSepolia;
-                // } else if(network === 'avalanche-mainnet') {
-                //     GraphClient = GraphClientAvalancheMainnet;
+            } else if (network === 'avalanche-mainnet') {
+                GraphClient = GraphClientAvalancheMainnet;
             } else {
                 GraphClient = GraphClientMainnet;
                 sfNetwork = 'mainnet';
