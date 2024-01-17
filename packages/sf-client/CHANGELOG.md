@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.148](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.147...v0.2.0-beta.148) (2024-01-17)
+
+
+### Features
+
+* support Avalanche [SF-988] ([5ce16f3](https://github.com/secured-finance/sf-sdk/commit/5ce16f351f37ad044427f006c65a1c620c8d964a))
+
+
+
+
+
 # [0.2.0-beta.147](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.146...v0.2.0-beta.147) (2024-01-15)
 
 
