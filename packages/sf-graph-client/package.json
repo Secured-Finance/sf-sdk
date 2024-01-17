@@ -17,6 +17,7 @@
     "codegen:mainnet": "graphclient build --dir src/graphclients/mainnet",
     "codegen:arbitrum-sepolia": "graphclient build --dir src/graphclients/arbitrum-sepolia",
     "codegen:arbitrum-one": "graphclient build --dir src/graphclients/arbitrum-one",
+    "codegen:avalanche-mainnet": "graphclient build --dir src/graphclients/avalanche-mainnet",
     "codegen": "concurrently 'npm:codegen:*' -m 1",
     "build": "npm run compile && tsc -b",
     "prebuild": "npm run codegen",

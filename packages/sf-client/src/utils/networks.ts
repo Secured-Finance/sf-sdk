@@ -53,7 +53,7 @@ const contractEnvironments = [
     'mainnet',
     'arbitrum-sepolia',
     'arbitrum-one',
-    // 'avalanche-mainnet',
+    'avalanche-mainnet',
 ] as const;
 type Environment = (typeof environments)[number];
 export type ContractEnvironments = (typeof contractEnvironments)[number];
@@ -75,7 +75,7 @@ const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
         mainnet: 'mainnet',
         'arbitrum-sepolia': 'arbitrum-sepolia',
         'arbitrum-one': 'arbitrum-one',
-        // 'avalanche-mainnet': 'avalanche-mainnet',
+        'avalanche-mainnet': 'avalanche-mainnet',
     },
 };
 
