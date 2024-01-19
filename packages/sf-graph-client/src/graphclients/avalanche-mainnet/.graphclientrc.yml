@@ -2,7 +2,7 @@ sources:
   - name: sf-protocol
     handler:
       graphql:
-        endpoint: https://api.studio.thegraph.com/query/61214/sf-protocol-prd-ava-mainnet/0.0.1
+        endpoint: https://api.studio.thegraph.com/query/61214/sf-protocol-prd-ava-mainnet/0.0.7
     transforms:
       - blockTracking:
           validateSchema: true
