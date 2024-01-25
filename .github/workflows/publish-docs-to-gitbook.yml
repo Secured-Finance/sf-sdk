@@ -3,7 +3,7 @@ name: Publish GitBook
 on:
   push:
     branches:
-      - SF-1009 
+      - SF-1009
 
 jobs:
   publish-gitbook:
@@ -25,6 +25,8 @@ jobs:
         run: |
           gitbook init
           mv packages/sf-client/docs/* .
+          npm config set unsafe-perm true  
+          npm cache clean -f               
           gitbook build
 
       - name: Deploy GitBook to gh-pages
