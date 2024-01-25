@@ -232,6 +232,13 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Retrieves order book for a currency
+     *
+     * @param {Currency} ccy - Currency for which order book details are fetched
+     * @return {Object} returns orderbook for the specified currency
+     * @memberof SecuredFinanceClient
+     */
     async getOrderBookDetailsPerCurrency(ccy: Currency) {
         return this.getOrderBookDetails([ccy]);
     }

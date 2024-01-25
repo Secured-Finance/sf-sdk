@@ -11,7 +11,8 @@
     "build": "tsc --project tsconfig.json",
     "test": "jest --config jest.config.ts",
     "test:cov": "jest --config jest.config.ts --coverage",
-    "prepublish": "npm run codegen"
+    "prepublish": "npm run codegen",
+    "docs": "typedoc --includes src --plugin typedoc-plugin-markdown"
   },
   "author": "Secured Finance",
   "bugs": {
@@ -34,6 +35,8 @@
     "timemachine": "^0.3.2",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.1.0",
+    "typedoc": "^0.25.7",
+    "typedoc-plugin-markdown": "^3.17.1",
     "typescript": "^5.1.6",
     "viem": "^1.2.12"
   },
