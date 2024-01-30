@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[src/entities.ts:8](https://github.com/Secured-Finance/sf-sdk/blob/52126c3/packages/sf-client/src/entities.ts#L8)
+[packages/sf-client/src/entities.ts:8](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/entities.ts#L8)
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 #### Defined in
 
-[src/entities.ts:5](https://github.com/Secured-Finance/sf-sdk/blob/52126c3/packages/sf-client/src/entities.ts#L5)
+[packages/sf-client/src/entities.ts:5](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/entities.ts#L5)
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 #### Defined in
 
-[src/entities.ts:6](https://github.com/Secured-Finance/sf-sdk/blob/52126c3/packages/sf-client/src/entities.ts#L6)
+[packages/sf-client/src/entities.ts:6](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/entities.ts#L6)
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 #### Defined in
 
-[src/entities.ts:10](https://github.com/Secured-Finance/sf-sdk/blob/52126c3/packages/sf-client/src/entities.ts#L10)
+[packages/sf-client/src/entities.ts:10](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/entities.ts#L10)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 #### Defined in
 
-[src/entities.ts:7](https://github.com/Secured-Finance/sf-sdk/blob/52126c3/packages/sf-client/src/entities.ts#L7)
+[packages/sf-client/src/entities.ts:7](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/entities.ts#L7)
 
 ___
 
@@ -71,4 +71,4 @@ ___
 
 #### Defined in
 
-[src/entities.ts:9](https://github.com/Secured-Finance/sf-sdk/blob/52126c3/packages/sf-client/src/entities.ts#L9)
+[packages/sf-client/src/entities.ts:9](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/entities.ts#L9)

@@ -39,6 +39,41 @@ export enum WalletSource {
     SF_VAULT = 'SF Vault',
 }
 
+export type OrderBookDetails = {
+    ccy: Currency;
+    maturity: bigint;
+    bestLendUnitPrice: bigint;
+    bestBorrowUnitPrice: bigint;
+    marketUnitPrice: bigint;
+    blockUnitPriceHistory: bigint[];
+    lastBlockUnitPriceTimestamp: bigint;
+    maxLendUnitPrice: bigint;
+    minBorrowUnitPrice: bigint;
+    openingUnitPrice: bigint;
+    openingDate: bigint;
+    preOpeningDate: bigint;
+    currentMinDebtUnitPrice: bigint;
+    isReady: boolean;
+};
+
+export type Order = {
+    orderId: bigint;
+    ccy: Currency;
+    maturity: bigint;
+    side: OrderSide;
+    unitPrice: bigint;
+    amount: bigint;
+    timestamp: bigint;
+    isPreOrder: boolean;
+};
+
+export type Position = {
+    ccy: Currency;
+    maturity: bigint;
+    presentValue: bigint;
+    futureValue: bigint;
+};
+
 // TODO: get those from the contracts
 export const ITAYOSE_PERIOD = 60 * 60; // 1 hour in seconds
 
@@ -119,26 +154,74 @@ export class SecuredFinanceClient {
         );
     }
 
+    /**
+     *
+     *
+     * @readonly
+     * @memberof SecuredFinanceClient
+     */
     get config() {
         assertNonNullish(this._config);
         return this._config;
     }
 
+    /**
+     *
+     *
+     * @readonly
+     * @type {PublicClient}
+     * @memberof SecuredFinanceClient
+     */
     get publicClient(): PublicClient {
         assertNonNullish(this._publicClient);
         return this._publicClient;
     }
 
+    /**
+     *
+     *
+     * @readonly
+     * @type {WalletClient}
+     * @memberof SecuredFinanceClient
+     */
     get walletClient(): WalletClient {
         assertNonNullish(this._walletClient);
         return this._walletClient;
     }
 
+    /**
+     *
+     *
+     * @readonly
+     * @memberof SecuredFinanceClient
+     */
     get tokenVault() {
         assertNonNullish(this._tokenVault);
         return this._tokenVault;
     }
 
+    /**
+     * Gets the estimated order result by the calculation of the amount to be filled when executing an order in the order books.
+     *
+     * @param {Currency} ccy - Native currency of the selected market
+     * @param {number} maturity - Maturity term of order
+     * @param {string} account - Wallet address of user
+     * @param {OrderSide} side - Type of order placed i.e Lend/Borrow
+     * @param {bigint} amount - Amount of funds the maker wants to borrow/lend
+     * @param {number} unitPrice - Amount of unit price taker wish to borrow/lend
+     * @param {number} [additionalDepositAmount=0] - Optional parameter for
+     * @param {boolean} [ignoreBorrowedAmount=false] - The boolean if the borrowed amount is to be used as collateral or not
+     * @return {Promise<{
+     *   lastUnitPrice: bigint, // The last unit price that is filled on the order book
+     *   filledAmount: bigint, // The amount that is filled on the order book
+     *   filledAmountInFV: bigint, // The amount in the future value that is filled on the order book
+     *   orderFeeInFV: bigint, // The order fee amount in the future value
+     *   placedAmount: bigint, // The total amount of the order placed
+     *   coverage: bigint, // The rate of collateral used
+     *   isInsufficientDepositAmount: boolean // Boolean indicating if the order amount for lending in the selected currency is insufficient
+     * }>}
+     * @memberof SecuredFinanceClient
+     */
     async getOrderEstimation(
         ccy: Currency,
         maturity: number,
@@ -177,6 +260,15 @@ export class SecuredFinanceClient {
         };
     }
 
+    /**
+     * Deposits collateral to the protocol
+     *
+     * @param {Currency} ccy - Native currency of collateral user wants to deposit
+     * @param {bigint} amount - Amount of collateral user wants to deposit
+     * @param {((isApproved: boolean) => Promise<void> | void)} [onApproved] - function to be called when tx is approved by the user
+     * @return a `Contract Transaction`
+     * @memberof SecuredFinanceClient
+     */
     async depositCollateral(
         ccy: Currency,
         amount: bigint,
@@ -200,6 +292,15 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the best lending unit price array for a given currency.
+     *
+     * @param {Currency} ccy - Native currency for which lending unit prices are requested
+     * @return {Promise<{
+     *   bigint[], - An array of the best price for lending
+     * }>}
+     * @memberof SecuredFinanceClient
+     */
     async getBestLendUnitPrices(ccy: Currency) {
         return this.publicClient.readContract({
             ...getLendingMarketReaderContract(this.config.env),
@@ -208,6 +309,15 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the best borrowing unit price array for a given currency.
+     *
+     * @param {Currency} ccy - Native currency for which lending unit prices are requested
+     * @return {Promise<{
+     *   bigint[], // - An array of the best price for borrowing
+     * }>}
+     * @memberof SecuredFinanceClient
+     */
     async getBestBorrowUnitPrices(ccy: Currency) {
         return this.publicClient.readContract({
             ...getLendingMarketReaderContract(this.config.env),
@@ -216,6 +326,15 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets market maturities for a currency
+     *
+     * @param {Currency} ccy - Native currency selected to fetch related maturities
+     * @return {Promise<{
+     *   bigint[], // - An array with market maturities
+     * }>}
+     * @memberof SecuredFinanceClient
+     */
     async getMaturities(ccy: Currency) {
         return this.publicClient.readContract({
             ...getLendingMarketControllerContract(this.config.env),
@@ -224,6 +343,16 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the order book detail.
+     *
+     * @param {Currency} ccy - Native currency selected for getting order book details
+     * @param {number} maturity - Market maturity selected for getting order book details
+     * @return {Promise<{
+     * OrderBookDetails
+     * }>}
+     * @memberof SecuredFinanceClient
+     */
     async getOrderBookDetail(ccy: Currency, maturity: number) {
         return this.publicClient.readContract({
             ...getLendingMarketReaderContract(this.config.env),
@@ -236,13 +365,36 @@ export class SecuredFinanceClient {
      * Retrieves order book for a currency
      *
      * @param {Currency} ccy - Currency for which order book details are fetched
-     * @return {Object} returns orderbook for the specified currency
+     * @return {Promise<{
+     * OrderBookDetails,
+     * maturity - Maturity of orderbook
+     * openingDate - opening date of market
+     * preOpeningDate - pre-opening date of market
+     * isReady - flag for if market is ready
+     * isMatured - flag for if market is matured
+     * isOpened - flag for if market is open
+     * }>}
      * @memberof SecuredFinanceClient
      */
     async getOrderBookDetailsPerCurrency(ccy: Currency) {
         return this.getOrderBookDetails([ccy]);
     }
 
+    /**
+     *
+     *
+     * @param {Currency[]} ccys - List of currencies for which orderbook details are requested
+     * @return {Promise<[
+     * OrderBookDetails,
+     * maturity - Maturity of orderbook
+     * openingDate - opening date of market
+     * preOpeningDate - pre-opening date of market
+     * isReady - flag for if market is ready
+     * isMatured - flag for if market is matured
+     * isOpened - flag for if market is open
+     * ]>}
+     * @memberof SecuredFinanceClient
+     */
     async getOrderBookDetails(ccys: Currency[]) {
         const orderBookDetails = await this.publicClient.readContract({
             ...getLendingMarketReaderContract(this.config.env),
@@ -274,6 +426,7 @@ export class SecuredFinanceClient {
     }
 
     /**
+     * Places an order
      *
      * @param ccy the Currency object of the selected market
      * @param maturity the maturity of the selected market
@@ -366,6 +519,19 @@ export class SecuredFinanceClient {
         }
     }
 
+    /**
+     * Places a pre-order
+     *
+     * @param ccy - the Currency object of the selected market
+     * @param maturity - the maturity of the selected market
+     * @param side - Order position type, 0 for lend, 1 for borrow
+     * @param amount - Amount of funds the maker wants to borrow/lend
+     * @param {WalletSource} sourceWallet - Source of fund used for transaction
+     * @param {number} unitPrice - Unit price the taker is willing to pay/receive. 0 for placing a market order
+     * @param {((isApproved: boolean) => Promise<void> | void)} [onApproved] - callback function to be called after the approval transaction is mined
+     * @return `Contract Transaction`
+     * @memberof SecuredFinanceClient
+     */
     async placePreOrder(
         ccy: Currency,
         maturity: number,
@@ -449,6 +615,15 @@ export class SecuredFinanceClient {
         }
     }
 
+    /**
+     * Cancels an open order
+     *
+     * @param {Currency} ccy - Native currency of the open order
+     * @param {number} maturity - Maturity of the open order
+     * @param {number} orderID - order ID of the open order
+     * @return a `Contract Transaction`
+     * @memberof SecuredFinanceClient
+     */
     async cancelLendingOrder(ccy: Currency, maturity: number, orderID: number) {
         const [address] = await this.walletClient.getAddresses();
         return this.walletClient.writeContract({
@@ -464,6 +639,16 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the converted amount in the base currency.
+     *
+     * @param {Currency} ccy - Native currency object
+     * @param {bigint} amount - Amount to be converted
+     * @return {Promise<{
+     *  amount - bigint
+     * }>}
+     * @memberof SecuredFinanceClient
+     */
     async convertToBaseCurrency(ccy: Currency, amount: bigint) {
         return this.publicClient.readContract({
             ...getCurrencyControllerContract(this.config.env),
@@ -472,6 +657,17 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the converted amount between currencies
+     *
+     * @param {Currency} fromCcy - Original native currency of amount
+     * @param {Currency} toCcy - Currency to which amount has to be converted
+     * @param {bigint} amount - Amount to be converted
+     * @return {Promise<{
+     *  amount - bigint
+     * }>}
+     * @memberof SecuredFinanceClient
+     */
     async convert(fromCcy: Currency, toCcy: Currency, amount: bigint) {
         return this.publicClient.readContract({
             ...getCurrencyControllerContract(this.config.env),
@@ -484,6 +680,21 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the order book of borrow orders for specified currency and maturity.
+     *
+     * @param {Currency} currency - Native currency of requested orderbook
+     * @param {number} maturity - Maturity of requested orderbook
+     * @param {number} start - The starting unit price to get order book
+     * @param {number} limit - The max limit for getting unit prices
+     * @return {
+     *  unitPrices: - An array of order unit prices
+     *  amounts: - An array of order amounts
+     *  quantities: - An array of order quantities
+     *  next: - The next starting unit price to get order book,
+     * }
+     * @memberof SecuredFinanceClient
+     */
     async getBorrowOrderBook(
         currency: Currency,
         maturity: number,
@@ -509,6 +720,21 @@ export class SecuredFinanceClient {
         };
     }
 
+    /**
+     * Gets the order book of lend orders for specified currency and maturity.
+     *
+     * @param {Currency} currency - Native currency of requested orderbook
+     * @param {number} maturity - Maturity of requested orderbook
+     * @param {number} start - The starting unit price to get order book
+     * @param {number} limit - The max limit for getting unit prices
+     * @return {
+     *  unitPrices: - An array of order unit prices
+     *  amounts: - An array of order amounts
+     *  quantities: - An array of order quantities
+     *  next: - The next starting unit price to get order book,
+     * }
+     * @memberof SecuredFinanceClient
+     */
     async getLendOrderBook(
         currency: Currency,
         maturity: number,
@@ -534,7 +760,14 @@ export class SecuredFinanceClient {
         };
     }
 
-    // Mock ERC20 token related functions
+    /**
+     * MockERC20 related function
+     * Mints ERC20 tokens for specified token for user
+     *
+     * @param {Token} token - Token to be minted
+     * @return a `Contract Transaction`
+     * @memberof SecuredFinanceClient
+     */
     async mintERC20Token(token: Token) {
         const [account] = await this.walletClient.getAddresses();
         const { abi, address } = getTokenFaucetContract(this.config.env);
@@ -553,6 +786,15 @@ export class SecuredFinanceClient {
         }
     }
 
+    /**
+     * Gets address of mock ERC20 token contracts
+     *
+     * @param {Token} token - Token for which address is requested
+     * @return {Promise<{
+     *  address
+     * }>}
+     * @memberof SecuredFinanceClient
+     */
     async getERC20TokenContractAddress(token: Token) {
         const { abi, address } = getTokenFaucetContract(this.config.env);
         if (address) {
@@ -567,6 +809,14 @@ export class SecuredFinanceClient {
         }
     }
 
+    /**
+     * Gets all currencies supported by the protocol
+     *
+     * @return {Promise<[
+     *  Currency
+     * ]>}
+     * @memberof SecuredFinanceClient
+     */
     async getCurrencies() {
         return this.publicClient.readContract({
             ...getCurrencyControllerContract(this.config.env),
@@ -574,6 +824,15 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets if the selected currency is supported.
+     *
+     * @param {Currency} ccy - Native currency
+     * @return {Promise<
+     *  Boolean
+     * >}
+     * @memberof SecuredFinanceClient
+     */
     async currencyExists(ccy: Currency) {
         return this.publicClient.readContract({
             ...getCurrencyControllerContract(this.config.env),
@@ -582,6 +841,14 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the currencies that are accepted as collateral
+     *
+     * @return {Promise<[
+     * Currency
+     * ]>}
+     * @memberof SecuredFinanceClient
+     */
     async getCollateralCurrencies() {
         return this.publicClient.readContract({
             ...getTokenVaultContract(this.config.env),
@@ -589,6 +856,16 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * gets token balance of an ERC20 token
+     *
+     * @param {Token} token - Token for which balance has to be checked
+     * @param {string} account - Wallet address of the user
+     * @return {Promise<
+     *  bigint
+     * >}
+     * @memberof SecuredFinanceClient
+     */
     async getERC20Balance(token: Token, account: string) {
         const address = await this.tokenVault.getTokenAddress(token);
         return this.publicClient.readContract({
@@ -630,6 +907,12 @@ export class SecuredFinanceClient {
         return false;
     }
 
+    /**
+     * Gets the total amount deposited in protocol in all currencies
+     *
+     * @return {Record<string, bigint>}
+     * @memberof SecuredFinanceClient
+     */
     async getProtocolDepositAmount() {
         const currencyList = await this.getCurrencies();
         const contract = getTokenVaultContract(this.config.env);
@@ -654,6 +937,14 @@ export class SecuredFinanceClient {
         }, {} as Record<string, bigint>);
     }
 
+    /**
+     * Unwinds user's lending or borrowing positions by creating an opposite position order.
+     *
+     * @param {Currency} currency - Native currency of position
+     * @param {number} maturity - Maturity of position
+     * @return a `Contract Transaction`
+     * @memberof SecuredFinanceClient
+     */
     async unwindPosition(currency: Currency, maturity: number) {
         const [address] = await this.walletClient.getAddresses();
         const contract = getLendingMarketControllerContract(this.config.env);
@@ -675,6 +966,15 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the total present value of the account converted to base currency.
+     *
+     * @param {string} account - Address of user
+     * @return {Promise<
+     * bigint
+     * >}
+     * @memberof SecuredFinanceClient
+     */
     async getTotalPresentValueInBaseCurrency(account: string) {
         return this.publicClient.readContract({
             ...getLendingMarketControllerContract(this.config.env),
@@ -683,6 +983,14 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Repay user's borrowing positions. Repayment can only be executed once the order book has matured after the currency has been delisted.
+     *
+     * @param {Currency} currency - Native currency of matured position
+     * @param {number} maturity
+     * @return a `Contract Transaction`
+     * @memberof SecuredFinanceClient
+     */
     async executeRepayment(currency: Currency, maturity: number) {
         const [address] = await this.walletClient.getAddresses();
         return this.walletClient.writeContract({
@@ -694,6 +1002,14 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Redeem user's lending positions. Redemption can only be executed once the order book has matured after the currency has been delisted.
+     *
+     * @param {Currency} currency - Native currency of matured position
+     * @param {number} maturity
+     * @return a `Contract Transaction`
+     * @memberof SecuredFinanceClient
+     */
     async executeRedemption(currency: Currency, maturity: number) {
         const [address] = await this.walletClient.getAddresses();
         return this.walletClient.writeContract({
@@ -705,6 +1021,15 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the order fee rate
+     *
+     * @param {Currency} currency - Native currency used
+     * @return {Promise<
+     * bigint
+     * >}
+     * @memberof SecuredFinanceClient
+     */
     async getOrderFeeRate(currency: Currency) {
         return this.publicClient.readContract({
             ...getLendingMarketControllerContract(this.config.env),
@@ -713,6 +1038,16 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the order book id for the selected currency and maturity.
+     *
+     * @param {Currency} currency - Native currency of requested orderbook
+     * @param {number} maturity
+     * @return {Promise<
+     * bigint
+     * >}
+     * @memberof SecuredFinanceClient
+     */
     async getOrderBookId(currency: Currency, maturity: number) {
         return this.publicClient.readContract({
             ...getLendingMarketControllerContract(this.config.env),
@@ -721,6 +1056,17 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets user's active and inactive orders in the order book
+     *
+     * @param {string} account - Wallet address of user
+     * @param {Currency[]} usedCurrenciesForOrders - List of native currency of requested orders
+     * @return {Promise<{
+     *  activeOrders : Order[]
+     * inactiveOrders: Order[]
+     * }>}
+     * @memberof SecuredFinanceClient
+     */
     async getOrderList(account: string, usedCurrenciesForOrders: Currency[]) {
         const res = await this.publicClient.readContract({
             ...getLendingMarketReaderContract(this.config.env),
@@ -736,6 +1082,16 @@ export class SecuredFinanceClient {
         return { activeOrders: res[0], inactiveOrders: res[1] };
     }
 
+    /**
+     * Gets user's active positions of the selected currency
+     *
+     * @param {string} account - Wallet address of user
+     * @param {Currency[]} usedCurrenciesForOrders - Native currency used by user for placing orders
+     * @return {Promise<{
+     *  Position[]
+     * }>}
+     * @memberof SecuredFinanceClient
+     */
     async getPositions(account: string, usedCurrenciesForOrders: Currency[]) {
         return this.publicClient.readContract({
             ...getLendingMarketReaderContract(this.config.env),
@@ -749,6 +1105,15 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Get all the currencies in which the user has lending positions or orders.
+     *
+     * @param {string} account - Wallet address of user
+     * @return {Promise<[
+     * bytes32
+     * ]>}
+     * @memberof SecuredFinanceClient
+     */
     async getUsedCurrenciesForOrders(account: string) {
         return this.publicClient.readContract({
             ...getLendingMarketControllerContract(this.config.env),
@@ -757,6 +1122,16 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Liquidates a lending or borrowing position if the user's coverage is hight.
+     *
+     * @param {Currency} collateralCcy - Native currency of collateral used by user
+     * @param {Currency} debtCcy - Native currency of borrow order
+     * @param {number} debtMaturity - Maturity of position
+     * @param {string} account - Wallet address of user
+     * @return a `Contract Transaction`
+     * @memberof SecuredFinanceClient
+     */
     async executeLiquidationCall(
         collateralCcy: Currency,
         debtCcy: Currency,
@@ -792,6 +1167,15 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the last price of the selected currency in the base currency.
+     *
+     * @param {Currency} currency - Native currency for which last price is requested
+     * @return {Promise<
+     * bigint
+     * >}
+     * @memberof SecuredFinanceClient
+     */
     async getLastPrice(currency: Currency) {
         return this.publicClient.readContract({
             ...getCurrencyControllerContract(this.config.env),
@@ -801,8 +1185,13 @@ export class SecuredFinanceClient {
     }
 
     /**
-     * Gets aggregated and cached decimals of the price feeds for the selected currency
-     * @param currency
+     *  * Gets aggregated and cached decimals of the price feeds for the selected currency
+     *
+     * @param {Currency} currency - Currency for which decimals are requested
+     * @return {Promise<
+     * bigint
+     * >}
+     * @memberof SecuredFinanceClient
      */
     async getDecimals(currency: Currency) {
         return this.publicClient.readContract({
@@ -812,8 +1201,12 @@ export class SecuredFinanceClient {
         });
     }
 
-    /*
-     * Global Emergency Settlement
+    /**
+     * Gets if the protocol has not been terminated.
+     * @return {Promise<
+     * boolean
+     * >}
+     * @memberof SecuredFinanceClient
      */
     async isTerminated() {
         return this.publicClient.readContract({
@@ -822,6 +1215,14 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the date at the emergency termination.
+     *
+     * @return {Promise<
+     * boolean
+     * >}
+     * @memberof SecuredFinanceClient
+     */
     async getMarketTerminationDate() {
         return this.publicClient.readContract({
             ...getLendingMarketControllerContract(this.config.env),
@@ -829,6 +1230,15 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the collateral ratio of each token in TokenVault at the emergency termination.
+     *
+     * @param {Currency} currency - Native currency for which market's state has to be checked
+     * @return {Promise<
+     * bigint
+     * >}
+     * @memberof SecuredFinanceClient
+     */
     async getMarketTerminationRatio(currency: Currency) {
         return this.publicClient.readContract({
             ...getLendingMarketControllerContract(this.config.env),
@@ -837,6 +1247,13 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the currency information cached at the emergency termination.
+     *
+     * @param {Currency} currency - Native currency for which market price and decimals are requested
+     * @return {*}
+     * @memberof SecuredFinanceClient
+     */
     async getMarketTerminationPriceAndDecimals(currency: Currency) {
         return this.publicClient.readContract({
             ...getLendingMarketControllerContract(this.config.env),
@@ -845,6 +1262,15 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets if the user needs to redeem the funds.
+     *
+     * @param {string} account - Wallet address of user
+     * @return {Promise<
+     * Boolean
+     * >}
+     * @memberof SecuredFinanceClient
+     */
     async isRedemptionRequired(account: string) {
         return this.publicClient.readContract({
             ...getLendingMarketControllerContract(this.config.env),
@@ -853,6 +1279,12 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Force settlement of all lending and borrowing positions. This function is executed under the present value as of the termination date.
+     *
+     * @return a `Contract Transaction`
+     * @memberof SecuredFinanceClient
+     */
     async executeEmergencySettlement() {
         const [address] = await this.walletClient.getAddresses();
         return this.walletClient.writeContract({
@@ -863,6 +1295,19 @@ export class SecuredFinanceClient {
         });
     }
 
+    /**
+     * Gets the estimation of the Itayose process.
+     *
+     * @param {Currency} currency - Native currency for which itayose estimations are requested
+     * @param {number} maturity
+     * @return {Promise<
+     * openingUnitPrice	bigint	The opening price when Itayose is executed
+     * lastLendUnitPrice bigint	The price of the last lend order filled by Itayose.
+     * lastBorrowUnitPrice bigint	The price of the last borrow order filled by Itayose.
+     * totalOffsetAmount bigint	The total amount of the orders filled by Itayose.
+     * >}
+     * @memberof SecuredFinanceClient
+     */
     async getItayoseEstimation(currency: Currency, maturity: number) {
         const result = await this.publicClient.readContract({
             ...getLendingMarketReaderContract(this.config.env),

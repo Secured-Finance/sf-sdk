@@ -28,7 +28,7 @@
 
 #### Defined in
 
-[src/utils/networks.ts:59](https://github.com/Secured-Finance/sf-sdk/blob/52126c3/packages/sf-client/src/utils/networks.ts#L59)
+[packages/sf-client/src/utils/networks.ts:59](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/utils/networks.ts#L59)
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 #### Defined in
 
-[src/utils/networks.ts:39](https://github.com/Secured-Finance/sf-sdk/blob/52126c3/packages/sf-client/src/utils/networks.ts#L39)
+[packages/sf-client/src/utils/networks.ts:39](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/utils/networks.ts#L39)
 
 ___
 
@@ -55,7 +55,7 @@ ___
 
 #### Defined in
 
-[src/utils/networks.ts:37](https://github.com/Secured-Finance/sf-sdk/blob/52126c3/packages/sf-client/src/utils/networks.ts#L37)
+[packages/sf-client/src/utils/networks.ts:37](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/utils/networks.ts#L37)
 
 ## Variables
 
@@ -69,7 +69,7 @@ ___
 
 #### Defined in
 
-[src/utils/networks.ts:20](https://github.com/Secured-Finance/sf-sdk/blob/52126c3/packages/sf-client/src/utils/networks.ts#L20)
+[packages/sf-client/src/utils/networks.ts:20](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/utils/networks.ts#L20)
 
 ___
 
@@ -83,7 +83,7 @@ ___
 
 #### Defined in
 
-[src/utils/networks.ts:11](https://github.com/Secured-Finance/sf-sdk/blob/52126c3/packages/sf-client/src/utils/networks.ts#L11)
+[packages/sf-client/src/utils/networks.ts:11](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/utils/networks.ts#L11)
 
 ___
 
@@ -93,7 +93,7 @@ ___
 
 #### Defined in
 
-[src/utils/networks.ts:29](https://github.com/Secured-Finance/sf-sdk/blob/52126c3/packages/sf-client/src/utils/networks.ts#L29)
+[packages/sf-client/src/utils/networks.ts:29](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/utils/networks.ts#L29)
 
 ## Functions
 
@@ -113,4 +113,4 @@ ___
 
 #### Defined in
 
-[src/utils/networks.ts:82](https://github.com/Secured-Finance/sf-sdk/blob/52126c3/packages/sf-client/src/utils/networks.ts#L82)
+[packages/sf-client/src/utils/networks.ts:82](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/utils/networks.ts#L82)
