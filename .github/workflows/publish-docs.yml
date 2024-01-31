@@ -3,35 +3,66 @@ name: Documentation Generation
 on:
   push:
     branches:
-      - SF-1009  # Change this to your main branch name
+      - SF-1009 
 
 jobs:
   generate-documentation:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.MACHINE_USER_APP_ID }}
+          private_key: ${{ secrets.MACHINE_USER_PRIVATE_KEY }}
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 14
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ steps.generate_token.outputs.token }}
 
-    - name: Install dependencies
-      run: npm install
+      - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
-    - name: Generate Documentation
-      run: npm run docs
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
 
-    - name: Check Diff
-      id: docsDiff
-      run: echo "count=$(git diff --staged --name-only . | wc -l)" >> ${{ github. workspace }}/output.txt
+      - name: Set env
+        run: |
+          echo "NPM_AUTH_TOKEN=${{ secrets.NPM_AUTH_TOKEN }}" >> $GITHUB_ENV
 
-    - name: Commit and Push
-      if: steps.docsDiff.outputs.count > 0
-      run: |
-        git config user.name "Your GitHub Username"
-        git config user.email "your.email@example.com"
-        git commit -am "chore: update docs" --no-verify
-        git push
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Bootstrap Repository
+        run: npm run bootstrap
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >>$GITHUB_OUTPUT
+        id: extract_branch
+
+      - name: Set env for development environment
+        if: ${{ steps.extract_branch.outputs.branch == 'develop' }}
+        run: |
+          echo "NETWORK=development" >> $GITHUB_ENV
+
+      - name: Generate artifacts
+        run: npm run codegen
+
+      - name: Generate Documentation
+        run: npm run docs
+
+      - name: Check Diff
+        id: docsDiff
+        run: echo "count=$(git diff --staged --name-only . | wc -l)" >> ${{ github. workspace }}/output.txt
+
+      - name: Commit and Push
+        if: steps.docsDiff.outputs.count > 0
+        run: |
+              git config user.name "SF Machine User[bot]"
+              git config user.email "${{ secrets.MACHINE_USER_APP_ID }}+sf-machine-user[bot]@users.noreply.github.com"
+              git commit -am "chore: update docs" --no-verify
+              git push
