@@ -14,7 +14,8 @@
     "build": "nx run-many --target=build --all",
     "prepublishOnly": "npm run build",
     "version": "npm run format:fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "docs": "npx typedoc --includes packages/sf-client/src --plugin typedoc-plugin-markdown --tsconfig packages/sf-client/tsconfig.json"
   },
   "author": "Secured Finance",
   "bugs": {
