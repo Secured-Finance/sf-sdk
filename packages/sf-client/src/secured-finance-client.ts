@@ -201,25 +201,25 @@ export class SecuredFinanceClient {
     }
 
     /**
-     * Gets the estimated order result by the calculation of the amount to be filled when executing an order in the order books.
+     * Gets the estimated order result by calculating the amount to be filled when executing an order in the order books.
      *
-     * @param {Currency} ccy - Native currency of the selected market
-     * @param {number} maturity - Maturity term of order
-     * @param {string} account - Wallet address of user
-     * @param {OrderSide} side - Type of order placed i.e Lend/Borrow
-     * @param {bigint} amount - Amount of funds the maker wants to borrow/lend
-     * @param {number} unitPrice - Amount of unit price taker wish to borrow/lend
-     * @param {number} [additionalDepositAmount=0] - Optional parameter for
-     * @param {boolean} [ignoreBorrowedAmount=false] - The boolean if the borrowed amount is to be used as collateral or not
+     * @param {Currency} ccy - Native currency of the selected market.
+     * @param {number} maturity - Maturity term of the order.
+     * @param {string} account - Wallet address of the user.
+     * @param {OrderSide} side - Type of order placed (LEND or BORROW).
+     * @param {bigint} amount - Amount of funds the maker wants to borrow/lend.
+     * @param {number} unitPrice - Amount of unit price taker wishes to borrow/lend.
+     * @param {number} [additionalDepositAmount=0] - Optional parameter for additional deposit amount.
+     * @param {boolean} [ignoreBorrowedAmount=false] - Boolean indicating if the borrowed amount is to be used as collateral or not.
      * @return {Promise<{
-     *   lastUnitPrice: bigint, // The last unit price that is filled on the order book
-     *   filledAmount: bigint, // The amount that is filled on the order book
-     *   filledAmountInFV: bigint, // The amount in the future value that is filled on the order book
-     *   orderFeeInFV: bigint, // The order fee amount in the future value
-     *   placedAmount: bigint, // The total amount of the order placed
-     *   coverage: bigint, // The rate of collateral used
-     *   isInsufficientDepositAmount: boolean // Boolean indicating if the order amount for lending in the selected currency is insufficient
-     * }>}
+     *   lastUnitPrice: bigint,
+     *   filledAmount: bigint,
+     *   filledAmountInFV: bigint,
+     *   orderFeeInFV: bigint,
+     *   placedAmount: bigint,
+     *   coverage: bigint,
+     *   isInsufficientDepositAmount: boolean
+     * }>} Estimated order result.
      * @memberof SecuredFinanceClient
      */
     async getOrderEstimation(
@@ -261,11 +261,11 @@ export class SecuredFinanceClient {
     }
 
     /**
-     * Deposits collateral to the protocol
+     * Deposits collateral to the protocol.
      *
-     * @param {Currency} ccy - Native currency of collateral user wants to deposit
-     * @param {bigint} amount - Amount of collateral user wants to deposit
-     * @param {((isApproved: boolean) => Promise<void> | void)} [onApproved] - function to be called when tx is approved by the user
+     * @param {Currency} ccy - Native currency of the collateral user wants to deposit.
+     * @param {bigint} amount - Amount of collateral the user wants to deposit.
+     * @param {((isApproved: boolean) => Promise<void> | void)} [onApproved] - Function to be called when the transaction is approved by the user.
      * @return a `Contract Transaction`
      * @memberof SecuredFinanceClient
      */

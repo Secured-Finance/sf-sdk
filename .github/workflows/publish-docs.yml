@@ -1,0 +1,37 @@
+name: Documentation Generation
+
+on:
+  push:
+    branches:
+      - SF-1009  # Change this to your main branch name
+
+jobs:
+  generate-documentation:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 14
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Generate Documentation
+      run: npm run docs
+
+    - name: Check Diff
+      id: docsDiff
+      run: echo "count=$(git diff --staged --name-only . | wc -l)" >> ${{ github. workspace }}/output.txt
+
+    - name: Commit and Push
+      if: steps.docsDiff.outputs.count > 0
+      run: |
+        git config user.name "Your GitHub Username"
+        git config user.email "your.email@example.com"
+        git commit -am "chore: update docs" --no-verify
+        git push
