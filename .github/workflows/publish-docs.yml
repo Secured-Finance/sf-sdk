@@ -8,6 +8,7 @@ on:
 jobs:
   generate-documentation:
     runs-on: ubuntu-latest
+    if: ${{ always() && github.actor != 'secured-finance-machine-user[bot]' && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
     steps:
       - name: Generate token
         id: generate_token
@@ -38,16 +39,6 @@ jobs:
 
       - name: Bootstrap Repository
         run: npm run bootstrap
-
-      - name: Extract branch name
-        shell: bash
-        run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >>$GITHUB_OUTPUT
-        id: extract_branch
-
-      - name: Set env for development environment
-        if: ${{ steps.extract_branch.outputs.branch == 'develop' }}
-        run: |
-          echo "NETWORK=development" >> $GITHUB_ENV
 
       - name: Generate artifacts
         run: npm run codegen
