@@ -52,16 +52,20 @@ jobs:
         run: npm install @secured-finance/sf-core
 
       - name: Generate Documentation
-        run: npm run docs
+        run: |
+            npm run docs
+            git add .
 
       - name: Check Diff
+        shell: bash
         id: docsDiff
-        run: echo "count=$(git diff --name-only . | wc -l)" >> ${{ github. workspace }}/output.txt
+        run: echo "count=$(git diff --staged --name-only . | wc -l)" >> $GITHUB_OUTPUT
 
       - name: Commit and Push
-        if: steps.docsDiff.outputs.count > 0
+        shell: bash
+        if: ${{ steps.docsDiff.outputs.count > 0 }}
         run: |
               git config user.name "SF Machine User[bot]"
               git config user.email "${{ secrets.MACHINE_USER_APP_ID }}+sf-machine-user[bot]@users.noreply.github.com"
-              git commit -am "chore: update docs" --no-verify
+              git commit -m "chore: update docs" --no-verify
               git push
