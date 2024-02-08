@@ -5,6 +5,7 @@ import {
     avalanche,
     avalancheFuji,
     mainnet,
+    polygonZkEvm,
     sepolia,
 } from 'viem/chains';
 
@@ -15,6 +16,7 @@ export const NETWORKS: { [key: number]: string } = {
     421614: 'arbitrum-sepolia',
     43114: 'avalanche-mainnet',
     43113: 'avalanche-fuji',
+    1101: 'polygon-zkevm-mainnet',
 };
 
 export const CHAINS: { [key: number]: Chain } = {
@@ -24,6 +26,7 @@ export const CHAINS: { [key: number]: Chain } = {
     421614: arbitrumSepolia,
     43114: avalanche,
     43113: avalancheFuji,
+    1101: polygonZkEvm,
 };
 
 export const networkNames = [
@@ -33,6 +36,7 @@ export const networkNames = [
     'arbitrum-one',
     'avalanche-fuji',
     'avalanche-mainnet',
+    'polygon-zkevm-mainnet',
 ] as const;
 export type NetworkName = (typeof networkNames)[number];
 
@@ -54,6 +58,7 @@ const contractEnvironments = [
     'arbitrum-sepolia',
     'arbitrum-one',
     'avalanche-mainnet',
+    'polygon-zkevm-mainnet',
 ] as const;
 type Environment = (typeof environments)[number];
 export type ContractEnvironments = (typeof contractEnvironments)[number];
@@ -76,6 +81,7 @@ const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
         'arbitrum-sepolia': 'arbitrum-sepolia',
         'arbitrum-one': 'arbitrum-one',
         'avalanche-mainnet': 'avalanche-mainnet',
+        'polygon-zkevm-mainnet': 'polygon-zkevm-mainnet',
     },
 };
 
