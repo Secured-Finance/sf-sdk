@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:38](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/secured-finance-client.ts#L38)
+[packages/sf-client/src/secured-finance-client.ts:38](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L38)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:39](https://github.com/Secured-Finance/sf-sdk/blob/6f4921a/packages/sf-client/src/secured-finance-client.ts#L39)
+[packages/sf-client/src/secured-finance-client.ts:39](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L39)
