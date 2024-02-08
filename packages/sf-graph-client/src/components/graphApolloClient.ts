@@ -11,6 +11,7 @@ import * as GraphClientArbitrumOne from '../graphclients/arbitrum-one/.graphclie
 import * as GraphClientArbitrumSepolia from '../graphclients/arbitrum-sepolia/.graphclient';
 import * as GraphClientAvalancheMainnet from '../graphclients/avalanche-mainnet/.graphclient';
 import * as GraphClientMainnet from '../graphclients/mainnet/.graphclient';
+import * as GraphClientPolygonZkevmMainnet from '../graphclients/polygon-zkevm-mainnet/.graphclient';
 import * as GraphClientSepolia from '../graphclients/sepolia/.graphclient';
 // Staging clients
 import * as GraphClientStgArb from '../graphclients/staging-arb/.graphclient';
@@ -76,6 +77,8 @@ const getGraphClient = (network = 'none') => {
                 GraphClient = GraphClientArbitrumSepolia;
             } else if (network === 'avalanche-mainnet') {
                 GraphClient = GraphClientAvalancheMainnet;
+            } else if (network === 'polygon-zkevm-mainnet') {
+                GraphClient = GraphClientPolygonZkevmMainnet;
             } else {
                 GraphClient = GraphClientMainnet;
                 sfNetwork = 'mainnet';
