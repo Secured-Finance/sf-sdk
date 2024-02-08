@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.151](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.150...v0.2.0-beta.151) (2024-02-08)
+
+
+### Features
+
+* support Polygon zkEVM [SF-1049] ([6728682](https://github.com/secured-finance/sf-sdk/commit/6728682d2031f7419485385ff55f9e02c7fbd5dc))
+
+
+
+
+
 # [0.2.0-beta.150](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.149...v0.2.0-beta.150) (2024-02-01)
 
 **Note:** Version bump only for package @secured-finance/sf-graph-client
