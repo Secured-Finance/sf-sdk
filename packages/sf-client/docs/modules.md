@@ -33,4 +33,4 @@
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:78](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L78)
+[packages/sf-client/src/secured-finance-client.ts:78](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L78)

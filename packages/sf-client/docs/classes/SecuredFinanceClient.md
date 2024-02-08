@@ -90,7 +90,7 @@
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:117](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L117)
+[packages/sf-client/src/secured-finance-client.ts:117](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L117)
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:119](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L119)
+[packages/sf-client/src/secured-finance-client.ts:119](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L119)
 
 ___
 
@@ -110,7 +110,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:120](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L120)
+[packages/sf-client/src/secured-finance-client.ts:120](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L120)
 
 ___
 
@@ -120,7 +120,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:118](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L118)
+[packages/sf-client/src/secured-finance-client.ts:118](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L118)
 
 ## Accessors
 
@@ -134,7 +134,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:162](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L162)
+[packages/sf-client/src/secured-finance-client.ts:162](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L162)
 
 ___
 
@@ -148,7 +148,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:173](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L173)
+[packages/sf-client/src/secured-finance-client.ts:173](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L173)
 
 ___
 
@@ -162,7 +162,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:196](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L196)
+[packages/sf-client/src/secured-finance-client.ts:196](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L196)
 
 ___
 
@@ -176,7 +176,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:185](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L185)
+[packages/sf-client/src/secured-finance-client.ts:185](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L185)
 
 ## Methods
 
@@ -197,7 +197,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:870](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L870)
+[packages/sf-client/src/secured-finance-client.ts:870](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L870)
 
 ___
 
@@ -217,7 +217,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:111](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L111)
+[packages/sf-client/src/secured-finance-client.ts:111](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L111)
 
 ___
 
@@ -243,7 +243,7 @@ a `Contract Transaction`
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:625](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L625)
+[packages/sf-client/src/secured-finance-client.ts:625](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L625)
 
 ___
 
@@ -267,7 +267,7 @@ Gets the converted amount between currencies
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:669](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L669)
+[packages/sf-client/src/secured-finance-client.ts:669](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L669)
 
 ___
 
@@ -287,7 +287,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:101](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L101)
+[packages/sf-client/src/secured-finance-client.ts:101](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L101)
 
 ___
 
@@ -307,7 +307,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:93](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L93)
+[packages/sf-client/src/secured-finance-client.ts:93](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L93)
 
 ___
 
@@ -330,7 +330,7 @@ Gets the converted amount in the base currency.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:650](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L650)
+[packages/sf-client/src/secured-finance-client.ts:650](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L650)
 
 ___
 
@@ -352,7 +352,7 @@ Gets if the selected currency is supported.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:829](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L829)
+[packages/sf-client/src/secured-finance-client.ts:829](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L829)
 
 ___
 
@@ -378,7 +378,7 @@ a `Contract Transaction`
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:270](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L270)
+[packages/sf-client/src/secured-finance-client.ts:270](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L270)
 
 ___
 
@@ -396,7 +396,7 @@ a `Contract Transaction`
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1260](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1260)
+[packages/sf-client/src/secured-finance-client.ts:1260](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1260)
 
 ___
 
@@ -423,7 +423,7 @@ a `Contract Transaction`
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1115](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1115)
+[packages/sf-client/src/secured-finance-client.ts:1115](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1115)
 
 ___
 
@@ -448,7 +448,7 @@ a `Contract Transaction`
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:999](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L999)
+[packages/sf-client/src/secured-finance-client.ts:999](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L999)
 
 ___
 
@@ -473,7 +473,7 @@ a `Contract Transaction`
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:981](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L981)
+[packages/sf-client/src/secured-finance-client.ts:981](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L981)
 
 ___
 
@@ -495,7 +495,7 @@ Gets the best borrowing unit price array for a given currency.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:319](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L319)
+[packages/sf-client/src/secured-finance-client.ts:319](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L319)
 
 ___
 
@@ -517,7 +517,7 @@ Gets the best lending unit price array for a given currency.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:302](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L302)
+[packages/sf-client/src/secured-finance-client.ts:302](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L302)
 
 ___
 
@@ -542,7 +542,7 @@ Gets the order book of borrow orders for specified currency and maturity.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:696](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L696)
+[packages/sf-client/src/secured-finance-client.ts:696](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L696)
 
 ___
 
@@ -558,7 +558,7 @@ Gets the currencies that are accepted as collateral
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:844](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L844)
+[packages/sf-client/src/secured-finance-client.ts:844](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L844)
 
 ___
 
@@ -574,7 +574,7 @@ Gets all currencies supported by the protocol
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:814](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L814)
+[packages/sf-client/src/secured-finance-client.ts:814](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L814)
 
 ___
 
@@ -596,7 +596,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1174](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1174)
+[packages/sf-client/src/secured-finance-client.ts:1174](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1174)
 
 ___
 
@@ -619,7 +619,7 @@ gets token balance of an ERC20 token
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:860](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L860)
+[packages/sf-client/src/secured-finance-client.ts:860](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L860)
 
 ___
 
@@ -641,7 +641,7 @@ Gets address of mock ERC20 token contracts
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:793](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L793)
+[packages/sf-client/src/secured-finance-client.ts:793](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L793)
 
 ___
 
@@ -664,7 +664,7 @@ Gets the estimation of the Itayose process.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1282](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1282)
+[packages/sf-client/src/secured-finance-client.ts:1282](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1282)
 
 ___
 
@@ -686,7 +686,7 @@ Gets the last price of the selected currency in the base currency.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1158](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1158)
+[packages/sf-client/src/secured-finance-client.ts:1158](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1158)
 
 ___
 
@@ -711,7 +711,7 @@ Gets the order book of lend orders for specified currency and maturity.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:735](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L735)
+[packages/sf-client/src/secured-finance-client.ts:735](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L735)
 
 ___
 
@@ -727,7 +727,7 @@ Gets the date at the emergency termination.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1202](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1202)
+[packages/sf-client/src/secured-finance-client.ts:1202](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1202)
 
 ___
 
@@ -749,7 +749,7 @@ Gets the currency information cached at the emergency termination.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1231](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1231)
+[packages/sf-client/src/secured-finance-client.ts:1231](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1231)
 
 ___
 
@@ -771,7 +771,7 @@ Gets the collateral ratio of each token in TokenVault at the emergency terminati
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1217](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1217)
+[packages/sf-client/src/secured-finance-client.ts:1217](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1217)
 
 ___
 
@@ -793,7 +793,7 @@ Gets market maturities for a currency
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:336](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L336)
+[packages/sf-client/src/secured-finance-client.ts:336](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L336)
 
 ___
 
@@ -816,7 +816,7 @@ Gets the order book detail.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:354](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L354)
+[packages/sf-client/src/secured-finance-client.ts:354](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L354)
 
 ___
 
@@ -836,7 +836,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:396](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L396)
+[packages/sf-client/src/secured-finance-client.ts:396](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L396)
 
 ___
 
@@ -858,7 +858,7 @@ Retrieves order book for a currency
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:377](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L377)
+[packages/sf-client/src/secured-finance-client.ts:377](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L377)
 
 ___
 
@@ -881,7 +881,7 @@ Gets the order book id for the selected currency and maturity.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1035](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1035)
+[packages/sf-client/src/secured-finance-client.ts:1035](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1035)
 
 ___
 
@@ -912,7 +912,7 @@ Estimated order result.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:223](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L223)
+[packages/sf-client/src/secured-finance-client.ts:223](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L223)
 
 ___
 
@@ -934,7 +934,7 @@ Gets the order fee rate
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1018](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1018)
+[packages/sf-client/src/secured-finance-client.ts:1018](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1018)
 
 ___
 
@@ -957,7 +957,7 @@ Gets user's active and inactive orders in the order book
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1053](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1053)
+[packages/sf-client/src/secured-finance-client.ts:1053](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1053)
 
 ___
 
@@ -980,7 +980,7 @@ Gets user's active positions of the selected currency
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1077](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1077)
+[packages/sf-client/src/secured-finance-client.ts:1077](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1077)
 
 ___
 
@@ -996,7 +996,7 @@ Gets the total amount deposited in protocol in all currencies
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:906](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L906)
+[packages/sf-client/src/secured-finance-client.ts:906](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L906)
 
 ___
 
@@ -1018,7 +1018,7 @@ Gets the total present value of the account converted to base currency.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:966](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L966)
+[packages/sf-client/src/secured-finance-client.ts:966](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L966)
 
 ___
 
@@ -1040,7 +1040,7 @@ Get all the currencies in which the user has lending positions or orders.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1098](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1098)
+[packages/sf-client/src/secured-finance-client.ts:1098](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1098)
 
 ___
 
@@ -1064,7 +1064,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:122](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L122)
+[packages/sf-client/src/secured-finance-client.ts:122](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L122)
 
 ___
 
@@ -1086,7 +1086,7 @@ Gets if the user needs to redeem the funds.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1247](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1247)
+[packages/sf-client/src/secured-finance-client.ts:1247](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1247)
 
 ___
 
@@ -1102,7 +1102,7 @@ Gets if the protocol has not been terminated.
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:1188](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L1188)
+[packages/sf-client/src/secured-finance-client.ts:1188](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L1188)
 
 ___
 
@@ -1127,7 +1127,7 @@ a `Contract Transaction`
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:767](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L767)
+[packages/sf-client/src/secured-finance-client.ts:767](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L767)
 
 ___
 
@@ -1147,7 +1147,7 @@ ___
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:107](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L107)
+[packages/sf-client/src/secured-finance-client.ts:107](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L107)
 
 ___
 
@@ -1177,7 +1177,7 @@ a `ContractTransaction`
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:437](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L437)
+[packages/sf-client/src/secured-finance-client.ts:437](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L437)
 
 ___
 
@@ -1207,7 +1207,7 @@ Places a pre-order
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:533](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L533)
+[packages/sf-client/src/secured-finance-client.ts:533](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L533)
 
 ___
 
@@ -1232,4 +1232,4 @@ a `Contract Transaction`
 
 #### Defined in
 
-[packages/sf-client/src/secured-finance-client.ts:937](https://github.com/Secured-Finance/sf-sdk/blob/3fc4a6d/packages/sf-client/src/secured-finance-client.ts#L937)
+[packages/sf-client/src/secured-finance-client.ts:937](https://github.com/Secured-Finance/sf-sdk/blob/e1872bb/packages/sf-client/src/secured-finance-client.ts#L937)
