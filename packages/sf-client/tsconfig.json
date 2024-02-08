@@ -11,10 +11,6 @@
   },
   "include": ["src"],
   "exclude": ["dist", "examples", "**/*.test.ts", "**/*.test.js"],
-  "typedocOptions": {
-    "entryPoints": ["src"],
-    "out": "docs"
-  },
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"

@@ -1,0 +1,7 @@
+{
+  "entryPoints": ["packages/sf-client/src"],
+  "out": "docs",
+  "exclude": ["**/*.spec.ts"],
+  "plugin": ["typedoc-plugin-markdown"],
+  "tsconfig": "packages/sf-client/tsconfig.json"
+}
