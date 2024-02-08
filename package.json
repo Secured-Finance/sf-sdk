@@ -15,7 +15,7 @@
     "prepublishOnly": "npm run build",
     "version": "npm run format:fix",
     "prepare": "husky install",
-    "docs": "npx typedoc --options typedoc.json --plugin typedoc-plugin-markdown --exclude 'node_modules/**/*'"
+    "docs": "npx typedoc --options typedoc.json"
   },
   "author": "Secured Finance",
   "bugs": {
