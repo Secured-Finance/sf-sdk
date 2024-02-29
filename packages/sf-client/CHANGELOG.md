@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.153](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.152...v0.2.0-beta.153) (2024-02-29)
+
+
+### Bug Fixes
+
+* change market names to have numeric representation of year [SF-1003] ([8302a2a](https://github.com/secured-finance/sf-sdk/commit/8302a2a7a99b4f3ccd553fe29af7fa2c16933dce))
+
+
+
+# 0.2.0-beta.151 (2024-02-08)
+
+
+
+
+
 # [0.2.0-beta.152](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.151...v0.2.0-beta.152) (2024-02-29)
 
 **Note:** Version bump only for package @secured-finance/sf-client
