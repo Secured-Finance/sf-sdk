@@ -13,4 +13,9 @@ describe('dateFormat', () => {
         expect(formatDate(timestamp_1)).toEqual('Mar 1, 2023');
         expect(formatDate(timestamp_2)).toEqual('Dec 1, 2024');
     });
+
+    it('test getUTCMonthYear when numeric is true', () => {
+        expect(getUTCMonthYear(timestamp_1, true)).toEqual('MAR2023');
+        expect(getUTCMonthYear(timestamp_2, true)).toEqual('DEC2024');
+    });
 });

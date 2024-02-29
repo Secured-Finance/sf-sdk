@@ -1,7 +1,7 @@
-export const getUTCMonthYear = (timestamp: number) => {
+export const getUTCMonthYear = (timestamp: number, numeric = false) => {
     return timestamp
         ? Intl.DateTimeFormat('en-US', {
-              year: '2-digit',
+              year: numeric ? 'numeric' : '2-digit',
               month: 'short',
               timeZone: 'GMT',
           })
