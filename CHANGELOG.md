@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.152](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.151...v0.2.0-beta.152) (2024-02-29)
+
+
+### Features
+
+* add numeric formatting to UTCMonthYear [SF-1003] ([dc1ced6](https://github.com/Secured-Finance/sf-sdk/commit/dc1ced6f7b30f5a36cfd199cec671d91c8c4b956))
+
+
+
+
+
 # [0.2.0-beta.151](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.150...v0.2.0-beta.151) (2024-02-08)
 
 
