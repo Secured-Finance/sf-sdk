@@ -254,7 +254,7 @@ export class SecuredFinanceClient {
 
             return {
                 ...orderBook,
-                name: getUTCMonthYear(maturity),
+                name: getUTCMonthYear(maturity, true),
                 isMatured,
                 isOpened,
                 isItayosePeriod:
