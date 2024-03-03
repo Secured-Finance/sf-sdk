@@ -4,6 +4,7 @@ import * as PROD_MAINNET_QUERIES from './mainnet/.graphclient';
 
 let queries: typeof DEV_QUERIES;
 
+// TODO: find a better solution to export queries
 switch (process.env.SF_ENV) {
     case 'development':
         queries = DEV_QUERIES;
