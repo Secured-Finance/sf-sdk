@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.154](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.153...v0.2.0-beta.154) (2024-03-04)
+
+
+### Features
+
+* update with latest dev subgraphs and queries [SF-1063] ([f57a37c](https://github.com/secured-finance/sf-sdk/commit/f57a37c22fd028a2e097b21e0a5377d1cfadf70e))
+
+
+
+
+
 # [0.2.0-beta.153](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.152...v0.2.0-beta.153) (2024-02-29)
 
 
