@@ -48,13 +48,13 @@ export const USER_TRANSACTION_HISTORY = gql`
                 currency
                 maturity
                 side
-                orderPrice
-                forwardValue
+                executionPrice
+                futureValue
                 amount
                 averagePrice
                 createdAt
                 feeInFV
-                taker {
+                user {
                     id
                 }
             }
@@ -78,13 +78,13 @@ export const FILTERED_USER_TRANSACTION_HISTORY = gql`
                 currency
                 maturity
                 side
-                orderPrice
-                forwardValue
+                executionPrice
+                futureValue
                 amount
                 averagePrice
                 createdAt
                 feeInFV
-                taker {
+                user {
                     id
                 }
             }
@@ -115,9 +115,10 @@ export const USER_ORDER_HISTORY = gql`
                     isActive
                 }
                 type
+                isCircuitBreakerTriggered
                 createdAt
                 txHash
-                maker {
+                user {
                     id
                 }
             }
@@ -151,9 +152,10 @@ export const FILTERED_USER_ORDER_HISTORY = gql`
                     isActive
                 }
                 type
+                isCircuitBreakerTriggered
                 createdAt
                 txHash
-                maker {
+                user {
                     id
                 }
             }
@@ -174,7 +176,7 @@ export const TRANSACTION_HISTORY = gql`
                 maturity: $maturity
                 createdAt_gte: $from
                 createdAt_lt: $to
-                executionType: Sync
+                executionType: Taker
             }
         ) {
             amount
@@ -188,7 +190,7 @@ export const TRANSACTION_HISTORY = gql`
             where: {
                 currency: $currency
                 maturity: $maturity
-                executionType: Sync
+                executionType: Taker
             }
             orderBy: createdAt
             orderDirection: desc
@@ -200,6 +202,36 @@ export const TRANSACTION_HISTORY = gql`
             createdAt
             currency
             averagePrice
+        }
+    }
+`;
+
+export const TRANSACTION_CANDLE_STICK = gql`
+    query TransactionCandleStick(
+        $currency: Bytes!
+        $maturity: BigInt!
+        $interval: BigInt!
+        $first: Int!
+        $skip: Int!
+    ) {
+        transactionCandleSticks(
+            where: {
+                currency: $currency
+                maturity: $maturity
+                interval: $interval
+            }
+        ) {
+            currency
+            maturity
+            interval
+            timestamp
+            open
+            close
+            high
+            low
+            average
+            volume
+            volumeInFV
         }
     }
 `;

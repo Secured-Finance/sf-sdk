@@ -2,7 +2,10 @@ import * as DEV_QUERIES from './development/.graphclient';
 import * as STAGING_QUERIES from './staging/.graphclient';
 import * as PROD_MAINNET_QUERIES from './mainnet/.graphclient';
 
-let queries: typeof DEV_QUERIES;
+let queries:
+    | typeof DEV_QUERIES
+    | typeof STAGING_QUERIES
+    | typeof PROD_MAINNET_QUERIES;
 
 // TODO: find a better solution to export queries
 switch (process.env.SF_ENV) {
@@ -10,12 +13,12 @@ switch (process.env.SF_ENV) {
         queries = DEV_QUERIES;
         break;
     case 'staging':
-        queries = STAGING_QUERIES as unknown as typeof DEV_QUERIES;
+        queries = STAGING_QUERIES;
         break;
     // TODO: different queries for different networks need to be set
     case 'production':
     default:
-        queries = PROD_MAINNET_QUERIES as unknown as typeof DEV_QUERIES;
+        queries = PROD_MAINNET_QUERIES;
         break;
 }
 
