@@ -2,7 +2,7 @@ sources:
   - name: sf-protocol
     handler:
       graphql:
-        endpoint: https://api.studio.thegraph.com/query/64582/sf-prd-polygon-zkevm-mainnet/0.0.1
+        endpoint: https://api.studio.thegraph.com/query/64582/sf-prd-polygon-zkevm-mainnet/0.0.2
     transforms:
       - blockTracking:
           validateSchema: true
