@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.158](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.157...v0.2.0-beta.158) (2024-03-21)
+
+
+### Features
+
+* return id for user orders and transactions [SF-1097] ([91c7ba0](https://github.com/secured-finance/sf-sdk/commit/91c7ba08b2f67e6ed46701c6cc4041c07e993045))
+
+
+
+
+
 # [0.2.0-beta.157](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.156...v0.2.0-beta.157) (2024-03-18)
 
 **Note:** Version bump only for package @secured-finance/sf-graph-client
