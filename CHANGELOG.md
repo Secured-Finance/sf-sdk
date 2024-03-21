@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.159](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.158...v0.2.0-beta.159) (2024-03-21)
+
+
+### Bug Fixes
+
+* fix the dev subgraph versions [SF-1097] ([25a48b4](https://github.com/Secured-Finance/sf-sdk/commit/25a48b48b37e215d8be23112c01c74adf9107012))
+
+
+### Features
+
+* return id for user orders and transactions [SF-1097] ([91c7ba0](https://github.com/Secured-Finance/sf-sdk/commit/91c7ba08b2f67e6ed46701c6cc4041c07e993045))
+
+
+
+# 0.2.0-beta.157 (2024-03-18)
+
+
+
+
+
 # [0.2.0-beta.158](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.157...v0.2.0-beta.158) (2024-03-21)
 
 
