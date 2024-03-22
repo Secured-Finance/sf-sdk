@@ -16,7 +16,7 @@ export const LENDING_MARKETS = gql`
 
 export const USER_COUNT = gql`
     query UserCount {
-        protocol(id: "ethereum") {
+        protocol(id: "1") {
             totalUsers
         }
     }
