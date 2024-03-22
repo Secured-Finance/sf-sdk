@@ -16,7 +16,7 @@ export const LENDING_MARKETS = gql`
 
 export const USER_COUNT = gql`
     query UserCount {
-        protocol(id: "ethereum") {
+        protocol(id: "1") {
             totalUsers
         }
     }
@@ -45,7 +45,6 @@ export const USER_TRANSACTION_HISTORY = gql`
                 skip: $skip
                 first: $first
             ) {
-                id
                 currency
                 maturity
                 side
@@ -103,7 +102,6 @@ export const USER_ORDER_HISTORY = gql`
                 skip: $skip
                 first: $first
             ) {
-                id
                 orderId
                 currency
                 side
