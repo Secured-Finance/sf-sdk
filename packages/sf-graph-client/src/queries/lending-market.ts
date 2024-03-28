@@ -45,6 +45,7 @@ export const USER_TRANSACTION_HISTORY = gql`
                 skip: $skip
                 first: $first
             ) {
+                id
                 currency
                 maturity
                 side
@@ -102,6 +103,7 @@ export const USER_ORDER_HISTORY = gql`
                 skip: $skip
                 first: $first
             ) {
+                id
                 orderId
                 currency
                 side
