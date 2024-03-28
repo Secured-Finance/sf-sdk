@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.162](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.161...v0.2.0-beta.162) (2024-03-28)
+
+
+### Bug Fixes
+
+* fix the dev subgraph versions [SF-1097] ([25a48b4](https://github.com/secured-finance/sf-sdk/commit/25a48b48b37e215d8be23112c01c74adf9107012))
+* remove id for historical changes [SF-1097] ([65a70ba](https://github.com/secured-finance/sf-sdk/commit/65a70ba4245cd30f779f788f9dd32dfb0b014b73))
+* total users fixed [SF-1097] ([e1dc1dc](https://github.com/secured-finance/sf-sdk/commit/e1dc1dcf759f1ea5a5b42e25d41c4a70f58f0f92))
+
+
+### Features
+
+* add id for user order and transaction history [SF-1097] ([ca99395](https://github.com/secured-finance/sf-sdk/commit/ca9939521619de3e143214b69ae76fbafe8599d4))
+* return id for user orders and transactions [SF-1097] ([91c7ba0](https://github.com/secured-finance/sf-sdk/commit/91c7ba08b2f67e6ed46701c6cc4041c07e993045))
+
+
+
+# 0.2.0-beta.157 (2024-03-18)
+
+
+
+
+
 # [0.2.0-beta.161](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.160...v0.2.0-beta.161) (2024-03-22)
 
 
