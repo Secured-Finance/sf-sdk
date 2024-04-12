@@ -4,6 +4,7 @@ import {
     arbitrumSepolia,
     avalanche,
     avalancheFuji,
+    filecoinCalibration,
     mainnet,
     polygonZkEvm,
     sepolia,
@@ -17,6 +18,7 @@ export const NETWORKS: { [key: number]: string } = {
     43114: 'avalanche-mainnet',
     43113: 'avalanche-fuji',
     1101: 'polygon-zkevm-mainnet',
+    314159: 'filecoin-calibration',
 };
 
 export const CHAINS: { [key: number]: Chain } = {
@@ -27,6 +29,7 @@ export const CHAINS: { [key: number]: Chain } = {
     43114: avalanche,
     43113: avalancheFuji,
     1101: polygonZkEvm,
+    314159: filecoinCalibration,
 };
 
 export const networkNames = [
@@ -37,6 +40,7 @@ export const networkNames = [
     'avalanche-fuji',
     'avalanche-mainnet',
     'polygon-zkevm-mainnet',
+    'filecoin-calibration',
 ] as const;
 export type NetworkName = (typeof networkNames)[number];
 
@@ -50,6 +54,7 @@ const contractEnvironments = [
     'development',
     'development-arb',
     'development-ava',
+    'development-fil',
     'staging',
     'staging-arb',
     'staging-ava',
@@ -69,6 +74,7 @@ const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
         sepolia: 'development',
         'arbitrum-sepolia': 'development-arb',
         'avalanche-fuji': 'development-ava',
+        'filecoin-calibration': 'development-fil',
     },
     staging: {
         sepolia: 'staging',
