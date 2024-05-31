@@ -37,6 +37,8 @@ jobs:
 
       - name: Generate artifacts
         run: npm run codegen
+        env:
+          SCHEMA_URL: ${{ vars.SCHEMA_URL }}
 
       - name: Execute Test
         run: npm run test-all

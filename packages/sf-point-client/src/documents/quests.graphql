@@ -1,0 +1,15 @@
+query getQuests {
+  quests {
+    id
+    questType
+    title
+    description
+    point
+    startAt
+    endAt
+    network
+    chainId
+    currency
+    isHighlight
+  }
+}

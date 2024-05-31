@@ -59,6 +59,8 @@ jobs:
 
       - name: Generate artifacts
         run: npm run codegen
+        env:
+          SCHEMA_URL: ${{ vars.SCHEMA_URL }}
 
       - name: Version and Publish
         env:

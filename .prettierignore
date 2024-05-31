@@ -2,6 +2,7 @@
 packages/sf-client/src/types/
 packages/sf-client/src/deployments
 packages/sf-graph-client/src/generated.ts
+packages/sf-point-client/src/types.ts 
 **/coverage
 **/.nyc_output
 **/dist/

@@ -1,0 +1,23 @@
+{
+  "name": "@secured-finance/sf-point-client",
+  "version": "0.0.1",
+  "description": "GraphQL react client for the point dashboard",
+  "main": "dist/types.js",
+  "scripts": {
+    "codegen": "graphql-codegen --config codegen.ts",
+    "build": "tsc -p tsconfig.json"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "graphql": "^16.8.1"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/typescript": "^4.0.7",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.0",
+    "@graphql-codegen/typescript-resolvers": "^4.1.0",
+    "dotenv": "^16.4.5",
+    "typescript": "^5.1.6"
+  }
+}

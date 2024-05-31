@@ -15,6 +15,10 @@
     {
       "name": "sf-graph-client",
       "path": "../packages/sf-graph-client"
+    },
+    {
+      "name": "sf-point-client",
+      "path": "../packages/sf-point-client"
     }
   ],
   "settings": {
