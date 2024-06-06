@@ -62,6 +62,7 @@ export type PointHistoryModel = {
   questId: Scalars['String']['output'];
   referee?: Maybe<UserModel>;
   refereeUserId?: Maybe<Scalars['String']['output']>;
+  roundNumber: Scalars['Int']['output'];
   user: UserModel;
   userId: Scalars['String']['output'];
 };
@@ -87,8 +88,8 @@ export type QueryUsersArgs = {
 
 export type QuestModel = {
   __typename?: 'QuestModel';
-  chainId?: Maybe<Scalars['Float']['output']>;
-  currency?: Maybe<Scalars['String']['output']>;
+  chainId?: Maybe<Scalars['Int']['output']>;
+  currencies?: Maybe<Array<Scalars['String']['output']>>;
   description: Scalars['String']['output'];
   endAt?: Maybe<Scalars['DateTime']['output']>;
   id: Scalars['String']['output'];
@@ -123,7 +124,7 @@ export type UserModel = {
   loginBonusEarnedAt: Scalars['DateTime']['output'];
   point: Scalars['Int']['output'];
   pointDetails?: Maybe<Scalars['JSON']['output']>;
-  rank?: Maybe<Scalars['Float']['output']>;
+  rank?: Maybe<Scalars['Int']['output']>;
   referralCode?: Maybe<Scalars['String']['output']>;
   referrer?: Maybe<UserModel>;
   referrerUserId?: Maybe<Scalars['String']['output']>;
@@ -204,7 +205,6 @@ export type ResolversTypes = {
   AuthResponse: ResolverTypeWrapper<AuthResponse>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
-  Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   JSON: ResolverTypeWrapper<Scalars['JSON']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -223,7 +223,6 @@ export type ResolversParentTypes = {
   AuthResponse: AuthResponse;
   Boolean: Scalars['Boolean']['output'];
   DateTime: Scalars['DateTime']['output'];
-  Float: Scalars['Float']['output'];
   Int: Scalars['Int']['output'];
   JSON: Scalars['JSON']['output'];
   Mutation: {};
@@ -261,6 +260,7 @@ export type PointHistoryModelResolvers<ContextType = any, ParentType extends Res
   questId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   referee?: Resolver<Maybe<ResolversTypes['UserModel']>, ParentType, ContextType>;
   refereeUserId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  roundNumber?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['UserModel'], ParentType, ContextType>;
   userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -274,8 +274,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type QuestModelResolvers<ContextType = any, ParentType extends ResolversParentTypes['QuestModel'] = ResolversParentTypes['QuestModel']> = {
-  chainId?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  currency?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  chainId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  currencies?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   endAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -295,7 +295,7 @@ export type UserModelResolvers<ContextType = any, ParentType extends ResolversPa
   loginBonusEarnedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   point?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   pointDetails?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  rank?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  rank?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   referralCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   referrer?: Resolver<Maybe<ResolversTypes['UserModel']>, ParentType, ContextType>;
   referrerUserId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -328,7 +328,7 @@ export const GetQuestsDocument = gql`
     endAt
     network
     chainId
-    currency
+    currencies
     isHighlight
   }
 }
@@ -495,7 +495,7 @@ export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQuer
 export type GetQuestsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetQuestsQuery = { __typename?: 'Query', quests: Array<{ __typename?: 'QuestModel', id: string, questType: QuestType, title: string, description: string, point: number, startAt?: any | null, endAt?: any | null, network?: Network | null, chainId?: number | null, currency?: string | null, isHighlight: boolean }> };
+export type GetQuestsQuery = { __typename?: 'Query', quests: Array<{ __typename?: 'QuestModel', id: string, questType: QuestType, title: string, description: string, point: number, startAt?: any | null, endAt?: any | null, network?: Network | null, chainId?: number | null, currencies?: Array<string> | null, isHighlight: boolean }> };
 
 export type SignInMutationVariables = Exact<{
   input: SignInInput;

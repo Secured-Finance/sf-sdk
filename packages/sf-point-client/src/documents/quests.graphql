@@ -9,7 +9,7 @@ query getQuests {
     endAt
     network
     chainId
-    currency
+    currencies
     isHighlight
   }
 }
