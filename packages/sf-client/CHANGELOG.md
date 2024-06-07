@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.167](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.166...v0.2.0-beta.167) (2024-06-07)
+
+
+### Features
+
+* support FVM in dev [SF-1112] ([46588ef](https://github.com/secured-finance/sf-sdk/commit/46588efe31d00eaff3aa5f4a0f92bc59dbf5e53e))
+
+
+
+
+
 # [0.2.0-beta.164](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.163...v0.2.0-beta.164) (2024-04-12)
 
 
