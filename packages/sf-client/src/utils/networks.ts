@@ -58,6 +58,7 @@ const contractEnvironments = [
     'staging',
     'staging-arb',
     'staging-ava',
+    'staging-fil',
     'sepolia',
     'mainnet',
     'arbitrum-sepolia',
@@ -80,6 +81,7 @@ const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
         sepolia: 'staging',
         'arbitrum-sepolia': 'staging-arb',
         'avalanche-fuji': 'staging-ava',
+        'filecoin-calibration': 'staging-fil',
     },
     production: {
         sepolia: 'sepolia',
