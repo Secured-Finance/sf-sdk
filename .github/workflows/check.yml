@@ -34,6 +34,8 @@ jobs:
 
       - name: Build Repo
         run: npm run build
+        env:
+          SCHEMA_URL: ${{ vars.SCHEMA_URL }}
 
       - name: Generate artifacts
         run: npm run codegen

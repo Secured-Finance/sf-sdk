@@ -5,7 +5,8 @@
   "main": "dist/types.js",
   "scripts": {
     "codegen": "graphql-codegen --config codegen.ts",
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "prebuild": "npm run codegen"
   },
   "author": "",
   "license": "MIT",
