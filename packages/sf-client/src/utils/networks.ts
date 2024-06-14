@@ -4,6 +4,7 @@ import {
     arbitrumSepolia,
     avalanche,
     avalancheFuji,
+    filecoin,
     filecoinCalibration,
     mainnet,
     polygonZkEvm,
@@ -18,6 +19,7 @@ export const NETWORKS: { [key: number]: string } = {
     43114: 'avalanche-mainnet',
     43113: 'avalanche-fuji',
     1101: 'polygon-zkevm-mainnet',
+    314: 'filecoin-mainnet',
     314159: 'filecoin-calibration',
 };
 
@@ -29,6 +31,7 @@ export const CHAINS: { [key: number]: Chain } = {
     43114: avalanche,
     43113: avalancheFuji,
     1101: polygonZkEvm,
+    314: filecoin,
     314159: filecoinCalibration,
 };
 
@@ -41,6 +44,7 @@ export const networkNames = [
     'avalanche-mainnet',
     'polygon-zkevm-mainnet',
     'filecoin-calibration',
+    'filecoin-mainnet',
 ] as const;
 export type NetworkName = (typeof networkNames)[number];
 
@@ -65,6 +69,7 @@ const contractEnvironments = [
     'arbitrum-one',
     'avalanche-mainnet',
     'polygon-zkevm-mainnet',
+    'filecoin-mainnet',
 ] as const;
 type Environment = (typeof environments)[number];
 export type ContractEnvironments = (typeof contractEnvironments)[number];
@@ -90,6 +95,7 @@ const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
         'arbitrum-one': 'arbitrum-one',
         'avalanche-mainnet': 'avalanche-mainnet',
         'polygon-zkevm-mainnet': 'polygon-zkevm-mainnet',
+        'filecoin-mainnet': 'filecoin-mainnet',
     },
 };
 
