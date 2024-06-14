@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.168](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.167...v0.2.0-beta.168) (2024-06-14)
+
+
+### Bug Fixes
+
+* fix publishing issue [SF-1157] ([0ee64ee](https://github.com/Secured-Finance/sf-sdk/commit/0ee64ee9faf4fea36d2b39d3f3f4e02eb5d3bad3))
+
+
+### Features
+
+* support Filecoin Mainnet [SF-1157] ([e4904f0](https://github.com/Secured-Finance/sf-sdk/commit/e4904f02f3480eb06b65ba9ed4f20a970d4bcd57))
+
+
+
+
+
 # [0.2.0-beta.167](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.166...v0.2.0-beta.167) (2024-06-07)
 
 
