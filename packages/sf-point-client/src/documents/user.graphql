@@ -11,5 +11,6 @@ query getUser {
     }
     joinedAt
     rank
+    boostPercentage
   }
 }
