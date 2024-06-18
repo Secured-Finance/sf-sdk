@@ -5,6 +5,7 @@ query getUser {
     point
     pointDetails
     referralCode
+    refereesCount
     referrer {
       id
       walletAddress
