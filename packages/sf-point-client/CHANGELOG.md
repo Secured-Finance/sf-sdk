@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.170](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.169...v0.2.0-beta.170) (2024-06-18)
+
+
+### Features
+
+* update document for referees counts [SF-1203] ([47ddc0a](https://github.com/Secured-Finance/sf-sdk/commit/47ddc0af4df837ac266f675e227cc023cd96c8d0))
+
+
+
+
+
 # [0.2.0-beta.169](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.168...v0.2.0-beta.169) (2024-06-18)
 
 
