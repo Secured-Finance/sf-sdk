@@ -605,7 +605,7 @@ export class SecuredFinanceClient {
                 args: [address, spender],
             });
 
-            if (allowance <= amount) {
+            if (allowance < amount) {
                 const tx = await this.walletClient.writeContract({
                     abi: ERC20Abi,
                     address: tokenAddress,
