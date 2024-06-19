@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.171](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.170...v0.2.0-beta.171) (2024-06-19)
+
+
+### Features
+
+* support ERC4361 [SF-1157] ([83fa999](https://github.com/Secured-Finance/sf-sdk/commit/83fa999a337642a97c18f6bccae455279bf8ff8f))
+
+
+
+
+
 # [0.2.0-beta.170](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.169...v0.2.0-beta.170) (2024-06-18)
 
 
