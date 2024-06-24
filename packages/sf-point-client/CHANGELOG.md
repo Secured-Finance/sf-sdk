@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.173](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.172...v0.2.0-beta.173) (2024-06-24)
+
+
+### Features
+
+* add bonusPoints in getQuests [SF-1206] ([291ef04](https://github.com/Secured-Finance/sf-sdk/commit/291ef04f87e61fe658b8b176517c8161c8a2a3d6))
+
+
+
+
+
 # [0.2.0-beta.171](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.170...v0.2.0-beta.171) (2024-06-19)
 
 
