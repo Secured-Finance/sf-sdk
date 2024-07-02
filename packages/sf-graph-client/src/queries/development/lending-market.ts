@@ -213,8 +213,6 @@ export const TRANSACTION_CANDLE_STICK = gql`
         $currency: Bytes!
         $maturity: BigInt!
         $interval: BigInt!
-        $first: Int!
-        $skip: Int!
     ) {
         transactionCandleSticks(
             where: {

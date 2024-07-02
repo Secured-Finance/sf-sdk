@@ -23,7 +23,7 @@ npm run bootstrap
 To build updated packages, run:
 
 ```
-npm run build-all
+npm run build
 ```
 
 This will compile and build all packages inside the monorepo. To build individual package please run the same command from an individual repository
