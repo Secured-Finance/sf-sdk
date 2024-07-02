@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.174](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.173...v0.2.0-beta.174) (2024-07-02)
+
+
+### Bug Fixes
+
+* remove first and skip from candlestick query [SF-1214] ([098e928](https://github.com/secured-finance/sf-sdk/commit/098e9289f2699934b1500d31216239a7b2cf0573))
+* replace first with count [SF-1214] ([38e4c10](https://github.com/secured-finance/sf-sdk/commit/38e4c104bfbb759c79ac862db1ae75a31f5d316a))
+
+
+
+# 0.2.0-beta.172 (2024-06-19)
+
+
+
+
+
 # [0.2.0-beta.163](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.162...v0.2.0-beta.163) (2024-04-05)
 
 **Note:** Version bump only for package @secured-finance/sf-graph-client
