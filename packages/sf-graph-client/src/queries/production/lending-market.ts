@@ -93,6 +93,28 @@ export const FILTERED_USER_TRANSACTION_HISTORY = gql`
     }
 `;
 
+export const FULL_USER_TRANSACTION_HISTORY = gql`
+    query FullUserTransactionHistory($address: ID!) {
+        user(id: $address) {
+            transactions(orderBy: createdAt, orderDirection: desc) {
+                id
+                currency
+                maturity
+                side
+                executionPrice
+                futureValue
+                amount
+                averagePrice
+                createdAt
+                feeInFV
+                user {
+                    id
+                }
+            }
+        }
+    }
+`;
+
 export const USER_ORDER_HISTORY = gql`
     query UserOrderHistory($address: ID!, $skip: Int!, $count: Int!) {
         user(id: $address) {
@@ -140,6 +162,35 @@ export const FILTERED_USER_ORDER_HISTORY = gql`
                 orderDirection: desc
                 where: { currency: $currency, maturity: $maturity }
             ) {
+                id
+                orderId
+                currency
+                side
+                maturity
+                inputUnitPrice
+                inputAmount
+                filledAmount
+                status
+                lendingMarket {
+                    id
+                    isActive
+                }
+                type
+                isCircuitBreakerTriggered
+                createdAt
+                txHash
+                user {
+                    id
+                }
+            }
+        }
+    }
+`;
+
+export const FULL_USER_ORDER_HISTORY = gql`
+    query FullUserOrderHistory($address: ID!) {
+        user(id: $address) {
+            orders(orderBy: createdAt, orderDirection: desc) {
                 id
                 orderId
                 currency
