@@ -36,14 +36,14 @@ export const DAILY_VOLUMES = gql`
 `;
 
 export const USER_TRANSACTION_HISTORY = gql`
-    query UserTransactionHistory($address: ID!, $skip: Int!, $first: Int!) {
+    query UserTransactionHistory($address: ID!, $skip: Int!, $count: Int!) {
         user(id: $address) {
             transactionCount
             transactions(
                 orderBy: createdAt
                 orderDirection: desc
                 skip: $skip
-                first: $first
+                first: $count
             ) {
                 id
                 currency
@@ -94,14 +94,14 @@ export const FILTERED_USER_TRANSACTION_HISTORY = gql`
 `;
 
 export const USER_ORDER_HISTORY = gql`
-    query UserOrderHistory($address: ID!, $skip: Int!, $first: Int!) {
+    query UserOrderHistory($address: ID!, $skip: Int!, $count: Int!) {
         user(id: $address) {
             orderCount
             orders(
                 orderBy: createdAt
                 orderDirection: desc
                 skip: $skip
-                first: $first
+                first: $count
             ) {
                 id
                 orderId
@@ -213,8 +213,6 @@ export const TRANSACTION_CANDLE_STICK = gql`
         $currency: Bytes!
         $maturity: BigInt!
         $interval: BigInt!
-        $first: Int!
-        $skip: Int!
     ) {
         transactionCandleSticks(
             where: {
