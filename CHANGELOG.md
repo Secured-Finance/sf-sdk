@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.175](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.174...v0.2.0-beta.175) (2024-07-03)
+
+
+### Bug Fixes
+
+* remove first and skip from candlestick query [SF-1214] ([098e928](https://github.com/Secured-Finance/sf-sdk/commit/098e9289f2699934b1500d31216239a7b2cf0573))
+* replace first with count [SF-1214] ([38e4c10](https://github.com/Secured-Finance/sf-sdk/commit/38e4c104bfbb759c79ac862db1ae75a31f5d316a))
+
+
+### Features
+
+* create full queries [SF-1214] ([55b23f4](https://github.com/Secured-Finance/sf-sdk/commit/55b23f40f601105040b417212028efd171254ba4))
+
+
+
+# 0.2.0-beta.172 (2024-06-19)
+
+
+
+
+
 # [0.2.0-beta.174](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.173...v0.2.0-beta.174) (2024-07-02)
 
 
