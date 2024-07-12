@@ -1,5 +1,6 @@
 import { Currency, Token, getUTCMonthYear } from '@secured-finance/sf-core';
 import {
+    Address,
     Hex,
     PublicClient,
     WalletClient,
@@ -9,6 +10,7 @@ import {
 import { ERC20Abi } from './ERC20Abi';
 import {
     getCurrencyControllerContract,
+    getGenesisValueVaultContract,
     getLendingMarketControllerContract,
     getLendingMarketReaderContract,
     getTokenFaucetContract,
@@ -592,6 +594,15 @@ export class SecuredFinanceClient {
         });
     }
 
+    async getERC20TokenBalance(tokenAddress: string, account: string) {
+        return this.publicClient.readContract({
+            abi: ERC20Abi,
+            address: tokenAddress as Address,
+            functionName: 'balanceOf',
+            args: [account as Hex],
+        });
+    }
+
     private async approveTokenTransfer(ccy: Currency, amount: bigint) {
         const [address] = await this.walletClient.getAddresses();
         const tokenAddress = await this.tokenVault.getTokenAddress(ccy);
@@ -869,5 +880,125 @@ export class SecuredFinanceClient {
             lastBorrowUnitPrice: result[2],
             totalOffsetAmount: result[3],
         };
+    }
+
+    async getGenesisValue(currency: Currency, account: string) {
+        return this.publicClient.readContract({
+            ...getLendingMarketControllerContract(this.config.env),
+            functionName: 'getGenesisValue',
+            args: [this.convertCurrencyToBytes32(currency), account as Hex],
+        });
+    }
+
+    async getZCToken(currency: Currency, maturity: number) {
+        return this.publicClient.readContract({
+            ...getLendingMarketControllerContract(this.config.env),
+            functionName: 'getZCToken',
+            args: [this.convertCurrencyToBytes32(currency), BigInt(maturity)],
+        });
+    }
+
+    async getWithdrawableZCTokenAmount(
+        currency: Currency,
+        maturity: number,
+        account: string
+    ) {
+        return this.publicClient.readContract({
+            ...getLendingMarketControllerContract(this.config.env),
+            functionName: 'getWithdrawableZCTokenAmount',
+            args: [
+                this.convertCurrencyToBytes32(currency),
+                BigInt(maturity),
+                account as Hex,
+            ],
+        });
+    }
+
+    async withdrawZCToken(
+        currency: Currency,
+        maturity: number,
+        amount: bigint
+    ) {
+        const [address] = await this.walletClient.getAddresses();
+        const estimatedGas = await this.publicClient.estimateContractGas({
+            ...getLendingMarketControllerContract(this.config.env),
+            account: address,
+            functionName: 'withdrawZCToken',
+            args: [
+                this.convertCurrencyToBytes32(currency),
+                BigInt(maturity),
+                amount,
+            ],
+        });
+        return this.walletClient.writeContract({
+            ...getLendingMarketControllerContract(this.config.env),
+            account: address,
+            chain: this.config.chain,
+            functionName: 'withdrawZCToken',
+            args: [
+                this.convertCurrencyToBytes32(currency),
+                BigInt(maturity),
+                amount,
+            ],
+            gas: this.calculateAdjustedGas(estimatedGas),
+        });
+    }
+
+    async depositZCToken(currency: Currency, maturity: number, amount: bigint) {
+        const [address] = await this.walletClient.getAddresses();
+        const estimatedGas = await this.publicClient.estimateContractGas({
+            ...getLendingMarketControllerContract(this.config.env),
+            account: address,
+            functionName: 'depositZCToken',
+            args: [
+                this.convertCurrencyToBytes32(currency),
+                BigInt(maturity),
+                amount,
+            ],
+        });
+        return this.walletClient.writeContract({
+            ...getLendingMarketControllerContract(this.config.env),
+            account: address,
+            chain: this.config.chain,
+            functionName: 'depositZCToken',
+            args: [
+                this.convertCurrencyToBytes32(currency),
+                BigInt(maturity),
+                amount,
+            ],
+            gas: this.calculateAdjustedGas(estimatedGas),
+        });
+    }
+
+    async getLatestAutoRollLog(currency: Currency) {
+        return this.publicClient.readContract({
+            ...getGenesisValueVaultContract(this.config.env),
+            functionName: 'getLatestAutoRollLog',
+            args: [this.convertCurrencyToBytes32(currency)],
+        });
+    }
+
+    async getAutoRollLog(currency: Currency, maturity: number) {
+        return this.publicClient.readContract({
+            ...getGenesisValueVaultContract(this.config.env),
+            functionName: 'getAutoRollLog',
+            args: [this.convertCurrencyToBytes32(currency), BigInt(maturity)],
+        });
+    }
+
+    async calculateFVFromGV(
+        currency: Currency,
+        maturity: number,
+        amount: bigint
+    ) {
+        return this.publicClient.readContract({
+            ...getGenesisValueVaultContract(this.config.env),
+            functionName: 'calculateFVFromGV',
+            args: [
+                this.convertCurrencyToBytes32(currency),
+                BigInt(maturity),
+                amount,
+            ],
+        });
     }
 }

@@ -4,6 +4,10 @@ import {
     addresses as currencyControllerAddresses,
 } from './deployments/CurrencyController';
 import {
+    abi as genesisValueVaultAbi,
+    addresses as genesisValueVaultAddresses,
+} from './deployments/GenesisValueVault';
+import {
     abi as lendingMarketControllerAbi,
     addresses as lendingMarketControllerAddresses,
 } from './deployments/LendingMarketController';
@@ -55,5 +59,12 @@ export const getCurrencyControllerContract = (env: ContractEnvironments) => {
     return {
         abi: currencyControllerAbi,
         address: currencyControllerAddresses[env] as Hex,
+    };
+};
+
+export const getGenesisValueVaultContract = (env: ContractEnvironments) => {
+    return {
+        abi: genesisValueVaultAbi,
+        address: genesisValueVaultAddresses[env] as Hex,
     };
 };
