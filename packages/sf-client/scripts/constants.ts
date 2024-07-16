@@ -4,4 +4,5 @@ export const contractsList = [
     'LendingMarketReader',
     'TokenFaucet',
     'TokenVault',
+    'GenesisValueVault',
 ];
