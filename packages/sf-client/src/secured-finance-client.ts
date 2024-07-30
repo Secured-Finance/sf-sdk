@@ -6,8 +6,10 @@ import {
     WalletClient,
     hexToString,
     stringToHex,
+    parseSignature,
 } from 'viem';
 import { ERC20Abi } from './ERC20Abi';
+import { ERC20PermitAbi } from './ERC20PermitAbi';
 import {
     getCurrencyControllerContract,
     getGenesisValueVaultContract,
@@ -293,43 +295,94 @@ export class SecuredFinanceClient {
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
             const overrides: PayableOverrides = {};
 
-            if (ccy.isNative) {
-                overrides.value = amount;
+            if (ccy.isNative || !ccy.hasPermit) {
+                if (ccy.isNative) {
+                    overrides.value = amount;
+                } else {
+                    const isApproved = await this.approveTokenTransfer(
+                        ccy,
+                        amount
+                    );
+                    await onApproved?.(isApproved);
+                }
+
+                const estimatedGas =
+                    await this.publicClient.estimateContractGas({
+                        ...contract,
+                        account: address,
+                        functionName: 'depositAndExecuteOrder',
+                        args: [
+                            this.convertCurrencyToBytes32(ccy),
+                            BigInt(maturity),
+                            side,
+                            amount,
+                            BigInt(unitPrice ?? 0),
+                        ],
+                        ...overrides,
+                    });
+                overrides.gas = this.calculateAdjustedGas(estimatedGas);
+                return this.walletClient.writeContract({
+                    ...contract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'depositAndExecuteOrder',
+                    args: [
+                        this.convertCurrencyToBytes32(ccy),
+                        BigInt(maturity),
+                        side,
+                        amount,
+                        BigInt(unitPrice ?? 0),
+                    ],
+                    ...overrides,
+                });
             } else {
-                const isApproved = await this.approveTokenTransfer(ccy, amount);
-                await onApproved?.(isApproved);
+                const latestBlock = await this.publicClient.getBlock({
+                    blockTag: 'latest',
+                });
+                const deadline = latestBlock.timestamp + BigInt(4200);
+
+                const sig = await this.getPermitSignature(
+                    ccy,
+                    amount,
+                    deadline
+                );
+
+                const estimatedGas =
+                    await this.publicClient.estimateContractGas({
+                        ...contract,
+                        account: address,
+                        functionName: 'depositWithPermitAndExecuteOrder',
+                        args: [
+                            this.convertCurrencyToBytes32(ccy),
+                            BigInt(maturity),
+                            side,
+                            amount,
+                            BigInt(unitPrice ?? 0),
+                            deadline,
+                            Number(sig.v ?? 27),
+                            sig.r,
+                            sig.s,
+                        ],
+                    });
+                return this.walletClient.writeContract({
+                    ...contract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'depositWithPermitAndExecuteOrder',
+                    args: [
+                        this.convertCurrencyToBytes32(ccy),
+                        BigInt(maturity),
+                        side,
+                        amount,
+                        BigInt(unitPrice ?? 0),
+                        deadline,
+                        Number(sig.v ?? 27),
+                        sig.r,
+                        sig.s,
+                    ],
+                    gas: this.calculateAdjustedGas(estimatedGas),
+                });
             }
-
-            const estimatedGas = await this.publicClient.estimateContractGas({
-                ...contract,
-                account: address,
-                functionName: 'depositAndExecuteOrder',
-                args: [
-                    this.convertCurrencyToBytes32(ccy),
-                    BigInt(maturity),
-                    side,
-                    amount,
-                    BigInt(unitPrice ?? 0),
-                ],
-                ...overrides,
-            });
-
-            overrides.gas = this.calculateAdjustedGas(estimatedGas);
-
-            return this.walletClient.writeContract({
-                ...contract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'depositAndExecuteOrder',
-                args: [
-                    this.convertCurrencyToBytes32(ccy),
-                    BigInt(maturity),
-                    side,
-                    amount,
-                    BigInt(unitPrice ?? 0),
-                ],
-                ...overrides,
-            });
         } else {
             const estimatedGas = await this.publicClient.estimateContractGas({
                 ...contract,
@@ -601,6 +654,72 @@ export class SecuredFinanceClient {
             functionName: 'balanceOf',
             args: [account as Hex],
         });
+    }
+
+    async getERC20TokenName(tokenAddress: string) {
+        return this.publicClient.readContract({
+            abi: ERC20Abi,
+            address: tokenAddress as Address,
+            functionName: 'name',
+        });
+    }
+
+    async getUserNonceFromPermitToken(tokenAddress: string, account: string) {
+        return this.publicClient.readContract({
+            abi: ERC20PermitAbi,
+            address: tokenAddress as Address,
+            functionName: 'nonces',
+            args: [account as Hex],
+        });
+    }
+
+    private async getPermitSignature(
+        ccy: Currency,
+        amount: bigint,
+        deadline: bigint
+    ) {
+        const tokenAddress = await this.tokenVault.getTokenAddress(ccy);
+        const [address] = await this.walletClient.getAddresses();
+        const spender = getTokenVaultContract(this.config.env).address;
+        const nonce = await this.getUserNonceFromPermitToken(
+            tokenAddress,
+            address
+        );
+
+        const domain = {
+            name: await this.getERC20TokenName(tokenAddress),
+            version: '1',
+            chainId: this.config.networkId,
+            verifyingContract: tokenAddress,
+        };
+
+        const types = {
+            Permit: [
+                { name: 'owner', type: 'address' },
+                { name: 'spender', type: 'address' },
+                { name: 'value', type: 'uint256' },
+                { name: 'nonce', type: 'uint256' },
+                { name: 'deadline', type: 'uint256' },
+            ],
+        };
+
+        const message = {
+            owner: address,
+            spender: spender,
+            value: amount.toString(),
+            nonce: nonce.toString(),
+            deadline: deadline.toString(),
+        };
+
+        const signature = await this.walletClient.signTypedData({
+            account: address,
+            domain,
+            types,
+            primaryType: 'Permit',
+            message: message,
+        });
+
+        return parseSignature(signature);
     }
 
     private async approveTokenTransfer(ccy: Currency, amount: bigint) {

@@ -1,7 +1,7 @@
 import { Token } from './token';
 
 describe('token', () => {
-    const token = new Token(18, 'TKN', 'Token');
+    const token = new Token(18, 'TKN', 'Token', true);
     it('should create an instance', () => {
         expect(token).toBeTruthy();
     });
@@ -14,6 +14,10 @@ describe('token', () => {
         expect(token.isToken).toBeTruthy();
     });
 
+    it('should has a permit function', () => {
+        expect(token.hasPermit).toBeTruthy();
+    });
+
     it('should be wrapped by itself', () => {
         expect(token.wrapped).toBe(token);
     });
@@ -23,7 +27,7 @@ describe('token', () => {
     });
 
     it('should be different from another token', () => {
-        const other = new Token(18, 'TKN1', 'Token');
+        const other = new Token(18, 'TKN1', 'Token', true);
         expect(token.equals(other)).toBeFalsy();
     });
 });

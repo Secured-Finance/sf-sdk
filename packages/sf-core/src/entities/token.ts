@@ -4,9 +4,16 @@ import { Currency } from './currency';
 export class Token extends BaseCurrency {
     public readonly isNative = false;
     public readonly isToken = true;
+    public readonly hasPermit: boolean;
 
-    public constructor(decimals: number, symbol: string, name: string) {
+    public constructor(
+        decimals: number,
+        symbol: string,
+        name: string,
+        hasPermit = false
+    ) {
         super(decimals, symbol, name);
+        this.hasPermit = hasPermit;
     }
 
     /**
@@ -18,7 +25,8 @@ export class Token extends BaseCurrency {
             other.isToken &&
             this.decimals === other.decimals &&
             this.symbol === other.symbol &&
-            this.name === other.name
+            this.name === other.name &&
+            this.hasPermit === other.hasPermit
         );
     }
 
