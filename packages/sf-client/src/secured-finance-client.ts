@@ -187,21 +187,48 @@ export class SecuredFinanceClient {
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
         const [address] = await this.walletClient.getAddresses();
-        const isApproved = await this.approveTokenTransfer(ccy, amount);
-        await onApproved?.(isApproved);
 
-        const payableOverride: PayableOverrides = ccy.isNative
-            ? { value: amount }
-            : {};
+        if (ccy.isNative || !ccy.hasPermit) {
+            const payableOverride: PayableOverrides = {};
+            if (ccy.isNative) {
+                payableOverride.value = amount;
+            } else {
+                const isApproved = await this.approveTokenTransfer(ccy, amount);
+                await onApproved?.(isApproved);
+            }
 
-        return this.walletClient.writeContract({
-            ...getTokenVaultContract(this.config.env),
-            account: address,
-            chain: this.config.chain,
-            functionName: 'deposit',
-            args: [this.convertCurrencyToBytes32(ccy), amount],
-            ...payableOverride,
-        });
+            return this.walletClient.writeContract({
+                ...getTokenVaultContract(this.config.env),
+                account: address,
+                chain: this.config.chain,
+                functionName: 'deposit',
+                args: [this.convertCurrencyToBytes32(ccy), amount],
+                ...payableOverride,
+            });
+        } else {
+            const latestBlock = await this.publicClient.getBlock({
+                blockTag: 'latest',
+            });
+            const deadline = latestBlock.timestamp + BigInt(4200);
+
+            const sig = await this.getPermitSignature(ccy, amount, deadline);
+
+            return this.walletClient.writeContract({
+                ...getTokenVaultContract(this.config.env),
+                account: address,
+                chain: this.config.chain,
+                functionName: 'depositWithPermitTo',
+                args: [
+                    this.convertCurrencyToBytes32(ccy),
+                    amount,
+                    address,
+                    deadline,
+                    Number(sig.v ?? 27),
+                    sig.r,
+                    sig.s,
+                ],
+            });
+        }
     }
 
     async getBestLendUnitPrices(ccy: Currency) {
@@ -293,9 +320,9 @@ export class SecuredFinanceClient {
         const contract = getLendingMarketControllerContract(this.config.env);
 
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
-            const overrides: PayableOverrides = {};
-
             if (ccy.isNative || !ccy.hasPermit) {
+                const overrides: PayableOverrides = {};
+
                 if (ccy.isNative) {
                     overrides.value = amount;
                 } else {
@@ -427,45 +454,98 @@ export class SecuredFinanceClient {
         const contract = getLendingMarketControllerContract(this.config.env);
 
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
-            const overrides: PayableOverrides = {};
+            if (ccy.isNative || !ccy.hasPermit) {
+                const overrides: PayableOverrides = {};
 
-            if (ccy.isNative) {
-                overrides.value = amount;
+                if (ccy.isNative) {
+                    overrides.value = amount;
+                } else {
+                    const isApproved = await this.approveTokenTransfer(
+                        ccy,
+                        amount
+                    );
+                    await onApproved?.(isApproved);
+                }
+
+                const estimatedGas =
+                    await this.publicClient.estimateContractGas({
+                        ...contract,
+                        account: address,
+                        functionName: 'depositAndExecutesPreOrder',
+                        args: [
+                            this.convertCurrencyToBytes32(ccy),
+                            BigInt(maturity),
+                            side,
+                            amount,
+                            BigInt(unitPrice),
+                        ],
+                        ...overrides,
+                    });
+                overrides.gas = this.calculateAdjustedGas(estimatedGas);
+
+                return this.walletClient.writeContract({
+                    ...contract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'depositAndExecutesPreOrder',
+                    args: [
+                        this.convertCurrencyToBytes32(ccy),
+                        BigInt(maturity),
+                        side,
+                        amount,
+                        BigInt(unitPrice),
+                    ],
+                    ...overrides,
+                });
             } else {
-                const isApproved = await this.approveTokenTransfer(ccy, amount);
-                await onApproved?.(isApproved);
+                const latestBlock = await this.publicClient.getBlock({
+                    blockTag: 'latest',
+                });
+                const deadline = latestBlock.timestamp + BigInt(4200);
+
+                const sig = await this.getPermitSignature(
+                    ccy,
+                    amount,
+                    deadline
+                );
+
+                const estimatedGas =
+                    await this.publicClient.estimateContractGas({
+                        ...contract,
+                        account: address,
+                        functionName: 'depositWithPermitAndExecutePreOrder',
+                        args: [
+                            this.convertCurrencyToBytes32(ccy),
+                            BigInt(maturity),
+                            side,
+                            amount,
+                            BigInt(unitPrice),
+                            deadline,
+                            Number(sig.v ?? 27),
+                            sig.r,
+                            sig.s,
+                        ],
+                    });
+
+                return this.walletClient.writeContract({
+                    ...contract,
+                    account: address,
+                    chain: this.config.chain,
+                    functionName: 'depositWithPermitAndExecutePreOrder',
+                    args: [
+                        this.convertCurrencyToBytes32(ccy),
+                        BigInt(maturity),
+                        side,
+                        amount,
+                        BigInt(unitPrice),
+                        deadline,
+                        Number(sig.v ?? 27),
+                        sig.r,
+                        sig.s,
+                    ],
+                    gas: this.calculateAdjustedGas(estimatedGas),
+                });
             }
-
-            const estimatedGas = await this.publicClient.estimateContractGas({
-                ...contract,
-                account: address,
-                functionName: 'depositAndExecutesPreOrder',
-                args: [
-                    this.convertCurrencyToBytes32(ccy),
-                    BigInt(maturity),
-                    side,
-                    amount,
-                    BigInt(unitPrice),
-                ],
-                ...overrides,
-            });
-
-            overrides.gas = this.calculateAdjustedGas(estimatedGas);
-
-            return this.walletClient.writeContract({
-                ...contract,
-                account: address,
-                chain: this.config.chain,
-                functionName: 'depositAndExecutesPreOrder',
-                args: [
-                    this.convertCurrencyToBytes32(ccy),
-                    BigInt(maturity),
-                    side,
-                    amount,
-                    BigInt(unitPrice),
-                ],
-                ...overrides,
-            });
         } else {
             const estimatedGas = await this.publicClient.estimateContractGas({
                 ...contract,
