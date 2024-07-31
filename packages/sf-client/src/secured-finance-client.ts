@@ -189,6 +189,7 @@ export class SecuredFinanceClient {
     async depositCollateral(
         ccy: Currency,
         amount: bigint,
+        deadline?: bigint,
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
         const [address] = await this.walletClient.getAddresses();
@@ -211,12 +212,9 @@ export class SecuredFinanceClient {
                 ...payableOverride,
             });
         } else {
-            const latestBlock = await this.publicClient.getBlock({
-                blockTag: 'latest',
-            });
-            const deadline = latestBlock.timestamp + BigInt(4200);
+            const deadline_ = deadline ?? (await this.getDefaultDeadline());
 
-            const sig = await this.getPermitSignature(ccy, amount, deadline);
+            const sig = await this.getPermitSignature(ccy, amount, deadline_);
 
             return this.walletClient.writeContract({
                 ...getTokenVaultContract(this.config.env),
@@ -227,7 +225,7 @@ export class SecuredFinanceClient {
                     this.convertCurrencyToBytes32(ccy),
                     amount,
                     address,
-                    deadline,
+                    deadline_,
                     sig.v,
                     sig.r,
                     sig.s,
@@ -309,6 +307,7 @@ export class SecuredFinanceClient {
      * @param side Order position type, 0 for lend, 1 for borrow
      * @param amount Amount of funds the maker wants to borrow/lend
      * @param unitPrice Unit price the taker is willing to pay/receive. 0 for placing a market order
+     * @param deadline When ccy provides the permit function, the deadline is used during the permit call.
      * @param onApproved callback function to be called after the approval transaction is mined
      * @returns a `ContractTransaction`
      */
@@ -319,6 +318,7 @@ export class SecuredFinanceClient {
         amount: bigint,
         sourceWallet: WalletSource,
         unitPrice?: number,
+        deadline?: bigint,
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
         const [address] = await this.walletClient.getAddresses();
@@ -368,15 +368,12 @@ export class SecuredFinanceClient {
                     ...overrides,
                 });
             } else {
-                const latestBlock = await this.publicClient.getBlock({
-                    blockTag: 'latest',
-                });
-                const deadline = latestBlock.timestamp + BigInt(4200);
+                const deadline_ = deadline ?? (await this.getDefaultDeadline());
 
                 const sig = await this.getPermitSignature(
                     ccy,
                     amount,
-                    deadline
+                    deadline_
                 );
 
                 const estimatedGas =
@@ -390,7 +387,7 @@ export class SecuredFinanceClient {
                             side,
                             amount,
                             BigInt(unitPrice ?? 0),
-                            deadline,
+                            deadline_,
                             sig.v,
                             sig.r,
                             sig.s,
@@ -407,7 +404,7 @@ export class SecuredFinanceClient {
                         side,
                         amount,
                         BigInt(unitPrice ?? 0),
-                        deadline,
+                        deadline_,
                         sig.v,
                         sig.r,
                         sig.s,
@@ -453,6 +450,7 @@ export class SecuredFinanceClient {
         amount: bigint,
         sourceWallet: WalletSource,
         unitPrice: number,
+        deadline?: bigint,
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
         const [address] = await this.walletClient.getAddresses();
@@ -503,15 +501,12 @@ export class SecuredFinanceClient {
                     ...overrides,
                 });
             } else {
-                const latestBlock = await this.publicClient.getBlock({
-                    blockTag: 'latest',
-                });
-                const deadline = latestBlock.timestamp + BigInt(4200);
+                const deadline_ = deadline ?? (await this.getDefaultDeadline());
 
                 const sig = await this.getPermitSignature(
                     ccy,
                     amount,
-                    deadline
+                    deadline_
                 );
 
                 const estimatedGas =
@@ -525,7 +520,7 @@ export class SecuredFinanceClient {
                             side,
                             amount,
                             BigInt(unitPrice),
-                            deadline,
+                            deadline_,
                             sig.v,
                             sig.r,
                             sig.s,
@@ -543,7 +538,7 @@ export class SecuredFinanceClient {
                         side,
                         amount,
                         BigInt(unitPrice),
-                        deadline,
+                        deadline_,
                         sig.v,
                         sig.r,
                         sig.s,
@@ -776,6 +771,13 @@ export class SecuredFinanceClient {
         }
 
         return { r, s, v };
+    }
+
+    private async getDefaultDeadline() {
+        const latestBlock = await this.publicClient.getBlock({
+            blockTag: 'latest',
+        });
+        return latestBlock.timestamp + BigInt(600);
     }
 
     private async getPermitSignature(
