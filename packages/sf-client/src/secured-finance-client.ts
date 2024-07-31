@@ -6,7 +6,6 @@ import {
     WalletClient,
     hexToString,
     stringToHex,
-    parseSignature,
 } from 'viem';
 import { ERC20Abi } from './ERC20Abi';
 import { ERC20PermitAbi } from './ERC20PermitAbi';
@@ -31,6 +30,12 @@ import {
 export interface PayableOverrides {
     value?: bigint;
     gas?: bigint;
+}
+
+interface Signature {
+    r: `0x${string}`;
+    s: `0x${string}`;
+    v: number;
 }
 
 export enum OrderSide {
@@ -223,7 +228,7 @@ export class SecuredFinanceClient {
                     amount,
                     address,
                     deadline,
-                    Number(sig.v ?? 27),
+                    sig.v,
                     sig.r,
                     sig.s,
                 ],
@@ -386,7 +391,7 @@ export class SecuredFinanceClient {
                             amount,
                             BigInt(unitPrice ?? 0),
                             deadline,
-                            Number(sig.v ?? 27),
+                            sig.v,
                             sig.r,
                             sig.s,
                         ],
@@ -403,7 +408,7 @@ export class SecuredFinanceClient {
                         amount,
                         BigInt(unitPrice ?? 0),
                         deadline,
-                        Number(sig.v ?? 27),
+                        sig.v,
                         sig.r,
                         sig.s,
                     ],
@@ -521,7 +526,7 @@ export class SecuredFinanceClient {
                             amount,
                             BigInt(unitPrice),
                             deadline,
-                            Number(sig.v ?? 27),
+                            sig.v,
                             sig.r,
                             sig.s,
                         ],
@@ -539,7 +544,7 @@ export class SecuredFinanceClient {
                         amount,
                         BigInt(unitPrice),
                         deadline,
-                        Number(sig.v ?? 27),
+                        sig.v,
                         sig.r,
                         sig.s,
                     ],
@@ -753,6 +758,26 @@ export class SecuredFinanceClient {
         });
     }
 
+    private parseSignature(signature: string): Signature {
+        if (signature.startsWith('0x')) {
+            signature = signature.slice(2);
+        }
+
+        if (signature.length !== 130) {
+            throw new Error('Invalid signature length');
+        }
+
+        const r = ('0x' + signature.slice(0, 64)) as `0x${string}`;
+        const s = ('0x' + signature.slice(64, 128)) as `0x${string}`;
+        let v = parseInt(signature.slice(128, 130), 16);
+
+        if (v < 27) {
+            v += 27;
+        }
+
+        return { r, s, v };
+    }
+
     private async getPermitSignature(
         ccy: Currency,
         amount: bigint,
@@ -799,7 +824,7 @@ export class SecuredFinanceClient {
             message: message,
         });
 
-        return parseSignature(signature);
+        return this.parseSignature(signature);
     }
 
     private async approveTokenTransfer(ccy: Currency, amount: bigint) {
