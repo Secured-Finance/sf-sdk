@@ -1,4 +1,5 @@
 import { Currency, Token, getUTCMonthYear } from '@secured-finance/sf-core';
+import { splitSignature } from '@ethersproject/bytes';
 import {
     Address,
     Hex,
@@ -30,12 +31,6 @@ import {
 export interface PayableOverrides {
     value?: bigint;
     gas?: bigint;
-}
-
-interface Signature {
-    r: `0x${string}`;
-    s: `0x${string}`;
-    v: number;
 }
 
 export enum OrderSide {
@@ -227,8 +222,8 @@ export class SecuredFinanceClient {
                     address,
                     deadline_,
                     sig.v,
-                    sig.r,
-                    sig.s,
+                    sig.r as `0x${string}`,
+                    sig.s as `0x${string}`,
                 ],
             });
         }
@@ -389,8 +384,8 @@ export class SecuredFinanceClient {
                             BigInt(unitPrice ?? 0),
                             deadline_,
                             sig.v,
-                            sig.r,
-                            sig.s,
+                            sig.r as `0x${string}`,
+                            sig.s as `0x${string}`,
                         ],
                     });
                 return this.walletClient.writeContract({
@@ -406,8 +401,8 @@ export class SecuredFinanceClient {
                         BigInt(unitPrice ?? 0),
                         deadline_,
                         sig.v,
-                        sig.r,
-                        sig.s,
+                        sig.r as `0x${string}`,
+                        sig.s as `0x${string}`,
                     ],
                     gas: this.calculateAdjustedGas(estimatedGas),
                 });
@@ -522,8 +517,8 @@ export class SecuredFinanceClient {
                             BigInt(unitPrice),
                             deadline_,
                             sig.v,
-                            sig.r,
-                            sig.s,
+                            sig.r as `0x${string}`,
+                            sig.s as `0x${string}`,
                         ],
                     });
 
@@ -540,8 +535,8 @@ export class SecuredFinanceClient {
                         BigInt(unitPrice),
                         deadline_,
                         sig.v,
-                        sig.r,
-                        sig.s,
+                        sig.r as `0x${string}`,
+                        sig.s as `0x${string}`,
                     ],
                     gas: this.calculateAdjustedGas(estimatedGas),
                 });
@@ -753,26 +748,6 @@ export class SecuredFinanceClient {
         });
     }
 
-    private parseSignature(signature: string): Signature {
-        if (signature.startsWith('0x')) {
-            signature = signature.slice(2);
-        }
-
-        if (signature.length !== 130) {
-            throw new Error('Invalid signature length');
-        }
-
-        const r = ('0x' + signature.slice(0, 64)) as `0x${string}`;
-        const s = ('0x' + signature.slice(64, 128)) as `0x${string}`;
-        let v = parseInt(signature.slice(128, 130), 16);
-
-        if (v < 27) {
-            v += 27;
-        }
-
-        return { r, s, v };
-    }
-
     private async getDefaultDeadline() {
         const latestBlock = await this.publicClient.getBlock({
             blockTag: 'latest',
@@ -826,7 +801,7 @@ export class SecuredFinanceClient {
             message: message,
         });
 
-        return this.parseSignature(signature);
+        return splitSignature(signature);
     }
 
     private async approveTokenTransfer(ccy: Currency, amount: bigint) {
