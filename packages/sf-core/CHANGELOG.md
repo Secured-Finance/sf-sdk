@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.177](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.176...v0.2.0-beta.177) (2024-08-02)
+
+
+### Features
+
+* update placeOrder ([34c645b](https://github.com/Secured-Finance/sf-sdk/commit/34c645b267ac748dcf7e9d3d227a9d85597debfd))
+
+
+
+
+
 # [0.2.0-beta.152](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.151...v0.2.0-beta.152) (2024-02-29)
 
 

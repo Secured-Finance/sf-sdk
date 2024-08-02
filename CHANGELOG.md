@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.177](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.176...v0.2.0-beta.177) (2024-08-02)
+
+
+### Bug Fixes
+
+* add deadline for parameter ([e338853](https://github.com/Secured-Finance/sf-sdk/commit/e3388539674d445e69a7d211b64c4bd1f8076057))
+
+
+### Features
+
+* develop parseSignature ([644c5c0](https://github.com/Secured-Finance/sf-sdk/commit/644c5c0b29f31d6fa4df01d6b7693ed253426665))
+* placePreOrder, depositCollateral ([55e2e21](https://github.com/Secured-Finance/sf-sdk/commit/55e2e2148bb6df9cb33e319fe1912975797ba1c0))
+* update placeOrder ([34c645b](https://github.com/Secured-Finance/sf-sdk/commit/34c645b267ac748dcf7e9d3d227a9d85597debfd))
+* use ethersproject/bytes ([08f9084](https://github.com/Secured-Finance/sf-sdk/commit/08f90849092c8d643df98c8d997fe49f26797868))
+
+
+
+
+
 # [0.2.0-beta.176](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.175...v0.2.0-beta.176) (2024-07-16)
 
 **Note:** Version bump only for package sf-sdk
