@@ -20,7 +20,7 @@ describe('ether', () => {
     });
 
     it('should be different from other currencies', () => {
-        const token = new Token(18, 'TKN', 'Token');
+        const token = new Token(18, 'TKN', 'Token', true);
         expect(eth.equals(token)).toBeFalsy();
     });
 });
