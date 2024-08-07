@@ -222,6 +222,7 @@ export const TRANSACTION_HISTORY = gql`
         $maturity: BigInt!
         $from: BigInt!
         $to: BigInt!
+        $executionType: TransactionExecutionType!
     ) {
         transactionHistory: transactions(
             where: {
@@ -229,7 +230,7 @@ export const TRANSACTION_HISTORY = gql`
                 maturity: $maturity
                 createdAt_gte: $from
                 createdAt_lt: $to
-                executionType: Taker
+                executionType: $executionType
             }
         ) {
             amount
@@ -238,12 +239,15 @@ export const TRANSACTION_HISTORY = gql`
             createdAt
             currency
             averagePrice
+            executionPrice
+            blockNumber
+            txHash
         }
         lastTransaction: transactions(
             where: {
                 currency: $currency
                 maturity: $maturity
-                executionType: Taker
+                executionType: $executionType
             }
             orderBy: createdAt
             orderDirection: desc
@@ -255,6 +259,9 @@ export const TRANSACTION_HISTORY = gql`
             createdAt
             currency
             averagePrice
+            executionPrice
+            blockNumber
+            txHash
         }
     }
 `;
