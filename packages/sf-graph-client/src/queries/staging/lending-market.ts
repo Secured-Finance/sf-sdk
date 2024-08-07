@@ -222,7 +222,7 @@ export const TRANSACTION_HISTORY = gql`
         $maturity: BigInt!
         $from: BigInt!
         $to: BigInt!
-        $executionType: TransactionExecutionType!
+        $executionType: TransactionExecutionType
     ) {
         transactionHistory: transactions(
             where: {
