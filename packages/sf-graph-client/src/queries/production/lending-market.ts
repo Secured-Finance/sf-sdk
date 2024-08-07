@@ -217,7 +217,7 @@ export const FULL_USER_ORDER_HISTORY = gql`
 `;
 
 export const TRANSACTION_HISTORY = gql`
-    query TransactionHistory(
+    query Transactions(
         $currency: Bytes!
         $maturity: BigInt!
         $from: BigInt!
