@@ -5,7 +5,7 @@ export const contractsList = [
     },
     {
         name: 'LendingMarketController',
-        links: ['LendingMarketUserLogic'],
+        links: ['LendingMarketUserLogic', 'FundManagementLogic'],
     },
     {
         name: 'LendingMarketReader',
@@ -17,7 +17,7 @@ export const contractsList = [
     },
     {
         name: 'TokenVault',
-        links: [],
+        links: ['DepositManagementLogic'],
     },
     {
         name: 'GenesisValueVault',
