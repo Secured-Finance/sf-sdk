@@ -36,10 +36,18 @@ class Main {
 
         for (const network of networks) {
             for (const contract of contractsList) {
-                const file = `${contract}.json`;
-                const modulePath = `${moduleDir}/${network}/${file}`;
-                const filePath = `${deploymentDir}/${file}`;
-                this.extractAddressAndABI(modulePath, filePath, network);
+                const contractFile = `${contract.name}.json`;
+                const modulePath = `${moduleDir}/${network}/${contractFile}`;
+                const filePath = `${deploymentDir}/${contractFile}`;
+
+                this.extractAddressAndABI(
+                    modulePath,
+                    filePath,
+                    network,
+                    contract.links.map(
+                        link => `${moduleDir}/${network}/${link}.json`
+                    )
+                );
             }
         }
     }
@@ -47,7 +55,8 @@ class Main {
     private extractAddressAndABI(
         modulePath: string,
         filePath: string,
-        network: string
+        network: string,
+        linkedPaths: string[]
     ) {
         let addresses: Record<string, any> = {};
         let abi: Record<string, any> = [];
@@ -64,7 +73,38 @@ class Main {
                 JSON.parse(moduleContent);
 
             addresses[network] = newAddress;
-            abi = network === DEFAULT_NETWORK ? newAbi : abi;
+
+            if (network === DEFAULT_NETWORK) {
+                abi = newAbi;
+
+                for (const linkPath of linkedPaths) {
+                    if (existsSync(linkPath)) {
+                        const linkedContent = readFileSync(linkPath, 'utf-8');
+                        const { abi: linkedAbi } = JSON.parse(linkedContent);
+
+                        const linkedErrors = linkedAbi.filter(
+                            (item: { type: string }) => item.type === 'error'
+                        );
+
+                        linkedErrors.forEach(
+                            (error: { name: string; type: string }) => {
+                                if (
+                                    !abi.some(
+                                        (item: {
+                                            name: string;
+                                            type: string;
+                                        }) =>
+                                            item.name === error.name &&
+                                            item.type === 'error'
+                                    )
+                                ) {
+                                    abi.push(error);
+                                }
+                            }
+                        );
+                    }
+                }
+            }
         } else {
             addresses[network] = null;
         }
