@@ -216,22 +216,21 @@ export const FULL_USER_ORDER_HISTORY = gql`
     }
 `;
 
-export const TRANSACTIONS = gql`
-    query Transactions(
+export const TRANSACTION_HISTORY = gql`
+    query TransactionHistory(
         $currency: Bytes!
         $maturity: BigInt!
         $from: BigInt!
         $to: BigInt!
-        $executionType: TransactionExecutionType
         $side: Int
     ) {
-        transactions: transactions(
+        transactionHistory: transactions(
             where: {
                 currency: $currency
                 maturity: $maturity
                 createdAt_gte: $from
                 createdAt_lt: $to
-                executionType: $executionType
+                executionType: Taker
                 side: $side
             }
         ) {
@@ -242,7 +241,6 @@ export const TRANSACTIONS = gql`
             currency
             averagePrice
             executionPrice
-            blockNumber
             txHash
         }
         lastTransaction: transactions(
@@ -262,7 +260,6 @@ export const TRANSACTIONS = gql`
             currency
             averagePrice
             executionPrice
-            blockNumber
             txHash
         }
     }
