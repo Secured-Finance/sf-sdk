@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.180](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.179...v0.2.0-beta.180) (2024-08-09)
+
+
+### Bug Fixes
+
+* change name of query [SF-1136] ([23b7553](https://github.com/secured-finance/sf-sdk/commit/23b75531f01b45f0c566045e5537eaf4b96ff1b4))
+* change name of query [SF-1136] ([407b146](https://github.com/secured-finance/sf-sdk/commit/407b14614d81f6cfe7458650e2c3355bf0891486))
+* made execution type non compulsory [SF-1234] ([d975510](https://github.com/secured-finance/sf-sdk/commit/d9755106129ef91d97eeeb6ac4ea39ee2be4f40e))
+* pass side as param [SF-1136] ([4d897c9](https://github.com/secured-finance/sf-sdk/commit/4d897c95a192c4e3090b4a1b0fbd3019110d01bb))
+
+
+### Features
+
+* add transaction type as param for transaction history [SF-1136] ([db48166](https://github.com/secured-finance/sf-sdk/commit/db481668c9713f66865737825a6f458d1aabce32))
+* modify query [SF-1136] ([c89d4c8](https://github.com/secured-finance/sf-sdk/commit/c89d4c80dd9f05853576e9ddcdc3580d167c3d76))
+
+
+
+# 0.2.0-beta.177 (2024-08-02)
+
+
+
+
+
 # [0.2.0-beta.179](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.178...v0.2.0-beta.179) (2024-08-08)
 
 **Note:** Version bump only for package @secured-finance/sf-graph-client
