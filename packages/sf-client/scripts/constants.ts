@@ -1,8 +1,26 @@
 export const contractsList = [
-    'CurrencyController',
-    'LendingMarketController',
-    'LendingMarketReader',
-    'TokenFaucet',
-    'TokenVault',
-    'GenesisValueVault',
+    {
+        name: 'CurrencyController',
+        links: [],
+    },
+    {
+        name: 'LendingMarketController',
+        links: ['LendingMarketUserLogic', 'FundManagementLogic'],
+    },
+    {
+        name: 'LendingMarketReader',
+        links: [],
+    },
+    {
+        name: 'TokenFaucet',
+        links: [],
+    },
+    {
+        name: 'TokenVault',
+        links: ['DepositManagementLogic'],
+    },
+    {
+        name: 'GenesisValueVault',
+        links: [],
+    },
 ];
