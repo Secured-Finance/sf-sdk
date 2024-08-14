@@ -1,5 +1,5 @@
-import { Currency, Token, getUTCMonthYear } from '@secured-finance/sf-core';
 import { splitSignature } from '@ethersproject/bytes';
+import { Currency, Token, getUTCMonthYear } from '@secured-finance/sf-core';
 import {
     Address,
     Hex,
@@ -756,7 +756,7 @@ export class SecuredFinanceClient {
     }
 
     private async getPermitSignature(
-        ccy: Currency,
+        ccy: Token,
         amount: bigint,
         deadline: bigint
     ) {
@@ -770,7 +770,7 @@ export class SecuredFinanceClient {
 
         const domain = {
             name: await this.getERC20TokenName(tokenAddress),
-            version: '1',
+            version: ccy.eip712Version ?? '1',
             chainId: this.config.networkId,
             verifyingContract: tokenAddress,
         };

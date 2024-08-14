@@ -1,7 +1,7 @@
 import { Token } from './token';
 
 describe('token', () => {
-    const token = new Token(18, 'TKN', 'Token', true);
+    const token = new Token(18, 'TKN', 'Token', true, '2');
     it('should create an instance', () => {
         expect(token).toBeTruthy();
     });
@@ -18,6 +18,10 @@ describe('token', () => {
         expect(token.hasPermit).toBeTruthy();
     });
 
+    it('should be a version 2', () => {
+        expect(token.eip712Version).toBe('2');
+    });
+
     it('should be wrapped by itself', () => {
         expect(token.wrapped).toBe(token);
     });
@@ -27,7 +31,7 @@ describe('token', () => {
     });
 
     it('should be different from another token', () => {
-        const other = new Token(18, 'TKN1', 'Token', true);
+        const other = new Token(18, 'TKN1', 'Token', true, '2');
         expect(token.equals(other)).toBeFalsy();
     });
 });

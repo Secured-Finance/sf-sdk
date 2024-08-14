@@ -5,15 +5,18 @@ export class Token extends BaseCurrency {
     public readonly isNative = false;
     public readonly isToken = true;
     public readonly hasPermit: boolean;
+    public readonly eip712Version?: string;
 
     public constructor(
         decimals: number,
         symbol: string,
         name: string,
-        hasPermit = false
+        hasPermit = false,
+        eip712Version?: string
     ) {
         super(decimals, symbol, name);
         this.hasPermit = hasPermit;
+        this.eip712Version = eip712Version;
     }
 
     /**
@@ -26,7 +29,8 @@ export class Token extends BaseCurrency {
             this.decimals === other.decimals &&
             this.symbol === other.symbol &&
             this.name === other.name &&
-            this.hasPermit === other.hasPermit
+            this.hasPermit === other.hasPermit &&
+            this.eip712Version === other.eip712Version
         );
     }
 
