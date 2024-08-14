@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.182](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.181...v0.2.0-beta.182) (2024-08-14)
+
+
+### Bug Fixes
+
+* fix eip712 version issue [SF-900] ([e30713b](https://github.com/Secured-Finance/sf-sdk/commit/e30713b88dd9937c5d4e7b74c3e28e2d2c56296c))
+
+
+
+
+
 # [0.2.0-beta.181](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.180...v0.2.0-beta.181) (2024-08-13)
 
 
