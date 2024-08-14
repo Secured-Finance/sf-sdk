@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.183](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.182...v0.2.0-beta.183) (2024-08-14)
+
+
+### Bug Fixes
+
+* create new query for transactions [SF-1136] ([2cadb04](https://github.com/Secured-Finance/sf-sdk/commit/2cadb04afe6eaa7db035d368bcb1fed04a815f5f))
+* handle sides by array [SF-1136] ([6d01961](https://github.com/Secured-Finance/sf-sdk/commit/6d0196107665325f1689c7db33f63ee752e2eecc))
+
+
+
+# 0.2.0-beta.180 (2024-08-09)
+
+
+
+
+
 # [0.2.0-beta.182](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.181...v0.2.0-beta.182) (2024-08-14)
 
 
