@@ -5,7 +5,11 @@ export const contractsList = [
     },
     {
         name: 'LendingMarketController',
-        links: ['LendingMarketUserLogic', 'FundManagementLogic'],
+        links: [
+            'LendingMarketUserLogic',
+            'FundManagementLogic',
+            'DepositManagementLogic',
+        ],
     },
     {
         name: 'LendingMarketReader',
