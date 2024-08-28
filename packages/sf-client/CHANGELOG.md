@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.184](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.183...v0.2.0-beta.184) (2024-08-28)
+
+
+### Features
+
+* SF-764 deployment script update ([aee96c1](https://github.com/secured-finance/sf-sdk/commit/aee96c11e83803f0a830b12f0c550cbcdbf7b793))
+* SF-764 update constants for update abi ([9073055](https://github.com/secured-finance/sf-sdk/commit/9073055a5d5f777c7a1a69157b4012f243bd1479))
+* update constants SF-764 ([0b5ecf2](https://github.com/secured-finance/sf-sdk/commit/0b5ecf2ba784006709e0df7566f96f81e28b301d))
+
+
+
+# 0.2.0-beta.179 (2024-08-08)
+
+
+
+
+
 # [0.2.0-beta.182](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.181...v0.2.0-beta.182) (2024-08-14)
 
 
