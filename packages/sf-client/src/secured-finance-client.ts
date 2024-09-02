@@ -848,7 +848,7 @@ export class SecuredFinanceClient {
             chainId !== undefined
                 ? getEnvironmentByChainId(chainId)
                 : this.config.env;
-                
+
         const contract = getTokenVaultContract(targetEnv);
         const totalDepositAmounts = await Promise.allSettled(
             currencyList.map(currency =>
