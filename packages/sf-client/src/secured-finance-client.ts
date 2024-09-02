@@ -26,6 +26,7 @@ import {
     NetworkName,
     getContractEnvironment,
     networkNames,
+    getEnvironmentByChainId,
 } from './utils';
 
 export interface PayableOverrides {
@@ -690,9 +691,14 @@ export class SecuredFinanceClient {
         }
     }
 
-    async getCurrencies() {
+    async getCurrencies(chainId?: number) {
+        const targetEnv =
+            chainId !== undefined
+                ? getEnvironmentByChainId(chainId)
+                : this.config.env;
+
         return this.publicClient.readContract({
-            ...getCurrencyControllerContract(this.config.env),
+            ...getCurrencyControllerContract(targetEnv),
             functionName: 'getCurrencies',
         });
     }
@@ -835,9 +841,15 @@ export class SecuredFinanceClient {
         return false;
     }
 
-    async getProtocolDepositAmount() {
-        const currencyList = await this.getCurrencies();
-        const contract = getTokenVaultContract(this.config.env);
+    async getProtocolDepositAmount(chainId?: number) {
+        const currencyList = await this.getCurrencies(chainId);
+
+        const targetEnv =
+            chainId !== undefined
+                ? getEnvironmentByChainId(chainId)
+                : this.config.env;
+                
+        const contract = getTokenVaultContract(targetEnv);
         const totalDepositAmounts = await Promise.allSettled(
             currencyList.map(currency =>
                 this.publicClient.readContract({
@@ -997,9 +1009,14 @@ export class SecuredFinanceClient {
         });
     }
 
-    async getLastPrice(currency: Currency) {
+    async getLastPrice(currency: Currency, chainId?: number) {
+        const targetEnv =
+            chainId !== undefined
+                ? getEnvironmentByChainId(chainId)
+                : this.config.env;
+
         return this.publicClient.readContract({
-            ...getCurrencyControllerContract(this.config.env),
+            ...getCurrencyControllerContract(targetEnv),
             functionName: 'getLastPrice',
             args: [this.convertCurrencyToBytes32(currency)],
         });

@@ -112,3 +112,15 @@ export const getContractEnvironment = (networkName: NetworkName) => {
         );
     }
 };
+
+export const getEnvironmentByChainId = (
+    chainId: number
+): ContractEnvironments => {
+    const networkName = NETWORKS[chainId] as NetworkName;
+
+    if (!networkName) {
+        throw new Error(`Unsupported chainId: ${chainId}`);
+    }
+
+    return getContractEnvironment(networkName as NetworkName);
+};
