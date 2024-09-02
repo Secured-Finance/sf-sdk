@@ -9,6 +9,8 @@ export const contractsList = [
             'LendingMarketUserLogic',
             'FundManagementLogic',
             'DepositManagementLogic',
+            'LendingMarket',
+            'OrderActionLogic',
         ],
     },
     {
