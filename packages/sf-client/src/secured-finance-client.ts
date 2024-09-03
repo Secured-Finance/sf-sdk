@@ -7,6 +7,8 @@ import {
     WalletClient,
     hexToString,
     stringToHex,
+    createPublicClient,
+    http,
 } from 'viem';
 import { ERC20Abi } from './ERC20Abi';
 import { ERC20PermitAbi } from './ERC20PermitAbi';
@@ -82,6 +84,21 @@ export class SecuredFinanceClient {
         // NOTE: This adjustment is for the function that executes the collateral coverage check.
         // Without this adjustment, the transaction often fails due to out-of-gas error.
         return (amount * 11n) / 10n;
+    }
+
+    private createPublicClientWithChain(chainId?: number) {
+        return chainId
+            ? createPublicClient({
+                  chain: CHAINS[chainId],
+                  transport: http(),
+              })
+            : this.publicClient;
+    }
+
+    private getTargetEnvironment(chainId?: number) {
+        return chainId !== undefined
+            ? getEnvironmentByChainId(chainId)
+            : this.config.env;
     }
 
     private _config: SecuredFinanceClientConfig | undefined;
@@ -692,12 +709,11 @@ export class SecuredFinanceClient {
     }
 
     async getCurrencies(chainId?: number) {
-        const targetEnv =
-            chainId !== undefined
-                ? getEnvironmentByChainId(chainId)
-                : this.config.env;
+        const publicClient = this.createPublicClientWithChain(chainId);
 
-        return this.publicClient.readContract({
+        const targetEnv = this.getTargetEnvironment(chainId);
+
+        return publicClient.readContract({
             ...getCurrencyControllerContract(targetEnv),
             functionName: 'getCurrencies',
         });
@@ -842,17 +858,16 @@ export class SecuredFinanceClient {
     }
 
     async getProtocolDepositAmount(chainId?: number) {
+        const publicClient = this.createPublicClientWithChain(chainId);
+
         const currencyList = await this.getCurrencies(chainId);
 
-        const targetEnv =
-            chainId !== undefined
-                ? getEnvironmentByChainId(chainId)
-                : this.config.env;
+        const targetEnv = this.getTargetEnvironment(chainId);
 
         const contract = getTokenVaultContract(targetEnv);
         const totalDepositAmounts = await Promise.allSettled(
             currencyList.map(currency =>
-                this.publicClient.readContract({
+                publicClient.readContract({
                     ...contract,
                     functionName: 'getTotalDepositAmount',
                     args: [currency],
@@ -1010,12 +1025,11 @@ export class SecuredFinanceClient {
     }
 
     async getLastPrice(currency: Currency, chainId?: number) {
-        const targetEnv =
-            chainId !== undefined
-                ? getEnvironmentByChainId(chainId)
-                : this.config.env;
+        const publicClient = this.createPublicClientWithChain(chainId);
 
-        return this.publicClient.readContract({
+        const targetEnv = this.getTargetEnvironment(chainId);
+
+        return publicClient.readContract({
             ...getCurrencyControllerContract(targetEnv),
             functionName: 'getLastPrice',
             args: [this.convertCurrencyToBytes32(currency)],
