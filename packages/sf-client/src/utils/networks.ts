@@ -122,5 +122,5 @@ export const getEnvironmentByChainId = (
         throw new Error(`Unsupported chainId: ${chainId}`);
     }
 
-    return getContractEnvironment(networkName as NetworkName);
+    return getContractEnvironment(networkName);
 };
