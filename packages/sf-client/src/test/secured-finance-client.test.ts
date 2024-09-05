@@ -1,5 +1,5 @@
 import { createPublicClient, custom } from 'viem';
-import { goerli, mainnet } from 'viem/chains';
+import { goerli, sepolia, mainnet } from 'viem/chains';
 import { SecuredFinanceClient } from '../secured-finance-client';
 import { WBTC, publicClient } from './helper';
 
@@ -214,5 +214,72 @@ describe('getDecimals', () => {
         await client.init(publicClient);
 
         expect(await client.getDecimals(new WBTC())).toEqual(8n);
+    });
+});
+
+describe('getTargetEnvironment', () => {
+    const publicClient = createPublicClient({
+        chain: sepolia,
+        transport: custom({
+            async request({ method }) {
+                if (method === 'eth_chainId') {
+                    return Promise.resolve(sepolia.id);
+                }
+            },
+        }),
+    });
+
+    it('should return the correct environment based on chainId', async () => {
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+
+        const result = (client as any).getTargetEnvironment(314159);
+
+        expect(result).toBe(
+            process.env.SF_ENV == 'development'
+                ? 'development-fil'
+                : 'staging-fil'
+        );
+    });
+
+    it('should return the environment from config when chainId is not provided', async () => {
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+
+        const result = (client as any).getTargetEnvironment();
+
+        expect(result).toBe(client.config.env);
+    });
+});
+
+describe('createPublicClientWithChain', () => {
+    const publicClient = createPublicClient({
+        chain: sepolia,
+        transport: custom({
+            async request({ method }) {
+                if (method === 'eth_chainId') {
+                    return Promise.resolve(sepolia.id);
+                }
+            },
+        }),
+    });
+
+    it('should create a new public client when chainId is provided', async () => {
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+
+        const result = (client as any).createPublicClientWithChain(314159);
+
+        expect(result).toBeTruthy();
+        expect(result.chain.id).toBe(314159);
+    });
+
+    it('should return the existing publicClient when chainId is not provided', async () => {
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+
+        const result = (client as any).createPublicClientWithChain();
+
+        expect(result).toBe(client.publicClient);
     });
 });
