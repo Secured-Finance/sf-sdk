@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.186](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.185...v0.2.0-beta.186) (2024-10-14)
+
+
+### Bug Fixes
+
+* remove NetworkName SF-1239 ([99c4fcc](https://github.com/secured-finance/sf-sdk/commit/99c4fcc1ee54bfaedccf70077fa6b7b0ca38113a))
+
+
+### Features
+
+* add chainid SF-1239 ([645aef5](https://github.com/secured-finance/sf-sdk/commit/645aef503c37b625a488949dac6c224c1235fb16))
+* add targetevn and publicclientchain SF-1239 ([fcf4729](https://github.com/secured-finance/sf-sdk/commit/fcf4729cf31df88085cf4d372884d91cc2ec0d62))
+* add test code SF-1239 ([d04e446](https://github.com/secured-finance/sf-sdk/commit/d04e446c1d7a5192bff828dd4e4cb305e1decd35))
+* prettier check SF-1239 ([8c78609](https://github.com/secured-finance/sf-sdk/commit/8c786099b32502a44e27ac97be5cc44b5cff410b))
+
+
+
+# 0.2.0-beta.184 (2024-08-28)
+
+
+
+
+
 # [0.2.0-beta.185](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.184...v0.2.0-beta.185) (2024-09-02)
 
 
