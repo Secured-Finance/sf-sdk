@@ -1,0 +1,33 @@
+{
+  "name": "@secured-finance/sf-cli",
+  "version": "0.0.1",
+  "description": "Javascript cli library for the Secured Finance protocol",
+  "bin": "dist/main.cjs",
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "watch": "esbuild src/index.ts --bundle --minify --platform=node --outfile=dist/main.cjs --watch",
+    "build": "esbuild src/index.ts --bundle --minify --platform=node --outfile=dist/main.cjs"
+  },
+  "author": "Secured Finance",
+  "bugs": {
+    "url": "https://github.com/secured-finance/sf-cli/issues"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/secured-finance/sf-cli/packages/sf-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/secured-finance/sf-cli"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.12"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.7",
+    "esbuild": "^0.19.9"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": ["dist"]
+}
