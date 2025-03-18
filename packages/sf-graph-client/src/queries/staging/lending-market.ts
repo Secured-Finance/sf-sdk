@@ -233,6 +233,8 @@ export const TRANSACTION_HISTORY = gql`
                 executionType: Taker
                 side_in: $sides
             }
+            orderBy: createdAt
+            orderDirection: desc
         ) {
             amount
             maturity
