@@ -1,0 +1,13 @@
+sources:
+  - name: sf-protocol
+    handler:
+      graphql:
+        endpoint: https://api.goldsky.com/api/public/project_cm8i6ca9k24d601wy45zzbsrq/subgraphs/sf-filecoin-mainnet/0.0.1/gn
+    transforms:
+      - blockTracking:
+          validateSchema: true
+      - autoPagination:
+          validateSchema: true
+documents:
+  - ../../queries/production/*.{ts,tsx,js,jsx}
+  - ../../queries/production/*.graphql
