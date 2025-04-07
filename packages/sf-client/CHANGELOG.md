@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.189](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.188...v0.2.0-beta.189) (2025-04-07)
+
+
+### Features
+
+* remove avalanche-mainnet & polygon-zkevm-mainnet [SF-1360] ([cb9476f](https://github.com/secured-finance/sf-sdk/commit/cb9476feb74da560a52e2c2dfe98bb2f529debf4))
+
+
+
+
+
 # [0.2.0-beta.187](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.186...v0.2.0-beta.187) (2025-03-12)
 
 **Note:** Version bump only for package @secured-finance/sf-client

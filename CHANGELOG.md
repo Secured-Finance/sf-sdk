@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.189](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.188...v0.2.0-beta.189) (2025-04-07)
+
+
+### Features
+
+* add filecoin-mainnet to sf-graph-client [SF-1360] ([c6cbf01](https://github.com/Secured-Finance/sf-sdk/commit/c6cbf0167648012539c7534938f3260c184c592f))
+* remove avalanche-mainnet & polygon-zkevm-mainnet [SF-1360] ([cb9476f](https://github.com/Secured-Finance/sf-sdk/commit/cb9476feb74da560a52e2c2dfe98bb2f529debf4))
+
+
+
+
+
 # [0.2.0-beta.188](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.187...v0.2.0-beta.188) (2025-03-18)
 
 
