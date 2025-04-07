@@ -9,9 +9,8 @@ import { GraphApolloLink } from '@graphprotocol/client-apollo';
 // Production clients
 import * as GraphClientArbitrumOne from '../graphclients/arbitrum-one/.graphclient';
 import * as GraphClientArbitrumSepolia from '../graphclients/arbitrum-sepolia/.graphclient';
-import * as GraphClientAvalancheMainnet from '../graphclients/avalanche-mainnet/.graphclient';
+import * as GraphClientFilecoinMainnet from '../graphclients/filecoin-mainnet/.graphclient';
 import * as GraphClientMainnet from '../graphclients/mainnet/.graphclient';
-import * as GraphClientPolygonZkevmMainnet from '../graphclients/polygon-zkevm-mainnet/.graphclient';
 import * as GraphClientSepolia from '../graphclients/sepolia/.graphclient';
 // Staging clients
 import * as GraphClientStgArb from '../graphclients/staging-arb/.graphclient';
@@ -69,10 +68,8 @@ const getGraphClient = (network = 'none') => {
                 GraphClient = GraphClientArbitrumOne;
             } else if (network === 'arbitrum-sepolia') {
                 GraphClient = GraphClientArbitrumSepolia;
-            } else if (network === 'avalanche-mainnet') {
-                GraphClient = GraphClientAvalancheMainnet;
-            } else if (network === 'polygon-zkevm-mainnet') {
-                GraphClient = GraphClientPolygonZkevmMainnet;
+            } else if (network === 'filecoin-mainnet') {
+                GraphClient = GraphClientFilecoinMainnet;
             } else {
                 GraphClient = GraphClientMainnet;
                 sfNetwork = 'mainnet';

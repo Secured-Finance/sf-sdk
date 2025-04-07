@@ -2,12 +2,9 @@ import {
     Chain,
     arbitrum,
     arbitrumSepolia,
-    avalanche,
-    avalancheFuji,
     filecoin,
     filecoinCalibration,
     mainnet,
-    polygonZkEvm,
     sepolia,
 } from 'viem/chains';
 
@@ -16,9 +13,6 @@ export const NETWORKS: { [key: number]: string } = {
     11155111: 'sepolia',
     42161: 'arbitrum-one',
     421614: 'arbitrum-sepolia',
-    43114: 'avalanche-mainnet',
-    43113: 'avalanche-fuji',
-    1101: 'polygon-zkevm-mainnet',
     314: 'filecoin-mainnet',
     314159: 'filecoin-calibration',
 };
@@ -28,9 +22,6 @@ export const CHAINS: { [key: number]: Chain } = {
     11155111: sepolia,
     42161: arbitrum,
     421614: arbitrumSepolia,
-    43114: avalanche,
-    43113: avalancheFuji,
-    1101: polygonZkEvm,
     314: filecoin,
     314159: filecoinCalibration,
 };
@@ -40,9 +31,6 @@ export const networkNames = [
     'mainnet',
     'arbitrum-sepolia',
     'arbitrum-one',
-    'avalanche-fuji',
-    'avalanche-mainnet',
-    'polygon-zkevm-mainnet',
     'filecoin-calibration',
     'filecoin-mainnet',
 ] as const;
@@ -67,8 +55,6 @@ const contractEnvironments = [
     'mainnet',
     'arbitrum-sepolia',
     'arbitrum-one',
-    'avalanche-mainnet',
-    'polygon-zkevm-mainnet',
     'filecoin-mainnet',
 ] as const;
 type Environment = (typeof environments)[number];
@@ -79,13 +65,11 @@ const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
     development: {
         sepolia: 'development',
         'arbitrum-sepolia': 'development-arb',
-        'avalanche-fuji': 'development-ava',
         'filecoin-calibration': 'development-fil',
     },
     staging: {
         sepolia: 'staging',
         'arbitrum-sepolia': 'staging-arb',
-        'avalanche-fuji': 'staging-ava',
         'filecoin-calibration': 'staging-fil',
     },
     production: {
@@ -93,8 +77,6 @@ const DEPLOYMENT_PATH_MAP: Record<Environment, Partial<NetworkMap>> = {
         mainnet: 'mainnet',
         'arbitrum-sepolia': 'arbitrum-sepolia',
         'arbitrum-one': 'arbitrum-one',
-        'avalanche-mainnet': 'avalanche-mainnet',
-        'polygon-zkevm-mainnet': 'polygon-zkevm-mainnet',
         'filecoin-mainnet': 'filecoin-mainnet',
     },
 };
