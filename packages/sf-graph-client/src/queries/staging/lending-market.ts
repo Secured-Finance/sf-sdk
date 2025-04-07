@@ -294,3 +294,49 @@ export const TRANSACTION_CANDLE_STICK = gql`
         }
     }
 `;
+
+export const HISTORICAL_PRICE_QUERY = (
+    intervals: number[],
+    maturityList: number[],
+    currency: string
+) => {
+    if (!intervals.length || !maturityList.length || !currency) {
+        return gql`
+            query FallBackQuery {
+                __typename
+            }
+        `;
+    }
+    const queryParts = intervals
+        .map((interval, i) => {
+            return maturityList.map((maturity, j) => {
+                return `
+        tx${i}_${j}: transactions(
+          where: {
+            createdAt_lte: ${interval}
+            maturity: ${maturity}
+            currency: "${currency}"
+          }
+          orderBy: createdAt
+          orderDirection: desc
+          first: 1
+        ) {
+          amount
+          averagePrice
+          executionPrice
+          createdAt
+          currency
+          maturity
+        }`;
+            });
+        })
+        .join('\n');
+
+    const fullQuery = `
+      query Transactions {
+        ${queryParts}
+      }
+    `;
+
+    return gql(fullQuery);
+};
