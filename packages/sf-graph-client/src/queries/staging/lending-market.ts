@@ -333,7 +333,7 @@ export const HISTORICAL_PRICE_QUERY = (
         .join('\n');
 
     const fullQuery = `
-      query Transactions {
+      query HistoricalPriceQuery {
         ${queryParts}
       }
     `;
