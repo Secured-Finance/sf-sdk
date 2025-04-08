@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.190](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.189...v0.2.0-beta.190) (2025-04-08)
+
+
+### Bug Fixes
+
+* fix supported network issue [SF-1360] ([ea7e969](https://github.com/Secured-Finance/sf-sdk/commit/ea7e96938ecd020f136a82411d20cf8c9869ac7f))
+
+
+
+
+
 # [0.2.0-beta.189](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.188...v0.2.0-beta.189) (2025-04-07)
 
 
