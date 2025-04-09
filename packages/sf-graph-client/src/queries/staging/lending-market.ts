@@ -295,25 +295,25 @@ export const TRANSACTION_CANDLE_STICK = gql`
     }
 `;
 
-export const HISTORICAL_PRICE_QUERY = (
-    intervals: number[],
+export const TRANSACTIONS_BY_TIMESTAMP_AND_MATURITY_QUERY = (
+    timestamps: number[],
     maturityList: number[],
     currency: string
 ) => {
-    if (!intervals.length || !maturityList.length || !currency) {
+    if (!timestamps.length || !maturityList.length || !currency) {
         return gql`
             query FallBackQuery {
                 __typename
             }
         `;
     }
-    const queryParts = intervals
-        .map((interval, i) => {
+    const queryParts = timestamps
+        .map((timestamp, i) => {
             return maturityList.map((maturity, j) => {
                 return `
         tx${i}_${j}: transactions(
           where: {
-            createdAt_lte: ${interval}
+            createdAt_lte: ${timestamp}
             maturity: ${maturity}
             currency: "${currency}"
           }
