@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.191](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.190...v0.2.0-beta.191) (2025-04-09)
+
+
+### Bug Fixes
+
+* throw errors [SF-1362] ([cd5a47a](https://github.com/secured-finance/sf-sdk/commit/cd5a47a5d38956d8bf889d61f1f938e4209421a0))
+
+
+### Features
+
+* historical price query [SF-1362] ([14a1fe7](https://github.com/secured-finance/sf-sdk/commit/14a1fe7e29570fbc15a51df5d1773f25acb78298))
+
+
+
+# 0.2.0-beta.189 (2025-04-07)
+
+
+
+
+
 # [0.2.0-beta.189](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.188...v0.2.0-beta.189) (2025-04-07)
 
 
