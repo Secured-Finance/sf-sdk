@@ -300,13 +300,11 @@ export const TRANSACTIONS_BY_TIMESTAMP_AND_MATURITY_QUERY = (
     maturityList: number[],
     currency: string
 ) => {
-    if (!timestamps.length || !maturityList.length || !currency) {
-        return gql`
-            query FallBackQuery {
-                __typename
-            }
-        `;
-    }
+    if (!timestamps || !maturityList || !currency)
+        throw new Error('Invalid Parameters');
+    if (!timestamps.length || !maturityList.length)
+        throw new Error("Timestamps and MaturityList can't be empty");
+
     const queryParts = timestamps
         .map((timestamp, i) => {
             return maturityList.map((maturity, j) => {
@@ -333,7 +331,7 @@ export const TRANSACTIONS_BY_TIMESTAMP_AND_MATURITY_QUERY = (
         .join('\n');
 
     const fullQuery = `
-      query HistoricalPriceQuery {
+      query TransactionsByTimestampAndMaturityQuery {
         ${queryParts}
       }
     `;
