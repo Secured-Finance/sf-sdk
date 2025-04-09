@@ -294,3 +294,47 @@ export const TRANSACTION_CANDLE_STICK = gql`
         }
     }
 `;
+
+export const TRANSACTIONS_BY_TIMESTAMP_AND_MATURITY_QUERY = (
+    timestamps: number[],
+    maturityList: number[],
+    currency: string
+) => {
+    if (!timestamps || !maturityList || !currency)
+        throw new Error('Invalid Parameters');
+    if (!timestamps.length || !maturityList.length)
+        throw new Error("Timestamps and MaturityList can't be empty");
+
+    const queryParts = timestamps
+        .map((timestamp, i) => {
+            return maturityList.map((maturity, j) => {
+                return `
+        tx${i}_${j}: transactions(
+          where: {
+            createdAt_lte: ${timestamp}
+            maturity: ${maturity}
+            currency: "${currency}"
+          }
+          orderBy: createdAt
+          orderDirection: desc
+          first: 1
+        ) {
+          amount
+          averagePrice
+          executionPrice
+          createdAt
+          currency
+          maturity
+        }`;
+            });
+        })
+        .join('\n');
+
+    const fullQuery = `
+      query TransactionsByTimestampAndMaturityQuery {
+        ${queryParts}
+      }
+    `;
+
+    return gql(fullQuery);
+};
