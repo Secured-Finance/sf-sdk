@@ -340,7 +340,7 @@ export const TRANSACTIONS_BY_TIMESTAMP_AND_MATURITY_QUERY = (
 };
 
 export const TRANSACTIONS_BY_TIMESTAMP_CURRENCIES_AND_MATURITIES_QUERY = (
-    timestamp: number[],
+    timestamp: number,
     maturityList: number[],
     currencyList: string[]
 ) => {
@@ -348,7 +348,7 @@ export const TRANSACTIONS_BY_TIMESTAMP_CURRENCIES_AND_MATURITIES_QUERY = (
         throw new Error('Invalid Parameters');
     if (!currencyList.length || !maturityList.length)
         throw new Error(
-            "Timestamps , CurrencyList and MaturityList can't be empty"
+            "Timestamp , CurrencyList and MaturityList can't be empty"
         );
 
     const queryParts = currencyList
