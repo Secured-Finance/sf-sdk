@@ -351,9 +351,9 @@ export const TRANSACTIONS_BY_TIMESTAMP_CURRENCIES_AND_MATURITIES_QUERY = (
             "Timestamp , CurrencyList and MaturityList can't be empty"
         );
 
-    const queryParts = currencyList.map((currency, i) => {
-        return maturityList
-            .map((maturity, j) => {
+    const queryParts = currencyList
+        .map((currency, i) => {
+            return maturityList.map((maturity, j) => {
                 return `
                     tx_${i}_${j}: transactions(
                         where: {
@@ -373,9 +373,9 @@ export const TRANSACTIONS_BY_TIMESTAMP_CURRENCIES_AND_MATURITIES_QUERY = (
                         maturity
                     }
                 `;
-            })
-            .join('\n');
-    });
+            });
+        })
+        .join('\n');
 
     const fullQuery = `
       query TransactionsByTimestampCurrenciesAndMaturitiesQuery {

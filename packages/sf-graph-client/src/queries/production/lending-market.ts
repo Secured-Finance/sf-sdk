@@ -338,7 +338,6 @@ export const TRANSACTIONS_BY_TIMESTAMP_AND_MATURITY_QUERY = (
 
     return gql(fullQuery);
 };
-
 export const TRANSACTIONS_BY_TIMESTAMP_CURRENCIES_AND_MATURITIES_QUERY = (
     timestamp: number,
     maturityList: number[],
@@ -347,13 +346,10 @@ export const TRANSACTIONS_BY_TIMESTAMP_CURRENCIES_AND_MATURITIES_QUERY = (
     if (!timestamp || !maturityList || !currencyList)
         throw new Error('Invalid Parameters');
     if (!currencyList.length || !maturityList.length)
-        throw new Error(
-            "Timestamp , CurrencyList and MaturityList can't be empty"
-        );
-
-    const queryParts = currencyList.map((currency, i) => {
-        return maturityList
-            .map((maturity, j) => {
+        throw new Error("Timestamps and MaturityList can't be empty");
+    const queryParts = currencyList
+        .map((currency, i) => {
+            return maturityList.map((maturity, j) => {
                 return `
                     tx_${i}_${j}: transactions(
                         where: {
@@ -373,12 +369,11 @@ export const TRANSACTIONS_BY_TIMESTAMP_CURRENCIES_AND_MATURITIES_QUERY = (
                         maturity
                     }
                 `;
-            })
-            .join('\n');
-    });
-
+            });
+        })
+        .join('\n');
     const fullQuery = `
-      query TransactionsByTimestampCurrenciesAndMaturitiesQuery {
+      query TransactionsByTimestampsCurrenciesAndMaturitiesQuery {
         ${queryParts}
       }
     `;
