@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.193](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.192...v0.2.0-beta.193) (2025-04-30)
+
+
+### Bug Fixes
+
+* build fix and error [SF-1365] ([5d5c946](https://github.com/secured-finance/sf-sdk/commit/5d5c946d0e6469b32ec0b954b923793708f9b568))
+
+
+### Features
+
+* update query for currencies [SF-1365] ([ed40489](https://github.com/secured-finance/sf-sdk/commit/ed404891d65173dbb65ef524ba778be68ecc23b8))
+
+
+
+# 0.2.0-beta.191 (2025-04-09)
+
+
+
+
+
 # [0.2.0-beta.192](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.191...v0.2.0-beta.192) (2025-04-30)
 
 **Note:** Version bump only for package @secured-finance/sf-graph-client
