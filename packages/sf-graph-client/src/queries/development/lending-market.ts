@@ -338,3 +338,49 @@ export const TRANSACTIONS_BY_TIMESTAMP_AND_MATURITY_QUERY = (
 
     return gql(fullQuery);
 };
+
+export const TRANSACTIONS_BY_TIMESTAMP_CURRENCIES_AND_MATURITIES_QUERY = (
+    timestamp: number,
+    maturityList: number[],
+    currencyList: string[]
+) => {
+    if (!timestamp || !maturityList || !currencyList)
+        throw new Error('Invalid Parameters');
+    if (!currencyList.length || !maturityList.length)
+        throw new Error(
+            "Timestamp , CurrencyList and MaturityList can't be empty"
+        );
+
+    const queryParts = currencyList
+        .map((currency, i) => {
+            return maturityList.map((maturity, j) => {
+                return `
+                    tx_${i}_${j}: transactions(
+                        where: {
+                            createdAt_lte: ${timestamp}
+                            maturity: ${maturity}
+                            currency: "${currency}"
+                        }
+                        orderBy: createdAt
+                        orderDirection: desc
+                        first: 1
+                    ) {
+                        amount
+                        averagePrice
+                        executionPrice
+                        createdAt
+                        currency
+                        maturity
+                    }
+                `;
+            });
+        })
+        .join('\n');
+
+    const fullQuery = `
+      query TransactionsByTimestampCurrenciesAndMaturitiesQuery {
+        ${queryParts}
+      }
+    `;
+    return gql(fullQuery);
+};
