@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.195](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.194...v0.2.0-beta.195) (2025-05-23)
+
+
+### Features
+
+* improve query to fetch protocol volume [SF-1386] ([2c3fbb7](https://github.com/secured-finance/sf-sdk/commit/2c3fbb7381c2bd5cd1d1274f0bfc9efeb58fd54c))
+
+
+
+
+
 # [0.2.0-beta.194](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.193...v0.2.0-beta.194) (2025-05-07)
 
 **Note:** Version bump only for package @secured-finance/sf-graph-client
