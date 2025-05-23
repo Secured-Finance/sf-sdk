@@ -14,10 +14,14 @@ export const LENDING_MARKETS = gql`
     }
 `;
 
-export const USER_COUNT = gql`
-    query UserCount {
+export const USER_COUNT_AND_VOLUME = gql`
+    query UserCountAndVolume {
         protocol(id: "1") {
             totalUsers
+            volumesByCurrency {
+                currency
+                totalVolume
+            }
         }
     }
 `;
