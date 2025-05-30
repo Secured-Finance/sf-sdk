@@ -283,6 +283,9 @@ export const TRANSACTION_CANDLE_STICK = gql`
                 maturity: $maturity
                 interval: $interval
             }
+            first: 1000
+            orderDirection: desc
+            orderBy: timestamp
         ) {
             currency
             maturity
