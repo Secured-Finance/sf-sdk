@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.196](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.195...v0.2.0-beta.196) (2025-06-03)
+
+
+### Features
+
+* update transaction candle stick query [SF-1404] ([1f94cbc](https://github.com/Secured-Finance/sf-sdk/commit/1f94cbc59903142d937917e20d8a6bd88e131e77))
+
+
+
+
+
 # [0.2.0-beta.195](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.194...v0.2.0-beta.195) (2025-05-23)
 
 
