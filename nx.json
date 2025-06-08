@@ -41,5 +41,6 @@
   },
   "affected": {
     "defaultBase": "main"
-  }
+  },
+  "workspaces": ["packages/*"]
 }
