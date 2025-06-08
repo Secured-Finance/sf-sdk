@@ -4,31 +4,24 @@
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "prebuild",
-          "build",
-          "prettier:check",
-          "prettier:write",
-          "lint:check",
-          "lint:write",
-          "test",
-          "test:watch",
-          "test:cov",
-          "test:debug",
-          "test:e2e",
-          "create",
-          "create-local",
-          "codegen",
-          "deploy",
-          "deploy-local",
-          "watch",
-          "lint",
-          "prepublish",
-          "precompile",
-          "compile",
-          "posttest"
-        ]
+        "cacheableOperations": ["build", "test", "lint", "format"]
       }
+    }
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "inputs": ["default", "^production"]
+    },
+    "lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc"]
+    },
+    "format": {
+      "inputs": ["default", "{workspaceRoot}/.prettierrc.json"]
     }
   },
   "targetDependencies": {
