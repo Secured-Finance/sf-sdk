@@ -1,7 +1,34 @@
-import { createPublicClient, custom } from 'viem';
+import { createPublicClient, custom, createWalletClient } from 'viem';
 import { goerli, sepolia, mainnet } from 'viem/chains';
 import { SecuredFinanceClient } from '../secured-finance-client';
 import { WBTC, publicClient } from './helper';
+import timemachine from 'timemachine';
+
+beforeAll(() => {
+    process.env.SF_ENV = 'development';
+    timemachine.reset();
+    timemachine.config({
+        dateString: '2023-11-01T11:00:00.00Z',
+    });
+});
+
+beforeEach(() => {
+    jest.resetAllMocks();
+});
+
+afterAll(() => {
+    jest.clearAllMocks();
+    jest.clearAllTimers();
+});
+
+const mockWalletClient = createWalletClient({
+    chain: sepolia,
+    transport: custom({
+        async request() {
+            return Promise.resolve('0x123');
+        },
+    }),
+});
 
 describe('Secured Finance Client', () => {
     it('should be able to create a new client', async () => {
@@ -11,7 +38,7 @@ describe('Secured Finance Client', () => {
 
     it('should be able to init the client', async () => {
         const client = new SecuredFinanceClient();
-        await client.init(publicClient);
+        await client.init(publicClient, mockWalletClient);
         expect(client).toBeTruthy();
     });
 });
@@ -75,7 +102,7 @@ describe('getOrderEstimation', () => {
             Promise.resolve([9991n, 1000n, 1002n, 149n, 0n, 6334n, true])
         );
         const client = new SecuredFinanceClient();
-        await client.init(publicClient);
+        await client.init(publicClient, mockWalletClient);
 
         expect(
             await client.getOrderEstimation(
@@ -104,7 +131,7 @@ describe('getMarketTerminationDate', () => {
             Promise.resolve(1698089813n)
         );
         const client = new SecuredFinanceClient();
-        await client.init(publicClient);
+        await client.init(publicClient, mockWalletClient);
 
         expect(await client.getMarketTerminationDate()).toEqual(1698089813n);
     });
@@ -115,7 +142,7 @@ describe('getMarketTerminationDate', () => {
             Promise.resolve(123n)
         );
         const client = new SecuredFinanceClient();
-        await client.init(publicClient);
+        await client.init(publicClient, mockWalletClient);
 
         expect(await client.getMarketTerminationDate()).toEqual(123n);
     });
@@ -158,7 +185,7 @@ describe('getOrderBookDetails', () => {
             ])
         );
         const client = new SecuredFinanceClient();
-        await client.init(publicClient);
+        await client.init(publicClient, mockWalletClient);
 
         expect(await client.getOrderBookDetails([])).toEqual([
             {
@@ -211,7 +238,7 @@ describe('getDecimals', () => {
             Promise.resolve(8n)
         );
         const client = new SecuredFinanceClient();
-        await client.init(publicClient);
+        await client.init(publicClient, mockWalletClient);
 
         expect(await client.getDecimals(new WBTC())).toEqual(8n);
     });

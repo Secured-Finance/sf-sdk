@@ -1,5 +1,25 @@
+import { createPublicClient, custom } from 'viem';
+import { sepolia } from 'viem/chains';
 import { SecuredFinanceClient } from '../secured-finance-client';
 import { WBTC, publicClient } from './helper';
+import timemachine from 'timemachine';
+
+beforeAll(() => {
+    process.env.SF_ENV = 'development';
+    timemachine.reset();
+    timemachine.config({
+        dateString: '2023-11-01T11:00:00.00Z',
+    });
+});
+
+beforeEach(() => {
+    jest.resetAllMocks();
+});
+
+afterAll(() => {
+    jest.clearAllMocks();
+    jest.clearAllTimers();
+});
 
 describe('getTokenAddress', () => {
     it('should return the token address for a given currency', async () => {
