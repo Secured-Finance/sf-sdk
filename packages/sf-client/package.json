@@ -2,13 +2,13 @@
   "name": "@secured-finance/sf-client",
   "version": "0.2.0-beta.190",
   "description": "Javascript client library for the Secured Finance protocol",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "codegen": "ts-node ./scripts/copy-deployment-files.ts",
     "prebuild": "rm -rf dist",
-    "watch": "tsc -p tsconfig.json -w",
-    "build": "tsc --project tsconfig.json",
+    "build": "tsup",
     "test": "jest --config jest.config.ts",
     "test:cov": "jest --config jest.config.ts --coverage",
     "prepublish": "npm run codegen"
@@ -25,8 +25,9 @@
   },
   "dependencies": {
     "@ethersproject/bytes": "^5.7.0",
-    "@secured-finance/contracts": "1.2.1",
-    "@secured-finance/sf-core": "^0.2.0-beta.187"
+    "@secured-finance/contracts": "^1.2.1",
+    "@secured-finance/sf-core": "^0.2.0-beta.187",
+    "viem": "^1.21.4"
   },
   "devDependencies": {
     "@types/jest": "27.4.1",
@@ -35,8 +36,8 @@
     "timemachine": "^0.3.2",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.1.0",
-    "typescript": "^5.1.6",
-    "viem": "^1.2.12"
+    "tsup": "^8.0.2",
+    "typescript": "^5.1.6"
   },
   "engines": {
     "node": ">=10.0.0"
