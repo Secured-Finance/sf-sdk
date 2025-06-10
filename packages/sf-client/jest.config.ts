@@ -1,12 +1,25 @@
-module.exports = {
-    moduleFileExtensions: ['js', 'json', 'ts'],
-    transform: {
-        '^.+\\.(t|j)s$': 'ts-jest',
-    },
-    transformIgnorePatterns: ['../sf-core/', 'node_modules'],
-    collectCoverageFrom: ['src/**/*.ts', '!**/*.module.ts', '!**/index.ts'],
-    coverageDirectory: './coverage',
+import type { Config } from 'jest';
+
+const config: Config = {
+    preset: 'ts-jest',
     testEnvironment: 'node',
+    moduleNameMapper: {
+        '^@/(.*)$': '<rootDir>/src/$1',
+    },
     testMatch: ['**/*.test.ts'],
-    setupFilesAfterEnv: ['<rootDir>/src/test/jest.setup.ts'],
+    transform: {
+        '^.+\\.tsx?$': [
+            'ts-jest',
+            {
+                useESM: true,
+                tsconfig: 'tsconfig.json',
+                isolatedModules: true,
+            },
+        ],
+    },
+    extensionsToTreatAsEsm: ['.ts'],
+    moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+    setupFilesAfterEnv: ['<rootDir>/src/test/setup.ts'],
 };
+
+export default config;

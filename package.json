@@ -3,7 +3,6 @@
   "private": true,
   "description": "Monorepo of Javascript libraries for working with Secured Finance protocol",
   "scripts": {
-    "bootstrap": "lerna bootstrap --hoist",
     "codegen": "nx run-many --target=codegen --all",
     "lint:check": "eslint './packages/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint './packages/**/*.{js,ts,tsx}' --fix",
@@ -23,7 +22,6 @@
   "license": "MIT",
   "homepage": "https://github.com/secured-finance/sf-sdk#readme",
   "dependencies": {
-    "lerna": "^4.0.0",
     "typescript": "^5.1.6"
   },
   "devDependencies": {
@@ -44,7 +42,8 @@
     "prettier": "^2.8.8",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.1.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "tsup": "^8.5.0"
   },
   "engines": {
     "node": ">=10.0.0"
