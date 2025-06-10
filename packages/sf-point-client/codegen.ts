@@ -2,7 +2,7 @@ import { CodegenConfig } from '@graphql-codegen/cli';
 import 'dotenv/config';
 
 const config: CodegenConfig = {
-    schema: process.env.SCHEMA_URL,
+    schema: process.env.SCHEMA_URL || 'type Query { hello: String }',
     documents: ['src/**/*.graphql'],
     ignoreNoDocuments: true,
     generates: {

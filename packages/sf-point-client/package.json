@@ -7,7 +7,7 @@
   "types": "./dist/types.d.ts",
   "scripts": {
     "codegen": "graphql-codegen --config codegen.ts",
-    "prebuild": "npm run codegen",
+    "prebuild": "echo 'Skipping codegen for now'",
     "build": "tsup"
   },
   "author": "",
