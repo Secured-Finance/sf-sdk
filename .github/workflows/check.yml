@@ -32,13 +32,13 @@ jobs:
       - name: Format Code
         run: npm run format
 
-      - name: Build Repo
-        run: npm run build
+      - name: Generate artifacts
+        run: npm run codegen
         env:
           SCHEMA_URL: ${{ vars.SCHEMA_URL }}
 
-      - name: Generate artifacts
-        run: npm run codegen
+      - name: Build Repo
+        run: npm run build
         env:
           SCHEMA_URL: ${{ vars.SCHEMA_URL }}
 
