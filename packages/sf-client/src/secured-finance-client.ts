@@ -30,6 +30,12 @@ import {
     networkNames,
     getEnvironmentByChainId,
 } from './utils';
+import {
+    OrderService,
+    MarketService,
+    PositionService,
+    TokenService,
+} from './services';
 
 export interface PayableOverrides {
     value?: bigint;
@@ -105,6 +111,11 @@ export class SecuredFinanceClient {
     private _walletClient: WalletClient | undefined;
     private _publicClient: PublicClient | undefined;
     private _tokenVault: TokenVault | undefined;
+
+    private orderService?: OrderService;
+    private positionService?: PositionService;
+    private marketService?: MarketService;
+    private tokenService?: TokenService;
 
     async init(
         publicClient: PublicClient,
