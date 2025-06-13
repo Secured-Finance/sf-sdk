@@ -1,23 +1,20 @@
 import { Currency } from '@secured-finance/sf-core';
-import { PublicClient, WalletClient, Hex, stringToHex } from 'viem';
-import { SecuredFinanceClientConfig } from '../entities';
 import {
     getLendingMarketControllerContract,
     getLendingMarketReaderContract,
     getCurrencyControllerContract,
+    getGenesisValueVaultContract,
 } from '../contracts';
+import { BaseService, BaseServiceConfig } from './BaseService';
+import { Hex } from 'viem';
 
-export class MarketService {
-    constructor(
-        private config: SecuredFinanceClientConfig,
-        private publicClient: PublicClient,
-        private walletClient: WalletClient
-    ) {}
+export class MarketService extends BaseService {
+    constructor(config: BaseServiceConfig) {
+        super(config);
+    }
 
-    private convertCurrencyToBytes32(ccy: Currency) {
-        return stringToHex(ccy.isNative ? ccy.symbol : ccy.wrapped.symbol, {
-            size: 32,
-        });
+    public getAdjustedGas(amount: bigint): bigint {
+        return this.calculateAdjustedGas(amount);
     }
 
     async getLastPrice(currency: Currency) {
@@ -75,6 +72,9 @@ export class MarketService {
     }
 
     async executeEmergencySettlement() {
+        if (!this.walletClient) {
+            throw new Error('Wallet client is required for this operation');
+        }
         const [address] = await this.walletClient.getAddresses();
         return this.walletClient.writeContract({
             ...getLendingMarketControllerContract(this.config.env),
@@ -103,6 +103,38 @@ export class MarketService {
             ...getLendingMarketControllerContract(this.config.env),
             functionName: 'getGenesisValue',
             args: [this.convertCurrencyToBytes32(currency), account as Hex],
+        });
+    }
+
+    async getLatestAutoRollLog(currency: Currency) {
+        return this.publicClient.readContract({
+            ...getGenesisValueVaultContract(this.config.env),
+            functionName: 'getLatestAutoRollLog',
+            args: [this.convertCurrencyToBytes32(currency)],
+        });
+    }
+
+    async getAutoRollLog(currency: Currency, maturity: number) {
+        return this.publicClient.readContract({
+            ...getGenesisValueVaultContract(this.config.env),
+            functionName: 'getAutoRollLog',
+            args: [this.convertCurrencyToBytes32(currency), BigInt(maturity)],
+        });
+    }
+
+    async calculateFVFromGV(
+        currency: Currency,
+        maturity: number,
+        amount: bigint
+    ) {
+        return this.publicClient.readContract({
+            ...getGenesisValueVaultContract(this.config.env),
+            functionName: 'calculateFVFromGV',
+            args: [
+                this.convertCurrencyToBytes32(currency),
+                BigInt(maturity),
+                amount,
+            ],
         });
     }
 }

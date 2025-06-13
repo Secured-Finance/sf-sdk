@@ -1,7 +1,5 @@
 import { Currency, Token } from '@secured-finance/sf-core';
-import { PublicClient, WalletClient, Address, Hex, stringToHex } from 'viem';
-import { SecuredFinanceClientConfig } from '../entities';
-import { TokenVault } from '../contracts/TokenVault';
+import { Address, Hex } from 'viem';
 import {
     getTokenFaucetContract,
     getTokenVaultContract,
@@ -10,22 +8,17 @@ import {
 } from '../contracts';
 import { ERC20Abi } from '../ERC20Abi';
 import { ERC20PermitAbi } from '../ERC20PermitAbi';
+import { BaseService, BaseServiceConfig } from './BaseService';
 
-export class TokenService {
-    constructor(
-        private config: SecuredFinanceClientConfig,
-        private publicClient: PublicClient,
-        private walletClient: WalletClient,
-        private tokenVault: TokenVault
-    ) {}
-
-    private convertCurrencyToBytes32(ccy: Currency) {
-        return stringToHex(ccy.isNative ? ccy.symbol : ccy.wrapped.symbol, {
-            size: 32,
-        });
+export class TokenService extends BaseService {
+    constructor(config: BaseServiceConfig) {
+        super(config);
     }
 
     async mintERC20Token(token: Token) {
+        if (!this.walletClient) {
+            throw new Error('Wallet client is required for this operation');
+        }
         const [account] = await this.walletClient.getAddresses();
         const { abi, address } = getTokenFaucetContract(this.config.env);
         if (address) {
@@ -57,6 +50,7 @@ export class TokenService {
     }
 
     async getERC20Balance(token: Token, account: string) {
+        if (!this.tokenVault) throw new Error('TokenVault not initialized');
         const address = await this.tokenVault.getTokenAddress(token);
         return this.publicClient.readContract({
             abi: ERC20Abi,
@@ -121,6 +115,9 @@ export class TokenService {
         maturity: number,
         amount: bigint
     ) {
+        if (!this.walletClient) {
+            throw new Error('Wallet client is required for this operation');
+        }
         const [address] = await this.walletClient.getAddresses();
         const estimatedGas = await this.publicClient.estimateContractGas({
             ...getLendingMarketControllerContract(this.config.env),
@@ -142,11 +139,14 @@ export class TokenService {
                 BigInt(maturity),
                 amount,
             ],
-            gas: (estimatedGas * 11n) / 10n,
+            gas: this.calculateAdjustedGas(estimatedGas),
         });
     }
 
     async depositZCToken(currency: Currency, maturity: number, amount: bigint) {
+        if (!this.walletClient) {
+            throw new Error('Wallet client is required for this operation');
+        }
         const [address] = await this.walletClient.getAddresses();
         const estimatedGas = await this.publicClient.estimateContractGas({
             ...getLendingMarketControllerContract(this.config.env),
@@ -168,7 +168,7 @@ export class TokenService {
                 BigInt(maturity),
                 amount,
             ],
-            gas: (estimatedGas * 11n) / 10n,
+            gas: this.calculateAdjustedGas(estimatedGas),
         });
     }
 
