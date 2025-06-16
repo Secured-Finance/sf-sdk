@@ -227,6 +227,8 @@ export const TRANSACTION_HISTORY = gql`
         $from: BigInt!
         $to: BigInt!
         $sides: [Int!]!
+        $first: Int = 1000
+        $skip: Int = 0
     ) {
         transactionHistory: transactions(
             where: {
@@ -239,6 +241,8 @@ export const TRANSACTION_HISTORY = gql`
             }
             orderBy: createdAt
             orderDirection: desc
+            first: $first
+            skip: $skip
         ) {
             amount
             maturity
