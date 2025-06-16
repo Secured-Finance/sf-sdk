@@ -1,49 +1,17 @@
 import { Currency, getUTCMonthYear } from '@secured-finance/sf-core';
-import {
-    PublicClient,
-    WalletClient,
-    Hex,
-    stringToHex,
-    hexToString,
-} from 'viem';
-import { SecuredFinanceClientConfig } from '../entities';
-import { TokenVault } from '../contracts/TokenVault';
+import { Hex } from 'viem';
 import {
     getLendingMarketControllerContract,
     getLendingMarketReaderContract,
 } from '../contracts';
 import { OrderSide, WalletSource } from '../secured-finance-client';
+import { BaseService, BaseServiceConfig } from './BaseService';
 
 const ITAYOSE_PERIOD = 60 * 60;
 
-export class OrderService {
-    constructor(
-        private config: SecuredFinanceClientConfig,
-        private publicClient: PublicClient,
-        private walletClient: WalletClient,
-        private tokenVault: TokenVault
-    ) {}
-
-    private convertCurrencyToBytes32(ccy: Currency) {
-        if (ccy.isNative) {
-            return stringToHex(ccy.symbol, { size: 32 });
-        } else {
-            return stringToHex(ccy.wrapped.symbol, { size: 32 });
-        }
-    }
-
-    private convertCurrencyArrayToBytes32Array(currencies: Currency[]) {
-        return currencies.map(currency =>
-            this.convertCurrencyToBytes32(currency)
-        );
-    }
-
-    private parseBytes32String(ccy: string) {
-        return hexToString(ccy as Hex, { size: 32 });
-    }
-
-    private calculateAdjustedGas(amount: bigint) {
-        return (amount * 11n) / 10n;
+export class OrderService extends BaseService {
+    constructor(config: BaseServiceConfig) {
+        super(config);
     }
 
     async getOrderEstimation(
@@ -92,7 +60,7 @@ export class OrderService {
         deadline?: bigint,
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
-        const [address] = await this.walletClient.getAddresses();
+        const address = await this.getWalletAddress();
         const contract = getLendingMarketControllerContract(this.config.env);
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
             if (ccy.isNative || !ccy.hasPermit) {
@@ -117,6 +85,11 @@ export class OrderService {
                         ...overrides,
                     });
                 overrides.gas = this.calculateAdjustedGas(estimatedGas);
+                if (!this.walletClient) {
+                    throw new Error(
+                        'Wallet client is required for this operation'
+                    );
+                }
                 return this.walletClient.writeContract({
                     ...contract,
                     account: address,
@@ -147,6 +120,9 @@ export class OrderService {
                     BigInt(unitPrice ?? 0),
                 ],
             });
+            if (!this.walletClient) {
+                throw new Error('Wallet client is required for this operation');
+            }
             return this.walletClient.writeContract({
                 ...contract,
                 account: address,
@@ -174,7 +150,7 @@ export class OrderService {
         deadline?: bigint,
         onApproved?: (isApproved: boolean) => Promise<void> | void
     ) {
-        const [address] = await this.walletClient.getAddresses();
+        const address = await this.getWalletAddress();
         const contract = getLendingMarketControllerContract(this.config.env);
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
             if (ccy.isNative || !ccy.hasPermit) {
@@ -199,6 +175,11 @@ export class OrderService {
                         ...overrides,
                     });
                 overrides.gas = this.calculateAdjustedGas(estimatedGas);
+                if (!this.walletClient) {
+                    throw new Error(
+                        'Wallet client is required for this operation'
+                    );
+                }
                 return this.walletClient.writeContract({
                     ...contract,
                     account: address,
@@ -229,6 +210,9 @@ export class OrderService {
                     BigInt(unitPrice),
                 ],
             });
+            if (!this.walletClient) {
+                throw new Error('Wallet client is required for this operation');
+            }
             return this.walletClient.writeContract({
                 ...contract,
                 account: address,
@@ -247,7 +231,10 @@ export class OrderService {
     }
 
     async cancelLendingOrder(ccy: Currency, maturity: number, orderID: number) {
-        const [address] = await this.walletClient.getAddresses();
+        const address = await this.getWalletAddress();
+        if (!this.walletClient) {
+            throw new Error('Wallet client is required for this operation');
+        }
         return this.walletClient.writeContract({
             ...getLendingMarketControllerContract(this.config.env),
             account: address,

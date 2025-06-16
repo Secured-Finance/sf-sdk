@@ -1,5 +1,11 @@
 import { Currency } from '@secured-finance/sf-core';
-import { PublicClient, WalletClient, stringToHex } from 'viem';
+import {
+    PublicClient,
+    WalletClient,
+    stringToHex,
+    Hex,
+    hexToString,
+} from 'viem';
 import { SecuredFinanceClientConfig } from '../entities';
 import { TokenVault } from '../contracts/TokenVault';
 
@@ -30,8 +36,28 @@ export class BaseService {
     }
 
     protected convertCurrencyToBytes32(ccy: Currency) {
-        return stringToHex(ccy.isNative ? ccy.symbol : ccy.wrapped.symbol, {
-            size: 32,
-        });
+        if (ccy.isNative) {
+            return stringToHex(ccy.symbol, { size: 32 });
+        } else {
+            return stringToHex(ccy.wrapped.symbol, { size: 32 });
+        }
+    }
+
+    protected convertCurrencyArrayToBytes32Array(currencies: Currency[]) {
+        return currencies.map(currency =>
+            this.convertCurrencyToBytes32(currency)
+        );
+    }
+
+    protected parseBytes32String(ccy: string) {
+        return hexToString(ccy as Hex, { size: 32 });
+    }
+
+    protected async getWalletAddress(): Promise<`0x${string}`> {
+        if (!this.walletClient) {
+            throw new Error('Wallet client not initialized');
+        }
+        const [address] = await this.walletClient.getAddresses();
+        return address;
     }
 }

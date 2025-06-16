@@ -1,24 +1,14 @@
 import { Currency } from '@secured-finance/sf-core';
-import { PublicClient, WalletClient, Hex, stringToHex } from 'viem';
-import { SecuredFinanceClientConfig } from '../entities';
-import { TokenVault } from '../contracts/TokenVault';
+import { Hex } from 'viem';
 import {
     getLendingMarketControllerContract,
     getLendingMarketReaderContract,
 } from '../contracts';
+import { BaseService, BaseServiceConfig } from './BaseService';
 
-export class PositionService {
-    constructor(
-        private config: SecuredFinanceClientConfig,
-        private publicClient: PublicClient,
-        private walletClient: WalletClient,
-        private tokenVault: TokenVault
-    ) {}
-
-    private convertCurrencyToBytes32(ccy: Currency) {
-        return stringToHex(ccy.isNative ? ccy.symbol : ccy.wrapped.symbol, {
-            size: 32,
-        });
+export class PositionService extends BaseService {
+    constructor(config: BaseServiceConfig) {
+        super(config);
     }
 
     async getPositions(account: string, usedCurrenciesForOrders: Currency[]) {
@@ -26,8 +16,8 @@ export class PositionService {
             ...getLendingMarketReaderContract(this.config.env),
             functionName: 'getPositions',
             args: [
-                usedCurrenciesForOrders.map(ccy =>
-                    this.convertCurrencyToBytes32(ccy)
+                this.convertCurrencyArrayToBytes32Array(
+                    usedCurrenciesForOrders
                 ),
                 account as Hex,
             ],
@@ -43,7 +33,7 @@ export class PositionService {
     }
 
     async unwindPosition(currency: Currency, maturity: number) {
-        const [address] = await this.walletClient.getAddresses();
+        const address = await this.getWalletAddress();
         const contract = getLendingMarketControllerContract(this.config.env);
         const estimatedGas = await this.publicClient.estimateContractGas({
             ...contract,
@@ -51,13 +41,16 @@ export class PositionService {
             functionName: 'unwindPosition',
             args: [this.convertCurrencyToBytes32(currency), BigInt(maturity)],
         });
+        if (!this.walletClient) {
+            throw new Error('Wallet client is required for this operation');
+        }
         return this.walletClient.writeContract({
             ...contract,
             account: address,
             chain: this.config.chain,
             functionName: 'unwindPosition',
             args: [this.convertCurrencyToBytes32(currency), BigInt(maturity)],
-            gas: (estimatedGas * 11n) / 10n,
+            gas: this.calculateAdjustedGas(estimatedGas),
         });
     }
 
@@ -70,7 +63,10 @@ export class PositionService {
     }
 
     async executeRepayment(currency: Currency, maturity: number) {
-        const [address] = await this.walletClient.getAddresses();
+        const address = await this.getWalletAddress();
+        if (!this.walletClient) {
+            throw new Error('Wallet client is required for this operation');
+        }
         return this.walletClient.writeContract({
             ...getLendingMarketControllerContract(this.config.env),
             account: address,
@@ -81,7 +77,10 @@ export class PositionService {
     }
 
     async executeRedemption(currency: Currency, maturity: number) {
-        const [address] = await this.walletClient.getAddresses();
+        const address = await this.getWalletAddress();
+        if (!this.walletClient) {
+            throw new Error('Wallet client is required for this operation');
+        }
         return this.walletClient.writeContract({
             ...getLendingMarketControllerContract(this.config.env),
             account: address,
@@ -97,7 +96,7 @@ export class PositionService {
         debtMaturity: number,
         account: string
     ) {
-        const [address] = await this.walletClient.getAddresses();
+        const address = await this.getWalletAddress();
         const contract = getLendingMarketControllerContract(this.config.env);
         const estimatedGas = await this.publicClient.estimateContractGas({
             ...contract,
@@ -110,6 +109,9 @@ export class PositionService {
                 account as Hex,
             ],
         });
+        if (!this.walletClient) {
+            throw new Error('Wallet client is required for this operation');
+        }
         return this.walletClient.writeContract({
             ...contract,
             account: address,
@@ -121,7 +123,7 @@ export class PositionService {
                 BigInt(debtMaturity),
                 account as Hex,
             ],
-            gas: (estimatedGas * 11n) / 10n,
+            gas: this.calculateAdjustedGas(estimatedGas),
         });
     }
 }
