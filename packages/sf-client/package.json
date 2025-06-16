@@ -2,13 +2,13 @@
   "name": "@secured-finance/sf-client",
   "version": "0.2.0-beta.190",
   "description": "Javascript client library for the Secured Finance protocol",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "codegen": "ts-node ./scripts/copy-deployment-files.ts",
     "prebuild": "rm -rf dist",
-    "watch": "tsc -p tsconfig.json -w",
-    "build": "tsc --project tsconfig.json",
+    "build": "tsup",
     "test": "jest --config jest.config.ts",
     "test:cov": "jest --config jest.config.ts --coverage",
     "prepublish": "npm run codegen"
@@ -35,6 +35,7 @@
     "timemachine": "^0.3.2",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.1.0",
+    "tsup": "^8.0.2",
     "typescript": "^5.1.6",
     "viem": "^1.2.12"
   },

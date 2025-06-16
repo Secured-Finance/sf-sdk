@@ -1,4 +1,4 @@
-import * as assert from 'assert';
+import assert from 'assert';
 export abstract class BaseCurrency {
     public abstract readonly isNative: boolean;
     public abstract readonly isToken: boolean;
