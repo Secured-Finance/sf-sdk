@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.197](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.196...v0.2.0-beta.197) (2025-06-18)
+
+
+### Features
+
+* transaction history query [SF-1382] ([e19f6e8](https://github.com/secured-finance/sf-sdk/commit/e19f6e89f6a1b9f045b25810c0c19ce462929147))
+
+
+
+
+
 # [0.2.0-beta.196](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.195...v0.2.0-beta.196) (2025-06-03)
 
 
