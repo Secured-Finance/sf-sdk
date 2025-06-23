@@ -27,8 +27,8 @@ export const USER_COUNT_AND_VOLUME = gql`
 `;
 
 export const DAILY_VOLUMES = gql`
-    query DailyVolumes {
-        dailyVolumes {
+    query DailyVolumes($first: Int = 1000, $skip: Int = 0) {
+        dailyVolumes(first: $first, skip: $skip) {
             id
             currency
             maturity
