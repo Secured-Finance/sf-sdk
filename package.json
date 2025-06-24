@@ -23,6 +23,7 @@
   "license": "MIT",
   "homepage": "https://github.com/secured-finance/sf-sdk#readme",
   "dependencies": {
+    "@secured-finance/contracts": "^1.3.1-beta.0",
     "lerna": "^4.0.0",
     "typescript": "^5.1.6"
   },
