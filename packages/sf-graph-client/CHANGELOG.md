@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.200](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.199...v0.2.0-beta.200) (2025-07-03)
+
+
+### Features
+
+* 24H transaction query ([a8b3346](https://github.com/secured-finance/sf-sdk/commit/a8b33460fb4b32671a8ba7cdba3b7dd62d5a24ef))
+* update DailyVolumes query [SF-1389] ([e6ca749](https://github.com/secured-finance/sf-sdk/commit/e6ca7499b17e6a1ab46f37df3ffa52fd0836290f))
+
+
+
+# 0.2.0-beta.197 (2025-06-18)
+
+
+
+
+
 # [0.2.0-beta.198](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.197...v0.2.0-beta.198) (2025-06-24)
 
 
