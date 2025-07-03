@@ -27,8 +27,8 @@ export const USER_COUNT_AND_VOLUME = gql`
 `;
 
 export const DAILY_VOLUMES = gql`
-    query DailyVolumes($first: Int = 1000, $skip: Int = 0) {
-        dailyVolumes(first: $first, skip: $skip) {
+    query DailyVolumes {
+        dailyVolumes {
             id
             currency
             maturity
@@ -395,3 +395,31 @@ export const TRANSACTIONS_BY_TIMESTAMP_CURRENCIES_AND_MATURITIES_QUERY = (
     `;
     return gql(fullQuery);
 };
+
+export const TransactionsHistory24H = gql`
+    query TransactionsHistory24H(
+        $from: BigInt!
+        $to: BigInt!
+        $first: Int = 1000
+        $skip: Int = 0
+    ) {
+        transactions(
+            where: {
+                createdAt_gte: $from
+                createdAt_lt: $to
+                executionType: Taker
+            }
+            orderBy: createdAt
+            orderDirection: desc
+            first: $first
+            skip: $skip
+        ) {
+            amount
+            maturity
+            createdAt
+            currency
+            averagePrice
+            executionPrice
+        }
+    }
+`;
