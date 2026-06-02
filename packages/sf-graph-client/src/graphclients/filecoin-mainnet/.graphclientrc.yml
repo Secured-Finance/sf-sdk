@@ -5,7 +5,7 @@ sources:
         endpoint: https://api.goldsky.com/api/public/project_cm8i6ca9k24d601wy45zzbsrq/subgraphs/sf-filecoin-mainnet/0.0.3/gn
     transforms:
       - blockTracking:
-          validateSchema: true
+          validateSchema: false
       - autoPagination:
           validateSchema: true
 documents:
