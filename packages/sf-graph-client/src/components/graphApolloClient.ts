@@ -13,10 +13,10 @@ import * as GraphClientFilecoinMainnet from '../graphclients/filecoin-mainnet/.g
 import * as GraphClientMainnet from '../graphclients/mainnet/.graphclient';
 import * as GraphClientSepolia from '../graphclients/sepolia/.graphclient';
 // Staging clients
-import * as GraphClientStgArb from '../graphclients/staging-arb/.graphclient';
+// import * as GraphClientStgArb from '../graphclients/staging-arb/.graphclient';
 import * as GraphClientStg from '../graphclients/staging/.graphclient';
 // Development clients
-import * as GraphClientDevArb from '../graphclients/development-arb/.graphclient';
+// import * as GraphClientDevArb from '../graphclients/development-arb/.graphclient';
 import * as GraphClientDev from '../graphclients/development/.graphclient';
 
 const environments = ['development', 'staging', 'production'] as const;
@@ -33,9 +33,11 @@ const getGraphClient = (network = 'none') => {
             sfNetwork = network;
             if (network === 'sepolia') {
                 GraphClient = GraphClientDev;
-            } else if (network === 'arbitrum-sepolia') {
-                GraphClient = GraphClientDevArb;
-            } else {
+            }
+            // else if (network === 'arbitrum-sepolia') {
+            //     GraphClient = GraphClientDevArb;
+            // }
+            else {
                 GraphClient = GraphClientDev;
                 sfNetwork = 'sepolia';
                 console.warn(`${network} is not a supported network.`);
@@ -47,9 +49,11 @@ const getGraphClient = (network = 'none') => {
             sfNetwork = network;
             if (network === 'sepolia') {
                 GraphClient = GraphClientStg;
-            } else if (network === 'arbitrum-sepolia') {
-                GraphClient = GraphClientStgArb;
-            } else {
+            }
+            // else if (network === 'arbitrum-sepolia') {
+            //     GraphClient = GraphClientStgArb;
+            // }
+            else {
                 GraphClient = GraphClientStg;
                 sfNetwork = 'sepolia';
                 console.warn(`${network} is not a supported network.`);

@@ -5,7 +5,7 @@ sources:
         endpoint: https://api.studio.thegraph.com/query/64582/sf-prd-sepolia/0.1.1
     transforms:
       - blockTracking:
-          validateSchema: true
+          validateSchema: false
       - autoPagination:
           validateSchema: true
 documents:

@@ -8,9 +8,7 @@
     "precompile": "rm -rf dist",
     "compile": "tsc -p tsconfig.json",
     "codegen:development": "graphclient build --dir src/graphclients/development",
-    "codegen:development-arb": "graphclient build --dir src/graphclients/development-arb",
     "codegen:staging": "graphclient build --dir src/graphclients/staging",
-    "codegen:staging-arb": "graphclient build --dir src/graphclients/staging-arb",
     "codegen:sepolia": "graphclient build --dir src/graphclients/sepolia",
     "codegen:mainnet": "graphclient build --dir src/graphclients/mainnet",
     "codegen:arbitrum-sepolia": "graphclient build --dir src/graphclients/arbitrum-sepolia",
@@ -59,7 +57,7 @@
     "ts-jest": "^29.0.3",
     "ts-node": "^10.1.0",
     "typescript": "^5.1.6",
-    "viem": "^1.2.12"
+    "viem": "^2.52.2"
   },
   "files": ["dist/**/*"],
   "ts-node": {
