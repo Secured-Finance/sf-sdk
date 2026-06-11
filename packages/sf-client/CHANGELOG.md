@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.202](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.201...v0.2.0-beta.202) (2026-06-11)
+
+
+### Bug Fixes
+
+* upgrade viem versions and remove archived subgraphs [SF-1473] ([bde7e22](https://github.com/secured-finance/sf-sdk/commit/bde7e221b2323548187c1fab4d7b4b7ec7511553))
+
+
+
+
+
 # [0.2.0-beta.201](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.200...v0.2.0-beta.201) (2025-12-09)
 
 **Note:** Version bump only for package @secured-finance/sf-client
