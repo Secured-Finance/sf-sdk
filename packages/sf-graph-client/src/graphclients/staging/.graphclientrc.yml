@@ -5,7 +5,7 @@ sources:
         endpoint: https://api.studio.thegraph.com/query/30564/sf-protocol-stg-sepolia/0.1.2
     transforms:
       - blockTracking:
-          validateSchema: true
+          validateSchema: false
       - autoPagination:
           validateSchema: true
 documents:
