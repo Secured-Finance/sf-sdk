@@ -8,7 +8,7 @@ import { GraphApolloLink } from '@graphprotocol/client-apollo';
 
 // Production clients
 import * as GraphClientArbitrumOne from '../graphclients/arbitrum-one/.graphclient';
-import * as GraphClientArbitrumSepolia from '../graphclients/arbitrum-sepolia/.graphclient';
+// import * as GraphClientArbitrumSepolia from '../graphclients/arbitrum-sepolia/.graphclient';
 import * as GraphClientFilecoinMainnet from '../graphclients/filecoin-mainnet/.graphclient';
 import * as GraphClientMainnet from '../graphclients/mainnet/.graphclient';
 import * as GraphClientSepolia from '../graphclients/sepolia/.graphclient';
@@ -70,9 +70,11 @@ const getGraphClient = (network = 'none') => {
                 GraphClient = GraphClientSepolia;
             } else if (network === 'arbitrum-one') {
                 GraphClient = GraphClientArbitrumOne;
-            } else if (network === 'arbitrum-sepolia') {
-                GraphClient = GraphClientArbitrumSepolia;
-            } else if (network === 'filecoin-mainnet') {
+            }
+            // else if (network === 'arbitrum-sepolia') {
+            //     GraphClient = GraphClientArbitrumSepolia;
+            // }
+            else if (network === 'filecoin-mainnet') {
                 GraphClient = GraphClientFilecoinMainnet;
             } else {
                 GraphClient = GraphClientMainnet;
