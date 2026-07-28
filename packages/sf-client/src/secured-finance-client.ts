@@ -207,7 +207,11 @@ export class SecuredFinanceClient {
     ) {
         const [address] = await this.walletClient.getAddresses();
 
-        if (ccy.isNative || !ccy.hasPermit) {
+        if (
+            ccy.isNative ||
+            !ccy.hasPermit ||
+            (await this.isContractWallet(address))
+        ) {
             const payableOverride: PayableOverrides = {};
             if (ccy.isNative) {
                 payableOverride.value = amount;
@@ -338,7 +342,11 @@ export class SecuredFinanceClient {
         const contract = getLendingMarketControllerContract(this.config.env);
 
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
-            if (ccy.isNative || !ccy.hasPermit) {
+            if (
+                ccy.isNative ||
+                !ccy.hasPermit ||
+                (await this.isContractWallet(address))
+            ) {
                 const overrides: PayableOverrides = {};
 
                 if (ccy.isNative) {
@@ -470,7 +478,11 @@ export class SecuredFinanceClient {
         const contract = getLendingMarketControllerContract(this.config.env);
 
         if (side === OrderSide.LEND && sourceWallet === WalletSource.METAMASK) {
-            if (ccy.isNative || !ccy.hasPermit) {
+            if (
+                ccy.isNative ||
+                !ccy.hasPermit ||
+                (await this.isContractWallet(address))
+            ) {
                 const overrides: PayableOverrides = {};
 
                 if (ccy.isNative) {
@@ -768,6 +780,11 @@ export class SecuredFinanceClient {
             functionName: 'nonces',
             args: [account as Hex],
         });
+    }
+
+    private async isContractWallet(address: Address) {
+        const code = await this.publicClient.getCode({ address });
+        return code !== undefined && code !== '0x';
     }
 
     private async getDefaultDeadline() {
