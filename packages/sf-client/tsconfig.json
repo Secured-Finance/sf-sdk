@@ -2,8 +2,11 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./",
-    "module": "node16",
-    "moduleResolution": "node16",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    // viem/ox ship ESM-only type declarations, so classic resolution type-checks
+    // their .ts sources; they require ES2022 lib features (emit target unchanged).
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "outDir": "dist",
     "rootDir": "src",
     "resolveJsonModule": true,
