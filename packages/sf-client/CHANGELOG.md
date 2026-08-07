@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.204](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.203...v0.2.0-beta.204) (2026-08-07)
+
+
+### Bug Fixes
+
+* fix build failure [SF-1545] ([8bc61ca](https://github.com/secured-finance/sf-sdk/commit/8bc61ca4c9bb3b3958401c15688481c22f7c6a6c))
+* route contract wallet to the approve deposit flow [SF-1545] ([76d0e02](https://github.com/secured-finance/sf-sdk/commit/76d0e02da156e11c71317a412cf3a08d7365deaf))
+
+
+
+
+
 # [0.2.0-beta.202](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.201...v0.2.0-beta.202) (2026-06-11)
 
 
