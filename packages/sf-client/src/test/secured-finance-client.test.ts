@@ -1,5 +1,5 @@
 import { createPublicClient, custom } from 'viem';
-import { goerli, sepolia, mainnet } from 'viem/chains';
+import { goerli, mainnet, sepolia } from 'viem/chains';
 import { SecuredFinanceClient } from '../secured-finance-client';
 import { WBTC, publicClient } from './helper';
 
@@ -95,6 +95,30 @@ describe('getOrderEstimation', () => {
             coverage: 6334n,
             isInsufficientDepositAmount: true,
         });
+    });
+});
+
+describe('getOrderUnitPriceRange', () => {
+    it('should return the accepted order unit price range', async () => {
+        const range = [9000n, 10000n, 1n, 9500n, 9250n, false] as const;
+        const readContractSpy = jest
+            .spyOn(publicClient, 'readContract')
+            .mockImplementationOnce(() => Promise.resolve(range));
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+
+        await expect(
+            client.getOrderUnitPriceRange(new WBTC(), 1703203200)
+        ).resolves.toEqual(range);
+        expect(readContractSpy).toHaveBeenCalledWith(
+            expect.objectContaining({
+                functionName: 'getOrderUnitPriceRange',
+                args: [
+                    '0x5742544300000000000000000000000000000000000000000000000000000000',
+                    1703203200n,
+                ],
+            })
+        );
     });
 });
 
