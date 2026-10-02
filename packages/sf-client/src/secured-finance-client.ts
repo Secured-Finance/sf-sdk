@@ -275,6 +275,14 @@ export class SecuredFinanceClient {
         });
     }
 
+    async getOrderUnitPriceRange(ccy: Currency, maturity: number) {
+        return this.publicClient.readContract({
+            ...getLendingMarketControllerContract(this.config.env),
+            functionName: 'getOrderUnitPriceRange',
+            args: [this.convertCurrencyToBytes32(ccy), BigInt(maturity)],
+        });
+    }
+
     async getOrderBookDetail(ccy: Currency, maturity: number) {
         return this.publicClient.readContract({
             ...getLendingMarketReaderContract(this.config.env),
