@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.206](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.205...v0.2.0-beta.206) (2026-10-02)
+
+
+### Features
+
+* add getOrderUnitPriceRange to SecuredFinanceClient ([9921ad0](https://github.com/secured-finance/sf-sdk/commit/9921ad01c87f67b1ba9c1ed093fb2a6eb5ed757e))
+
+
+
+
+
 # [0.2.0-beta.205](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.204...v0.2.0-beta.205) (2026-10-02)
 
 **Note:** Version bump only for package @secured-finance/sf-client
