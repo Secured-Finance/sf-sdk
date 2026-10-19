@@ -283,6 +283,14 @@ export class SecuredFinanceClient {
         });
     }
 
+    async getMinimumPreOrderAmount(ccy: Currency) {
+        return this.publicClient.readContract({
+            ...getLendingMarketControllerContract(this.config.env),
+            functionName: 'getMinimumPreOrderAmount',
+            args: [this.convertCurrencyToBytes32(ccy)],
+        });
+    }
+
     async getOrderBookDetail(ccy: Currency, maturity: number) {
         return this.publicClient.readContract({
             ...getLendingMarketReaderContract(this.config.env),

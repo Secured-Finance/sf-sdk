@@ -122,6 +122,31 @@ describe('getOrderUnitPriceRange', () => {
     });
 });
 
+describe('getMinimumPreOrderAmount', () => {
+    it('should return the minimum pre-order amount', async () => {
+        const minimumPreOrderAmount = 100000000n;
+        const readContractSpy = jest
+            .spyOn(publicClient, 'readContract')
+            .mockImplementationOnce(() =>
+                Promise.resolve(minimumPreOrderAmount)
+            );
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+
+        await expect(
+            client.getMinimumPreOrderAmount(new WBTC())
+        ).resolves.toEqual(minimumPreOrderAmount);
+        expect(readContractSpy).toHaveBeenCalledWith(
+            expect.objectContaining({
+                functionName: 'getMinimumPreOrderAmount',
+                args: [
+                    '0x5742544300000000000000000000000000000000000000000000000000000000',
+                ],
+            })
+        );
+    });
+});
+
 describe('getMarketTerminationDate', () => {
     it('should return the market termination date', async () => {
         jest.spyOn(publicClient, 'readContract').mockImplementation(() =>
