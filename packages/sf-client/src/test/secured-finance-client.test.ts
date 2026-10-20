@@ -122,23 +122,21 @@ describe('getOrderUnitPriceRange', () => {
     });
 });
 
-describe('getMinimumPreOrderAmount', () => {
+describe('getMinPreOrderAmount', () => {
     it('should return the minimum pre-order amount', async () => {
-        const minimumPreOrderAmount = 100000000n;
+        const minPreOrderAmount = 100000000n;
         const readContractSpy = jest
             .spyOn(publicClient, 'readContract')
-            .mockImplementationOnce(() =>
-                Promise.resolve(minimumPreOrderAmount)
-            );
+            .mockImplementationOnce(() => Promise.resolve(minPreOrderAmount));
         const client = new SecuredFinanceClient();
         await client.init(publicClient);
 
-        await expect(
-            client.getMinimumPreOrderAmount(new WBTC())
-        ).resolves.toEqual(minimumPreOrderAmount);
+        await expect(client.getMinPreOrderAmount(new WBTC())).resolves.toEqual(
+            minPreOrderAmount
+        );
         expect(readContractSpy).toHaveBeenCalledWith(
             expect.objectContaining({
-                functionName: 'getMinimumPreOrderAmount',
+                functionName: 'getMinPreOrderAmount',
                 args: [
                     '0x5742544300000000000000000000000000000000000000000000000000000000',
                 ],

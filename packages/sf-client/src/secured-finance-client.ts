@@ -5,10 +5,10 @@ import {
     Hex,
     PublicClient,
     WalletClient,
-    hexToString,
-    stringToHex,
     createPublicClient,
+    hexToString,
     http,
+    stringToHex,
 } from 'viem';
 import { ERC20Abi } from './ERC20Abi';
 import { ERC20PermitAbi } from './ERC20PermitAbi';
@@ -27,8 +27,8 @@ import {
     NETWORKS,
     NetworkName,
     getContractEnvironment,
-    networkNames,
     getEnvironmentByChainId,
+    networkNames,
 } from './utils';
 
 export interface PayableOverrides {
@@ -283,10 +283,10 @@ export class SecuredFinanceClient {
         });
     }
 
-    async getMinimumPreOrderAmount(ccy: Currency) {
+    async getMinPreOrderAmount(ccy: Currency) {
         return this.publicClient.readContract({
             ...getLendingMarketControllerContract(this.config.env),
-            functionName: 'getMinimumPreOrderAmount',
+            functionName: 'getMinPreOrderAmount',
             args: [this.convertCurrencyToBytes32(ccy)],
         });
     }
