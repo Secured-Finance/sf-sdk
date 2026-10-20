@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.207](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.206...v0.2.0-beta.207) (2026-10-20)
+
+
+### Features
+
+* add getMinimumPreOrderAmount [SF-1556] ([53f48ce](https://github.com/Secured-Finance/sf-sdk/commit/53f48ce07e0bb4d094c28e891cdc010279d608b4))
+
+
+
+
+
 # [0.2.0-beta.206](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.205...v0.2.0-beta.206) (2026-10-02)
 
 
