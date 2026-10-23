@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.209](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.208...v0.2.0-beta.209) (2026-10-23)
+
+
+### Bug Fixes
+
+* update to LTS node 22 [SF-1557] ([42957b1](https://github.com/Secured-Finance/sf-sdk/commit/42957b198083be53b4b38c4f963440b88830128f))
+
+
+
+# 0.2.0-beta.207 (2026-10-20)
+
+
+
+
+
 # [0.2.0-beta.187](https://github.com/Secured-Finance/sf-sdk/compare/v0.2.0-beta.186...v0.2.0-beta.187) (2025-03-12)
 
 **Note:** Version bump only for package @secured-finance/sf-core
