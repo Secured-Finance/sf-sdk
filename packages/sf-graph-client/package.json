@@ -44,7 +44,7 @@
   "devDependencies": {
     "@types/jest": "27.4.1",
     "@types/js-yaml": "^4.0.5",
-    "@types/node": "^16.14.2",
+    "@types/node": "^22.0.0",
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.11",
     "babel-preset-react": "^6.24.1",
@@ -58,6 +58,9 @@
     "ts-node": "^10.1.0",
     "typescript": "^5.1.6",
     "viem": "^2.52.2"
+  },
+  "engines": {
+    "node": ">=22.0.0"
   },
   "files": ["dist/**/*"],
   "ts-node": {
