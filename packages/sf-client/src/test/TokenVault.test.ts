@@ -1,3 +1,5 @@
+import { encodeFunctionData, toFunctionSelector } from 'viem';
+import { getTokenVaultContract } from '../contracts';
 import { SecuredFinanceClient } from '../secured-finance-client';
 import { WBTC, publicClient } from './helper';
 
@@ -86,5 +88,60 @@ describe('getLiquidationAmount', () => {
         expect(liquidationAmount).toEqual(981200000n);
         expect(protocolFee).toEqual(19624000n);
         expect(liquidationFee).toEqual(49060000n);
+    });
+});
+
+describe('getTotalCollateralAmount', () => {
+    it.each([undefined, false, true])(
+        'should call the two-argument overload with useConservativePrice=%s',
+        async useConservativePrice => {
+            const readContract = jest
+                .spyOn(publicClient, 'readContract')
+                .mockResolvedValueOnce(1000000000000000000n);
+            const client = new SecuredFinanceClient();
+            await client.init(publicClient);
+            const account = '0x1234567890123456789012345678901234567890';
+
+            expect(
+                await client.tokenVault.getTotalCollateralAmount(
+                    account,
+                    useConservativePrice
+                )
+            ).toEqual(1000000000000000000n);
+            expect(readContract).toHaveBeenCalledWith({
+                ...getTokenVaultContract('development'),
+                functionName: 'getTotalCollateralAmount',
+                args: [account, useConservativePrice ?? false],
+            });
+            const call = readContract.mock.calls[0][0];
+            expect(encodeFunctionData(call).slice(0, 10)).toEqual(
+                toFunctionSelector('getTotalCollateralAmount(address,bool)')
+            );
+        }
+    );
+
+    it('should use valuation prices when retrieving the collateral book', async () => {
+        const readContract = jest
+            .spyOn(publicClient, 'readContract')
+            .mockResolvedValueOnce([])
+            .mockResolvedValueOnce(100n)
+            .mockResolvedValueOnce(200n)
+            .mockResolvedValueOnce(50n);
+        const client = new SecuredFinanceClient();
+        await client.init(publicClient);
+        const account = '0x1234567890123456789012345678901234567890';
+
+        expect(await client.tokenVault.getCollateralBook(account)).toEqual({
+            collateral: {},
+            collateralCoverage: 100n,
+            totalCollateralAmount: 200n,
+            totalUnusedCollateralAmount: 50n,
+        });
+        expect(readContract).toHaveBeenCalledWith(
+            expect.objectContaining({
+                functionName: 'getTotalCollateralAmount',
+                args: [account, false],
+            })
+        );
     });
 });

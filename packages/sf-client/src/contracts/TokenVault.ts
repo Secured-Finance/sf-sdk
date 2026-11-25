@@ -182,13 +182,17 @@ export class TokenVault extends BaseContract {
      * Retrieves the total collateral amount for a given account.
      *
      * @param account - The account for which to retrieve the total collateral amount.
+     * @param useConservativePrice - Whether to use conservative prices. Defaults to false (valuation prices).
      * @returns A promise that resolves to the total collateral amount.
      */
-    async getTotalCollateralAmount(account: string) {
+    async getTotalCollateralAmount(
+        account: string,
+        useConservativePrice = false
+    ) {
         return this.publicClient.readContract({
             ...getTokenVaultContract(this.config.env),
             functionName: 'getTotalCollateralAmount',
-            args: [account as Hex],
+            args: [account as Hex, useConservativePrice],
         });
     }
 
