@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-beta.211](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.210...v0.2.0-beta.211) (2026-11-25)
+
+
+### Features
+
+* **sf-client:** migrate getTotalCollateralAmount to two-argument overload [SF-1571] ([87bbb4c](https://github.com/secured-finance/sf-sdk/commit/87bbb4cbecaea2b30aaf5c4a20ef773e814f6d6a))
+
+
+
+
+
 # [0.2.0-beta.210](https://github.com/secured-finance/sf-sdk/compare/v0.2.0-beta.209...v0.2.0-beta.210) (2026-11-06)
 
 **Note:** Version bump only for package @secured-finance/sf-client
